@@ -1,6 +1,6 @@
 {
   "low": {
-    "sea_level_rise_cm": 15,
+    "sea_level_rise_cm": 20,
     "coral_loss_pct": 20,
     "flood_days_per_year": 5,
     "infra_loss_pct": 5,
@@ -10,7 +10,7 @@
     "renewables_pct": 85
   },
   "medium": {
-    "sea_level_rise_cm": 25,
+    "sea_level_rise_cm": 23,
     "coral_loss_pct": 50,
     "flood_days_per_year": 15,
     "infra_loss_pct": 15,
@@ -20,7 +20,7 @@
     "renewables_pct": 60
   },
   "high": {
-    "sea_level_rise_cm": 40,
+    "sea_level_rise_cm": 27,
     "coral_loss_pct": 80,
     "flood_days_per_year": 40,
     "infra_loss_pct": 35,
