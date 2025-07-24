@@ -1,83 +1,200 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-const Scenario2 = () => {
+export default function Scenario2() {
+  const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
+
+  const narrative = {
+    title: "Moderate Change · Mixed Resilience",
+    subtitle: "The path of compromise and difficult choices",
+    content: [
+      "2050 arrives in Fiji with the weight of unfinished business. Global efforts to halt climate change succeeded partially — the world warmed by 2°C, not the catastrophic 3°C many feared, yet not the 1.5°C scientists demanded.",
+      "The results are written in rising tides and struggling reefs. Half of Fiji's corals have bleached beyond recovery, their ancient colors fading to ghostly white. Coastal flooding happens not once or twice a year, but monthly — predictable now, manageable with the right preparation.",
+      "Communities learned to adapt, some better than others. Those who invested early in resilience thrive in elevated villages with renewable power and water security. Others face harder choices: rebuild again, or join the growing migration inland.",
+      "Fishing boats return with smaller catches, but aquaculture farms fill the gap. Tourism evolved — visitors come not just for pristine beaches, but to witness resilience in action. The Pacific voice grew stronger through struggle, demanding more from the world while doing what it could with less.",
+      "This is a future of survival, of making do, of human ingenuity tested against nature's patience. It is neither paradise nor catastrophe — it is the complex reality of a world that acted, but not soon enough."
+    ]
+  };
+
+  const metrics = [
+    {
+      id: 'sea_level',
+      title: 'Sea Level Rise',
+      value: '23cm',
+      description: 'Noticeable coastal impacts, managed through adaptation measures',
+      csvFile: 'sea_level_scenario2.csv',
+      rScript: 'visualize_sea_level.R'
+    },
+    {
+      id: 'coral',
+      title: 'Coral Health',
+      value: '50% loss',
+      description: 'Significant bleaching with some recovery in protected areas',
+      csvFile: 'coral_health_scenario2.csv',
+      rScript: 'visualize_coral.R'
+    },
+    {
+      id: 'displacement',
+      title: 'Population Displacement',
+      value: '12 communities',
+      description: 'Mix of planned and emergency relocations, regional support needed',
+      csvFile: 'displacement_scenario2.csv',
+      rScript: 'visualize_displacement.R'
+    },
+    {
+      id: 'energy',
+      title: 'Renewable Energy',
+      value: '60%',
+      description: 'Significant progress but fossil fuels still part of the energy mix',
+      csvFile: 'energy_scenario2.csv',
+      rScript: 'visualize_energy.R'
+    },
+    {
+      id: 'fisheries',
+      title: 'Fish Catch',
+      value: '-35%',
+      description: 'Ocean changes impact traditional fishing, aquaculture expands',
+      csvFile: 'fisheries_scenario2.csv',
+      rScript: 'visualize_fisheries.R'
+    },
+    {
+      id: 'flooding',
+      title: 'Coastal Flooding',
+      value: '15 days/year',
+      description: 'Regular flooding events require ongoing adaptation measures',
+      csvFile: 'flooding_scenario2.csv',
+      rScript: 'visualize_flooding.R'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-coral-warning to-ocean-surface p-6">
-      <div className="container mx-auto max-w-4xl">
-        <Card className="bg-card/80 backdrop-blur-md border-coral-warning/20">
-          <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center text-coral-warning">
-              Scenario 2: Moderate Impact (Medium Emissions)
-            </CardTitle>
-            <p className="text-center text-muted-foreground">
-              Global warming reached 2°C - Mixed climate action with significant challenges
-            </p>
-          </CardHeader>
+    <div className="min-h-screen bg-gradient-ocean relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/90 via-ocean-deep/95 to-ocean-deep" />
+      
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
+        
+        {/* Navigation */}
+        <div className="mb-12 animate-fade-in">
+          <Link 
+            to="/"
+            className="text-wave-foam/60 hover:text-wave-foam font-extralight tracking-wider text-sm uppercase transition-colors duration-500"
+          >
+            ← return to journey
+          </Link>
+        </div>
+
+        {/* Header */}
+        <div className="text-center mb-20 animate-fade-in">
+          <h1 className="text-5xl md:text-7xl font-extralight tracking-wide text-wave-foam mb-6">
+            Scenario Two
+          </h1>
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-coral-warm to-transparent mx-auto mb-8" />
+          <p className="text-2xl md:text-3xl font-light tracking-wide text-coral-warm mb-4">
+            {narrative.title}
+          </p>
+          <p className="text-lg text-card-foreground/70 font-light">
+            {narrative.subtitle}
+          </p>
+        </div>
+
+        {/* Narrative */}
+        <div className="mb-24 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="max-w-4xl mx-auto space-y-8">
+            {narrative.content.map((paragraph, index) => (
+              <p 
+                key={index}
+                className="text-xl md:text-2xl font-light text-card-foreground/90 leading-relaxed animate-fade-in"
+                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        {/* Metrics Grid */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-12 text-center tracking-wide">
+            Key Indicators · 2050
+          </h2>
           
-          <CardContent className="space-y-6">
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-coral-warning">2050 Narrative</h2>
-              <div className="bg-coral-warning/10 p-6 rounded-lg border border-coral-warning/20">
-                <p className="text-lg leading-relaxed">
-                  Global warming reached 2°C by 2050, bringing significant challenges, but 
-                  Fiji's resilience investments paid off. Advanced early warning systems, 
-                  climate-smart infrastructure, and diversified economies help communities 
-                  weather the storms. While coral reefs face serious stress, restoration 
-                  efforts keep some areas healthy. Managed retreat from vulnerable coastlines 
-                  was planned and supported. Fiji demonstrates that preparation makes the difference.
-                </p>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-coral-warning">Key 2050 Indicators</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-coral-warning/10 p-4 rounded-lg border border-coral-warning/20">
-                  <h3 className="font-semibold text-coral-warning">Environmental</h3>
-                  <ul className="mt-2 space-y-2 text-sm">
-                    <li>• Sea Level Rise: +25cm</li>
-                    <li>• Coral Loss: 50%</li>
-                    <li>• Flood Days/Year: 15</li>
-                    <li>• Renewable Energy: 60%</li>
-                  </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {metrics.map((metric, index) => (
+              <div 
+                key={metric.id}
+                className={`p-8 border border-ocean-light/20 bg-transparent backdrop-blur-sm
+                          hover:border-coral-warm/40 transition-all duration-700 ease-out cursor-pointer
+                          animate-fade-in ${selectedMetric === metric.id ? 'border-coral-warm/60 bg-coral-warm/5' : ''}`}
+                style={{ animationDelay: `${0.8 + index * 0.1}s` }}
+                onClick={() => setSelectedMetric(selectedMetric === metric.id ? null : metric.id)}
+              >
+                <div className="text-center">
+                  <h3 className="text-sm text-wave-foam/60 font-extralight tracking-wider uppercase mb-3">
+                    {metric.title}
+                  </h3>
+                  <div className="text-3xl font-light text-coral-warm mb-4">
+                    {metric.value}
+                  </div>
+                  <p className="text-sm text-card-foreground/70 leading-relaxed">
+                    {metric.description}
+                  </p>
+                  
+                  {/* R Visualization Placeholder */}
+                  {selectedMetric === metric.id && (
+                    <div className="mt-6 p-4 border border-coral-warm/20 bg-coral-warm/5">
+                      <p className="text-xs text-coral-warm/80 font-extralight mb-2 uppercase tracking-wider">
+                        Data Visualization
+                      </p>
+                      <div className="text-xs text-card-foreground/60 space-y-1">
+                        <div>CSV: {metric.csvFile}</div>
+                        <div>R Script: {metric.rScript}</div>
+                      </div>
+                      <div className="mt-4 h-32 bg-coral-warm/10 border border-coral-warm/20 flex items-center justify-center">
+                        <span className="text-coral-warm/60 text-sm font-extralight">
+                          R visualization will render here
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="bg-coral-warning/10 p-4 rounded-lg border border-coral-warning/20">
-                  <h3 className="font-semibold text-coral-warning">Socio-Economic</h3>
-                  <ul className="mt-2 space-y-2 text-sm">
-                    <li>• Infrastructure Loss: 15%</li>
-                    <li>• Fish Catch Change: -35%</li>
-                    <li>• Displaced Communities: 8</li>
-                    <li>• GDP Loss: 8%</li>
-                  </ul>
-                </div>
               </div>
-            </section>
+            ))}
+          </div>
+        </div>
 
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-coral-warning">Audio Description</h2>
-              <div className="bg-coral-warning/10 p-4 rounded-lg border border-coral-warning/20">
-                <p className="text-muted-foreground">
-                  <strong>Scenario 2 Tide Audio:</strong> Moderate waves with some storm elements. 
-                  Rougher seas than today, occasional strong winds, representing increased 
-                  climate variability and moderate ocean stress.
-                </p>
-              </div>
-            </section>
-
-            <div className="text-center pt-6">
-              <Link to="/">
-                <Button variant="coral" size="lg">
-                  Back to Game
-                </Button>
-              </Link>
+        {/* Data Sources */}
+        <div className="text-center animate-fade-in" style={{ animationDelay: '1s' }}>
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-lg font-extralight text-coral-warm/80 mb-6 tracking-wide uppercase">
+              Data Sources & Methodology
+            </h3>
+            <div className="text-sm text-card-foreground/60 leading-relaxed space-y-2">
+              <p>Climate projections: IPCC AR6 Regional Atlas, Pacific Climate Science Program</p>
+              <p>Sea level data: NASA Sea Level Change Team, Australian Bureau of Meteorology</p>
+              <p>Coral projections: NOAA Coral Reef Watch, Pacific Regional Coral Studies</p>
+              <p>Socioeconomic indicators: Fiji Climate Ministry, Pacific Data Hub, World Bank</p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+
+        {/* Navigation to other scenarios */}
+        <div className="mt-20 text-center space-x-8 animate-fade-in" style={{ animationDelay: '1.2s' }}>
+          <Link 
+            to="/scenario-1"
+            className="text-accent/60 hover:text-accent font-extralight tracking-wider text-sm uppercase transition-colors duration-500"
+          >
+            ← Scenario One
+          </Link>
+          <Link 
+            to="/scenario-3"
+            className="text-coral-urgent/60 hover:text-coral-urgent font-extralight tracking-wider text-sm uppercase transition-colors duration-500"
+          >
+            Scenario Three →
+          </Link>
+        </div>
       </div>
     </div>
   );
-};
-
-export default Scenario2;
+}

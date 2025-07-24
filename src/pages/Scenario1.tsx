@@ -1,83 +1,200 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-const Scenario1 = () => {
+export default function Scenario1() {
+  const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
+
+  const narrative = {
+    title: "Sustainable Path · High Resilience",
+    subtitle: "A future where wisdom guided our choices",
+    content: [
+      "By 2050, the Pacific Ocean breathes differently. Not with the labored gasps of a dying sea, but with the steady rhythm of renewal. The choices made in the 2020s — difficult, sometimes painful, always necessary — have borne fruit.",
+      "Fiji's coral reefs, though changed, persist. Marine protected areas established decades ago now serve as nurseries for recovering ecosystems. The sea has risen, yes, but communities relocated with dignity to higher ground call their new homes blessings, not exile.",
+      "Renewable energy flows like the trade winds themselves — constant, reliable, clean. Solar panels glint on every rooftop, and wind turbines turn lazily in the ocean breeze. The old fossil fuel infrastructure rusts peacefully, monuments to a carbon-heavy past.",
+      "Children learn to swim in cleaner waters. Fishers return with catches that, while different from their grandparents' time, still feed families and communities. The Pacific voice rings strong in international forums, no longer pleading but leading.",
+      "This is not paradise regained — it is something more precious: a future earned through foresight, sacrifice, and solidarity."
+    ]
+  };
+
+  const metrics = [
+    {
+      id: 'sea_level',
+      title: 'Sea Level Rise',
+      value: '20cm',
+      description: 'Managed through early warning systems and nature-based solutions',
+      csvFile: 'sea_level_scenario1.csv',
+      rScript: 'visualize_sea_level.R'
+    },
+    {
+      id: 'coral',
+      title: 'Coral Health',
+      value: '20% loss',
+      description: 'Protected areas and restoration efforts limit damage',
+      csvFile: 'coral_health_scenario1.csv',
+      rScript: 'visualize_coral.R'
+    },
+    {
+      id: 'displacement',
+      title: 'Population Displacement',
+      value: '5 communities',
+      description: 'Planned relocation with community support and new infrastructure',
+      csvFile: 'displacement_scenario1.csv',
+      rScript: 'visualize_displacement.R'
+    },
+    {
+      id: 'energy',
+      title: 'Renewable Energy',
+      value: '85%',
+      description: 'Solar and wind dominate energy mix, fossil fuel phase-out complete',
+      csvFile: 'energy_scenario1.csv',
+      rScript: 'visualize_energy.R'
+    },
+    {
+      id: 'fisheries',
+      title: 'Fish Catch',
+      value: '-10%',
+      description: 'Sustainable fishing practices maintain stable yields despite ocean changes',
+      csvFile: 'fisheries_scenario1.csv',
+      rScript: 'visualize_fisheries.R'
+    },
+    {
+      id: 'flooding',
+      title: 'Coastal Flooding',
+      value: '5 days/year',
+      description: 'Green infrastructure and early warning systems minimize impact',
+      csvFile: 'flooding_scenario1.csv',
+      rScript: 'visualize_flooding.R'
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-ocean-deep to-ocean-surface p-6">
-      <div className="container mx-auto max-w-4xl">
-        <Card className="bg-card/80 backdrop-blur-md border-ocean-light/20">
-          <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center text-ocean-light">
-              Scenario 1: Sustainable Future (Low Emissions)
-            </CardTitle>
-            <p className="text-center text-muted-foreground">
-              Global warming limited to 1.5°C - Strong climate action succeeded
-            </p>
-          </CardHeader>
+    <div className="min-h-screen bg-gradient-ocean relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/90 via-ocean-deep/95 to-ocean-deep" />
+      
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
+        
+        {/* Navigation */}
+        <div className="mb-12 animate-fade-in">
+          <Link 
+            to="/"
+            className="text-wave-foam/60 hover:text-wave-foam font-extralight tracking-wider text-sm uppercase transition-colors duration-500"
+          >
+            ← return to journey
+          </Link>
+        </div>
+
+        {/* Header */}
+        <div className="text-center mb-20 animate-fade-in">
+          <h1 className="text-5xl md:text-7xl font-extralight tracking-wide text-wave-foam mb-6">
+            Scenario One
+          </h1>
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mb-8" />
+          <p className="text-2xl md:text-3xl font-light tracking-wide text-accent mb-4">
+            {narrative.title}
+          </p>
+          <p className="text-lg text-card-foreground/70 font-light">
+            {narrative.subtitle}
+          </p>
+        </div>
+
+        {/* Narrative */}
+        <div className="mb-24 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="max-w-4xl mx-auto space-y-8">
+            {narrative.content.map((paragraph, index) => (
+              <p 
+                key={index}
+                className="text-xl md:text-2xl font-light text-card-foreground/90 leading-relaxed animate-fade-in"
+                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        {/* Metrics Grid */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-12 text-center tracking-wide">
+            Key Indicators · 2050
+          </h2>
           
-          <CardContent className="space-y-6">
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-ocean-light">2050 Narrative</h2>
-              <div className="bg-ocean-deep/20 p-6 rounded-lg border border-ocean-light/10">
-                <p className="text-lg leading-relaxed">
-                  By 2050, Fiji has become a global model for climate resilience. Strong international 
-                  cooperation kept global warming below 1.5°C, while strategic investments in adaptation 
-                  created thriving, resilient communities. Coral reefs show signs of recovery, renewable 
-                  energy powers 90% of the grid, and nature-based solutions protect coastlines. 
-                  Fijian innovations in sustainable development are replicated across the Pacific. 
-                  The sounds of healthy reefs and bustling sustainable communities fill the air.
-                </p>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-ocean-light">Key 2050 Indicators</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-wave-crest/10 p-4 rounded-lg border border-wave-crest/20">
-                  <h3 className="font-semibold text-ocean-light">Environmental</h3>
-                  <ul className="mt-2 space-y-2 text-sm">
-                    <li>• Sea Level Rise: +15cm</li>
-                    <li>• Coral Loss: 20%</li>
-                    <li>• Flood Days/Year: 5</li>
-                    <li>• Renewable Energy: 85%</li>
-                  </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {metrics.map((metric, index) => (
+              <div 
+                key={metric.id}
+                className={`p-8 border border-ocean-light/20 bg-transparent backdrop-blur-sm
+                          hover:border-accent/40 transition-all duration-700 ease-out cursor-pointer
+                          animate-fade-in ${selectedMetric === metric.id ? 'border-accent/60 bg-accent/5' : ''}`}
+                style={{ animationDelay: `${0.8 + index * 0.1}s` }}
+                onClick={() => setSelectedMetric(selectedMetric === metric.id ? null : metric.id)}
+              >
+                <div className="text-center">
+                  <h3 className="text-sm text-wave-foam/60 font-extralight tracking-wider uppercase mb-3">
+                    {metric.title}
+                  </h3>
+                  <div className="text-3xl font-light text-accent mb-4">
+                    {metric.value}
+                  </div>
+                  <p className="text-sm text-card-foreground/70 leading-relaxed">
+                    {metric.description}
+                  </p>
+                  
+                  {/* R Visualization Placeholder */}
+                  {selectedMetric === metric.id && (
+                    <div className="mt-6 p-4 border border-accent/20 bg-accent/5">
+                      <p className="text-xs text-accent/80 font-extralight mb-2 uppercase tracking-wider">
+                        Data Visualization
+                      </p>
+                      <div className="text-xs text-card-foreground/60 space-y-1">
+                        <div>CSV: {metric.csvFile}</div>
+                        <div>R Script: {metric.rScript}</div>
+                      </div>
+                      <div className="mt-4 h-32 bg-accent/10 border border-accent/20 flex items-center justify-center">
+                        <span className="text-accent/60 text-sm font-extralight">
+                          R visualization will render here
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="bg-wave-crest/10 p-4 rounded-lg border border-wave-crest/20">
-                  <h3 className="font-semibold text-ocean-light">Socio-Economic</h3>
-                  <ul className="mt-2 space-y-2 text-sm">
-                    <li>• Infrastructure Loss: 5%</li>
-                    <li>• Fish Catch Change: -15%</li>
-                    <li>• Displaced Communities: 2</li>
-                    <li>• GDP Loss: 2%</li>
-                  </ul>
-                </div>
               </div>
-            </section>
+            ))}
+          </div>
+        </div>
 
-            <section>
-              <h2 className="text-2xl font-semibold mb-4 text-ocean-light">Audio Description</h2>
-              <div className="bg-ocean-deep/20 p-4 rounded-lg border border-ocean-light/10">
-                <p className="text-muted-foreground">
-                  <strong>Scenario 1 Tide Audio:</strong> Calm, peaceful ocean sounds representing 
-                  a sustainable future. Gentle waves, seabird calls, and the sound of healthy 
-                  marine ecosystems.
-                </p>
-              </div>
-            </section>
-
-            <div className="text-center pt-6">
-              <Link to="/">
-                <Button variant="ocean" size="lg">
-                  Back to Game
-                </Button>
-              </Link>
+        {/* Data Sources */}
+        <div className="text-center animate-fade-in" style={{ animationDelay: '1s' }}>
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-lg font-extralight text-coral-warm/80 mb-6 tracking-wide uppercase">
+              Data Sources & Methodology
+            </h3>
+            <div className="text-sm text-card-foreground/60 leading-relaxed space-y-2">
+              <p>Climate projections: IPCC AR6 Regional Atlas, Pacific Climate Science Program</p>
+              <p>Sea level data: NASA Sea Level Change Team, Australian Bureau of Meteorology</p>
+              <p>Coral projections: NOAA Coral Reef Watch, Pacific Regional Coral Studies</p>
+              <p>Socioeconomic indicators: Fiji Climate Ministry, Pacific Data Hub, World Bank</p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+
+        {/* Navigation to other scenarios */}
+        <div className="mt-20 text-center space-x-8 animate-fade-in" style={{ animationDelay: '1.2s' }}>
+          <Link 
+            to="/scenario-2"
+            className="text-coral-warm/60 hover:text-coral-warm font-extralight tracking-wider text-sm uppercase transition-colors duration-500"
+          >
+            Scenario Two →
+          </Link>
+          <Link 
+            to="/scenario-3"
+            className="text-coral-urgent/60 hover:text-coral-urgent font-extralight tracking-wider text-sm uppercase transition-colors duration-500"
+          >
+            Scenario Three →
+          </Link>
+        </div>
       </div>
     </div>
   );
-};
-
-export default Scenario1;
+}
