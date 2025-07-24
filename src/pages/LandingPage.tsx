@@ -118,10 +118,10 @@ export default function LandingPage() {
           <h1 className="text-7xl font-bold text-white mb-8 drop-shadow-2xl tracking-tight">
             WELCOME TO PACIFIC FUTURE
           </h1>
-          <p className="text-2xl text-white/90 max-w-3xl drop-shadow-lg mb-6 leading-relaxed">
+          <p className="text-7xl text-white/90 max-w-4xl drop-shadow-lg mb-6 leading-tight font-bold">
             AN IMMERSIVE VISUALISATION INTO OUR FUTURE
           </p>
-          <p className="text-xl text-white/80 max-w-2xl drop-shadow-lg mb-4">
+          <p className="text-7xl text-white/80 max-w-4xl drop-shadow-lg mb-4 leading-tight font-bold">
             PARTICIPATE INTO DECISION MAKING<br />
             AND MAKE AN IMPACT TO CHANGE THE COURSE<br />
             OF OUR OCEAN
