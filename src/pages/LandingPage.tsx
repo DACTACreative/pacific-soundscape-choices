@@ -115,17 +115,17 @@ export default function LandingPage() {
       <div className="relative z-10 flex h-full flex-col items-center justify-between p-8">
         {/* Top Content */}
         <div className="flex flex-col items-center justify-center flex-1 text-center">
-          <h1 className="text-7xl font-bold text-white mb-8 drop-shadow-2xl tracking-tight">
-            WELCOME TO PACIFIC FUTURE
-          </h1>
-          <p className="text-7xl text-white/90 max-w-4xl drop-shadow-lg mb-6 leading-tight font-bold">
-            AN IMMERSIVE VISUALISATION INTO OUR FUTURE
-          </p>
-          <p className="text-7xl text-white/80 max-w-4xl drop-shadow-lg mb-4 leading-tight font-bold">
-            PARTICIPATE INTO DECISION MAKING<br />
-            AND MAKE AN IMPACT TO CHANGE THE COURSE<br />
-            OF OUR OCEAN
-          </p>
+          <div className="text-5xl font-bold text-white drop-shadow-2xl tracking-tight leading-tight">
+            <p>WELCOME TO PACIFIC FUTURE</p>
+            <p>AN IMMERSIVE VISUALISATION</p>
+            <br />
+            <p>MAKE THE RIGHT DECISION</p>
+            <p>AND CHANGE THE COURSE</p>
+            <p>OF OUR OCEAN</p>
+            <br />
+            <br />
+            <p>START THE JOURNEY TO 2050</p>
+          </div>
         </div>
 
         {/* Bottom CTA */}
@@ -137,9 +137,9 @@ export default function LandingPage() {
             onClick={handleStart}
             size="hero"
             variant="ocean"
-            className="text-xl px-12 py-6 backdrop-blur-sm bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 font-semibold tracking-wide"
+            className="text-xl px-12 py-6 bg-white text-black hover:bg-white/90 transition-all duration-300 font-bold tracking-wide rounded-full border-none"
           >
-            START YOUR JOURNEY TO 2050
+            START
           </Button>
         </div>
       </div>
