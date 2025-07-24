@@ -25,9 +25,9 @@ const quantileLabels = {
 };
 
 const quantileColors = {
-  5: '#4ade80',   // green for low scenario
-  50: '#fbbf24',  // amber for median
-  95: '#ef4444'   // red for high scenario
+  5: '#00ff41',   // matrix green for low scenario
+  50: '#39ff14',  // neon green for median
+  95: '#00cc33'   // darker green for high scenario
 };
 
 export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizationProps) {
@@ -154,7 +154,23 @@ export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizatio
               dataKey="year" 
               stroke="rgba(255,255,255,0.6)"
               fontSize={12}
-              tickFormatter={(value) => `${value}`}
+              tickFormatter={(value) => value === 2050 ? `${value}` : `${value}`}
+              tick={(props) => {
+                const { x, y, payload } = props;
+                const is2050 = payload.value === 2050;
+                return (
+                  <text 
+                    x={x} 
+                    y={y} 
+                    textAnchor="middle" 
+                    fill={is2050 ? "#00ff41" : "rgba(255,255,255,0.6)"} 
+                    fontSize={is2050 ? 16 : 12}
+                    fontWeight={is2050 ? "bold" : "normal"}
+                  >
+                    {payload.value}
+                  </text>
+                );
+              }}
             />
             <YAxis 
               stroke="rgba(255,255,255,0.6)"
@@ -175,6 +191,7 @@ export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizatio
               labelFormatter={(year) => `Year: ${year}`}
             />
             <Legend 
+              wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }}
               formatter={(value) => quantileLabels[parseInt(value.slice(1)) as keyof typeof quantileLabels]}
             />
             
