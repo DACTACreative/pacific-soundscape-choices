@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SeaLevelVisualization from '../components/SeaLevelVisualization';
+import FloodingDaysVisualization from '../components/FloodingDaysVisualization';
 
 export default function Scenario2() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
@@ -168,11 +169,15 @@ export default function Scenario2() {
                           <div>CSV: {metric.csvFile}</div>
                           <div>Analysis: {metric.rScript}</div>
                         </div>
-                        <div className="h-32 bg-coral-warm/10 border border-coral-warm/20 flex items-center justify-center">
-                          <span className="text-coral-warm/60 text-sm font-extralight">
-                            {metric.title} visualization will render here
-                          </span>
-                        </div>
+                        {metric.id === 'flooding' ? (
+                          <FloodingDaysVisualization />
+                        ) : (
+                          <div className="h-32 bg-coral-warm/10 border border-coral-warm/20 flex items-center justify-center">
+                            <span className="text-coral-warm/60 text-sm font-extralight">
+                              {metric.title} visualization will render here
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
