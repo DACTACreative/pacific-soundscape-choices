@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SeaLevelVisualization from '../components/SeaLevelVisualization';
-import FloodingDaysVisualization from '../components/FloodingDaysVisualization';
+import AnnualFloodDaysVisualization from '../components/AnnualFloodDaysVisualization';
 
 export default function Scenario2() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
@@ -141,7 +141,7 @@ export default function Scenario2() {
               Annual flooding events increase with rising seas
             </p>
             <div className="w-full">
-              <FloodingDaysVisualization />
+              <AnnualFloodDaysVisualization currentScenario="3.0 °C warming" />
             </div>
           </div>
         </div>
