@@ -70,10 +70,15 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({
 
   // 2) Play or switch scenarios
   const playScenario = (scenario: Scenario) => {
+    // Guard: don't play if still loading or howls not ready
+    if (loading || !howls[scenario]) {
+      return;
+    }
+
     if (current && howls[current]) {
       howls[current].fade(howls[current].volume(), 0, 1000);
     }
-    const sound = howls[scenario]!;
+    const sound = howls[scenario];
     sound.volume(0);
     sound.play();
     sound.fade(0, 0.3, 1000);
@@ -82,8 +87,8 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({
 
   // 3) Fade out & stop
   const stop = () => {
-    if (!current) return;
-    const sound = howls[current]!;
+    if (!current || !howls[current]) return;
+    const sound = howls[current];
     sound.fade(sound.volume(), 0, 800);
     setTimeout(() => {
       sound.stop();

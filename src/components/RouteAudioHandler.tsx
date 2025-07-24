@@ -3,10 +3,13 @@ import { useLocation } from "react-router-dom";
 import { useAudio, Scenario } from "../context/AudioContext";
 
 export default function RouteAudioHandler() {
-  const { playScenario, stop } = useAudio();
+  const { playScenario, stop, loading } = useAudio();
   const { pathname } = useLocation();
 
   useEffect(() => {
+    // Don't play audio if still loading
+    if (loading) return;
+
     if (pathname.startsWith("/scenario-1")) {
       playScenario(Scenario.Scenario1);
     } else if (pathname.startsWith("/scenario-2")) {
@@ -20,7 +23,7 @@ export default function RouteAudioHandler() {
       // on any other route (e.g. results, home) fade out
       stop();
     }
-  }, [pathname, playScenario, stop]);
+  }, [pathname, playScenario, stop, loading]);
 
   return null;
 }
