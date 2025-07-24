@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Scenario1 from "./pages/Scenario1";
 import Scenario2 from "./pages/Scenario2";
 import Scenario3 from "./pages/Scenario3";
+import RouteAudioHandler from "./components/RouteAudioHandler";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <RouteAudioHandler />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

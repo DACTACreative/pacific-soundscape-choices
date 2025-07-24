@@ -1,4 +1,5 @@
 import heroImage from '@/assets/hero-pacific-future.jpg';
+import { useAudio, Scenario } from '@/context/AudioContext';
 
 interface IntroScreenProps {
   onStart: () => void;
@@ -33,6 +34,12 @@ const dataStats = [
 ];
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
+  const { loading, playScenario } = useAudio();
+
+  const handleStart = () => {
+    playScenario(Scenario.Scenario0);
+    onStart();
+  };
   return (
     <div className="min-h-screen bg-gradient-ocean relative overflow-hidden">
       {/* Background */}
@@ -159,16 +166,20 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
         {/* Call to action */}
         <div className="text-center animate-fade-in" style={{ animationDelay: '1.2s' }}>
           <button 
-            onClick={onStart}
+            onClick={handleStart}
+            disabled={loading}
             className="group relative px-16 py-5 text-lg font-extralight tracking-[0.3em] text-wave-foam/70 
                        border border-ocean-light/30 bg-transparent backdrop-blur-sm
                        hover:text-wave-foam hover:border-coral-warm/50 
                        transition-all duration-1000 ease-out uppercase
                        before:absolute before:inset-0 before:border before:border-coral-warm/20 
                        before:scale-95 before:opacity-0 before:transition-all before:duration-700
-                       hover:before:scale-100 hover:before:opacity-100"
+                       hover:before:scale-100 hover:before:opacity-100
+                       disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="relative z-10">start the journey</span>
+            <span className="relative z-10">
+              {loading ? 'loading audio...' : 'start the journey'}
+            </span>
           </button>
           
           <div className="mt-8 text-xs text-wave-foam/30 font-extralight tracking-widest">
