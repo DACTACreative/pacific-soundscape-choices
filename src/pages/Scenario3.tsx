@@ -3,6 +3,7 @@ import { useState } from 'react';
 import SeaLevelVisualization from '../components/SeaLevelVisualization';
 import AnnualFloodDaysVisualization from '../components/AnnualFloodDaysVisualization';
 import { InteractiveFloodSentence } from '../components/InteractiveFloodSentence';
+import CoastalFisheriesVisualization from '../components/CoastalFisheriesVisualization';
 
 export default function Scenario3() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
@@ -140,6 +141,11 @@ export default function Scenario3() {
             </h2>
             <InteractiveFloodSentence scenario="5.0 °C warming" />
           </div>
+        </div>
+
+        {/* Coastal Fisheries Visualization */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.75s' }}>
+          <CoastalFisheriesVisualization scenario="high" />
         </div>
 
         {/* Other Metrics Grid */}
