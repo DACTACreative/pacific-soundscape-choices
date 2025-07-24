@@ -2,41 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Pacific Ocean Climate Game Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Ocean depth gradient colors */
+    --background: 200 100% 4%;
+    --foreground: 200 20% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Deep ocean card styling */
+    --card: 200 50% 8%;
+    --card-foreground: 200 15% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 200 50% 8%;
+    --popover-foreground: 200 15% 92%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary ocean blue */
+    --primary: 200 100% 20%;
+    --primary-foreground: 200 15% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Coral accent for choices */
+    --secondary: 15 80% 60%;
+    --secondary-foreground: 200 15% 95%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted ocean tones */
+    --muted: 200 30% 15%;
+    --muted-foreground: 200 10% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Turquoise accent */
+    --accent: 180 60% 40%;
+    --accent-foreground: 200 15% 95%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Warning coral for high emissions */
+    --destructive: 15 90% 55%;
+    --destructive-foreground: 200 15% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 200 30% 20%;
+    --input: 200 30% 15%;
+    --ring: 180 60% 40%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Custom ocean theme variables */
+    --ocean-deep: 200 100% 4%;
+    --ocean-mid: 200 80% 12%;
+    --ocean-light: 180 60% 25%;
+    --coral-warm: 15 80% 60%;
+    --coral-urgent: 15 90% 55%;
+    --wave-foam: 200 20% 85%;
+    
+    /* Gradients */
+    --gradient-ocean: linear-gradient(180deg, hsl(var(--ocean-deep)), hsl(var(--ocean-mid)), hsl(var(--ocean-light)));
+    --gradient-coral: linear-gradient(135deg, hsl(var(--coral-warm)), hsl(var(--coral-urgent)));
+    --gradient-wave: linear-gradient(90deg, transparent, hsl(var(--wave-foam) / 0.1), transparent);
+    
+    /* Shadows with ocean theme */
+    --shadow-ocean: 0 4px 20px hsl(var(--ocean-deep) / 0.6);
+    --shadow-coral: 0 4px 15px hsl(var(--coral-warm) / 0.3);
+    --shadow-deep: 0 8px 30px hsl(var(--ocean-deep) / 0.8);
+    
+    /* Animations */
+    --transition-wave: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-gentle: all 0.3s ease-out;
 
     --sidebar-background: 0 0% 98%;
 

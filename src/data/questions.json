@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "title": "Energy Future",
+    "question": "How should Fiji meet its growing energy demands by 2030?",
+    "options": [
+      {
+        "text": "Invest heavily in solar and wind power infrastructure across all islands",
+        "effects": { "mitigation": 2, "resilience": 1 }
+      },
+      {
+        "text": "Expand existing fossil fuel power plants for immediate energy security",
+        "effects": { "mitigation": -2, "resilience": -1 }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Coastal Development",
+    "question": "A developer wants to build a large resort on pristine coastline. What's your decision?",
+    "options": [
+      {
+        "text": "Approve with strict environmental conditions and community benefit-sharing",
+        "effects": { "mitigation": -1, "resilience": 1 }
+      },
+      {
+        "text": "Designate the area as a protected marine reserve instead",
+        "effects": { "mitigation": 1, "resilience": 2 }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Agriculture Adaptation",
+    "question": "Rising seas threaten traditional farming areas. How do you support farmers?",
+    "options": [
+      {
+        "text": "Introduce salt-resistant crops and sustainable farming techniques",
+        "effects": { "mitigation": 1, "resilience": 2 }
+      },
+      {
+        "text": "Provide financial aid to continue current farming practices",
+        "effects": { "mitigation": -1, "resilience": 0 }
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Transportation",
+    "question": "How should Fiji modernize inter-island transportation?",
+    "options": [
+      {
+        "text": "Invest in electric ferries and improve public transportation",
+        "effects": { "mitigation": 2, "resilience": 1 }
+      },
+      {
+        "text": "Expand air travel routes with conventional aircraft",
+        "effects": { "mitigation": -2, "resilience": 0 }
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Coral Conservation",
+    "question": "Coral reefs are bleaching due to warming waters. What's your priority action?",
+    "options": [
+      {
+        "text": "Launch a major coral restoration and protection program",
+        "effects": { "mitigation": 1, "resilience": 2 }
+      },
+      {
+        "text": "Focus on economic diversification away from reef-dependent industries",
+        "effects": { "mitigation": 0, "resilience": -1 }
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Climate Finance",
+    "question": "How should Fiji use international climate funding?",
+    "options": [
+      {
+        "text": "Build resilient infrastructure and early warning systems",
+        "effects": { "mitigation": 0, "resilience": 2 }
+      },
+      {
+        "text": "Focus on renewable energy projects for emission reductions",
+        "effects": { "mitigation": 2, "resilience": 0 }
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Waste Management",
+    "question": "Plastic pollution threatens marine ecosystems. What's your approach?",
+    "options": [
+      {
+        "text": "Ban single-use plastics and invest in recycling infrastructure",
+        "effects": { "mitigation": 1, "resilience": 1 }
+      },
+      {
+        "text": "Improve waste collection but maintain current consumption patterns",
+        "effects": { "mitigation": 0, "resilience": 0 }
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Urban Planning",
+    "question": "Cities are growing rapidly. How do you plan for climate risks?",
+    "options": [
+      {
+        "text": "Design green, flood-resistant neighborhoods with nature-based solutions",
+        "effects": { "mitigation": 1, "resilience": 2 }
+      },
+      {
+        "text": "Build sea walls and concrete infrastructure for protection",
+        "effects": { "mitigation": 0, "resilience": 1 }
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Forest Protection",
+    "question": "Logging companies want access to native forests. Your decision?",
+    "options": [
+      {
+        "text": "Protect forests and invest in sustainable forestry alternatives",
+        "effects": { "mitigation": 2, "resilience": 1 }
+      },
+      {
+        "text": "Allow controlled logging with reforestation requirements",
+        "effects": { "mitigation": -1, "resilience": 0 }
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Regional Leadership",
+    "question": "How should Fiji lead on climate action in the Pacific region?",
+    "options": [
+      {
+        "text": "Champion ambitious emission targets and support other island nations",
+        "effects": { "mitigation": 2, "resilience": 1 }
+      },
+      {
+        "text": "Focus on national adaptation while maintaining current climate commitments",
+        "effects": { "mitigation": 0, "resilience": 1 }
+      }
+    ]
+  }
+]
