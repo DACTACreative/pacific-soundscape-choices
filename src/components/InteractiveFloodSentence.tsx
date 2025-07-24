@@ -41,7 +41,7 @@ export const InteractiveFloodSentence: React.FC<InteractiveFloodSentenceProps> =
   const thresholdLabel = "0.5 m above the high-tide line";
 
   return (
-    <div className="bg-card/50 backdrop-blur-sm rounded-xl border border-border/50 p-6 space-y-4">
+    <div className="space-y-6">
       <div className="flex flex-wrap gap-2 justify-center">
         {years.map((year) => (
           <button
@@ -49,7 +49,7 @@ export const InteractiveFloodSentence: React.FC<InteractiveFloodSentenceProps> =
             onClick={() => setSelectedYear(year)}
             className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
               selectedYear === year
-                ? 'bg-primary text-primary-foreground shadow-md'
+                ? 'bg-accent text-accent-foreground shadow-md'
                 : 'bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground'
             }`}
           >
@@ -61,13 +61,13 @@ export const InteractiveFloodSentence: React.FC<InteractiveFloodSentenceProps> =
       <p className="text-center text-xl md:text-2xl leading-relaxed font-light text-card-foreground/90">
         By{" "}
         <span className="text-2xl md:text-3xl font-bold text-accent">{selectedYear}</span>, under the{" "}
-        <span className="text-2xl md:text-3xl font-bold text-accent">{scenario}</span> pathway, sea levels
+        <span className="text-lg font-bold text-accent">{scenario}</span> pathway, sea levels
         around Suva will have climbed about{" "}
         <span className="text-2xl md:text-3xl font-bold text-accent">{currentData.seaRise} m</span>,
         pushing water half a metre above today's shoreline—and the city will find
         itself underwater between{" "}
-        <span className="text-2xl md:text-3xl font-bold text-accent">{currentData.low}</span> and{" "}
-        <span className="text-2xl md:text-3xl font-bold text-accent">{currentData.high}</span> days each year.
+        <span className="font-bold text-accent">{currentData.low}</span> and{" "}
+        <span className="font-bold text-accent">{currentData.high}</span> days each year.
         Flooding here is no longer a question of if, but exactly when.
       </p>
     </div>
