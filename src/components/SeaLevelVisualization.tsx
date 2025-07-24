@@ -146,9 +146,12 @@ export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizatio
       </div>
 
       {/* Chart */}
-      <div className="w-full h-80 bg-ocean-deep/5 border border-ocean-light/20 p-4">
+      <div className="w-full h-96 bg-ocean-deep/5 border border-ocean-light/20 p-4">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData()}>
+          <LineChart 
+            data={chartData()} 
+            margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
             <XAxis 
               dataKey="year" 
@@ -191,7 +194,11 @@ export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizatio
               labelFormatter={(year) => `Year: ${year}`}
             />
             <Legend 
-              wrapperStyle={{ fontSize: '16px', fontWeight: 'bold' }}
+              wrapperStyle={{ 
+                fontSize: '16px', 
+                fontWeight: 'bold',
+                paddingTop: '20px'
+              }}
               formatter={(value) => quantileLabels[parseInt(value.slice(1)) as keyof typeof quantileLabels]}
             />
             
