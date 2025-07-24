@@ -58,16 +58,16 @@ export const InteractiveFloodSentence: React.FC<InteractiveFloodSentenceProps> =
         ))}
       </div>
       
-      <p className="text-center text-lg leading-relaxed">
+      <p className="text-center text-xl md:text-2xl leading-relaxed font-light text-card-foreground/90">
         By{" "}
-        <span className="text-primary font-bold">{selectedYear}</span>, under the{" "}
-        <span className="text-primary font-bold">{scenario}</span> pathway, sea levels
+        <span className="text-2xl md:text-3xl font-bold text-accent">{selectedYear}</span>, under the{" "}
+        <span className="text-2xl md:text-3xl font-bold text-accent">{scenario}</span> pathway, sea levels
         around Suva will have climbed about{" "}
-        <span className="text-primary font-bold">{currentData.seaRise} m</span>,
+        <span className="text-2xl md:text-3xl font-bold text-accent">{currentData.seaRise} m</span>,
         pushing water half a metre above today's shoreline—and the city will find
         itself underwater between{" "}
-        <span className="text-primary font-bold">{currentData.low}</span> and{" "}
-        <span className="text-primary font-bold">{currentData.high}</span> days each year.
+        <span className="text-2xl md:text-3xl font-bold text-accent">{currentData.low}</span> and{" "}
+        <span className="text-2xl md:text-3xl font-bold text-accent">{currentData.high}</span> days each year.
         Flooding here is no longer a question of if, but exactly when.
       </p>
     </div>

@@ -132,24 +132,12 @@ export default function Scenario2() {
           </div>
         </div>
 
-        {/* Flooding Days Visualization */}
-        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.7s' }}>
-          <div className="max-w-full mx-auto">
-            <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-4 text-center tracking-wide">
-              Coastal Flooding Projections · 2050
-            </h2>
-            <p className="text-center text-card-foreground/60 mb-8 font-light">
-              Annual flooding events increase with rising seas
-            </p>
-            <div className="w-full">
-              <AnnualFloodDaysVisualization currentScenario="3.0 °C warming" />
-            </div>
-          </div>
-        </div>
-
         {/* Interactive Flood Sentence */}
-        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.75s' }}>
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.7s' }}>
           <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-8 text-center tracking-wide">
+              Annual Flooding Impact · 2050
+            </h2>
             <InteractiveFloodSentence scenario="3.0 °C warming" />
           </div>
         </div>
