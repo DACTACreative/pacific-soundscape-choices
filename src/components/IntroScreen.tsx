@@ -46,20 +46,27 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
           </div>
           
           {/* Call to action */}
-          <div className="pt-6">
-            <Button 
-              variant="coral" 
-              size="hero" 
+          <div className="pt-8">
+            <button 
               onClick={onStart}
-              className="animate-bounce hover:animate-none"
+              className="group relative px-12 py-4 text-lg font-light tracking-wider text-wave-foam/80 
+                         border border-ocean-light/20 bg-transparent backdrop-blur-sm
+                         hover:text-wave-foam hover:border-ocean-light/40 hover:bg-ocean-light/5
+                         transition-all duration-700 ease-out
+                         before:absolute before:inset-0 before:border before:border-wave-foam/10 
+                         before:scale-0 before:opacity-0 before:transition-all before:duration-500
+                         hover:before:scale-100 hover:before:opacity-100
+                         after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent 
+                         after:via-wave-foam/5 after:to-transparent after:translate-x-[-100%] 
+                         hover:after:translate-x-[100%] after:transition-transform after:duration-1000"
             >
-              Begin Your Journey
-            </Button>
+              <span className="relative z-10">enter the future</span>
+            </button>
           </div>
           
-          {/* Decorative element */}
-          <div className="pt-4 text-sm text-wave-foam/60">
-            <p>🌊 Put on headphones for the best experience 🌊</p>
+          {/* Subtle hint */}
+          <div className="pt-6 text-xs text-wave-foam/40 font-light tracking-wide">
+            <p>audio recommended</p>
           </div>
         </div>
         
