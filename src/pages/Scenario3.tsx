@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import SeaLevelVisualization from '../components/SeaLevelVisualization';
 
 export default function Scenario3() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
@@ -141,21 +142,27 @@ export default function Scenario3() {
                     {metric.description}
                   </p>
                   
-                  {/* R Visualization Placeholder */}
+                  {/* Interactive Visualization */}
                   {selectedMetric === metric.id && (
-                    <div className="mt-6 p-4 border border-coral-urgent/20 bg-coral-urgent/5">
-                      <p className="text-xs text-coral-urgent/80 font-extralight mb-2 uppercase tracking-wider">
-                        Data Visualization
-                      </p>
-                      <div className="text-xs text-card-foreground/60 space-y-1">
-                        <div>CSV: {metric.csvFile}</div>
-                        <div>R Script: {metric.rScript}</div>
-                      </div>
-                      <div className="mt-4 h-32 bg-coral-urgent/10 border border-coral-urgent/20 flex items-center justify-center">
-                        <span className="text-coral-urgent/60 text-sm font-extralight">
-                          R visualization will render here
-                        </span>
-                      </div>
+                    <div className="mt-6 p-6 border border-coral-urgent/20 bg-coral-urgent/5">
+                      {metric.id === 'sea_level' ? (
+                        <SeaLevelVisualization scenario="tlim5.0win0.25" />
+                      ) : (
+                        <div>
+                          <p className="text-xs text-coral-urgent/80 font-extralight mb-2 uppercase tracking-wider">
+                            Data Visualization
+                          </p>
+                          <div className="text-xs text-card-foreground/60 space-y-1 mb-4">
+                            <div>CSV: {metric.csvFile}</div>
+                            <div>Analysis: {metric.rScript}</div>
+                          </div>
+                          <div className="h-32 bg-coral-urgent/10 border border-coral-urgent/20 flex items-center justify-center">
+                            <span className="text-coral-urgent/60 text-sm font-extralight">
+                              {metric.title} visualization will render here
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
