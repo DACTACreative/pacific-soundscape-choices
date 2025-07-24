@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SeaLevelVisualization from '../components/SeaLevelVisualization';
+import AnnualFloodDaysVisualization from '../components/AnnualFloodDaysVisualization';
 
 export default function Scenario3() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
@@ -130,6 +131,13 @@ export default function Scenario3() {
           </div>
         </div>
 
+        {/* Flooding Days Visualization */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div className="max-w-full mx-auto">
+            <AnnualFloodDaysVisualization currentScenario="5.0 °C warming" />
+          </div>
+        </div>
+
         {/* Other Metrics Grid */}
         <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-12 text-center tracking-wide">
@@ -137,7 +145,7 @@ export default function Scenario3() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {metrics.filter(m => m.id !== 'sea_level').map((metric, index) => (
+            {metrics.filter(m => m.id !== 'sea_level' && m.id !== 'flooding').map((metric, index) => (
               <div 
                 key={metric.id}
                 className={`p-8 border border-ocean-light/20 bg-transparent backdrop-blur-sm
