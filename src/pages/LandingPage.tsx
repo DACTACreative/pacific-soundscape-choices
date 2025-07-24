@@ -8,15 +8,48 @@ export default function LandingPage() {
   const vantaEffect = useRef<any>(null);
 
   useEffect(() => {
-    // Dynamically import Vanta.js to avoid SSR issues
-    const loadVanta = async () => {
-      const VANTA = await import('vanta/dist/vanta.trunk.min.js');
-      const THREE = await import('three');
-      
+    let p5Script: HTMLScriptElement;
+    let vantaScript: HTMLScriptElement;
+    
+    const loadVanta = () => {
+      // Load p5.js first
+      p5Script = document.createElement('script');
+      p5Script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js';
+      p5Script.onload = () => {
+        // Then load vanta.trunk.min.js
+        vantaScript = document.createElement('script');
+        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js';
+        vantaScript.onload = () => {
+          // Initialize Vanta effect after both scripts are loaded
+          if (vantaRef.current && (window as any).VANTA && !vantaEffect.current) {
+            vantaEffect.current = (window as any).VANTA.TRUNK({
+              el: vantaRef.current,
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.00,
+              minWidth: 200.00,
+              scale: 1.00,
+              scaleMobile: 1.00,
+              color: 0x6f86d4,
+              chaos: 8.00,
+              backgroundColor: 0x1a365d
+            });
+          }
+        };
+        document.head.appendChild(vantaScript);
+      };
+      document.head.appendChild(p5Script);
+    };
+
+    // Check if scripts are already loaded
+    if (!(window as any).VANTA) {
+      loadVanta();
+    } else {
+      // Scripts already loaded, just initialize
       if (vantaRef.current && !vantaEffect.current) {
-        vantaEffect.current = (VANTA as any).default({
+        vantaEffect.current = (window as any).VANTA.TRUNK({
           el: vantaRef.current,
-          THREE: THREE,
           mouseControls: true,
           touchControls: true,
           gyroControls: false,
@@ -24,18 +57,24 @@ export default function LandingPage() {
           minWidth: 200.00,
           scale: 1.00,
           scaleMobile: 1.00,
-          backgroundColor: 0x1a365d, // Dark blue background
-          color: 0x2b6cb0,          // Blue color for structures
+          color: 0x6f86d4,
+          chaos: 8.00,
+          backgroundColor: 0x1a365d
         });
       }
-    };
-
-    loadVanta();
+    }
 
     return () => {
+      // Cleanup
       if (vantaEffect.current) {
         vantaEffect.current.destroy();
         vantaEffect.current = null;
+      }
+      if (p5Script && p5Script.parentNode) {
+        p5Script.parentNode.removeChild(p5Script);
+      }
+      if (vantaScript && vantaScript.parentNode) {
+        vantaScript.parentNode.removeChild(vantaScript);
       }
     };
   }, []);
