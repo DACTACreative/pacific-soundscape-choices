@@ -27,9 +27,9 @@ export default function LandingPage() {
             minWidth: 200.00,
             scale: 1.00,
             scaleMobile: 1.00,
-            color: 0x6f86d4,
+            color: 0x4A90E2,      // Beautiful blue for the trunk structures
             chaos: 8.00,
-            backgroundColor: 0x1a365d
+            backgroundColor: 0x000000  // Pure black background
           });
           console.log('Vanta TRUNK effect initialized successfully');
         } catch (error) {
