@@ -38,7 +38,7 @@ export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizatio
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch('/src/data/Choose Your Pacific Future - SEA RISE - SCENARIO - DATA.csv');
+        const response = await fetch('/data/sea-level-data.csv');
         const csvText = await response.text();
         
         const lines = csvText.trim().split('\n');
