@@ -8,73 +8,93 @@ export default function LandingPage() {
   const vantaEffect = useRef<any>(null);
 
   useEffect(() => {
-    let p5Script: HTMLScriptElement;
-    let vantaScript: HTMLScriptElement;
+    let mounted = true;
     
-    const loadVanta = () => {
-      // Load p5.js first
-      p5Script = document.createElement('script');
-      p5Script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js';
-      p5Script.onload = () => {
-        // Then load vanta.trunk.min.js
-        vantaScript = document.createElement('script');
-        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js';
-        vantaScript.onload = () => {
-          // Initialize Vanta effect after both scripts are loaded
-          if (vantaRef.current && (window as any).VANTA && !vantaEffect.current) {
-            vantaEffect.current = (window as any).VANTA.TRUNK({
-              el: vantaRef.current,
-              mouseControls: true,
-              touchControls: true,
-              gyroControls: false,
-              minHeight: 200.00,
-              minWidth: 200.00,
-              scale: 1.00,
-              scaleMobile: 1.00,
-              color: 0x6f86d4,
-              chaos: 8.00,
-              backgroundColor: 0x1a365d
-            });
-          }
-        };
-        document.head.appendChild(vantaScript);
-      };
-      document.head.appendChild(p5Script);
+    const initVanta = () => {
+      // Check if element still exists and component is mounted
+      if (!mounted || !vantaRef.current) return;
+      
+      // Check if VANTA is available
+      if ((window as any).VANTA && (window as any).VANTA.TRUNK) {
+        console.log('Initializing Vanta TRUNK effect');
+        try {
+          vantaEffect.current = (window as any).VANTA.TRUNK({
+            el: vantaRef.current,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x6f86d4,
+            chaos: 8.00,
+            backgroundColor: 0x1a365d
+          });
+          console.log('Vanta TRUNK effect initialized successfully');
+        } catch (error) {
+          console.error('Error initializing Vanta:', error);
+        }
+      } else {
+        console.log('VANTA not available, loading scripts...');
+        loadScripts();
+      }
     };
 
-    // Check if scripts are already loaded
-    if (!(window as any).VANTA) {
-      loadVanta();
-    } else {
-      // Scripts already loaded, just initialize
-      if (vantaRef.current && !vantaEffect.current) {
-        vantaEffect.current = (window as any).VANTA.TRUNK({
-          el: vantaRef.current,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 1.00,
-          color: 0x6f86d4,
-          chaos: 8.00,
-          backgroundColor: 0x1a365d
-        });
+    const loadScripts = () => {
+      // Check if p5 is already loaded
+      if (!(window as any).p5) {
+        const p5Script = document.createElement('script');
+        p5Script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js';
+        p5Script.onload = () => {
+          console.log('p5.js loaded');
+          loadVantaScript();
+        };
+        p5Script.onerror = () => {
+          console.error('Failed to load p5.js');
+        };
+        document.head.appendChild(p5Script);
+      } else {
+        loadVantaScript();
       }
-    }
+    };
+
+    const loadVantaScript = () => {
+      if (!(window as any).VANTA) {
+        const vantaScript = document.createElement('script');
+        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js';
+        vantaScript.onload = () => {
+          console.log('Vanta.js loaded');
+          if (mounted) {
+            setTimeout(initVanta, 100); // Small delay to ensure everything is ready
+          }
+        };
+        vantaScript.onerror = () => {
+          console.error('Failed to load Vanta.js');
+        };
+        document.head.appendChild(vantaScript);
+      } else {
+        initVanta();
+      }
+    };
+
+    // Start the loading process
+    initVanta();
 
     return () => {
-      // Cleanup
+      mounted = false;
+      console.log('Cleaning up Vanta effect');
+      
+      // Safe cleanup with error handling
       if (vantaEffect.current) {
-        vantaEffect.current.destroy();
+        try {
+          if (typeof vantaEffect.current.destroy === 'function') {
+            vantaEffect.current.destroy();
+          }
+        } catch (error) {
+          console.warn('Error during Vanta cleanup (this is usually safe to ignore):', error);
+        }
         vantaEffect.current = null;
-      }
-      if (p5Script && p5Script.parentNode) {
-        p5Script.parentNode.removeChild(p5Script);
-      }
-      if (vantaScript && vantaScript.parentNode) {
-        vantaScript.parentNode.removeChild(vantaScript);
       }
     };
   }, []);
