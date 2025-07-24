@@ -131,6 +131,21 @@ export default function Scenario2() {
           </div>
         </div>
 
+        {/* Flooding Days Visualization */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div className="max-w-full mx-auto">
+            <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-4 text-center tracking-wide">
+              Coastal Flooding Projections · 2050
+            </h2>
+            <p className="text-center text-card-foreground/60 mb-8 font-light">
+              Annual flooding events increase with rising seas
+            </p>
+            <div className="w-full">
+              <FloodingDaysVisualization />
+            </div>
+          </div>
+        </div>
+
         {/* Other Metrics Grid */}
         <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-12 text-center tracking-wide">
@@ -138,7 +153,7 @@ export default function Scenario2() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {metrics.filter(m => m.id !== 'sea_level').map((metric, index) => (
+            {metrics.filter(m => m.id !== 'sea_level' && m.id !== 'flooding').map((metric, index) => (
               <div 
                 key={metric.id}
                 className={`p-8 border border-ocean-light/20 bg-transparent backdrop-blur-sm
@@ -169,15 +184,11 @@ export default function Scenario2() {
                           <div>CSV: {metric.csvFile}</div>
                           <div>Analysis: {metric.rScript}</div>
                         </div>
-                        {metric.id === 'flooding' ? (
-                          <FloodingDaysVisualization />
-                        ) : (
-                          <div className="h-32 bg-coral-warm/10 border border-coral-warm/20 flex items-center justify-center">
-                            <span className="text-coral-warm/60 text-sm font-extralight">
-                              {metric.title} visualization will render here
-                            </span>
-                          </div>
-                        )}
+                        <div className="h-32 bg-coral-warm/10 border border-coral-warm/20 flex items-center justify-center">
+                          <span className="text-coral-warm/60 text-sm font-extralight">
+                            {metric.title} visualization will render here
+                          </span>
+                        </div>
                       </div>
                     </div>
                   )}

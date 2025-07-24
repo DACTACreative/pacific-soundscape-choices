@@ -112,7 +112,7 @@ export default function FloodingDaysVisualization() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {scenarios.map(scenario => (
+                {scenarios.filter(scenario => scenario).map(scenario => (
                   <SelectItem key={scenario} value={scenario}>
                     {scenarioLabels[scenario as keyof typeof scenarioLabels]}
                   </SelectItem>
@@ -128,7 +128,7 @@ export default function FloodingDaysVisualization() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {thresholds.map(threshold => (
+                {thresholds.filter(threshold => threshold).map(threshold => (
                   <SelectItem key={threshold} value={threshold}>
                     {threshold}
                   </SelectItem>
