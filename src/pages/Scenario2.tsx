@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SeaLevelVisualization from '../components/SeaLevelVisualization';
 import AnnualFloodDaysVisualization from '../components/AnnualFloodDaysVisualization';
+import { InteractiveFloodSentence } from '../components/InteractiveFloodSentence';
 
 export default function Scenario2() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
@@ -143,6 +144,13 @@ export default function Scenario2() {
             <div className="w-full">
               <AnnualFloodDaysVisualization currentScenario="3.0 °C warming" />
             </div>
+          </div>
+        </div>
+
+        {/* Interactive Flood Sentence */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.75s' }}>
+          <div className="max-w-4xl mx-auto">
+            <InteractiveFloodSentence scenario="3.0 °C warming" />
           </div>
         </div>
 
