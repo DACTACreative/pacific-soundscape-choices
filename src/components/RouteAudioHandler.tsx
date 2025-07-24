@@ -10,17 +10,17 @@ export default function RouteAudioHandler() {
     // Don't play audio if still loading
     if (loading) return;
 
-    if (pathname.startsWith("/scenario-1")) {
+    if (pathname === "/game") {
+      // On the main game page, start with Scenario0 (baseline audio)
+      playScenario(Scenario.Scenario0);
+    } else if (pathname.startsWith("/scenario-1")) {
       playScenario(Scenario.Scenario1);
     } else if (pathname.startsWith("/scenario-2")) {
       playScenario(Scenario.Scenario2);
     } else if (pathname.startsWith("/scenario-3")) {
       playScenario(Scenario.Scenario3);
-    } else if (pathname === "/") {
-      // On the main game page, start with Scenario0 (baseline audio)
-      playScenario(Scenario.Scenario0);
     } else {
-      // on any other route (e.g. results, home) fade out
+      // on any other route (e.g. results, home, landing) fade out
       stop();
     }
   }, [pathname, playScenario, stop, loading]);
