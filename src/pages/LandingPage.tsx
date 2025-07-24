@@ -115,26 +115,31 @@ export default function LandingPage() {
       <div className="relative z-10 flex h-full flex-col items-center justify-between p-8">
         {/* Top Content */}
         <div className="flex flex-col items-center justify-center flex-1 text-center">
-          <h1 className="text-6xl font-bold text-white mb-6 drop-shadow-2xl">
-            Choose Your Pacific Future
+          <h1 className="text-7xl font-bold text-white mb-8 drop-shadow-2xl tracking-tight">
+            WELCOME TO PACIFIC FUTURE
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl drop-shadow-lg">
-            A sound-driven data journey exploring climate choices and their consequences by 2050
+          <p className="text-2xl text-white/90 max-w-3xl drop-shadow-lg mb-6 leading-relaxed">
+            AN IMMERSIVE VISUALISATION INTO OUR FUTURE
+          </p>
+          <p className="text-xl text-white/80 max-w-2xl drop-shadow-lg mb-4">
+            PARTICIPATE INTO DECISION MAKING<br />
+            AND MAKE AN IMPACT TO CHANGE THE COURSE<br />
+            OF OUR OCEAN
           </p>
         </div>
 
         {/* Bottom CTA */}
-        <div className="flex flex-col items-center space-y-4">
-          <p className="text-white/80 text-sm uppercase tracking-wide">
-            Scroll to continue or click to start
+        <div className="flex flex-col items-center space-y-6">
+          <p className="text-white/90 text-lg font-medium tracking-wide">
+            (PUT YOUR HEADPHONES OR SOUND UP)
           </p>
           <Button
             onClick={handleStart}
             size="hero"
             variant="ocean"
-            className="text-lg px-8 py-4 backdrop-blur-sm bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300"
+            className="text-xl px-12 py-6 backdrop-blur-sm bg-white/10 border border-white/20 hover:bg-white/20 transition-all duration-300 font-semibold tracking-wide"
           >
-            Start Your Journey
+            START YOUR JOURNEY TO 2050
           </Button>
         </div>
       </div>
