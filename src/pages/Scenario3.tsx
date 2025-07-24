@@ -115,20 +115,35 @@ export default function Scenario3() {
           </div>
         </div>
 
-        {/* Metrics Grid */}
+        {/* Sea Level Rise Visualization */}
         <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <div className="max-w-full mx-auto">
+            <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-4 text-center tracking-wide">
+              Sea Level Rise Projections · 2050
+            </h2>
+            <p className="text-center text-card-foreground/60 mb-8 font-light">
+              Critical coastal infrastructure permanently underwater
+            </p>
+            <div className="w-full">
+              <SeaLevelVisualization scenario="tlim5.0win0.25" />
+            </div>
+          </div>
+        </div>
+
+        {/* Other Metrics Grid */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.8s' }}>
           <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-12 text-center tracking-wide">
-            Key Indicators · 2050
+            Other Key Indicators · 2050
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {metrics.map((metric, index) => (
+            {metrics.filter(m => m.id !== 'sea_level').map((metric, index) => (
               <div 
                 key={metric.id}
                 className={`p-8 border border-ocean-light/20 bg-transparent backdrop-blur-sm
                           hover:border-coral-urgent/40 transition-all duration-700 ease-out cursor-pointer
                           animate-fade-in ${selectedMetric === metric.id ? 'border-coral-urgent/60 bg-coral-urgent/5' : ''}`}
-                style={{ animationDelay: `${0.8 + index * 0.1}s` }}
+                style={{ animationDelay: `${1.0 + index * 0.1}s` }}
                 onClick={() => setSelectedMetric(selectedMetric === metric.id ? null : metric.id)}
               >
                 <div className="text-center">
@@ -145,24 +160,20 @@ export default function Scenario3() {
                   {/* Interactive Visualization */}
                   {selectedMetric === metric.id && (
                     <div className="mt-6 p-6 border border-coral-urgent/20 bg-coral-urgent/5">
-                      {metric.id === 'sea_level' ? (
-                        <SeaLevelVisualization scenario="tlim5.0win0.25" />
-                      ) : (
-                        <div>
-                          <p className="text-xs text-coral-urgent/80 font-extralight mb-2 uppercase tracking-wider">
-                            Data Visualization
-                          </p>
-                          <div className="text-xs text-card-foreground/60 space-y-1 mb-4">
-                            <div>CSV: {metric.csvFile}</div>
-                            <div>Analysis: {metric.rScript}</div>
-                          </div>
-                          <div className="h-32 bg-coral-urgent/10 border border-coral-urgent/20 flex items-center justify-center">
-                            <span className="text-coral-urgent/60 text-sm font-extralight">
-                              {metric.title} visualization will render here
-                            </span>
-                          </div>
+                      <div>
+                        <p className="text-xs text-coral-urgent/80 font-extralight mb-2 uppercase tracking-wider">
+                          Data Visualization
+                        </p>
+                        <div className="text-xs text-card-foreground/60 space-y-1 mb-4">
+                          <div>CSV: {metric.csvFile}</div>
+                          <div>Analysis: {metric.rScript}</div>
                         </div>
-                      )}
+                        <div className="h-32 bg-coral-urgent/10 border border-coral-urgent/20 flex items-center justify-center">
+                          <span className="text-coral-urgent/60 text-sm font-extralight">
+                            {metric.title} visualization will render here
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
