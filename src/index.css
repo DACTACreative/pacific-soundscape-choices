@@ -29,8 +29,8 @@
     --muted: 200 30% 15%;
     --muted-foreground: 200 10% 70%;
 
-    /* Turquoise accent */
-    --accent: 180 60% 40%;
+    /* Orange accent for key metrics and interactive elements */
+    --accent: 25 95% 60%;
     --accent-foreground: 200 15% 95%;
 
     /* Warning coral for high emissions */
@@ -39,7 +39,7 @@
 
     --border: 200 30% 20%;
     --input: 200 30% 15%;
-    --ring: 180 60% 40%;
+    --ring: 25 95% 60%;
 
     --radius: 0.75rem;
 
@@ -47,18 +47,25 @@
     --ocean-deep: 200 100% 4%;
     --ocean-mid: 200 80% 12%;
     --ocean-light: 180 60% 25%;
-    --coral-warm: 15 80% 60%;
+    --coral-warm: 25 85% 65%;
     --coral-urgent: 15 90% 55%;
     --wave-foam: 200 20% 85%;
+    
+    /* Orange palette variations */
+    --orange-soft: 30 90% 70%;
+    --orange-bright: 25 95% 60%;
+    --orange-deep: 20 85% 50%;
     
     /* Gradients */
     --gradient-ocean: linear-gradient(180deg, hsl(var(--ocean-deep)), hsl(var(--ocean-mid)), hsl(var(--ocean-light)));
     --gradient-coral: linear-gradient(135deg, hsl(var(--coral-warm)), hsl(var(--coral-urgent)));
+    --gradient-orange: linear-gradient(135deg, hsl(var(--orange-soft)), hsl(var(--orange-bright)));
     --gradient-wave: linear-gradient(90deg, transparent, hsl(var(--wave-foam) / 0.1), transparent);
     
     /* Shadows with ocean theme */
     --shadow-ocean: 0 4px 20px hsl(var(--ocean-deep) / 0.6);
     --shadow-coral: 0 4px 15px hsl(var(--coral-warm) / 0.3);
+    --shadow-orange: 0 4px 15px hsl(var(--orange-bright) / 0.3);
     --shadow-deep: 0 8px 30px hsl(var(--ocean-deep) / 0.8);
     
     /* Animations */

@@ -65,6 +65,11 @@ export default {
 				wave: {
 					foam: 'hsl(var(--wave-foam))'
 				},
+				orange: {
+					soft: 'hsl(var(--orange-soft))',
+					bright: 'hsl(var(--orange-bright))',
+					deep: 'hsl(var(--orange-deep))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -139,11 +144,13 @@ export default {
 			backgroundImage: {
 				'gradient-ocean': 'var(--gradient-ocean)',
 				'gradient-coral': 'var(--gradient-coral)',
+				'gradient-orange': 'var(--gradient-orange)',
 				'gradient-wave': 'var(--gradient-wave)'
 			},
 			boxShadow: {
 				'ocean': 'var(--shadow-ocean)',
 				'coral': 'var(--shadow-coral)',
+				'orange': 'var(--shadow-orange)',
 				'deep': 'var(--shadow-deep)'
 			},
 			transitionTimingFunction: {
