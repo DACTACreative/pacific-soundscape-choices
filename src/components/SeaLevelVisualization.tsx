@@ -25,9 +25,9 @@ const quantileLabels = {
 };
 
 const quantileColors = {
-  5: '#00ff41',   // matrix green for low scenario
-  50: '#39ff14',  // neon green for median
-  95: '#00cc33'   // darker green for high scenario
+  5: 'hsl(180, 60%, 40%)',   // accent color for low scenario
+  50: 'hsl(15, 80%, 60%)',   // coral-warm for median
+  95: 'hsl(15, 90%, 55%)'    // coral-urgent for high scenario
 };
 
 export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizationProps) {
@@ -163,7 +163,7 @@ export default function SeaLevelVisualization({ scenario }: SeaLevelVisualizatio
                     x={x} 
                     y={y} 
                     textAnchor="middle" 
-                    fill={is2050 ? "#00ff41" : "rgba(255,255,255,0.6)"} 
+                    fill={is2050 ? "hsl(15, 80%, 60%)" : "rgba(255,255,255,0.6)"} 
                     fontSize={is2050 ? 16 : 12}
                     fontWeight={is2050 ? "bold" : "normal"}
                   >
