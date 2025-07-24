@@ -14,88 +14,117 @@ const waterVertexShader = `
 `;
 
 const waterFragmentShader = `
+  #define T iTime
   uniform vec3 iResolution;
   uniform float iTime;
   uniform vec4 iMouse;
   varying vec2 vUv;
 
-  // Hash function for noise
-  float hash(vec2 p) {
-    vec3 p3 = fract(vec3(p.xyx) * 0.1031);
-    p3 += dot(p3, p3.yzx + 33.33);
-    return fract((p3.x + p3.y) * p3.z);
+  // Rotation matrix
+  #define r(v,t) { float a = (t)*T; float c=cos(a); float s=sin(a); v*=mat2(c,s,-s,c); }
+
+  // Hash function  
+  float hash(float n) {
+    return fract(sin(n)*43758.5453);
   }
 
-  // Noise function
-  float noise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    
-    float a = hash(i);
-    float b = hash(i + vec2(1.0, 0.0));
-    float c = hash(i + vec2(0.0, 1.0));
-    float d = hash(i + vec2(1.0, 1.0));
-    
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    
-    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+  // 3D Noise
+  float noise(in vec3 x) {
+    vec3 p = floor(x);
+    vec3 f = fract(x);
+    f = f*f*(3.0-2.0*f);
+    float n = p.x + p.y*57.0 + 113.0*p.z;
+    float res = mix(mix(mix( hash(n+  0.0), hash(n+  1.0),f.x),
+                        mix( hash(n+ 57.0), hash(n+ 58.0),f.x),f.y),
+                    mix(mix( hash(n+113.0), hash(n+114.0),f.x),
+                        mix( hash(n+170.0), hash(n+171.0),f.x),f.y),f.z);
+    return res;
   }
+
+  // Transformation matrix
+  const mat3 m = mat3( 0.00,  0.80,  0.60,
+                      -0.80,  0.36, -0.48,
+                      -0.60, -0.48,  0.64 );
 
   // Fractional Brownian Motion
-  float fbm(vec2 p) {
-    float value = 0.0;
-    float amplitude = 0.5;
-    float frequency = 1.0;
+  float fbm(vec3 p) {
+    float f = 0.0;
+    f  = 0.5000*noise( p ); p = m*p*2.02;
+    f += 0.2500*noise( p ); p = m*p*2.03;
+    f += 0.1250*noise( p ); p = m*p*2.01;
+    f += 0.0625*noise( p );
+    return f;
+  }
+
+  // Signed FBM
+  float sfbm(vec3 p) {
+    return 2.0*fbm(p) - 1.0;
+  }
+
+  // Distance function for the protoplasm
+  float map(vec3 p) {
+    // Animate the blob
+    vec3 q = p;
+    r(q.xz, 0.3);
+    r(q.xy, 0.2);
     
-    for(int i = 0; i < 5; i++) {
-      value += amplitude * noise(frequency * p);
-      amplitude *= 0.5;
-      frequency *= 2.0;
+    // Create the main blob shape
+    float d = length(q) - 1.5;
+    
+    // Add organic distortion
+    d += 0.3 * sfbm(p * 2.0);
+    d += 0.15 * sfbm(p * 4.0);
+    d += 0.075 * sfbm(p * 8.0);
+    
+    return d;
+  }
+
+  // Raymarching
+  vec3 raymarch(vec3 ro, vec3 rd) {
+    vec3 col = vec3(0.0);
+    vec3 pos = ro;
+    
+    for(int i = 0; i < 64; i++) {
+      float d = map(pos);
+      
+      if(d < 0.01) {
+        // We're inside - create glow effect
+        float intensity = 1.0 - float(i) / 64.0;
+        col += vec3(0.1, 0.8, 0.6) * intensity * 0.1;
+      }
+      
+      if(d > 5.0) break;
+      
+      pos += rd * max(d * 0.5, 0.02);
     }
     
-    return value;
+    return col;
   }
 
   void main() {
-    vec2 uv = vUv;
-    vec2 p = uv * 6.0;
+    vec2 uv = (vUv - 0.5) * 2.0;
+    uv.x *= iResolution.x / iResolution.y;
     
-    // Animate the noise
-    float t = iTime * 0.3;
-    p.x += t;
+    // Camera setup
+    vec3 ro = vec3(0.0, 0.0, 3.0);
+    vec3 rd = normalize(vec3(uv, -1.0));
     
-    // Create flowing water effect
-    float wave1 = fbm(p + vec2(t, 0.0));
-    float wave2 = fbm(p * 2.0 + vec2(-t * 0.5, t * 0.3));
-    float wave3 = fbm(p * 4.0 + vec2(t * 0.8, -t * 0.6));
+    // Animate camera
+    r(ro.xz, 0.1);
+    r(rd.xz, 0.1);
     
-    float waves = wave1 * 0.5 + wave2 * 0.3 + wave3 * 0.2;
+    // Raymarch the scene
+    vec3 col = raymarch(ro, rd);
     
-    // Create depth and flow
-    float depth = smoothstep(0.0, 1.0, waves);
+    // Add background gradient
+    vec3 bg = mix(vec3(0.05, 0.1, 0.2), vec3(0.0, 0.0, 0.1), length(uv));
+    col += bg;
     
-    // Pacific blue color palette
-    vec3 shallowColor = vec3(0.4, 0.8, 1.0);  // Light blue
-    vec3 deepColor = vec3(0.1, 0.3, 0.8);     // Deep blue
-    vec3 foamColor = vec3(0.9, 0.95, 1.0);    // White foam
+    // Add some glow around the center
+    float glow = 1.0 / (1.0 + length(uv) * 2.0);
+    col += vec3(0.05, 0.3, 0.2) * glow * 0.3;
     
-    // Mix colors based on depth
-    vec3 waterColor = mix(shallowColor, deepColor, depth);
-    
-    // Add foam on wave peaks
-    float foam = smoothstep(0.7, 1.0, waves);
-    waterColor = mix(waterColor, foamColor, foam * 0.6);
-    
-    // Add subtle gradient from top to bottom
-    float gradient = 1.0 - uv.y * 0.3;
-    waterColor *= gradient;
-    
-    // Add some shimmer
-    float shimmer = sin(p.x * 10.0 + t * 5.0) * sin(p.y * 8.0 - t * 3.0);
-    shimmer = smoothstep(-0.5, 0.5, shimmer) * 0.1;
-    waterColor += shimmer;
-    
-    gl_FragColor = vec4(waterColor, 1.0);
+    gl_FragColor = vec4(col, 1.0);
   }
 `;
 
