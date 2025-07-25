@@ -128,10 +128,11 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         },
         pointLabels: {
           font: {
-            size: 16,
+            size: 18,
             family: 'inherit'
           },
-          color: '#ffffff'
+          color: '#ffffff',
+          padding: 20
         },
         ticks: {
           stepSize: 1,
@@ -147,7 +148,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
           color: '#eeeeee',
           backdropColor: 'transparent',
           font: {
-            size: 10
+            size: 16
           }
         },
         suggestedMin: 0,
@@ -175,7 +176,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         </p>
       </div>
       
-      <div className="w-[90vw] h-[80vh] mx-auto">
+      <div className="w-full max-w-4xl h-[70vh] mx-auto px-4">
         <Radar data={data} options={options} />
       </div>
       
@@ -215,34 +216,34 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
             {gameData.userJourney.map((choice: any, index: number) => (
               <div 
                 key={`${choice.question_code}-${choice.answer_code}`}
-                className="min-h-screen flex flex-col justify-center items-center px-8 py-16 animate-fade-in"
+                className="h-screen flex flex-col justify-center items-center px-8 py-16 animate-fade-in"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
-                <div className="max-w-4xl text-center space-y-8">
+                  <div className="max-w-4xl text-center space-y-12">
                   {/* User's Choice */}
                   <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2}s` }}>
-                    <h4 className="text-2xl md:text-3xl font-light text-white mb-4 leading-relaxed">
+                    <h4 className="text-2xl md:text-3xl lg:text-4xl font-light text-white mb-6 leading-relaxed">
                       You chose to {choice.answer}
                     </h4>
                   </div>
 
                   {/* Narrative */}
                   <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.3}s` }}>
-                    <div className="text-lg md:text-xl text-card-foreground/80 leading-relaxed mb-6">
+                    <div className="text-lg md:text-xl lg:text-2xl text-card-foreground/90 leading-relaxed mb-8 font-light">
                       → {choice.narrative}
                     </div>
                   </div>
 
                   {/* Impact */}
                   <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.6}s` }}>
-                    <div className="text-xl md:text-2xl font-medium text-accent mb-4">
+                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-accent mb-6">
                       → {choice.impact}
                     </div>
                   </div>
 
                   {/* Outcome */}
                   <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.9}s` }}>
-                    <div className="text-base md:text-lg italic text-card-foreground/70">
+                    <div className="text-lg md:text-xl italic text-card-foreground/80 font-light">
                       Outcome: {choice.outcome}
                     </div>
                   </div>
