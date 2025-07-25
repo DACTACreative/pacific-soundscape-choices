@@ -27,6 +27,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   const [gameData, setGameData] = useState<any>(null);
   const [spiderMap, setSpiderMap] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
 
   useEffect(() => {
     // Load game data from sessionStorage
@@ -95,11 +96,11 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       {
         label: 'Your Impact on Blue Pacific 2050',
         data: chartData,
-        backgroundColor: 'rgba(34, 202, 236, 0.1)',
-        borderColor: 'hsl(var(--accent))',
+        backgroundColor: 'rgba(34, 202, 236, 0.3)',
+        borderColor: '#22CAEC',
         borderWidth: 2,
-        pointBackgroundColor: 'hsl(var(--accent))',
-        pointBorderColor: 'hsl(var(--accent))',
+        pointBackgroundColor: '#22CAEC',
+        pointBorderColor: '#22CAEC',
         pointRadius: 6,
         pointHoverRadius: 8,
       }
@@ -109,20 +110,28 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    onHover: (event: any, chartElements: any) => {
+      if (chartElements.length) {
+        const index = chartElements[0].index;
+        setHoveredTheme(themeLabels[index]);
+      } else {
+        setHoveredTheme(null);
+      }
+    },
     scales: {
       r: {
         angleLines: {
-          color: 'hsl(var(--ocean-light) / 0.3)'
+          color: '#ffffff30'
         },
         grid: {
-          color: 'hsl(var(--ocean-light) / 0.2)'
+          color: '#ffffff20'
         },
         pointLabels: {
           font: {
-            size: 12,
+            size: 14,
             family: 'inherit'
           },
-          color: 'hsl(var(--wave-foam) / 0.8)'
+          color: '#ffffff'
         },
         ticks: {
           stepSize: 1,
@@ -135,7 +144,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
             if (value === 3) return 'HIGH';
             return '';
           },
-          color: 'hsl(var(--wave-foam) / 0.6)',
+          color: '#eeeeee',
           backdropColor: 'transparent',
           font: {
             size: 10
@@ -150,28 +159,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         display: false
       },
       tooltip: {
-        backgroundColor: 'hsl(var(--ocean-deep) / 0.95)',
-        titleColor: 'hsl(var(--wave-foam))',
-        bodyColor: 'hsl(var(--card-foreground) / 0.8)',
-        borderColor: 'hsl(var(--accent))',
-        borderWidth: 1,
-        cornerRadius: 8,
-        padding: 12,
-        callbacks: {
-          title: function(context: any) {
-            return context[0].label;
-          },
-          label: function(context: any) {
-            const theme = context.label;
-            const score = context.parsed.r;
-            const level = getLevel(score);
-            
-            if (spiderMap[theme] && spiderMap[theme][level]) {
-              return `${level}: ${spiderMap[theme][level]}`;
-            }
-            return `Score: ${score}`;
-          }
-        }
+        enabled: false
       }
     }
   };
@@ -189,6 +177,26 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       
       <div className="h-80 w-full">
         <Radar data={data} options={options} />
+      </div>
+      
+      {/* Hover Info Box */}
+      <div className="mt-6 p-4 bg-white/5 rounded-lg border border-ocean-light/20 text-center min-h-[80px] flex flex-col justify-center">
+        {hoveredTheme ? (
+          <>
+            <h3 className="text-lg font-medium text-accent mb-2">
+              {hoveredTheme} ({getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)} Impact)
+            </h3>
+            <p className="text-card-foreground/90 leading-relaxed">
+              {spiderMap[hoveredTheme] && spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)]
+                ? spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)]
+                : 'No narrative available for this theme.'}
+            </p>
+          </>
+        ) : (
+          <p className="text-card-foreground/60">
+            Hover over a theme in the chart to see your detailed impact.
+          </p>
+        )}
       </div>
       
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
