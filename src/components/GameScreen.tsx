@@ -31,6 +31,7 @@ interface ThemeAnswers {
 interface UserJourney {
   question_code: string;
   answer_code: string;
+  answer: string;
   outcome: string;
   impact: string;
   narrative: string;
@@ -58,27 +59,35 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     const answerCode = currentQuestion.options[optionIndex];
     const answerObj = answers[answerCode];
     
+    let updatedThemeCounts = themeCounts;
+    let updatedThemeAnswers = themeAnswers;
+    let updatedUserJourney = userJourney;
+    
     if (answerObj) {
       // Update theme counts
-      setThemeCounts(prev => ({
-        ...prev,
-        [answerObj.themecode]: (prev[answerObj.themecode] || 0) + 1
-      }));
+      updatedThemeCounts = {
+        ...themeCounts,
+        [answerObj.themecode]: (themeCounts[answerObj.themecode] || 0) + 1
+      };
+      setThemeCounts(updatedThemeCounts);
       
       // Update theme answers
-      setThemeAnswers(prev => ({
-        ...prev,
-        [answerObj.themecode]: [...(prev[answerObj.themecode] || []), answerCode]
-      }));
+      updatedThemeAnswers = {
+        ...themeAnswers,
+        [answerObj.themecode]: [...(themeAnswers[answerObj.themecode] || []), answerCode]
+      };
+      setThemeAnswers(updatedThemeAnswers);
       
       // Update user journey
-      setUserJourney(prev => [...prev, {
+      updatedUserJourney = [...userJourney, {
         question_code: answerObj.QuestionCode,
         answer_code: answerObj.code,
+        answer: answerObj.answer,
         outcome: answerObj.outcome,
         impact: answerObj.impact,
         narrative: answerObj.narrative
-      }]);
+      }];
+      setUserJourney(updatedUserJourney);
     }
 
     // Delay transition for visual feedback
@@ -90,11 +99,11 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         // Game complete - redirect to random scenario
         const scenarioNum = Math.ceil(Math.random() * 3);
         
-        // Store game data before redirect
+        // Store complete game data including final answer
         sessionStorage.setItem('gameResults', JSON.stringify({
-          themeCounts,
-          themeAnswers,
-          userJourney
+          themeCounts: updatedThemeCounts,
+          themeAnswers: updatedThemeAnswers,
+          userJourney: updatedUserJourney
         }));
         
         // Redirect to scenario page
