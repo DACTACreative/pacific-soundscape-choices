@@ -128,7 +128,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         },
         pointLabels: {
           font: {
-            size: 14,
+            size: 16,
             family: 'inherit'
           },
           color: '#ffffff'
@@ -166,55 +166,92 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
   return (
     <div className={`relative ${className}`}>
-      <div className="mb-6 text-center">
-        <h3 className="text-xl font-extralight text-coral-warm mb-2 tracking-wide">
+      <div className="mb-8 text-center">
+        <h3 className="text-2xl font-extralight text-coral-warm mb-3 tracking-wide">
           Your Thematic Impact
         </h3>
-        <p className="text-sm text-card-foreground/60">
+        <p className="text-base text-card-foreground/60">
           Hover over each point to see your influence across Blue Pacific 2050 themes
         </p>
       </div>
       
-      <div className="h-80 w-full">
+      <div className="w-[90vw] h-[80vh] mx-auto">
         <Radar data={data} options={options} />
       </div>
       
       {/* Hover Info Box */}
-      <div className="mt-6 p-4 bg-white/5 rounded-lg border border-ocean-light/20 text-center min-h-[80px] flex flex-col justify-center">
+      <div className="mt-8 p-6 bg-white/5 rounded-lg border border-ocean-light/20 text-center min-h-[100px] flex flex-col justify-center">
         {hoveredTheme ? (
           <>
-            <h3 className="text-lg font-medium text-accent mb-2">
+            <h3 className="text-xl font-medium text-accent mb-3">
               {hoveredTheme} ({getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)} Impact)
             </h3>
-            <p className="text-card-foreground/90 leading-relaxed">
+            <p className="text-base text-card-foreground/90 leading-relaxed">
               {spiderMap[hoveredTheme] && spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)]
                 ? spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)]
                 : 'No narrative available for this theme.'}
             </p>
           </>
         ) : (
-          <p className="text-card-foreground/60">
+          <p className="text-base text-card-foreground/60">
             Hover over a theme in the chart to see your detailed impact.
           </p>
         )}
       </div>
-      
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        {themeLabels.map((theme, index) => {
-          const themeKey = theme.replace(/\s+/g, '_').replace(/&/g, 'and');
-          const score = themeCounts[themeKey] || 0;
-          const level = getLevel(score);
+
+      {/* Choice Narratives Section */}
+      {gameData.userJourney && gameData.userJourney.length > 0 && (
+        <div className="mt-16">
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-extralight text-coral-warm mb-3 tracking-wide">
+              Your Journey Through the Pacific Future
+            </h3>
+            <p className="text-base text-card-foreground/60">
+              Each choice you made shapes the Blue Pacific 2050
+            </p>
+          </div>
           
-          return (
-            <div key={theme} className="p-3 border border-ocean-light/20 bg-transparent backdrop-blur-sm">
-              <div className="font-medium text-accent mb-1">{theme}</div>
-              <div className="text-card-foreground/70">
-                {score} choice{score !== 1 ? 's' : ''} • {level} impact
+          <div className="space-y-0">
+            {gameData.userJourney.map((choice: any, index: number) => (
+              <div 
+                key={`${choice.question_code}-${choice.answer_code}`}
+                className="min-h-screen flex flex-col justify-center items-center px-8 py-16 animate-fade-in"
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                <div className="max-w-4xl text-center space-y-8">
+                  {/* User's Choice */}
+                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2}s` }}>
+                    <h4 className="text-2xl md:text-3xl font-light text-white mb-4 leading-relaxed">
+                      You chose to {choice.answer}
+                    </h4>
+                  </div>
+
+                  {/* Narrative */}
+                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.3}s` }}>
+                    <div className="text-lg md:text-xl text-card-foreground/80 leading-relaxed mb-6">
+                      → {choice.narrative}
+                    </div>
+                  </div>
+
+                  {/* Impact */}
+                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.6}s` }}>
+                    <div className="text-xl md:text-2xl font-medium text-accent mb-4">
+                      → {choice.impact}
+                    </div>
+                  </div>
+
+                  {/* Outcome */}
+                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.9}s` }}>
+                    <div className="text-base md:text-lg italic text-card-foreground/70">
+                      Outcome: {choice.outcome}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
