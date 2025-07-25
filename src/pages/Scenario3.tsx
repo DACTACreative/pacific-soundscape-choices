@@ -4,6 +4,7 @@ import SeaLevelVisualization from '../components/SeaLevelVisualization';
 import AnnualFloodDaysVisualization from '../components/AnnualFloodDaysVisualization';
 import { InteractiveFloodSentence } from '../components/InteractiveFloodSentence';
 import CoastalFisheriesVisualization from '../components/CoastalFisheriesVisualization';
+import ThematicSpiderChart from '../components/ThematicSpiderChart';
 
 export default function Scenario3() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
@@ -116,6 +117,11 @@ export default function Scenario3() {
               </p>
             ))}
           </div>
+        </div>
+
+        {/* Thematic Spider Chart */}
+        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <ThematicSpiderChart className="p-8 border border-ocean-light/20 bg-transparent backdrop-blur-sm" />
         </div>
 
         {/* Sea Level Rise Visualization */}
