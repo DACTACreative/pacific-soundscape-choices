@@ -1,0 +1,37 @@
+{
+  "Political Leadership and Regionalism": {
+    "LOW": "The political state of the Pacific remains fragmented. Leadership lacks coherence, and regional cooperation is fragile.",
+    "MEDIUM": "There is growing alignment among Pacific leaders, though occasional divergences delay unified responses.",
+    "HIGH": "Strong regional leadership drives collective decisions. The Pacific voice is respected and effective in global forums."
+  },
+  "People Centered Development": {
+    "LOW": "Basic services and social support remain weak across the Pacific. Cultural knowledge is fading, and many communities feel their needs and rights are overlooked.",
+    "MEDIUM": "Access to education and healthcare improves gradually. Cultural initiatives are underway, but inequalities persist and not all groups are reached.",
+    "HIGH": "Pacific peoples enjoy robust education, health, and social services. Traditional knowledge and culture guide development, and human rights are protected for all."
+  },
+  "Peace and Security": {
+    "LOW": "Peace and security are fragile. Local conflicts and transnational challenges (like climate-driven migration and crime) grow, straining communities with limited collective response.",
+    "MEDIUM": "Regional collaboration improves security. Most conflicts are contained and stability grows, but emerging threats and resource pressures still test Pacific unity.",
+    "HIGH": "The Blue Pacific remains peaceful and secure. Strong regional cooperation addresses conflicts and threats early, protecting communities and reinforcing stability."
+  },
+  "Resource and Economic Development": {
+    "LOW": "Economic opportunities are scarce for local communities. Resources are often exploited unsustainably by outside interests, yielding little benefit to Pacific peoples.",
+    "MEDIUM": "Pacific economies diversify and more benefits flow to communities. Some industries operate sustainably, but economic gains and resource control remain uneven.",
+    "HIGH": "Inclusive, sustainable prosperity grows in the Pacific. Local communities drive resource use decisions, balancing development and conservation. Regional economies thrive with shared benefits."
+  },
+  "Climate Change and Disasters": {
+    "LOW": "Climate change devastates the region by 2050. High emissions and weak preparation lead to extreme sea-level rise, coral collapse, and frequent disasters displacing many communities.",
+    "MEDIUM": "The Pacific faces significant climate impacts, but adaptation efforts blunt the worst effects. Emissions fall moderately; some reefs and coasts are protected, though losses remain substantial.",
+    "HIGH": "Aggressive climate action limits warming. Pacific communities are resilient: strong adaptation measures guard against most disasters, fewer people are displaced, and vital ecosystems endure."
+  },
+  "Ocean and Environment": {
+    "LOW": "Pacific ecosystems deteriorate badly. Coral reefs suffer mass bleaching, fisheries decline, and pollution remains widespread, undermining livelihoods and biodiversity.",
+    "MEDIUM": "Conservation efforts make headway. Protected areas and pollution controls help some reefs and fisheries recover, but other ecosystems continue to decline from inconsistent stewardship.",
+    "HIGH": "The Pacific environment is safeguarded. Healthy reefs, clean waters, and abundant fisheries support communities. Bold protections and local stewardship restore biodiversity."
+  },
+  "Technology and Connectivity": {
+    "LOW": "Digital isolation hinders many communities. Limited internet and technology access leave remote islands disconnected from knowledge and opportunities.",
+    "MEDIUM": "Connectivity improves across the Pacific. Most communities have some digital access and tools, enabling better communication and services, though gaps and high costs persist in remote areas.",
+    "HIGH": "The Pacific is highly connected. Even remote islands enjoy affordable, solar-powered internet and modern tech. Digital literacy is widespread, driving innovation, education, and cultural exchange."
+  }
+}
