@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import questionsData from '@/data/questions.json';
-import answersData from '@/data/answers.json';
+import Papa from 'papaparse';
 
 interface GameQuestion {
   QuestionCode: string;
@@ -36,11 +36,47 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswerCodes, setSelectedAnswerCodes] = useState<string[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [answers, setAnswers] = useState<Record<string, GameAnswer>>({});
+  const [loading, setLoading] = useState(true);
 
   const questions: GameQuestion[] = questionsData;
-  const answers: Record<string, GameAnswer> = answersData;
   const currentQuestion = questions[currentQuestionIndex];
   const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
+
+  useEffect(() => {
+    // Load the mapping CSV
+    fetch('/data/Mapping - Question BPC - Sheet1.csv')
+      .then(res => res.text())
+      .then(csvText => {
+        Papa.parse(csvText, {
+          header: true,
+          complete: (results) => {
+            const answersMap: Record<string, GameAnswer> = {};
+            results.data.forEach((row: any) => {
+              if (row.code) {
+                answersMap[row.code] = {
+                  code: row.code,
+                  themecode: row.themecode,
+                  answer: row.answer,
+                  theme: row.theme,
+                  QuestionCode: row.QuestionCode,
+                  Question: row.Question,
+                  outcome: row.outcome,
+                  impact: row.impact,
+                  narrative: row.narrative
+                };
+              }
+            });
+            setAnswers(answersMap);
+            setLoading(false);
+          }
+        });
+      })
+      .catch(err => {
+        console.error('Failed to load mapping CSV:', err);
+        setLoading(false);
+      });
+  }, []);
 
   const handleOptionSelect = (optionIndex: number) => {
     setIsTransitioning(true);
@@ -64,6 +100,14 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
       }
     }, 800);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-ocean relative overflow-hidden flex items-center justify-center">
+        <div className="text-wave-foam text-xl">Loading game...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-ocean relative overflow-hidden">

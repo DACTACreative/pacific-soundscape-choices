@@ -85,7 +85,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   // Calculate theme counts from player choices
   const themeCounts: Record<string, number> = {};
   playerChoices.forEach(choice => {
-    const theme = choice.themecode;
+    const theme = choice.theme; // Use 'theme' field, not 'themecode'
     themeCounts[theme] = (themeCounts[theme] || 0) + 1;
   });
 
@@ -108,8 +108,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
   // Convert theme counts to chart data
   const chartData = themeLabels.map(theme => {
-    const themeKey = theme.replace(/\s+/g, '_').replace(/&/g, 'and');
-    return themeCounts[themeKey] || 0;
+    return themeCounts[theme] || 0;
   });
 
   const data = {
@@ -207,11 +206,11 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         {hoveredTheme ? (
           <>
             <h3 className="text-xl font-medium text-accent mb-3">
-              {hoveredTheme} ({getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)} Impact)
+              {hoveredTheme} ({getLevel(themeCounts[hoveredTheme] || 0)} Impact)
             </h3>
             <p className="text-base text-card-foreground/90 leading-relaxed">
-              {spiderMap[hoveredTheme] && spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)]
-                ? spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme.replace(/\s+/g, '_').replace(/&/g, 'and')] || 0)]
+              {spiderMap[hoveredTheme] && spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme] || 0)]
+                ? spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme] || 0)]
                 : 'No narrative available for this theme.'}
             </p>
           </>
