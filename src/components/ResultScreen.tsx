@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import outcomesData from '@/data/outcomes.json';
 import dashboardData from '@/data/dashboard.json';
+import type { ThemeScores, ThemeAnswers } from '@/types/game';
 
 interface ResultScreenProps {
   mitigationScore: number;
-  resilienceScore: number;
+  themeScores: ThemeScores;
+  themeAnswers: ThemeAnswers;
   onReplay: () => void;
 }
 
@@ -16,7 +18,7 @@ interface MetricInfo {
   severity: 'low' | 'medium' | 'high';
 }
 
-export default function ResultScreen({ mitigationScore, resilienceScore, onReplay }: ResultScreenProps) {
+export default function ResultScreen({ mitigationScore, themeScores, themeAnswers, onReplay }: ResultScreenProps) {
   const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
@@ -25,22 +27,27 @@ export default function ResultScreen({ mitigationScore, resilienceScore, onRepla
 
   // Determine scenario based on mitigation score
   const getScenario = (): 'low' | 'medium' | 'high' => {
-    if (mitigationScore >= 4) return 'low';      // Strong mitigation -> low emissions
-    if (mitigationScore <= -4) return 'high';    // Weak mitigation -> high emissions
-    return 'medium';                             // In-between -> medium emissions
-  };
-
-  // Determine resilience variant
-  const getResilienceVariant = (): 'highRes' | 'lowRes' => {
-    return resilienceScore > 0 ? 'highRes' : 'lowRes';
+    if (mitigationScore >= 5) return 'low';      // Strong mitigation -> Scenario 1 (sustainable)
+    if (mitigationScore >= 3) return 'medium';   // Moderate mitigation -> Scenario 2 (moderate)
+    return 'high';                               // Weak mitigation -> Scenario 3 (crisis)
   };
 
   const scenario = getScenario();
-  const resilienceVariant = getResilienceVariant();
-  const outcomeKey = `${scenario}_${resilienceVariant}` as keyof typeof outcomesData;
+  const outcomeKey = scenario as keyof typeof outcomesData;
   
   const narrative = outcomesData[outcomeKey] || "Outcome narrative not found.";
   const metrics = dashboardData[scenario as keyof typeof dashboardData];
+
+  // Calculate theme focus for personalization
+  const getTopThemes = (): Array<{ theme: string; count: number }> => {
+    return Object.entries(themeScores)
+      .map(([theme, count]) => ({ theme: theme.replace(/_/g, ' '), count }))
+      .filter(({ count }) => count > 0)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3);
+  };
+
+  const topThemes = getTopThemes();
 
   // Format metrics with additional context
   const formatMetrics = (): MetricInfo[] => {
@@ -112,9 +119,12 @@ export default function ResultScreen({ mitigationScore, resilienceScore, onRepla
   };
 
   const getScenarioTitle = () => {
-    const emissionLevel = scenario === 'low' ? 'Sustainable Path' : scenario === 'medium' ? 'Moderate Change' : 'Crisis Trajectory';
-    const resilienceLevel = resilienceVariant === 'highRes' ? 'High Resilience' : 'Low Resilience';
-    return `${emissionLevel} · ${resilienceLevel}`;
+    const titles = {
+      low: 'Sustainable Path',
+      medium: 'Moderate Change', 
+      high: 'Crisis Trajectory'
+    };
+    return titles[scenario];
   };
 
   const getScenarioNumber = () => {
@@ -145,9 +155,26 @@ export default function ResultScreen({ mitigationScore, resilienceScore, onRepla
         {/* Narrative */}
         <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <div className="max-w-4xl mx-auto">
-            <p className="text-xl md:text-2xl font-light text-card-foreground/90 leading-relaxed text-center">
+            <p className="text-xl md:text-2xl font-light text-card-foreground/90 leading-relaxed text-center mb-8">
               {narrative}
             </p>
+            
+            {/* Theme Focus Summary */}
+            {topThemes.length > 0 && (
+              <div className="text-center mt-12 p-6 border border-ocean-light/20 bg-transparent backdrop-blur-sm">
+                <p className="text-lg text-coral-warm/80 mb-4 font-light">Your Pacific 2050 Focus Areas</p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  {topThemes.map(({ theme, count }) => (
+                    <span 
+                      key={theme}
+                      className="px-4 py-2 text-sm bg-ocean-light/10 border border-coral-warm/20 text-wave-foam/80 font-extralight tracking-wide"
+                    >
+                      {theme} ({count} action{count > 1 ? 's' : ''})
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -226,7 +253,7 @@ export default function ResultScreen({ mitigationScore, resilienceScore, onRepla
         {/* Debug info */}
         {process.env.NODE_ENV === 'development' && (
           <div className="mt-16 text-center text-xs text-wave-foam/30 font-extralight tracking-wider">
-            Final Scores - Mitigation: {mitigationScore} | Resilience: {resilienceScore}
+            Final Scores - Mitigation: {mitigationScore} | Top Themes: {topThemes.map(t => `${t.theme}: ${t.count}`).join(', ')}
           </div>
         )}
       </div>

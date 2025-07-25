@@ -1,151 +1,199 @@
 [
   {
     "id": 1,
-    "title": "Energy Future",
-    "question": "How should Fiji meet its growing energy demands by 2030?",
+    "text": "Many remote villages feel left behind by national development. How will you reconnect and empower your communities?",
     "options": [
       {
-        "text": "Invest heavily in solar and wind power infrastructure across all islands",
-        "effects": { "mitigation": 2, "resilience": 1 }
+        "text": "Fund a national climate and leadership tour in Vanuatu, focused on rural women and youth. The tour travels island to island, combining civic education, Indigenous knowledge, and pathways into local politics.",
+        "theme": "Political Leadership and Regionalism",
+        "theme_points_Political_Leadership_and_Regionalism": 1,
+        "mitigation_score": 0
       },
       {
-        "text": "Expand existing fossil fuel power plants for immediate energy security",
-        "effects": { "mitigation": -2, "resilience": -1 }
+        "text": "Launch a nationwide Cellule of Knowledge initiative that bridges formal healthcare with Indigenous practices. Local elders, healers, and youth are trained as co-practitioners, revitalising trust in health services and embedding cultural protocols into care delivery — especially in remote areas.",
+        "theme": "People Centered Development",
+        "theme_points_People_Centered_Development": 1,
+        "mitigation_score": -1
       }
     ]
   },
   {
     "id": 2,
-    "title": "Coastal Development",
-    "question": "A developer wants to build a large resort on pristine coastline. What's your decision?",
+    "text": "A wave of foreign investment is coming into the region. How do you ensure these deals truly benefit the Pacific and align with its priorities?",
     "options": [
       {
-        "text": "Approve with strict environmental conditions and community benefit-sharing",
-        "effects": { "mitigation": -1, "resilience": 1 }
+        "text": "The Solomon Islands invests 25% of aid into a Sovereign Oversight Commission to regulate foreign investment and launch the SolPower plan. All new investments must allocate at least 30% toward Blue Pacific 2050 priorities.",
+        "theme": "Political Leadership and Regionalism",
+        "theme_points_Political_Leadership_and_Regionalism": 1,
+        "mitigation_score": 1
       },
       {
-        "text": "Designate the area as a protected marine reserve instead",
-        "effects": { "mitigation": 1, "resilience": 2 }
+        "text": "Vanuatu enacts a revised Investment Reform Act that prioritises landowner negotiation, biodiversity safeguards, and shared ownership models for all medium- to large-scale ventures.",
+        "theme": "Resource and Economic Development",
+        "theme_points_Resource_and_Economic_Development": 1,
+        "mitigation_score": 1
       }
     ]
   },
   {
     "id": 3,
-    "title": "Agriculture Adaptation",
-    "question": "Rising seas threaten traditional farming areas. How do you support farmers?",
+    "text": "There's a governance gap between formal institutions and local communities, leading to conflicts and mistrust. What initiative do you support to mend this divide?",
     "options": [
       {
-        "text": "Introduce salt-resistant crops and sustainable farming techniques",
-        "effects": { "mitigation": 1, "resilience": 2 }
+        "text": "Kiribati formalises Ina i-Tu as a governance mechanism — embedding it into national consultations and regional architecture. The model ensures community leaders, elders, and youth shape Pacific policy from the ground up.",
+        "theme": "Political Leadership and Regionalism",
+        "theme_points_Political_Leadership_and_Regionalism": 1,
+        "mitigation_score": 0
       },
       {
-        "text": "Provide financial aid to continue current farming practices",
-        "effects": { "mitigation": -1, "resilience": 0 }
+        "text": "The Congress of New Caledonia establishes formal recognition for tribal councils as sovereign conflict-resolution authorities in Northern Province and the Loyalty Islands, backed by public funds and legal infrastructure.",
+        "theme": "Peace and Security",
+        "theme_points_Peace_and_Security": 1,
+        "mitigation_score": 0
       }
     ]
   },
   {
     "id": 4,
-    "title": "Transportation",
-    "question": "How should Fiji modernize inter-island transportation?",
+    "text": "Pacific youth are drifting from traditional practices, and the environment is suffering (for example, pollinators are declining). How will you revive cultural knowledge and heal nature?",
     "options": [
       {
-        "text": "Invest in electric ferries and improve public transportation",
-        "effects": { "mitigation": 2, "resilience": 1 }
+        "text": "French Polynesia launches the From Grandmother: Best Cooking challenge — a TikTok-driven campaign where youth film traditional plant-based recipes taught by elders. The initiative reintroduces ancestral crops and cooking skills into schools, homes, and the national food identity.",
+        "theme": "People Centered Development",
+        "theme_points_People_Centered_Development": 1,
+        "mitigation_score": 0
       },
       {
-        "text": "Expand air travel routes with conventional aircraft",
-        "effects": { "mitigation": -2, "resilience": 0 }
+        "text": "Launch the Pollinator Villages Network in the Cook Islands — certifying communities that protect native bees, plant nectar corridors, and revive ceremonial floral practices across five islands.",
+        "theme": "Ocean and Environment",
+        "theme_points_Ocean_and_Environment": 1,
+        "mitigation_score": 1
       }
     ]
   },
   {
     "id": 5,
-    "title": "Coral Conservation",
-    "question": "Coral reefs are bleaching due to warming waters. What's your priority action?",
+    "text": "Your nation grapples with urban health challenges and rural unemployment. What is your development priority?",
     "options": [
       {
-        "text": "Launch a major coral restoration and protection program",
-        "effects": { "mitigation": 1, "resilience": 2 }
+        "text": "Fiji launches a national mobility-for-health strategy: walkable neighbourhoods, bike paths, and free public transport routes to clinics and wellness hubs, prioritising outer-urban and underserved areas.",
+        "theme": "People Centered Development",
+        "theme_points_People_Centered_Development": 1,
+        "mitigation_score": 1
       },
       {
-        "text": "Focus on economic diversification away from reef-dependent industries",
-        "effects": { "mitigation": 0, "resilience": -1 }
+        "text": "Fiji launches a Cooperative Fast Lane policy to support rural and women-led enterprises, including legal support, app-based tax exemptions, and public procurement incentives.",
+        "theme": "Resource and Economic Development",
+        "theme_points_Resource_and_Economic_Development": 1,
+        "mitigation_score": 0
       }
     ]
   },
   {
     "id": 6,
-    "title": "Climate Finance",
-    "question": "How should Fiji use international climate funding?",
+    "text": "Climate risks are rising. Do you focus on grassroots resilience or bolster high-tech governance?",
     "options": [
       {
-        "text": "Build resilient infrastructure and early warning systems",
-        "effects": { "mitigation": 0, "resilience": 2 }
+        "text": "Kiribati launches a national training program to equip remote communities to co-design low-tech resilience stations. These hubs combine traditional knowledge with open-source climate tools, enabling early warning, local monitoring, and stronger climate preparedness.",
+        "theme": "Peace and Security",
+        "theme_points_Peace_and_Security": 1,
+        "mitigation_score": 0
       },
       {
-        "text": "Focus on renewable energy projects for emission reductions",
-        "effects": { "mitigation": 2, "resilience": 0 }
+        "text": "Fund and deploy the Fiji Public Service AI & Data Fellowship — a new civil servant upskilling program that trains 200+ officers per year to use AI tools and open data for local climate response projects.",
+        "theme": "Technology and Connectivity",
+        "theme_points_Technology_and_Connectivity": 1,
+        "mitigation_score": 1
       }
     ]
   },
   {
     "id": 7,
-    "title": "Waste Management",
-    "question": "Plastic pollution threatens marine ecosystems. What's your approach?",
+    "text": "Sea levels are rising faster than expected, endangering whole villages. How do you respond?",
     "options": [
       {
-        "text": "Ban single-use plastics and invest in recycling infrastructure",
-        "effects": { "mitigation": 1, "resilience": 1 }
+        "text": "Tuvalu launched the Navigating with Dignity programme — a legal-advocacy initiative led by climate-affected island nations to embed cultural identity and community consent into global mobility agreements.",
+        "theme": "Peace and Security",
+        "theme_points_Peace_and_Security": 1,
+        "mitigation_score": -1
       },
       {
-        "text": "Improve waste collection but maintain current consumption patterns",
-        "effects": { "mitigation": 0, "resilience": 0 }
+        "text": "The Solomon Islands launches a Customary Loss Registry with local leaders, while the Pacific Islands Forum creates a regional 1.5°C Story & Strategy Cohort — training young negotiators in diplomacy, Indigenous knowledge, and non-economic loss advocacy.",
+        "theme": "Climate Change and Disasters",
+        "theme_points_Climate_Change_and_Disasters": 1,
+        "mitigation_score": 1
       }
     ]
   },
   {
     "id": 8,
-    "title": "Urban Planning",
-    "question": "Cities are growing rapidly. How do you plan for climate risks?",
+    "text": "To boost local livelihoods without harming nature, what path do you choose?",
     "options": [
       {
-        "text": "Design green, flood-resistant neighborhoods with nature-based solutions",
-        "effects": { "mitigation": 1, "resilience": 2 }
+        "text": "Tonga launches the Island Micro Works scheme — offering low-interest loans, training, and market access to rural cooperatives making eco-goods, food products, and craft tools from traditional materials.",
+        "theme": "Resource and Economic Development",
+        "theme_points_Resource_and_Economic_Development": 1,
+        "mitigation_score": -1
       },
       {
-        "text": "Build sea walls and concrete infrastructure for protection",
-        "effects": { "mitigation": 0, "resilience": 1 }
+        "text": "Niue's Ministry of Natural Resources launches a national pilot to replace synthetic fertilisers with reef-safe seaweed biofertiliser, guided by Indigenous planting knowledge and village-led training.",
+        "theme": "Ocean and Environment",
+        "theme_points_Ocean_and_Environment": 1,
+        "mitigation_score": 1
       }
     ]
   },
   {
     "id": 9,
-    "title": "Forest Protection",
-    "question": "Logging companies want access to native forests. Your decision?",
+    "text": "To build a climate-ready future, do you send youth abroad for advanced training or invest in preserving ancestral knowledge at home?",
     "options": [
       {
-        "text": "Protect forests and invest in sustainable forestry alternatives",
-        "effects": { "mitigation": 2, "resilience": 1 }
+        "text": "New Caledonia launches Climate Avenir, a regional scholarship and placement scheme sending local youth to leading technical universities in Asia and the Pacific, focused on engineering climate resilience.",
+        "theme": "Climate Change and Disasters",
+        "theme_points_Climate_Change_and_Disasters": 1,
+        "mitigation_score": 1
       },
       {
-        "text": "Allow controlled logging with reforestation requirements",
-        "effects": { "mitigation": -1, "resilience": 0 }
+        "text": "Launch Ōrero o te fenua (Oral Wisdom of the Land) — a voice-based knowledge system across French Polynesia. Youth record interviews with elders using mobile devices. An LLM-powered platform tags themes like land, reef, and agriculture without transcription. Stories are indexed and accessible via natural language queries, informing territorial policy and school curricula.",
+        "theme": "Technology and Connectivity",
+        "theme_points_Technology_and_Connectivity": 1,
+        "mitigation_score": 0
       }
     ]
   },
   {
     "id": 10,
-    "title": "Regional Leadership",
-    "question": "How should Fiji lead on climate action in the Pacific region?",
+    "text": "Pacific communities seek to share climate solutions region-wide. What initiative do you support?",
     "options": [
       {
-        "text": "Champion ambitious emission targets and support other island nations",
-        "effects": { "mitigation": 2, "resilience": 1 }
+        "text": "Solomon Islands establishes PacificSekaNet — a solar-powered, low-emission regional intranet combining cultural archives, public services, and knowledge hubs, managed through community cooperatives and reinforced with local encryption standards.",
+        "theme": "Technology and Connectivity",
+        "theme_points_Technology_and_Connectivity": 1,
+        "mitigation_score": 1
       },
       {
-        "text": "Focus on national adaptation while maintaining current climate commitments",
-        "effects": { "mitigation": 0, "resilience": 1 }
+        "text": "Tonga launches the Pacific Peer Learning Platform on Climate Change, starting with a regional campaign on plastic replacement. Solomon Islands, New Caledonia, and Fiji contribute examples of cultural alternatives. The platform hosts community challenges, knowledge exchanges, and a public archive of locally driven solutions.",
+        "theme": "Ocean and Environment",
+        "theme_points_Ocean_and_Environment": 1,
+        "mitigation_score": 1
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "text": "The Pacific must take bold action on climate change. What do you initiate?",
+    "options": [
+      {
+        "text": "Micronesia launches Blue Garden pilot zones — perma-ecological mitigation sites combining coral restoration, offshore wind, and low-tech seaweed farming — co-managed by local schools, women's collectives, and fisher cooperatives.",
+        "theme": "Climate Change and Disasters",
+        "theme_points_Climate_Change_and_Disasters": 1,
+        "mitigation_score": 1
+      },
+      {
+        "text": "Pacific leaders sign a Blue Pacific Climate Pact to unify regional action – pledging no new fossil fuel projects, a regional net-zero goal by 2050, and a shared adaptation fund.",
+        "theme": "Political Leadership and Regionalism",
+        "theme_points_Political_Leadership_and_Regionalism": 1,
+        "mitigation_score": 1
       }
     ]
   }

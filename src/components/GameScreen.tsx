@@ -1,42 +1,61 @@
 import { useState, useEffect } from 'react';
 import questionsData from '@/data/questions.json';
-
-interface Question {
-  id: number;
-  title: string;
-  question: string;
-  options: Array<{
-    text: string;
-    effects: {
-      mitigation: number;
-      resilience: number;
-    };
-  }>;
-}
+import type { GameQuestion, ThemeScores, ThemeAnswers } from '@/types/game';
 
 interface GameScreenProps {
-  onComplete: (mitigationScore: number, resilienceScore: number) => void;
+  onComplete: (mitigationScore: number, themeScores: ThemeScores, themeAnswers: ThemeAnswers) => void;
 }
 
 export default function GameScreen({ onComplete }: GameScreenProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [mitigationScore, setMitigationScore] = useState(0);
-  const [resilienceScore, setResilienceScore] = useState(0);
+  const [themeScores, setThemeScores] = useState<ThemeScores>({
+    Political_Leadership_and_Regionalism: 0,
+    People_Centered_Development: 0,
+    Peace_and_Security: 0,
+    Resource_and_Economic_Development: 0,
+    Climate_Change_and_Disasters: 0,
+    Ocean_and_Environment: 0,
+    Technology_and_Connectivity: 0
+  });
+  const [themeAnswers, setThemeAnswers] = useState<ThemeAnswers>({
+    Political_Leadership_and_Regionalism: [],
+    People_Centered_Development: [],
+    Peace_and_Security: [],
+    Resource_and_Economic_Development: [],
+    Climate_Change_and_Disasters: [],
+    Ocean_and_Environment: [],
+    Technology_and_Connectivity: []
+  });
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const questions: Question[] = questionsData;
+  const questions: GameQuestion[] = questionsData;
   const currentQuestion = questions[currentQuestionIndex];
   const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   const handleOptionSelect = (choiceIndex: number) => {
     setIsTransitioning(true);
     
-    const effects = currentQuestion.options[choiceIndex].effects;
-    const newMitigationScore = mitigationScore + effects.mitigation;
-    const newResilienceScore = resilienceScore + effects.resilience;
+    const option = currentQuestion.options[choiceIndex];
+    const newMitigationScore = mitigationScore + option.mitigation_score;
+    
+    // Find the theme key and increment the appropriate theme score
+    const themeKey = Object.keys(option).find(k => k.startsWith('theme_points_') && option[k as keyof typeof option] === 1);
+    if (themeKey) {
+      const themeSlug = themeKey.replace('theme_points_', '') as keyof ThemeScores;
+      
+      setThemeScores(prev => ({
+        ...prev,
+        [themeSlug]: prev[themeSlug] + 1
+      }));
+      
+      setThemeAnswers(prev => ({
+        ...prev,
+        [themeSlug]: [...prev[themeSlug], option.text]
+      }));
+    }
     
     setMitigationScore(newMitigationScore);
-    setResilienceScore(newResilienceScore);
 
     // Delay transition for visual feedback
     setTimeout(() => {
@@ -45,7 +64,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         setIsTransitioning(false);
       } else {
         // Game complete
-        onComplete(newMitigationScore, newResilienceScore);
+        onComplete(newMitigationScore, themeScores, themeAnswers);
       }
     }, 800);
   };
@@ -81,18 +100,10 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
           isTransitioning ? 'opacity-30 transform translate-y-4' : 'opacity-100 transform translate-y-0'
         }`}>
           
-          {/* Question title */}
-          <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-2xl md:text-3xl font-extralight text-coral-warm mb-6 tracking-wide">
-              {currentQuestion.title}
-            </h2>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-coral-warm/50 to-transparent mx-auto mb-8" />
-          </div>
-
           {/* Question text */}
           <div className="max-w-3xl mx-auto mb-16 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <p className="text-xl md:text-2xl font-light text-card-foreground/90 leading-relaxed text-center">
-              {currentQuestion.question}
+              {currentQuestion.text}
             </p>
           </div>
 
@@ -133,7 +144,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         {/* Debug info */}
         {process.env.NODE_ENV === 'development' && (
           <div className="mt-16 text-center text-xs text-wave-foam/30 font-extralight tracking-wider">
-            Mitigation: {mitigationScore} | Resilience: {resilienceScore}
+            Mitigation: {mitigationScore} | Themes: {Object.entries(themeScores).map(([k, v]) => `${k.split('_').pop()}: ${v}`).join(', ')}
           </div>
         )}
       </div>
