@@ -11,7 +11,7 @@ const Index = () => {
     setGameState('playing');
   };
 
-  const handleGameComplete = (themeCounts: any, themeAnswers: any, userJourney: any) => {
+  const handleGameComplete = (selectedAnswerCodes: string[]) => {
     // Game now redirects directly to scenario pages
     // No need to handle completion here
   };

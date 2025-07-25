@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import Papa from 'papaparse';
 
 ChartJS.register(
   RadialLinearScale,
@@ -24,29 +25,45 @@ interface ThematicSpiderChartProps {
 }
 
 export default function ThematicSpiderChart({ className }: ThematicSpiderChartProps) {
-  const [gameData, setGameData] = useState<any>(null);
+  const [playerChoices, setPlayerChoices] = useState<any[]>([]);
   const [spiderMap, setSpiderMap] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
 
   useEffect(() => {
-    // Load game data from sessionStorage
-    const storedData = sessionStorage.getItem('gameResults');
-    if (storedData) {
-      setGameData(JSON.parse(storedData));
+    // Load selected answer codes from sessionStorage
+    const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    
+    if (selectedCodes.length === 0) {
+      setLoading(false);
+      return;
     }
 
-    // Load SpiderMap data
-    fetch('/data/SpiderMap.json')
-      .then(res => res.json())
-      .then(data => {
-        setSpiderMap(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Failed to load SpiderMap:', err);
-        setLoading(false);
+    // Load mapping CSV and spider map data
+    Promise.all([
+      fetch('/data/Mapping - Question BPC - Sheet1.csv').then(res => res.text()),
+      fetch('/data/SpiderMap.json').then(res => res.json())
+    ])
+    .then(([csvText, spiderMapData]) => {
+      // Parse CSV
+      Papa.parse(csvText, {
+        header: true,
+        complete: (results) => {
+          // Find matching answers for selected codes
+          const matchedAnswers = selectedCodes.map((code: string) => 
+            results.data.find((row: any) => row.code === code)
+          ).filter(Boolean);
+          
+          setPlayerChoices(matchedAnswers);
+          setSpiderMap(spiderMapData);
+          setLoading(false);
+        }
       });
+    })
+    .catch(err => {
+      console.error('Failed to load data:', err);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) {
@@ -57,7 +74,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     );
   }
 
-  if (!gameData || !spiderMap) {
+  if (playerChoices.length === 0 || !spiderMap) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-wave-foam">No thematic data available</div>
@@ -65,7 +82,12 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     );
   }
 
-  const { themeCounts } = gameData;
+  // Calculate theme counts from player choices
+  const themeCounts: Record<string, number> = {};
+  playerChoices.forEach(choice => {
+    const theme = choice.themecode;
+    themeCounts[theme] = (themeCounts[theme] || 0) + 1;
+  });
 
   const themeLabels = [
     "Political Leadership and Regionalism",
@@ -201,7 +223,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       </div>
 
       {/* Choice Narratives Section */}
-      {gameData.userJourney && gameData.userJourney.length > 0 && (
+      {playerChoices.length > 0 && (
         <div className="mt-16">
           <div className="text-center mb-12">
             <h3 className="text-2xl font-extralight text-coral-warm mb-3 tracking-wide">
@@ -213,9 +235,9 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
           </div>
           
           <div className="space-y-0">
-            {gameData.userJourney.map((choice: any, index: number) => (
+            {playerChoices.map((choice: any, index: number) => (
               <div 
-                key={`${choice.question_code}-${choice.answer_code}`}
+                key={`${choice.code}-${index}`}
                 className="h-screen flex flex-col justify-center items-center px-8 py-16 animate-fade-in"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >

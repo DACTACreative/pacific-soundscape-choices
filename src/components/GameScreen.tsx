@@ -28,24 +28,13 @@ interface ThemeAnswers {
   [key: string]: string[];
 }
 
-interface UserJourney {
-  question_code: string;
-  answer_code: string;
-  answer: string;
-  outcome: string;
-  impact: string;
-  narrative: string;
-}
-
 interface GameScreenProps {
-  onComplete: (themeCounts: ThemeCounts, themeAnswers: ThemeAnswers, userJourney: UserJourney[]) => void;
+  onComplete: (selectedAnswerCodes: string[]) => void;
 }
 
 export default function GameScreen({ onComplete }: GameScreenProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [themeCounts, setThemeCounts] = useState<ThemeCounts>({});
-  const [themeAnswers, setThemeAnswers] = useState<ThemeAnswers>({});
-  const [userJourney, setUserJourney] = useState<UserJourney[]>([]);
+  const [selectedAnswerCodes, setSelectedAnswerCodes] = useState<string[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const questions: GameQuestion[] = questionsData;
@@ -57,38 +46,8 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     setIsTransitioning(true);
     
     const answerCode = currentQuestion.options[optionIndex];
-    const answerObj = answers[answerCode];
-    
-    let updatedThemeCounts = themeCounts;
-    let updatedThemeAnswers = themeAnswers;
-    let updatedUserJourney = userJourney;
-    
-    if (answerObj) {
-      // Update theme counts
-      updatedThemeCounts = {
-        ...themeCounts,
-        [answerObj.themecode]: (themeCounts[answerObj.themecode] || 0) + 1
-      };
-      setThemeCounts(updatedThemeCounts);
-      
-      // Update theme answers
-      updatedThemeAnswers = {
-        ...themeAnswers,
-        [answerObj.themecode]: [...(themeAnswers[answerObj.themecode] || []), answerCode]
-      };
-      setThemeAnswers(updatedThemeAnswers);
-      
-      // Update user journey
-      updatedUserJourney = [...userJourney, {
-        question_code: answerObj.QuestionCode,
-        answer_code: answerObj.code,
-        answer: answerObj.answer,
-        outcome: answerObj.outcome,
-        impact: answerObj.impact,
-        narrative: answerObj.narrative
-      }];
-      setUserJourney(updatedUserJourney);
-    }
+    const updatedCodes = [...selectedAnswerCodes, answerCode];
+    setSelectedAnswerCodes(updatedCodes);
 
     // Delay transition for visual feedback
     setTimeout(() => {
@@ -96,17 +55,11 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setIsTransitioning(false);
       } else {
-        // Game complete - redirect to random scenario
+        // Game complete - store only answer codes
+        sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(updatedCodes));
+        
+        // Redirect to random scenario
         const scenarioNum = Math.ceil(Math.random() * 3);
-        
-        // Store complete game data including final answer
-        sessionStorage.setItem('gameResults', JSON.stringify({
-          themeCounts: updatedThemeCounts,
-          themeAnswers: updatedThemeAnswers,
-          userJourney: updatedUserJourney
-        }));
-        
-        // Redirect to scenario page
         window.location.href = `/scenario-${scenarioNum}`;
       }
     }, 800);
@@ -190,7 +143,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         {/* Debug info */}
         {process.env.NODE_ENV === 'development' && (
           <div className="mt-16 text-center text-xs text-wave-foam/30 font-extralight tracking-wider">
-            Theme Counts: {Object.entries(themeCounts).map(([k, v]) => `${k}: ${v}`).join(', ')}
+            Selected Codes: {selectedAnswerCodes.join(', ')}
           </div>
         )}
       </div>
