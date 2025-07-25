@@ -94,8 +94,9 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         // Game complete - store only answer codes
         sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(updatedCodes));
         
-        // Redirect to random scenario
-        const scenarioNum = Math.ceil(Math.random() * 3);
+        // Redirect to random scenario (1, 2, or 3)
+        const scenarioNum = Math.floor(Math.random() * 3) + 1;
+        console.log('Redirecting to scenario:', scenarioNum);
         window.location.href = `/scenario-${scenarioNum}`;
       }
     }, 800);

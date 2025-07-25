@@ -89,6 +89,11 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     themeCounts[theme] = (themeCounts[theme] || 0) + 1;
   });
 
+  // Debug logging
+  console.log('Player Choices:', playerChoices);
+  console.log('Theme Counts:', themeCounts);
+  console.log('Spider Map:', spiderMap);
+
   const themeLabels = [
     "Political Leadership and Regionalism",
     "People Centered Development", 
@@ -219,6 +224,31 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
             Hover over a theme in the chart to see your detailed impact.
           </p>
         )}
+      </div>
+
+      {/* Debug Section - Show Theme Mapping */}
+      <div className="mt-8 p-6 bg-red-900/20 rounded-lg border border-red-500/30">
+        <h3 className="text-lg font-medium text-red-300 mb-4">Debug: Theme Mapping</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          {playerChoices.map((choice: any, index: number) => (
+            <div key={index} className="p-3 bg-white/5 rounded border border-white/10">
+              <div className="text-accent font-medium">Choice {index + 1}: {choice.code}</div>
+              <div className="text-white/80">Answer: {choice.answer}</div>
+              <div className="text-coral-warm">Theme: {choice.theme}</div>
+              <div className="text-wave-foam">Question: {choice.QuestionCode}</div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="mt-4 p-3 bg-white/5 rounded">
+          <h4 className="text-white font-medium mb-2">Theme Counts:</h4>
+          {Object.entries(themeCounts).map(([theme, count]) => (
+            <div key={theme} className="text-sm">
+              <span className="text-accent">{theme}:</span> <span className="text-white">{count}</span> 
+              <span className="text-coral-warm ml-2">({getLevel(count)})</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Choice Narratives Section */}
