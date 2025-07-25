@@ -2,56 +2,56 @@
   {
     "QuestionCode": "Q1",
     "Question": "Many remote villages feel left behind by national development. How will you reconnect and empower your communities?",
-    "options": ["A1", "A2"]
+    "options": ["A1", "B1"]
   },
   {
-    "QuestionCode": "Q2",
-    "Question": "A wave of foreign investment is coming into the region. How do you ensure these deals truly benefit the Pacific and align with its priorities?",
-    "options": ["A3", "A4"]
+    "QuestionCode": "Q2", 
+    "Question": "There's a governance gap between formal institutions and local communities, leading to conflicts and mistrust. What initiative do you support to mend this divide?",
+    "options": ["A2", "C2"]
   },
   {
     "QuestionCode": "Q3",
-    "Question": "There's a governance gap between formal institutions and local communities, leading to conflicts and mistrust. What initiative do you support to mend this divide?",
-    "options": ["A5", "A6"]
+    "Question": "A wave of foreign investment is coming into the region. How do you ensure these deals truly benefit the Pacific and align with its priorities?",
+    "options": ["A3", "D1"]
   },
   {
     "QuestionCode": "Q4",
-    "Question": "Pacific youth are drifting from traditional practices, and the environment is suffering (for example, pollinators are declining). How will you revive cultural knowledge and heal nature?",
-    "options": ["A7", "A8"]
+    "Question": "The Pacific must take bold action on climate change. What do you initiate?",
+    "options": ["A4", "E3"]
   },
   {
     "QuestionCode": "Q5",
     "Question": "Your nation grapples with urban health challenges and rural unemployment. What is your development priority?",
-    "options": ["A9", "A10"]
+    "options": ["B2", "D3"]
   },
   {
     "QuestionCode": "Q6",
-    "Question": "Climate risks are rising. Do you focus on grassroots resilience or bolster high-tech governance?",
-    "options": ["A11", "A12"]
+    "Question": "Pacific youth are drifting from traditional practices, and the environment is suffering (for example, pollinators are declining). How will you revive cultural knowledge and heal nature?",
+    "options": ["B3", "F1"]
   },
   {
     "QuestionCode": "Q7",
     "Question": "Sea levels are rising faster than expected, endangering whole villages. How do you respond?",
-    "options": ["A13", "A14"]
+    "options": ["C1", "E1"]
   },
   {
     "QuestionCode": "Q8",
-    "Question": "To boost local livelihoods without harming nature, what path do you choose?",
-    "options": ["A15", "A16"]
+    "Question": "Climate risks are rising. Do you focus on grassroots resilience or bolster high-tech governance?",
+    "options": ["C3", "G1"]
   },
   {
     "QuestionCode": "Q9",
-    "Question": "To build a climate-ready future, do you send youth abroad for advanced training or invest in preserving ancestral knowledge at home?",
-    "options": ["A17", "A18"]
+    "Question": "To boost local livelihoods without harming nature, what path do you choose?",
+    "options": ["D2", "F2"]
   },
   {
     "QuestionCode": "Q10",
-    "Question": "Pacific communities seek to share climate solutions region-wide. What initiative do you support?",
-    "options": ["A19", "A20"]
+    "Question": "To build a climate-ready future, do you send youth abroad for advanced training or invest in preserving ancestral knowledge at home?",
+    "options": ["E2", "G2"]
   },
   {
     "QuestionCode": "Q11",
-    "Question": "The Pacific must take bold action on climate change. What do you initiate?",
-    "options": ["A21", "A22"]
+    "Question": "Pacific communities seek to share climate solutions region-wide. What initiative do you support?",
+    "options": ["F3", "G3"]
   }
 ]
