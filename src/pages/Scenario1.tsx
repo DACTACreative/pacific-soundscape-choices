@@ -135,16 +135,35 @@ export default function Scenario1() {
           </div>
         </section>
 
-        {/* Blue Pacific Dashboard */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto">
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-12 text-center">
-                Blue Pacific Dashboard
-              </h2>
-              <div className="flex justify-center">
-                <ThematicSpiderChart className="w-full max-w-4xl" />
-              </div>
+        {/* Blue Pacific 2050 Reality */}
+        <section className="pt-24 pb-32 md:px-12 text-white">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-8">Blue Pacific 2050 Reality</h2>
+            
+            <p className="text-xl md:text-2xl max-w-4xl leading-relaxed mb-6">
+              <strong>Thematic Spider Chart – A Snapshot of Hard-Won Outcomes</strong>
+            </p>
+            
+            <p className="text-lg md:text-xl max-w-4xl leading-relaxed mb-6 text-gray-300">
+              This interactive spider chart visualizes the Pacific region's hard-won progress by 2050, plotting outcomes across key themes like environment, health, and infrastructure against an ideal scenario.
+            </p>
+            
+            <p className="text-lg md:text-xl max-w-4xl leading-relaxed mb-6 text-gray-300">
+              The chart's broad but imperfect shape illustrates a future built on successful yet realistic trade-offs. It's a living portrait of the Pacific's navigation through uncertainty, strength, and resilience.
+            </p>
+            
+            <p className="text-lg md:text-xl max-w-4xl leading-relaxed mb-10 text-gray-300">
+              This shape is a direct result of the choices made in this experience — a visual map of your region's trajectory.
+            </p>
+
+            <div className="bg-black/80 rounded-xl p-6 mb-8 text-center">
+              <p className="text-lg md:text-xl text-gray-300">
+                Hover over a theme in the chart to see the real-world impact of your choices.
+              </p>
+            </div>
+
+            <div className="w-full min-h-[500px] relative z-10">
+              <ThematicSpiderChart className="w-full" />
             </div>
           </div>
         </section>
