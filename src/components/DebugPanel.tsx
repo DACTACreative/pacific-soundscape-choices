@@ -17,11 +17,15 @@ export default function DebugPanel() {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // Load selected codes and CSV data
+    // Only show debug panel if we're actually in a game/scenario context
     const codes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    console.log('🐛 DebugPanel: Checking for selected codes:', codes);
+    
     setSelectedCodes(codes);
     
+    // Don't load anything if no codes are selected (user hasn't played yet)
     if (codes.length === 0) {
+      console.log('🐛 DebugPanel: No codes found, hiding panel');
       setLoading(false);
       return;
     }
@@ -72,12 +76,8 @@ export default function DebugPanel() {
       .catch(() => setLoading(false));
   }, []);
   
-  if (loading) {
-    return (
-      <div className="fixed bottom-4 right-4 bg-black/90 text-white p-4 rounded-lg border border-red-500 max-w-md">
-        <h3 className="text-red-400 font-bold mb-2">🐛 DEBUG PANEL - Loading...</h3>
-      </div>
-    );
+  if (loading || selectedCodes.length === 0) {
+    return null; // Don't show debug panel if no selections made
   }
   
   return (

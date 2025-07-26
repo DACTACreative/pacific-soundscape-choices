@@ -366,7 +366,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
                   >
                     <span className="absolute inset-0 bg-[#003f7f] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                     <span className="relative z-10">
-                      {answerObj?.answer || optionCode}
+                      {answerObj?.answer || `Loading... (${optionCode})`}
                     </span>
                   </button>
                 );

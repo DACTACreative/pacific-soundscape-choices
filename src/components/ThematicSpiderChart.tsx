@@ -259,12 +259,19 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     responsive: true,
     maintainAspectRatio: false,
     onHover: (event: any, chartElements: any) => {
+      console.log('🕷️ Chart hover event:', chartElements.length > 0 ? chartElements[0].index : 'none');
       if (chartElements.length) {
         const index = chartElements[0].index;
-        setHoveredTheme(themeLabels[index]);
+        const theme = themeLabels[index];
+        console.log('🕷️ Setting hovered theme:', theme);
+        setHoveredTheme(theme);
       } else {
         setHoveredTheme(null);
       }
+    },
+    interaction: {
+      mode: 'nearest' as const,
+      intersect: false,
     },
     scales: {
       r: {
@@ -280,7 +287,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         pointLabels: {
           font: {
             size: 12,
-            family: 'inherit'
+            family: '"Inter", system-ui, sans-serif'
           },
           color: '#ffffff'
         },
@@ -312,12 +319,12 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
   return (
     <div className={`relative ${className}`}>
-      <div className="w-full h-[500px] mx-auto relative z-20">
+      <div className="w-full h-[400px] sm:h-[500px] mx-auto relative z-20">
         <Radar data={data} options={options} />
       </div>
       
       {/* Hover Info Box */}
-      <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center min-h-[120px] flex flex-col justify-center">
+      <div className="mt-6 p-4 sm:p-6 bg-black/40 rounded-lg border border-white/20 text-center min-h-[120px] flex flex-col justify-center font-inter">
         {hoveredTheme ? (
           <>
              {(() => {
@@ -333,10 +340,10 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
                
                return (
                  <>
-                   <h3 className="text-xl font-semibold text-white mb-3">
+                   <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 font-inter">
                      {hoveredTheme} ({level} Impact - {rawCount} choices)
                    </h3>
-                   <p className="text-base text-gray-200 leading-relaxed">
+                   <p className="text-sm sm:text-base text-gray-200 leading-relaxed font-inter">
                      {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level]
                        ? spiderMap[fullThemeName][level]
                        : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
@@ -346,7 +353,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
              })()}
           </>
         ) : (
-          <p className="text-base text-gray-300">
+          <p className="text-sm sm:text-base text-gray-300 font-inter">
             Hover over a theme in the chart to see your detailed impact.
           </p>
         )}
