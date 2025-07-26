@@ -111,41 +111,83 @@ export default function LandingPage() {
         className="absolute inset-0 w-full h-full"
       />
 
-      {/* Overlay Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center p-8">
-        <div className="flex flex-col items-center justify-center text-center max-w-4xl space-y-8">
-          {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full">
-            <span className="text-white/80 text-sm font-semibold tracking-wide">
-              Official Entry – Pacific DataViz Challenge 2025
-            </span>
-          </div>
-          
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-black/50 z-5" />
+
+      {/* Content */}
+      <div className="relative z-10 h-full flex items-center" style={{ padding: '5vh 10vw' }}>
+        <div className="max-w-4xl">
           {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight">
-            Choose Your Pacific Future
+          <h1 
+            className="text-white font-bold uppercase tracking-wider leading-none mb-4"
+            style={{ 
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontWeight: '800',
+              fontSize: 'clamp(36px, 4vw, 64px)',
+              lineHeight: '1.1',
+              letterSpacing: '0.03em'
+            }}
+          >
+            BLUE PACIFIC 2050
           </h1>
           
           {/* Subtitle */}
-          <h2 className="text-2xl md:text-3xl font-medium text-white/90 tracking-wide">
-            A Climate Challenge from the Blue Pacific
+          <h2 
+            className="text-white font-bold uppercase tracking-wider leading-none mb-6"
+            style={{ 
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontWeight: '800',
+              fontSize: 'clamp(24px, 3vw, 48px)',
+              lineHeight: '1.1',
+              letterSpacing: '0.03em'
+            }}
+          >
+            A SONIFICATION STRATEGY CHALLENGE
           </h2>
           
-          {/* Description */}
-          <div className="text-white/80 text-lg md:text-xl font-light leading-relaxed max-w-2xl space-y-2">
-            <p>An immersive experience through data, sound, and strategic decision-making.</p>
-            <p>Headphones are recommended for the full experience.</p>
-          </div>
-          
-          {/* Start Button */}
-          <Button
-            onClick={handleStart}
-            size="hero"
-            variant="ocean"
-            className="text-xl px-12 py-6 bg-white text-black hover:bg-white/90 transition-all duration-300 font-bold tracking-wide rounded-full border-none mt-8"
+          {/* Tagline */}
+          <p 
+            className="text-white mb-4"
+            style={{ 
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: 'clamp(16px, 2vw, 24px)',
+              fontWeight: '400',
+              lineHeight: '1.3'
+            }}
           >
-            Start Game
-          </Button>
+            An immersive experience in shaping our region's future
+          </p>
+          
+          {/* Note */}
+          <p 
+            className="text-white/80 mb-8"
+            style={{ 
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: 'clamp(14px, 1.5vw, 18px)',
+              fontWeight: '300'
+            }}
+          >
+            Headphones recommended
+          </p>
+          
+          {/* Button */}
+          <button
+            onClick={handleStart}
+            className="transition-all duration-300 hover:scale-105"
+            style={{
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: '20px',
+              fontWeight: '700',
+              padding: '1rem 2rem',
+              backgroundColor: '#00E0FF',
+              color: '#000000',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            START GAME
+          </button>
         </div>
       </div>
     </div>
