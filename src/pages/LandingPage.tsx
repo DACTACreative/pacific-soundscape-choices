@@ -123,7 +123,7 @@ export default function LandingPage() {
             style={{ 
               fontFamily: 'Space Grotesk, sans-serif',
               fontWeight: '800',
-              fontSize: 'clamp(36px, 4vw, 64px)',
+              fontSize: 'clamp(48px, 6vw, 80px)',
               lineHeight: '1.1',
               letterSpacing: '0.03em'
             }}
@@ -137,7 +137,7 @@ export default function LandingPage() {
             style={{ 
               fontFamily: 'Space Grotesk, sans-serif',
               fontWeight: '800',
-              fontSize: 'clamp(24px, 3vw, 48px)',
+              fontSize: 'clamp(42px, 5.5vw, 72px)',
               lineHeight: '1.1',
               letterSpacing: '0.03em'
             }}
@@ -147,11 +147,11 @@ export default function LandingPage() {
           
           {/* Tagline */}
           <p 
-            className="text-white mb-4"
+            className="text-white mb-6"
             style={{ 
               fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: 'clamp(16px, 2vw, 24px)',
-              fontWeight: '400',
+              fontSize: 'clamp(24px, 3vw, 36px)',
+              fontWeight: '600',
               lineHeight: '1.3'
             }}
           >
@@ -160,34 +160,30 @@ export default function LandingPage() {
           
           {/* Note */}
           <p 
-            className="text-white/80 mb-8"
+            className="text-white/80 mb-12"
             style={{ 
               fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: 'clamp(14px, 1.5vw, 18px)',
-              fontWeight: '300'
+              fontSize: 'clamp(20px, 2.5vw, 28px)',
+              fontWeight: '400'
             }}
           >
             Headphones recommended
           </p>
           
-          {/* Button */}
-          <button
+          {/* Clickable Start Text */}
+          <h3
             onClick={handleStart}
-            className="transition-all duration-300 hover:scale-105"
+            className="text-white font-bold uppercase tracking-wider leading-none cursor-pointer transition-all duration-300 hover:text-cyan-400"
             style={{
               fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: '20px',
-              fontWeight: '700',
-              padding: '1rem 2rem',
-              backgroundColor: '#00E0FF',
-              color: '#000000',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer'
+              fontWeight: '800',
+              fontSize: 'clamp(48px, 6vw, 80px)',
+              lineHeight: '1.1',
+              letterSpacing: '0.03em'
             }}
           >
-            START GAME
-          </button>
+            SHAPE OUR JOURNEY TO 2050
+          </h3>
         </div>
       </div>
     </div>
