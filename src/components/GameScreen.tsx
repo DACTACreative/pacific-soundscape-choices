@@ -56,7 +56,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   useEffect(() => {
     // Initialize VANTA background
     const initVanta = () => {
-      if (window.VANTA && window.THREE && !vantaEffect.current) {
+      if (window.VANTA && window.THREE && !vantaEffect.current && vantaRef.current) {
         vantaEffect.current = window.VANTA.TRUNK({
           el: vantaRef.current,
           THREE: window.THREE,
@@ -77,6 +77,10 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     // Load scripts
     const loadScript = (src: string) => {
       return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) {
+          resolve(true);
+          return;
+        }
         const script = document.createElement('script');
         script.src = src;
         script.onload = resolve;
@@ -93,7 +97,8 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         if (!window.VANTA) {
           await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js');
         }
-        initVanta();
+        // Small delay to ensure scripts are fully loaded
+        setTimeout(initVanta, 100);
       } catch (error) {
         console.error('Failed to load VANTA:', error);
       }
@@ -102,10 +107,15 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     loadVanta();
 
     return () => {
-      if (vantaEffect.current) {
-        vantaEffect.current.destroy();
-        vantaEffect.current = null;
+      // Safe cleanup: check if effect exists and if DOM element still exists
+      if (vantaEffect.current && vantaRef.current && document.contains(vantaRef.current)) {
+        try {
+          vantaEffect.current.destroy();
+        } catch (error) {
+          console.warn('Error destroying VANTA effect:', error);
+        }
       }
+      vantaEffect.current = null;
     };
   }, []);
 
