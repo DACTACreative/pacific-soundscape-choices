@@ -162,8 +162,8 @@ Not one shaped without us.`,
     <div className="bg-black text-white min-h-screen">
       {/* Fixed Header */}
      <div className="fixed top-6 left-6 z-50">
-  <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-1 text-white">BLUE PACIFIC 2050</h1>
-  <p className="text-sm md:text-lg font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
+<h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-1 text-white">
+  <p className="text-lg md:text-2xl font-medium tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
 </div>
 
       {/* Content Blocks */}
