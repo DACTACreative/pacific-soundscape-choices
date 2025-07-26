@@ -161,7 +161,7 @@ Not one shaped without us.`,
   return (
     <div className="bg-black text-white min-h-screen">
       {/* Fixed Header */}
-     <div className="fixed top-6 left-6 z-50">
+     <div className="fixed top-6 left-6 z-50 bg-black p-4 rounded-lg">
   <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-3 text-white">BLUE PACIFIC 2050</h1>
   <p className="text-2xl md:text-4xl font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
 </div>
@@ -207,15 +207,23 @@ Not one shaped without us.`,
                 {/* Image Side */}
                 <div className="w-full lg:w-1/2">
                   <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
-                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                      <div className="text-center text-gray-400">
-                        <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
-                          <span className="text-2xl">🖼️</span>
+                    {block.id === 1 ? (
+                      <img 
+                        src="/lovable-uploads/2784ebb1-a1be-46fa-ad9d-c9fc952a0d6d.png" 
+                        alt="Blue Pacific 2050 Experience"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                        <div className="text-center text-gray-400">
+                          <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
+                            <span className="text-2xl">🖼️</span>
+                          </div>
+                          <p className="text-sm">Image Placeholder</p>
+                          <p className="text-xs mt-1">Block {block.id}</p>
                         </div>
-                        <p className="text-sm">Image Placeholder</p>
-                        <p className="text-xs mt-1">Block {block.id}</p>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
 
