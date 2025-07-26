@@ -244,11 +244,11 @@ Let’s begin.`,
 
                 {/* Image Side */}
                 <div className="w-full lg:w-1/2">
-                  <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
+                  <div className="w-full max-w-md mx-auto bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
                     <img 
-                      src={block.id === 1 ? introImages[2] : block.id === 2 ? introImages[0] : introImages[(block.id - 1) % introImages.length]} 
+                      src={block.id === 1 ? introImages[1] : block.id === 2 ? introImages[0] : introImages[(block.id - 1) % introImages.length]} 
                       alt={`Intro image for ${block.title}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto object-contain"
                     />
                   </div>
                 </div>
