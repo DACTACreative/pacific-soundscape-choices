@@ -54,10 +54,16 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   useEffect(() => {
-    // Initialize VANTA background
+    let mounted = true;
+    
     const initVanta = () => {
-      if (window.VANTA && window.THREE && !vantaEffect.current && vantaRef.current) {
+      if (!mounted || !vantaRef.current) return;
+      
+      console.log('Checking VANTA availability:', !!window.VANTA, !!window.THREE);
+      
+      if (window.VANTA && window.THREE && !vantaEffect.current) {
         try {
+          console.log('Initializing VANTA...');
           vantaEffect.current = window.VANTA.TRUNK({
             el: vantaRef.current,
             THREE: window.THREE,
@@ -69,58 +75,54 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
             scale: 1.0,
             scaleMobile: 1.0,
             backgroundColor: 0x000000,
-            color: 0x1149ac,
-            chaos: 3.0,
+            color: 0x0066cc,
+            chaos: 4.0,
           });
+          console.log('VANTA initialized successfully!', vantaEffect.current);
         } catch (error) {
-          console.error('VANTA initialization error:', error);
+          console.error('VANTA initialization failed:', error);
         }
       }
     };
 
-    // Load scripts with proper version compatibility
-    const loadScript = (src: string) => {
-      return new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) {
-          resolve(true);
-          return;
-        }
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
+    // Direct script injection - more reliable
+    const loadScripts = () => {
+      // Remove any existing scripts first
+      document.querySelectorAll('script[src*="three"]').forEach(s => s.remove());
+      document.querySelectorAll('script[src*="vanta"]').forEach(s => s.remove());
+      
+      // Load THREE.js
+      const threeScript = document.createElement('script');
+      threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js';
+      threeScript.onload = () => {
+        console.log('THREE.js loaded');
+        
+        // Load VANTA after THREE.js
+        const vantaScript = document.createElement('script');
+        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@0.5.21/dist/vanta.trunk.min.js';
+        vantaScript.onload = () => {
+          console.log('VANTA loaded');
+          setTimeout(initVanta, 500);
+        };
+        vantaScript.onerror = () => console.error('VANTA script failed to load');
+        document.head.appendChild(vantaScript);
+      };
+      threeScript.onerror = () => console.error('THREE.js script failed to load');
+      document.head.appendChild(threeScript);
     };
 
-    const loadVanta = async () => {
-      try {
-        // Use a specific compatible version of THREE.js
-        if (!window.THREE) {
-          await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js');
-        }
-        if (!window.VANTA) {
-          await loadScript('https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.trunk.min.js');
-        }
-        // Give scripts time to load and register
-        setTimeout(initVanta, 200);
-      } catch (error) {
-        console.error('Failed to load VANTA:', error);
-      }
-    };
-
-    loadVanta();
+    loadScripts();
 
     return () => {
-      // Safe cleanup
-      if (vantaEffect.current && vantaRef.current && document.contains(vantaRef.current)) {
+      mounted = false;
+      if (vantaEffect.current) {
         try {
           vantaEffect.current.destroy();
         } catch (error) {
-          console.warn('Error destroying VANTA effect:', error);
+          console.warn('Error destroying VANTA:', error);
         }
+        vantaEffect.current = null;
       }
-      vantaEffect.current = null;
     };
   }, []);
 
@@ -186,7 +188,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   if (loading) {
     return (
       <div className="relative min-h-screen bg-black text-white overflow-hidden">
-        <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full"></div>
+        <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full animated-bg-fallback" data-vanta="true"></div>
         <div className="relative z-10 flex items-center justify-center min-h-screen">
           <div className="text-xl">Loading game...</div>
         </div>
@@ -196,8 +198,20 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* VANTA Background */}
-      <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full"></div>
+      {/* VANTA Background with fallback */}
+      <div 
+        ref={vantaRef} 
+        className="absolute inset-0 -z-10 w-full h-full animated-bg-fallback" 
+        data-vanta="true"
+        style={{ 
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: -10
+        }}
+      ></div>
       
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen">
@@ -255,7 +269,10 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
           {/* Debug info */}
           {process.env.NODE_ENV === 'development' && (
             <div className="mt-12 text-center text-xs text-white/30 font-light tracking-wider">
-              Selected Codes: {selectedAnswerCodes.join(', ')}
+              Selected Codes: {selectedAnswerCodes.join(', ')}<br/>
+              VANTA Status: {vantaEffect.current ? 'Active' : 'Not Active'}<br/>
+              THREE.js: {window.THREE ? 'Loaded' : 'Not Loaded'}<br/>
+              VANTA: {window.VANTA ? 'Loaded' : 'Not Loaded'}
             </div>
           )}
         </div>
