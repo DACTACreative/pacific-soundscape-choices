@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
+import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 
 export default function Scenario2() {
   const vantaRef = useRef<HTMLDivElement>(null);
@@ -132,16 +133,35 @@ export default function Scenario2() {
           </div>
         </section>
 
-        {/* Blue Pacific Dashboard */}
+        {/* Blue Pacific 2050 Reality */}
         <section className="min-h-screen py-24 md:py-48 flex items-center">
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-12 text-center">
-                Blue Pacific Dashboard
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 text-center">
+                Blue Pacific 2050 Reality
               </h2>
+              <div className="max-w-5xl mx-auto mb-12">
+                <p className="text-xl md:text-2xl leading-relaxed text-white text-center">
+                  This spider chart visualizes how your choices shaped Fiji's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
+                </p>
+              </div>
+              <div className="text-center mb-8">
+                <p className="text-lg text-white/80">
+                  Hover over each axis to explore how your choices influenced that theme
+                </p>
+              </div>
               <div className="flex justify-center">
                 <ThematicSpiderChart className="w-full max-w-4xl" />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Blue Pacific Stories */}
+        <section className="py-24 md:py-48">
+          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
+            <div className="max-w-7xl mx-auto">
+              <BluePacificStoriesSection />
             </div>
           </div>
         </section>
