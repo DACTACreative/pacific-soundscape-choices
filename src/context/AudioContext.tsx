@@ -55,17 +55,38 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({
         loop: true,
         volume: 0,
         preload: true,
+        onloaderror: (id, error) => {
+          console.warn(`Audio load error for ${sc}:`, error);
+          // Still resolve to prevent hanging
+        },
+        onload: () => {
+          console.log(`Audio loaded successfully: ${sc}`);
+        }
       });
       instances[sc] = hw;
       loaders.push(
-        new Promise((res) => hw.once("load", () => res()))
+        new Promise((res) => {
+          hw.once("load", () => res());
+          hw.once("loaderror", () => res()); // Resolve even on error
+          // Add timeout fallback
+          setTimeout(() => res(), 5000); // Max 5 seconds wait
+        })
       );
     });
 
     Promise.all(loaders).then(() => {
       setHowls(instances);
       setLoading(false);
+      console.log("Audio context loading complete");
     });
+
+    // Fallback: Force loading to false after 8 seconds
+    const fallbackTimer = setTimeout(() => {
+      console.warn("Audio loading timeout, forcing ready state");
+      setLoading(false);
+    }, 8000);
+
+    return () => clearTimeout(fallbackTimer);
   }, []);
 
   // 2) Play or switch scenarios
