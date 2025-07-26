@@ -16,7 +16,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   const blocks = [
     {
       id: 1,
-      title: "Block 1 – Creating Feeling",
+      title: "Creating Feeling",
       content: `This piece was created to create feeling.
 To create a sense of belonging and hope — a rare feeling in the face of climate change.
 
@@ -30,7 +30,7 @@ We are so close… but so far.`,
     },
     {
       id: 2,
-      title: "Block 2 – The Sound of Our Ocean",
+      title: "The Sound of Our Ocean",
       content: `The sea is what brings us together.
 It's the backbone of our Pacific culture.
 
@@ -46,7 +46,7 @@ Each low = a retreat six hours later.`,
     },
     {
       id: 3,
-      title: "Block 3 – The Reality We Face",
+      title: "The Reality We Face",
       content: `We are already on the path to a warmer Earth.
 
 The Pacific contributes less than 0.03% of global carbon emissions.
@@ -59,7 +59,7 @@ But it's always there — like the background sound of this ocean.`,
     },
     {
       id: 4,
-      title: "Block 4 – Your Role in This Journey",
+      title: "Your Role in This Journey",
       content: `During this game, you'll be projected into a series of decisions.
 
 Every one of them is connected to the themes and indicators from the Blue Pacific 2050 Implementation Plan.
@@ -87,7 +87,7 @@ Feeling makes things real.`,
     },
     {
       id: 6,
-      title: "Block 6 – Mechanics of the Game",
+      title: "Mechanics of the Game",
       content: `You'll make seven key decisions.
 Each one maps directly to the seven Blue Pacific Strategy pillars:
 
@@ -105,7 +105,7 @@ Your answers affect data points and Pacific indicators.`,
     },
     {
       id: 7,
-      title: "Block 7 – The Twist",
+      title: "The Twist",
       content: `Once your decisions are made, the world moves forward.
 Welcome to 2050.
 
@@ -125,7 +125,7 @@ We are not the biggest polluters — yet we carry the weight.`,
     },
     {
       id: 8,
-      title: "Block 8 – Seeing Your Impact",
+      title: "Seeing Your Impact",
       content: `Once 2050 loads, you'll see the consequences.
 
 How did your choices align with the Blue Pacific indicators?
@@ -140,7 +140,7 @@ See a dashboard of change.`,
     },
     {
       id: 9,
-      title: "Block 9 – Last Words Before You Begin",
+      title: "Last Words Before You Begin",
       content: `Yes, the ocean is rising.
 But so are we.
 
@@ -161,10 +161,10 @@ Not one shaped without us.`,
   return (
     <div className="bg-black text-white min-h-screen">
       {/* Fixed Header */}
-      <div className="fixed top-6 left-6 z-50">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-1 text-white">BLUE PACIFIC 2050</h1>
-        <p className="text-sm md:text-lg font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
-      </div>
+     <div className="fixed top-6 left-6 z-50">
+  <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-1 text-white">BLUE PACIFIC 2050</h1>
+  <p className="text-sm md:text-lg font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
+</div>
 
       {/* Content Blocks */}
       <div className="pt-32">
@@ -176,10 +176,11 @@ Not one shaped without us.`,
                 {/* Text Side */}
                 <div className="w-full lg:w-1/2">
                   <div className="max-w-2xl mx-auto lg:mx-0">
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#35c5f2] mb-8">{block.title}</h2>
-                    <div className="text-lg md:text-xl leading-relaxed whitespace-pre-line">
-                      {block.content}
-                    </div>
+                    <h2 className="text-3xl md:text-5xl font-bold text-[#0026d7] mb-10">{block.title}</h2>
+<div className="text-xl md:text-2xl leading-loose whitespace-pre-line text-white">
+  {block.content}
+</div>
+
                     
                     {block.isLast && (
                       <div className="mt-12">
