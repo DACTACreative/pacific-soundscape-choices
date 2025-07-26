@@ -185,19 +185,24 @@ export default function LandingPage() {
             <span className="relative z-10">SHAPE OUR JOURNEY TO 2050</span>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
           </button>
+
+
+
+      
+          
+        </div>
+            
 <p 
             className="text-white/80 mb-12"
             style={{ 
               fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: 'clamp(20px, 2.5vw, 28px)',
+              fontSize: 'clamp(11px, 2.5vw, 28px)',
               fontWeight: '400'
             }}
           >
            Official entry — Pacific DataViz Challenge 2025  
 https://pacificdatavizchallenge.org/
           </p>
-          
-        </div>
       </div>
     </div>
   );
