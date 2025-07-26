@@ -1,34 +1,29 @@
-import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
 
 // Import intro images
-import introA from '../data/intro-a.png';
-import introAA from '../data/intro-aa.png';
-import introB from '../data/intro-b.png';
-import introC from '../data/intro-c.png';
-import introD from '../data/intro-d.png';
-import introE from '../data/intro-e.png';
-import introF from '../data/intro-f.png';
-import introG from '../data/intro-g.png';
-import introH from '../data/intro-h.png';
-import introI from '../data/intro-i.png';
-import introJ from '../data/intro-j.png';
-
-const introImages = [
-  introA, introAA, introB, introC, introD, introE, introF, introG, introH, introI, introJ
-];
+import introA from '@/data/intro-a.png';
+import introAA from '@/data/intro-aa.png';
+import introB from '@/data/intro-b.png';
+import introC from '@/data/intro-c.png';
+import introD from '@/data/intro-d.png';
+import introE from '@/data/intro-e.png';
+import introF from '@/data/intro-f.png';
+import introG from '@/data/intro-g.png';
+import introH from '@/data/intro-h.png';
+import introI from '@/data/intro-i.png';
+import introJ from '@/data/intro-j.png';
 
 interface IntroScreenProps {
   onStart: () => void;
 }
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
-  const { loading, playScenario } = useAudio();
-
   const handleStart = () => {
-    playScenario(Scenario.Scenario0);
     onStart();
   };
+
+  // Array of intro images to use
+  const introImages = [introA, introB, introC, introD, introE, introF, introG, introH, introI, introJ, introAA];
 
   const blocks = [
     {
@@ -44,7 +39,7 @@ To bring us together as a region.
 We are mainly made of sea.
 We are so close… but so far.`,
       reversed: false,
-      image: introImages[1]
+      image: introImages[0]
     },
     {
       id: 2,
@@ -61,7 +56,7 @@ The sound you'll hear? It's real. The actual tide, sonified.
 Each high tide = water rising.
 Each low = a retreat six hours later.`,
       reversed: true,
-      image: introImages[0]
+      image: introImages[1]
     },
     {
       id: 3,
@@ -74,8 +69,8 @@ Yet we face the consequences just as much as any other region.
 Sea level rise is one of our most silent threats.
 So slow, so invisible… we forget.
 But it's always there — like the background sound of this ocean.`,
-      reversed: true,
-    image: introImages[3]
+      reversed: false,
+      image: introImages[2]
     },
     {
       id: 4,
@@ -87,8 +82,8 @@ Some are policy-based. Others are small-scale utopias.
 
 Why utopia?
 Because keeping hope is a form of resistance.`,
-       reversed: false,
-    image: introImages[4]
+      reversed: true,
+      image: introImages[3]
     },
     {
       id: 5,
@@ -104,8 +99,8 @@ It becomes personal.
 Frameworks and policies are crucial, yes.
 But emotion moves people.
 Feeling makes things real.`,
-         reversed: true,
-    image: introImages[5]
+      reversed: false,
+      image: introImages[4]
     },
     {
       id: 6,
@@ -123,8 +118,8 @@ Each one maps directly to the seven Blue Pacific Strategy pillars:
 
 Each decision will shape our region in subtle, measurable ways.
 Your answers affect data points and Pacific indicators.`,
-        reversed: false,
-    image: introImages[6]
+      reversed: true,
+      image: introImages[5]
     },
     {
       id: 7,
@@ -144,8 +139,8 @@ You'll land in one of three outcomes:
 
 This randomness mirrors our power imbalance in real life.
 We are not the biggest polluters — yet we carry the weight.`,
-     reversed: true,
-    image: introImages[7]
+      reversed: false,
+      image: introImages[6]
     },
     {
       id: 8,
@@ -161,7 +156,7 @@ You'll meet people.
 Hear how one decision affected them.
 See a dashboard of change.`,
       reversed: true,
-      image: introImages[9]
+      image: introImages[7]
     },
     {
       id: 9,
@@ -180,7 +175,7 @@ Let's shape a future that looks like us —
 Not one shaped without us.`,
       reversed: false,
       isLast: true,
-        image: introImages[8]
+      image: introImages[8]
     }
   ];
 
@@ -195,34 +190,32 @@ Not one shaped without us.`,
       {/* Content Blocks */}
       <div className="pt-32">
         {blocks.map((block) => (
-          <section key={block.id} className="min-h-screen py-48 flex items-center">
-            <div className="w-full px-6 md:px-12">
-              <div className={`flex flex-col lg:flex-row items-start gap-16 h-full ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
+          <section key={block.id} className="min-h-screen py-24 md:py-48 flex items-center">
+            <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
+              <div className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 h-full max-w-7xl mx-auto ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
                 
                 {/* Text Side */}
                 <div className="w-full lg:w-1/2">
-                  <div className="w-full max-w-2xl mx-auto lg:mx-0">
-                    <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">{block.title}</h2>
-<div className="text-2xl md:text-3xl leading-relaxed whitespace-pre-line text-white">
-  {block.content}
-</div>
+                  <div className={`w-full ${block.reversed ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0'}`}>
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 lg:mb-8">{block.title}</h2>
+                    <div className="text-lg md:text-xl lg:text-2xl leading-relaxed whitespace-pre-line text-white text-justify">
+                      {block.content}
+                    </div>
 
-                    
                     {block.isLast && (
-                      <div className="mt-12">
+                      <div className="mt-8 lg:mt-12">
                         <Button
                           onClick={handleStart}
-                          disabled={loading}
                           size="lg"
-                          className="group relative px-12 py-8 text-4xl md:text-5xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                          className="group relative px-8 md:px-12 py-6 md:py-8 text-2xl md:text-3xl lg:text-4xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
                         >
                           <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                           <span className="relative z-10">
-                            {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
+                            START YOUR JOURNEY TO 2050
                           </span>
                         </Button>
                         
-                        <p className="mt-6 text-2xl md:text-3xl text-white font-light">
+                        <p className="mt-6 text-lg md:text-xl lg:text-2xl text-white font-light">
                           Audio experience recommended for full immersion
                         </p>
                       </div>
@@ -232,15 +225,13 @@ Not one shaped without us.`,
 
                 {/* Image Side */}
                 <div className="w-full lg:w-1/2">
-                  <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
-                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                      <div className="text-center text-gray-400">
-                        <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
-                          <span className="text-2xl">🖼️</span>
-                        </div>
-                        <p className="text-sm">Image Placeholder</p>
-                        <p className="text-xs mt-1">Block {block.id}</p>
-                      </div>
+                  <div className={`w-full max-w-lg mx-auto ${block.reversed ? 'lg:mr-auto lg:ml-0' : 'lg:ml-auto lg:mr-0'}`}>
+                    <div className="rounded-lg overflow-hidden shadow-2xl">
+                      <img 
+                        src={block.image} 
+                        alt={`Illustration for ${block.title}`}
+                        className="w-full h-auto object-contain"
+                      />
                     </div>
                   </div>
                 </div>
