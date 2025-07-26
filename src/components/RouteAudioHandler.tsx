@@ -11,8 +11,8 @@ export default function RouteAudioHandler() {
     if (loading) return;
 
     if (pathname === "/game") {
-      // On the main game page, start with Scenario0 (baseline audio)
-      playScenario(Scenario.Scenario0);
+      // Audio will be handled by GameScreen component when first question loads
+      // No audio action needed here
     } else if (pathname.startsWith("/scenario-1")) {
       playScenario(Scenario.Scenario1);
     } else if (pathname.startsWith("/scenario-2")) {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useAudio, Scenario } from '@/context/AudioContext';
 import questionsData from '@/data/questions.json';
 import Papa from 'papaparse';
 
@@ -45,9 +46,11 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [answers, setAnswers] = useState<Record<string, GameAnswer>>({});
   const [loading, setLoading] = useState(true);
+  const [audioStarted, setAudioStarted] = useState(false);
   
   const vantaRef = useRef(null);
   const vantaEffect = useRef(null);
+  const { playScenario } = useAudio();
 
   const questions: GameQuestion[] = questionsData;
   const currentQuestion = questions[currentQuestionIndex];
@@ -211,6 +214,12 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
             });
             setAnswers(answersMap);
             setLoading(false);
+            
+            // Start Scenario0 audio when the first question loads
+            if (!audioStarted) {
+              playScenario(Scenario.Scenario0);
+              setAudioStarted(true);
+            }
           }
         });
       })
