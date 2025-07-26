@@ -1,6 +1,23 @@
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
 
+// Import intro images
+import introA from '../data/intro-a.png';
+import introAA from '../data/intro-aa.png';
+import introB from '../data/intro-b.png';
+import introC from '../data/intro-c.png';
+import introD from '../data/intro-d.png';
+import introE from '../data/intro-e.png';
+import introF from '../data/intro-f.png';
+import introG from '../data/intro-g.png';
+import introH from '../data/intro-h.png';
+import introI from '../data/intro-i.png';
+import introJ from '../data/intro-j.png';
+
+const introImages = [
+  introA, introAA, introB, introC, introD, introE, introF, introG, introH, introI, introJ
+];
+
 interface IntroScreenProps {
   onStart: () => void;
 }
@@ -144,7 +161,7 @@ You'll meet people.
 Hear how one decision affected them.
 See a dashboard of change.`,
       reversed: true,
-      mage: introImages[9]
+      image: introImages[9]
     },
     {
       id: 9,
