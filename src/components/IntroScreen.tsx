@@ -49,7 +49,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </div>
 
       {/* Block 1 - Text Left, Image Right */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-01" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -75,7 +75,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-01">
-            <div id="block-01" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="Ocean Sound" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-01-ocean-sound.jpg
@@ -86,7 +86,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </section>
 
       {/* Block 2 - Text Right, Image Left */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-02" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -114,7 +114,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-02">
-            <div id="block-02" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="Fiji Tide" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-02-fiji-tide.jpg
@@ -125,7 +125,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </section>
 
       {/* Block 3 - Text Left, Image Right */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-03" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -148,7 +148,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-03">
-            <div id="block-03" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="Climate Scenario" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-03-climate-scenario.jpg
@@ -159,7 +159,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </section>
 
       {/* Block 4 - Text Right, Image Left */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-04" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -178,7 +178,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-04">
-            <div id="block-04" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="Resilience Response" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-04-resilience-response.jpg
@@ -189,7 +189,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </section>
 
       {/* Block 5 - Text Left, Image Right */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-05" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -213,7 +213,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-05">
-            <div id="block-05" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="Blue Pacific Strategy" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-05-blue-pacific-strategy.jpg
@@ -224,7 +224,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </section>
 
       {/* Block 6 - Text Right, Image Left */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-06" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -249,7 +249,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-06">
-            <div id="block-06" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="People Impacted" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-06-people-impacted.jpg
@@ -260,7 +260,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </section>
 
       {/* Block 7 - Text Left, Image Right */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-07" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -287,7 +287,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-07">
-            <div id="block-07" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="Climate Uncertainty" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-07-climate-uncertainty.jpg
@@ -298,7 +298,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       </section>
 
       {/* Block 8 - Text Right, Image Left */}
-      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+      <section id="block-08" data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
           <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
             <div className="max-w-2xl">
@@ -317,7 +317,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
             </div>
           </div>
           <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-08">
-            <div id="block-08" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
               <img src="/placeholder.svg" alt="Impact Dashboard" className="w-full h-full object-cover" />
               <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
                 block-08-impact-dashboard.jpg
