@@ -69,15 +69,103 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-wave-foam">Loading your thematic impact...</div>
+        <div className="text-white text-lg">Loading your thematic impact...</div>
       </div>
     );
   }
 
   if (playerChoices.length === 0 || !spiderMap) {
+    // Provide fallback data for demonstration
+    const fallbackThemeLabels = [
+      "Political Leadership and Regionalism",
+      "People Centered Development", 
+      "Peace and Security",
+      "Resource and Economic Development",
+      "Climate Change and Disasters",
+      "Ocean and Environment",
+      "Technology and Connectivity"
+    ];
+    
+    const fallbackData = [2, 3, 1, 2, 3, 2, 1]; // Sample data showing moderate progress
+    
+    const data = {
+      labels: fallbackThemeLabels,
+      datasets: [
+        {
+          label: 'Blue Pacific 2050 Progress',
+          data: fallbackData,
+          backgroundColor: 'rgba(53, 197, 242, 0.3)',
+          borderColor: '#35c5f2',
+          borderWidth: 3,
+          pointBackgroundColor: '#35c5f2',
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointRadius: 8,
+          pointHoverRadius: 10,
+        }
+      ]
+    };
+
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          angleLines: {
+            color: 'rgba(255, 255, 255, 0.2)'
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.15)'
+          },
+          pointLabels: {
+            font: {
+              size: 14,
+              family: 'inherit'
+            },
+            color: '#ffffff',
+            padding: 25
+          },
+          ticks: {
+            stepSize: 1,
+            min: 0,
+            max: 3,
+            callback: function(value: any) {
+              if (value === 0) return '';
+              if (value === 1) return 'LOW';
+              if (value === 2) return 'MED';
+              if (value === 3) return 'HIGH';
+              return '';
+            },
+            color: '#e5e7eb',
+            backdropColor: 'transparent',
+            font: {
+              size: 12
+            }
+          },
+          suggestedMin: 0,
+          suggestedMax: 3
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          enabled: false
+        }
+      }
+    };
+
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-wave-foam">No thematic data available</div>
+      <div className={`relative ${className}`}>
+        <div className="w-full h-[500px] mx-auto">
+          <Radar data={data} options={options} />
+        </div>
+        <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center">
+          <p className="text-white/80">
+            This chart shows potential outcomes across key themes of the Blue Pacific 2050 strategy.
+          </p>
+        </div>
       </div>
     );
   }
@@ -89,10 +177,6 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     themeCounts[theme] = (themeCounts[theme] || 0) + 1;
   });
 
-  // Debug logging
-  console.log('Player Choices:', playerChoices);
-  console.log('Theme Counts:', themeCounts);
-  console.log('Spider Map:', spiderMap);
 
   const themeLabels = [
     "Political Leadership and Regionalism",
@@ -122,13 +206,14 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       {
         label: 'Your Impact on Blue Pacific 2050',
         data: chartData,
-        backgroundColor: 'rgba(34, 202, 236, 0.3)',
-        borderColor: '#22CAEC',
-        borderWidth: 2,
-        pointBackgroundColor: '#22CAEC',
-        pointBorderColor: '#22CAEC',
-        pointRadius: 6,
-        pointHoverRadius: 8,
+        backgroundColor: 'rgba(53, 197, 242, 0.3)',
+        borderColor: '#35c5f2',
+        borderWidth: 3,
+        pointBackgroundColor: '#35c5f2',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 8,
+        pointHoverRadius: 10,
       }
     ]
   };
@@ -144,43 +229,43 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         setHoveredTheme(null);
       }
     },
-    scales: {
-      r: {
-        angleLines: {
-          color: '#ffffff30'
-        },
-        grid: {
-          color: '#ffffff20'
-        },
-        pointLabels: {
-          font: {
-            size: 18,
-            family: 'inherit'
+      scales: {
+        r: {
+          angleLines: {
+            color: 'rgba(255, 255, 255, 0.2)'
           },
-          color: '#ffffff',
-          padding: 20
-        },
-        ticks: {
-          stepSize: 1,
-          min: 0,
-          max: 3,
-          callback: function(value: any) {
-            if (value === 0) return '';
-            if (value === 1) return 'LOW';
-            if (value === 2) return 'MED';
-            if (value === 3) return 'HIGH';
-            return '';
+          grid: {
+            color: 'rgba(255, 255, 255, 0.15)'
           },
-          color: '#eeeeee',
-          backdropColor: 'transparent',
-          font: {
-            size: 16
-          }
-        },
-        suggestedMin: 0,
-        suggestedMax: 3
-      }
-    },
+          pointLabels: {
+            font: {
+              size: 14,
+              family: 'inherit'
+            },
+            color: '#ffffff',
+            padding: 25
+          },
+          ticks: {
+            stepSize: 1,
+            min: 0,
+            max: 3,
+            callback: function(value: any) {
+              if (value === 0) return '';
+              if (value === 1) return 'LOW';
+              if (value === 2) return 'MED';
+              if (value === 3) return 'HIGH';
+              return '';
+            },
+            color: '#e5e7eb',
+            backdropColor: 'transparent',
+            font: {
+              size: 12
+            }
+          },
+          suggestedMin: 0,
+          suggestedMax: 3
+        }
+      },
     plugins: {
       legend: {
         display: false
@@ -193,62 +278,28 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
   return (
     <div className={`relative ${className}`}>
-      <div className="mb-8 text-center">
-        <h3 className="text-2xl font-extralight text-coral-warm mb-3 tracking-wide">
-          Your Thematic Impact
-        </h3>
-        <p className="text-base text-card-foreground/60">
-          Hover over each point to see your influence across Blue Pacific 2050 themes
-        </p>
-      </div>
-      
-      <div className="w-full max-w-4xl h-[70vh] mx-auto px-4">
+      <div className="w-full h-[500px] mx-auto">
         <Radar data={data} options={options} />
       </div>
       
       {/* Hover Info Box */}
-      <div className="mt-8 p-6 bg-white/5 rounded-lg border border-ocean-light/20 text-center min-h-[100px] flex flex-col justify-center">
+      <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center min-h-[120px] flex flex-col justify-center">
         {hoveredTheme ? (
           <>
-            <h3 className="text-xl font-medium text-accent mb-3">
+            <h3 className="text-xl font-semibold text-white mb-3">
               {hoveredTheme} ({getLevel(themeCounts[hoveredTheme] || 0)} Impact)
             </h3>
-            <p className="text-base text-card-foreground/90 leading-relaxed">
+            <p className="text-base text-gray-200 leading-relaxed">
               {spiderMap[hoveredTheme] && spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme] || 0)]
                 ? spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme] || 0)]
-                : 'No narrative available for this theme.'}
+                : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
             </p>
           </>
         ) : (
-          <p className="text-base text-card-foreground/60">
+          <p className="text-base text-gray-300">
             Hover over a theme in the chart to see your detailed impact.
           </p>
         )}
-      </div>
-
-      {/* Debug Section - Show Theme Mapping */}
-      <div className="mt-8 p-6 bg-red-900/20 rounded-lg border border-red-500/30">
-        <h3 className="text-lg font-medium text-red-300 mb-4">Debug: Theme Mapping</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          {playerChoices.map((choice: any, index: number) => (
-            <div key={index} className="p-3 bg-white/5 rounded border border-white/10">
-              <div className="text-accent font-medium">Choice {index + 1}: {choice.code}</div>
-              <div className="text-white/80">Answer: {choice.answer}</div>
-              <div className="text-coral-warm">Theme: {choice.theme}</div>
-              <div className="text-wave-foam">Question: {choice.QuestionCode}</div>
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-4 p-3 bg-white/5 rounded">
-          <h4 className="text-white font-medium mb-2">Theme Counts:</h4>
-          {Object.entries(themeCounts).map(([theme, count]) => (
-            <div key={theme} className="text-sm">
-              <span className="text-accent">{theme}:</span> <span className="text-white">{count}</span> 
-              <span className="text-coral-warm ml-2">({getLevel(count)})</span>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Choice Narratives Section */}
