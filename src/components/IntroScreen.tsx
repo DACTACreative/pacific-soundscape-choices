@@ -159,24 +159,22 @@ Not one shaped without us.`,
   ];
 
   return (
-    <div className="bg-black text-white">
-      {/* Fixed Header Block */}
-      <section className="h-screen flex items-center justify-center bg-black">
-        <div className="text-center">
-          <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-6 text-white">BLUE PACIFIC 2050</h1>
-          <p className="text-2xl md:text-4xl font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
-        </div>
-      </section>
+    <div className="bg-black text-white min-h-screen">
+      {/* Fixed Header */}
+     <div className="fixed top-6 left-6 z-50">
+  <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-3 text-white">BLUE PACIFIC 2050</h1>
+  <p className="text-2xl md:text-4xl font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
+</div>
 
       {/* Content Blocks */}
-      <div>
+      <div className="pt-32">
         {blocks.map((block) => (
-          <section key={block.id} className="min-h-screen flex items-start py-12">
+          <section key={block.id} className="min-h-screen py-48 flex items-center">
             <div className="w-full px-6 md:px-12">
-              <div className={`flex flex-col lg:flex-row items-start gap-16 min-h-screen ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
+              <div className={`flex flex-col lg:flex-row items-start gap-16 h-full ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
                 
                 {/* Text Side */}
-                <div className="w-full lg:w-1/2 flex items-start pt-12">
+                <div className="w-full lg:w-1/2">
                   <div className="w-full max-w-2xl mx-auto lg:mx-0">
                     <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">{block.title}</h2>
 <div className="text-2xl md:text-3xl leading-relaxed whitespace-pre-line text-white">
@@ -207,7 +205,7 @@ Not one shaped without us.`,
                 </div>
 
                 {/* Image Side */}
-                <div className="w-full lg:w-1/2 flex items-start pt-12">
+                <div className="w-full lg:w-1/2">
                   <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
                     <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                       <div className="text-center text-gray-400">
