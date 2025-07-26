@@ -193,9 +193,11 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     fetch('/data/Mapping - Question BPC - Sheet1.csv')
       .then(res => res.text())
       .then(csvText => {
+        console.log('CSV loaded, length:', csvText.length);
         Papa.parse(csvText, {
           header: true,
           complete: (results) => {
+            console.log('CSV parsing results:', results);
             const answersMap: Record<string, GameAnswer> = {};
             results.data.forEach((row: any) => {
               if (row.code) {
@@ -212,6 +214,8 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
                 };
               }
             });
+            console.log('Answers map created:', Object.keys(answersMap).length, 'answers');
+            console.log('Sample answer:', answersMap['A1']);
             setAnswers(answersMap);
             setLoading(false);
             
