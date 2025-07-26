@@ -11,6 +11,7 @@ import {
 import { Radar } from 'react-chartjs-2';
 import Papa from 'papaparse';
 
+// Register Chart.js components
 ChartJS.register(
   RadialLinearScale,
   PointElement,
@@ -75,62 +76,57 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   }
 
   if (playerChoices.length === 0 || !spiderMap) {
-    // Provide fallback data for demonstration
-    const fallbackThemeLabels = [
-      "Political Leadership and Regionalism",
-      "People Centered Development", 
-      "Peace and Security",
-      "Resource and Economic Development",
-      "Climate Change and Disasters",
-      "Ocean and Environment",
-      "Technology and Connectivity"
-    ];
-    
-    const fallbackData = [2, 3, 1, 2, 3, 2, 1]; // Sample data showing moderate progress
-    
-    const data = {
-      labels: fallbackThemeLabels,
+    // Provide fallback data showing a balanced Pacific 2050 scenario
+    const fallbackData = {
+      labels: [
+        "Political Leadership",
+        "People Development", 
+        "Peace & Security",
+        "Economic Development",
+        "Climate & Disasters",
+        "Ocean & Environment",
+        "Technology"
+      ],
       datasets: [
         {
           label: 'Blue Pacific 2050 Progress',
-          data: fallbackData,
-          backgroundColor: 'rgba(53, 197, 242, 0.3)',
+          data: [2.5, 2.8, 2.2, 2.6, 3.0, 2.4, 2.1],
+          backgroundColor: 'rgba(53, 197, 242, 0.2)',
           borderColor: '#35c5f2',
-          borderWidth: 3,
+          borderWidth: 2,
           pointBackgroundColor: '#35c5f2',
           pointBorderColor: '#ffffff',
-          pointBorderWidth: 2,
-          pointRadius: 8,
-          pointHoverRadius: 10,
+          pointBorderWidth: 1,
+          pointRadius: 4,
+          pointHoverRadius: 6,
         }
       ]
     };
 
-    const options = {
+    const fallbackOptions = {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
         r: {
+          beginAtZero: true,
+          min: 0,
+          max: 3,
           angleLines: {
-            color: 'rgba(255, 255, 255, 0.2)'
+            color: 'rgba(255, 255, 255, 0.1)'
           },
           grid: {
-            color: 'rgba(255, 255, 255, 0.15)'
+            color: 'rgba(255, 255, 255, 0.1)'
           },
           pointLabels: {
             font: {
-              size: 14,
+              size: 12,
               family: 'inherit'
             },
-            color: '#ffffff',
-            padding: 25
+            color: '#ffffff'
           },
           ticks: {
             stepSize: 1,
-            min: 0,
-            max: 3,
             callback: function(value: any) {
-              if (value === 0) return '';
               if (value === 1) return 'LOW';
               if (value === 2) return 'MED';
               if (value === 3) return 'HIGH';
@@ -139,11 +135,9 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
             color: '#e5e7eb',
             backdropColor: 'transparent',
             font: {
-              size: 12
+              size: 10
             }
-          },
-          suggestedMin: 0,
-          suggestedMax: 3
+          }
         }
       },
       plugins: {
@@ -158,12 +152,12 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
     return (
       <div className={`relative ${className}`}>
-        <div className="w-full h-[500px] mx-auto">
-          <Radar data={data} options={options} />
+        <div className="w-full h-[500px] mx-auto relative">
+          <Radar data={fallbackData} options={fallbackOptions} />
         </div>
         <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center">
           <p className="text-white/80">
-            This chart shows potential outcomes across key themes of the Blue Pacific 2050 strategy.
+            This chart visualizes progress across key themes of the Blue Pacific 2050 strategy.
           </p>
         </div>
       </div>
@@ -179,13 +173,13 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
 
   const themeLabels = [
-    "Political Leadership and Regionalism",
-    "People Centered Development", 
-    "Peace and Security",
-    "Resource and Economic Development",
-    "Climate Change and Disasters",
-    "Ocean and Environment",
-    "Technology and Connectivity"
+    "Political Leadership",
+    "People Development", 
+    "Peace & Security",
+    "Economic Development",
+    "Climate & Disasters",
+    "Ocean & Environment",
+    "Technology"
   ];
 
   // Helper function to map scores to level
@@ -204,16 +198,16 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     labels: themeLabels,
     datasets: [
       {
-        label: 'Your Impact on Blue Pacific 2050',
+        label: 'Your Pacific Impact',
         data: chartData,
-        backgroundColor: 'rgba(53, 197, 242, 0.3)',
+        backgroundColor: 'rgba(53, 197, 242, 0.2)',
         borderColor: '#35c5f2',
-        borderWidth: 3,
+        borderWidth: 2,
         pointBackgroundColor: '#35c5f2',
         pointBorderColor: '#ffffff',
-        pointBorderWidth: 2,
-        pointRadius: 8,
-        pointHoverRadius: 10,
+        pointBorderWidth: 1,
+        pointRadius: 4,
+        pointHoverRadius: 6,
       }
     ]
   };
@@ -229,43 +223,40 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         setHoveredTheme(null);
       }
     },
-      scales: {
-        r: {
-          angleLines: {
-            color: 'rgba(255, 255, 255, 0.2)'
+    scales: {
+      r: {
+        beginAtZero: true,
+        min: 0,
+        max: 3,
+        angleLines: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        },
+        pointLabels: {
+          font: {
+            size: 12,
+            family: 'inherit'
           },
-          grid: {
-            color: 'rgba(255, 255, 255, 0.15)'
+          color: '#ffffff'
+        },
+        ticks: {
+          stepSize: 1,
+          callback: function(value: any) {
+            if (value === 1) return 'LOW';
+            if (value === 2) return 'MED';
+            if (value === 3) return 'HIGH';
+            return '';
           },
-          pointLabels: {
-            font: {
-              size: 14,
-              family: 'inherit'
-            },
-            color: '#ffffff',
-            padding: 25
-          },
-          ticks: {
-            stepSize: 1,
-            min: 0,
-            max: 3,
-            callback: function(value: any) {
-              if (value === 0) return '';
-              if (value === 1) return 'LOW';
-              if (value === 2) return 'MED';
-              if (value === 3) return 'HIGH';
-              return '';
-            },
-            color: '#e5e7eb',
-            backdropColor: 'transparent',
-            font: {
-              size: 12
-            }
-          },
-          suggestedMin: 0,
-          suggestedMax: 3
+          color: '#e5e7eb',
+          backdropColor: 'transparent',
+          font: {
+            size: 10
+          }
         }
-      },
+      }
+    },
     plugins: {
       legend: {
         display: false
@@ -278,7 +269,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
   return (
     <div className={`relative ${className}`}>
-      <div className="w-full h-[500px] mx-auto">
+      <div className="w-full h-[500px] mx-auto relative z-20">
         <Radar data={data} options={options} />
       </div>
       
