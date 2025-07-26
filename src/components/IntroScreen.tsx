@@ -226,11 +226,11 @@ Not one shaped without us.`,
                 {/* Image Side */}
                 <div className="w-full lg:w-1/2">
                   <div className={`w-full max-w-lg mx-auto ${block.reversed ? 'lg:mr-auto lg:ml-0' : 'lg:ml-auto lg:mr-0'}`}>
-                    <div className="aspect-[4/3] rounded-lg overflow-hidden shadow-2xl">
+                    <div className="rounded-lg overflow-hidden shadow-2xl">
                       <img 
                         src={block.image} 
                         alt={`Illustration for ${block.title}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-auto object-contain"
                       />
                     </div>
                   </div>
