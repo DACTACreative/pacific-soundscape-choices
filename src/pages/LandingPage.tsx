@@ -15,10 +15,10 @@ export default function LandingPage() {
       if (!mounted || !vantaRef.current) return;
       
       // Check if VANTA is available
-      if ((window as any).VANTA && (window as any).VANTA.BIRDS) {
-        console.log('Initializing Vanta BIRDS effect');
+      if ((window as any).VANTA && (window as any).VANTA.CELLS) {
+        console.log('Initializing Vanta CELLS effect');
         try {
-          vantaEffect.current = (window as any).VANTA.BIRDS({
+          vantaEffect.current = (window as any).VANTA.CELLS({
             el: vantaRef.current,
             mouseControls: true,
             touchControls: true,
@@ -26,16 +26,12 @@ export default function LandingPage() {
             minHeight: 200.00,
             minWidth: 200.00,
             scale: 1.00,
-            scaleMobile: 1.00,
-            backgroundColor: 0x000000,
-            color1: 0x0087ff,
-            color2: 0x001eff,
-            colorMode: "lerp",
-            birdSize: 2.2,
-            wingSpan: 19.0,
-            quantity: 3.0
+            color1: 0x26d7,
+            color2: 0x35c5f2,
+            size: 5.00,
+            speed: 1.20
           });
-          console.log('Vanta BIRDS effect initialized successfully');
+          console.log('Vanta CELLS effect initialized successfully');
         } catch (error) {
           console.error('Error initializing Vanta:', error);
         }
@@ -66,7 +62,7 @@ export default function LandingPage() {
     const loadVantaScript = () => {
       if (!(window as any).VANTA) {
         const vantaScript = document.createElement('script');
-        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js';
+        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js';
         vantaScript.onload = () => {
           console.log('Vanta.js loaded');
           if (mounted) {
