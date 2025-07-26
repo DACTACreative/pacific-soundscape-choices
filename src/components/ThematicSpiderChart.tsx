@@ -215,14 +215,14 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     "Technology"
   ];
 
-  // Helper function to map scores to level
+  // Helper function to map scores to level (0-1=LOW, 2=MEDIUM, 3+=HIGH)
   const getLevel = (score: number): string => {
     if (score >= 3) return 'HIGH';
     if (score === 2) return 'MEDIUM';
     return 'LOW';
   };
 
-  // Convert theme counts to chart data using mapping
+  // Convert theme counts to chart data using mapping and cap at 3
   const chartData = themeLabels.map(shortLabel => {
     // Find the full theme name that maps to this short label
     const fullThemeName = Object.keys(themeMapping).find(
@@ -230,8 +230,9 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     );
     
     const count = fullThemeName ? (themeCounts[fullThemeName] || 0) : 0;
-    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${count}`);
-    return count;
+    const cappedCount = Math.min(count, 3); // Cap at 3 for chart display
+    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${count} (capped: ${cappedCount})`);
+    return cappedCount;
   });
 
   console.log('🕷️ Final chart data:', chartData);
@@ -319,27 +320,30 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center min-h-[120px] flex flex-col justify-center">
         {hoveredTheme ? (
           <>
-            {(() => {
-              // Find the full theme name for this short label
-              const fullThemeName = Object.keys(themeMapping).find(
-                fullName => themeMapping[fullName] === hoveredTheme
-              );
-              const count = fullThemeName ? (themeCounts[fullThemeName] || 0) : 0;
-              const level = getLevel(count);
-              
-              return (
-                <>
-                  <h3 className="text-xl font-semibold text-white mb-3">
-                    {hoveredTheme} ({level} Impact - {count} choices)
-                  </h3>
-                  <p className="text-base text-gray-200 leading-relaxed">
-                    {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level]
-                      ? spiderMap[fullThemeName][level]
-                      : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
-                  </p>
-                </>
-              );
-            })()}
+             {(() => {
+               // Find the full theme name for this short label
+               const fullThemeName = Object.keys(themeMapping).find(
+                 fullName => themeMapping[fullName] === hoveredTheme
+               );
+               const rawCount = fullThemeName ? (themeCounts[fullThemeName] || 0) : 0;
+               const level = getLevel(rawCount);
+               
+               console.log(`🕷️ Hover: ${hoveredTheme} -> ${fullThemeName} -> ${level} (${rawCount} choices)`);
+               console.log(`🕷️ SpiderMap lookup:`, spiderMap[fullThemeName]?.[level]);
+               
+               return (
+                 <>
+                   <h3 className="text-xl font-semibold text-white mb-3">
+                     {hoveredTheme} ({level} Impact - {rawCount} choices)
+                   </h3>
+                   <p className="text-base text-gray-200 leading-relaxed">
+                     {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level]
+                       ? spiderMap[fullThemeName][level]
+                       : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
+                   </p>
+                 </>
+               );
+             })()}
           </>
         ) : (
           <p className="text-base text-gray-300">
@@ -348,59 +352,6 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         )}
       </div>
 
-      {/* Choice Narratives Section */}
-      {playerChoices.length > 0 && (
-        <div className="mt-16">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-extralight text-coral-warm mb-3 tracking-wide">
-              Your Journey Through the Pacific Future
-            </h3>
-            <p className="text-base text-card-foreground/60">
-              Each choice you made shapes the Blue Pacific 2050
-            </p>
-          </div>
-          
-          <div className="space-y-0">
-            {playerChoices.map((choice: any, index: number) => (
-              <div 
-                key={`${choice.code}-${index}`}
-                className="h-screen flex flex-col justify-center items-center px-8 py-16 animate-fade-in"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                  <div className="max-w-4xl text-center space-y-12">
-                  {/* User's Choice */}
-                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2}s` }}>
-                    <h4 className="text-2xl md:text-3xl lg:text-4xl font-light text-white mb-6 leading-relaxed">
-                      You chose to {choice.answer}
-                    </h4>
-                  </div>
-
-                  {/* Narrative */}
-                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.3}s` }}>
-                    <div className="text-lg md:text-xl lg:text-2xl text-card-foreground/90 leading-relaxed mb-8 font-light">
-                      → {choice.narrative}
-                    </div>
-                  </div>
-
-                  {/* Impact */}
-                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.6}s` }}>
-                    <div className="text-xl md:text-2xl lg:text-3xl font-bold text-accent mb-6">
-                      → {choice.impact}
-                    </div>
-                  </div>
-
-                  {/* Outcome */}
-                  <div className="animate-fade-in" style={{ animationDelay: `${index * 0.2 + 0.9}s` }}>
-                    <div className="text-lg md:text-xl italic text-card-foreground/80 font-light">
-                      Outcome: {choice.outcome}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
