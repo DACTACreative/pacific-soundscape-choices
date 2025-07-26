@@ -57,15 +57,33 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     let mounted = true;
     
     const initVanta = () => {
-      if (!mounted || !vantaRef.current) return;
+      if (!mounted || !vantaRef.current) {
+        console.log('VANTA init failed: mounted =', mounted, 'vantaRef =', !!vantaRef.current);
+        return;
+      }
       
-      console.log('Checking VANTA availability:', !!window.VANTA, !!window.THREE);
+      // Ensure element has dimensions
+      const element = vantaRef.current;
+      const rect = element.getBoundingClientRect();
+      console.log('Element dimensions:', rect.width, 'x', rect.height);
+      
+      if (rect.width === 0 || rect.height === 0) {
+        console.log('Element has no dimensions, retrying...');
+        setTimeout(initVanta, 100);
+        return;
+      }
       
       if (window.VANTA && window.THREE && !vantaEffect.current) {
         try {
-          console.log('Initializing VANTA...');
+          console.log('Initializing VANTA with element:', element);
+          
+          // Destroy any existing VANTA instances on this element
+          if (element._vantaEffect) {
+            element._vantaEffect.destroy();
+          }
+          
           vantaEffect.current = window.VANTA.TRUNK({
-            el: vantaRef.current,
+            el: element,
             THREE: window.THREE,
             mouseControls: true,
             touchControls: true,
@@ -76,39 +94,80 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
             scaleMobile: 1.0,
             backgroundColor: 0x000000,
             color: 0x0066cc,
-            chaos: 4.0,
+            chaos: 4.0
           });
-          console.log('VANTA initialized successfully!', vantaEffect.current);
+          
+          console.log('VANTA initialized:', !!vantaEffect.current);
+          
+          // Force canvas to be visible
+          if (vantaEffect.current && vantaEffect.current.renderer) {
+            const canvas = vantaEffect.current.renderer.domElement;
+            if (canvas) {
+              canvas.style.position = 'absolute';
+              canvas.style.top = '0';
+              canvas.style.left = '0';
+              canvas.style.width = '100%';
+              canvas.style.height = '100%';
+              canvas.style.zIndex = '-10';
+              canvas.style.pointerEvents = 'none';
+              console.log('Canvas styled:', canvas);
+            }
+          }
+          
         } catch (error) {
-          console.error('VANTA initialization failed:', error);
+          console.error('VANTA initialization error:', error);
         }
+      } else {
+        console.log('VANTA dependencies not ready:', {
+          VANTA: !!window.VANTA,
+          THREE: !!window.THREE,
+          effect: !!vantaEffect.current
+        });
       }
     };
 
-    // Direct script injection - more reliable
-    const loadScripts = () => {
-      // Remove any existing scripts first
-      document.querySelectorAll('script[src*="three"]').forEach(s => s.remove());
-      document.querySelectorAll('script[src*="vanta"]').forEach(s => s.remove());
-      
-      // Load THREE.js
-      const threeScript = document.createElement('script');
-      threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js';
-      threeScript.onload = () => {
-        console.log('THREE.js loaded');
-        
-        // Load VANTA after THREE.js
-        const vantaScript = document.createElement('script');
-        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@0.5.21/dist/vanta.trunk.min.js';
-        vantaScript.onload = () => {
+    // Check if scripts are already loaded
+    if (window.THREE && window.VANTA) {
+      console.log('Scripts already loaded, initializing...');
+      requestAnimationFrame(initVanta);
+      return;
+    }
+
+    // Load scripts
+    const loadScripts = async () => {
+      try {
+        // Load THREE.js first
+        if (!window.THREE) {
+          await new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js';
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+          console.log('THREE.js loaded');
+        }
+
+        // Load VANTA
+        if (!window.VANTA) {
+          await new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.trunk.min.js';
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
           console.log('VANTA loaded');
-          setTimeout(initVanta, 500);
-        };
-        vantaScript.onerror = () => console.error('VANTA script failed to load');
-        document.head.appendChild(vantaScript);
-      };
-      threeScript.onerror = () => console.error('THREE.js script failed to load');
-      document.head.appendChild(threeScript);
+        }
+
+        // Initialize after a short delay to ensure DOM is ready
+        setTimeout(() => {
+          requestAnimationFrame(initVanta);
+        }, 100);
+
+      } catch (error) {
+        console.error('Script loading failed:', error);
+      }
     };
 
     loadScripts();

@@ -208,8 +208,8 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* VANTA canvas specific styling - force it to work */
-.vanta-canvas {
+/* Force VANTA canvas visibility - nuclear option */
+canvas {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
@@ -217,6 +217,21 @@ body {
   height: 100% !important;
   z-index: -10 !important;
   pointer-events: none !important;
+  display: block !important;
+}
+
+/* Specific VANTA canvas targeting */
+.vanta-canvas,
+canvas.vanta-canvas,
+[data-vanta="true"] canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: -10 !important;
+  pointer-events: none !important;
+  display: block !important;
 }
 
 /* Fallback animated background if VANTA fails */
