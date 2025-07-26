@@ -169,13 +169,13 @@ Not one shaped without us.`,
       {/* Content Blocks */}
       <div className="pt-32">
         {blocks.map((block) => (
-          <section key={block.id} className="h-screen flex items-center py-8">
-            <div className="w-full px-16 md:px-24">
+          <section key={block.id} className="min-h-screen py-48 flex items-center">
+            <div className="w-full px-6 md:px-12">
               <div className={`flex flex-col lg:flex-row items-start gap-16 h-full ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
                 
                 {/* Text Side */}
-                <div className="w-full lg:w-1/2 flex items-center">
-                  <div className="w-full">
+                <div className="w-full lg:w-1/2">
+                  <div className="w-full max-w-2xl mx-auto lg:mx-0">
                     <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">{block.title}</h2>
 <div className="text-2xl md:text-3xl leading-relaxed whitespace-pre-line text-white">
   {block.content}
@@ -205,7 +205,7 @@ Not one shaped without us.`,
                 </div>
 
                 {/* Image Side */}
-                <div className="w-full lg:w-1/2 flex items-center">
+                <div className="w-full lg:w-1/2">
                   <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
                     <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                       <div className="text-center text-gray-400">
