@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
+import DebugPanel from '../components/DebugPanel';
 
 export default function Scenario1() {
   const vantaRef = useRef<HTMLDivElement>(null);
@@ -213,6 +214,9 @@ export default function Scenario1() {
         </section>
 
       </div>
+      
+      {/* Debug Panel - Only in development */}
+      {process.env.NODE_ENV === 'development' && <DebugPanel />}
     </div>
   );
 }

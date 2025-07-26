@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useAudio, Scenario } from '@/context/AudioContext';
 import questionsData from '@/data/questions.json';
 import Papa from 'papaparse';
+import DebugPanel from './DebugPanel';
 
 declare global {
   interface Window {
@@ -193,29 +194,60 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     fetch('/data/Mapping - Question BPC - Sheet1.csv')
       .then(res => res.text())
       .then(csvText => {
-        console.log('CSV loaded, length:', csvText.length);
+        console.log('🔍 CSV loaded successfully, length:', csvText.length);
+        console.log('🔍 First 200 chars:', csvText.substring(0, 200));
+        
         Papa.parse(csvText, {
           header: true,
+          skipEmptyLines: true,
+          transformHeader: (header) => header.trim(),
+          transform: (value, field) => {
+            // Clean up multiline values and preserve line breaks
+            if (typeof value === 'string') {
+              return value.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            }
+            return value;
+          },
           complete: (results) => {
-            console.log('CSV parsing results:', results);
+            console.log('🔍 CSV parsing complete:', {
+              rows: results.data.length,
+              errors: results.errors,
+              meta: results.meta
+            });
+            
             const answersMap: Record<string, GameAnswer> = {};
-            results.data.forEach((row: any) => {
-              if (row.code) {
-                answersMap[row.code] = {
-                  code: row.code,
-                  themecode: row.themecode,
-                  answer: row.answer,
-                  theme: row.theme,
-                  QuestionCode: row.QuestionCode,
-                  Question: row.Question,
-                  outcome: row.outcome,
-                  impact: row.impact,
-                  narrative: row.narrative
+            results.data.forEach((row: any, index) => {
+              if (row.code && row.code.trim()) {
+                const cleanCode = row.code.trim();
+                answersMap[cleanCode] = {
+                  code: cleanCode,
+                  themecode: row.themecode?.trim() || '',
+                  answer: row.answer?.trim() || '',
+                  theme: row.theme?.trim() || '',
+                  QuestionCode: row.QuestionCode?.trim() || '',
+                  Question: row.Question?.trim() || '',
+                  outcome: row.outcome?.trim() || '',
+                  impact: row.impact?.trim() || '',
+                  narrative: row.narrative?.trim() || ''
                 };
+                
+                // Debug first few answers
+                if (index < 3) {
+                  console.log(`🔍 Answer ${cleanCode}:`, {
+                    answer: row.answer?.substring(0, 100) + '...',
+                    theme: row.theme,
+                    narrative: row.narrative?.substring(0, 100) + '...'
+                  });
+                }
               }
             });
-            console.log('Answers map created:', Object.keys(answersMap).length, 'answers');
-            console.log('Sample answer:', answersMap['A1']);
+            
+            console.log('🔍 Answers map created:', {
+              totalAnswers: Object.keys(answersMap).length,
+              sampleCodes: Object.keys(answersMap).slice(0, 10),
+              sampleAnswer: answersMap['A1']
+            });
+            
             setAnswers(answersMap);
             setLoading(false);
             
@@ -224,11 +256,15 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
               playScenario(Scenario.Scenario0);
               setAudioStarted(true);
             }
+          },
+          error: (error) => {
+            console.error('🚨 CSV parsing error:', error);
+            setLoading(false);
           }
         });
       })
       .catch(err => {
-        console.error('Failed to load mapping CSV:', err);
+        console.error('🚨 Failed to load mapping CSV:', err);
         setLoading(false);
       });
   }, []);
@@ -349,6 +385,9 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
           )}
         </div>
       </div>
+      
+      {/* Debug Panel - Only in development */}
+      {process.env.NODE_ENV === 'development' && <DebugPanel />}
     </div>
   );
 }

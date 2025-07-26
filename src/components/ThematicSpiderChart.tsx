@@ -176,11 +176,34 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
   // Calculate theme counts from player choices
   const themeCounts: Record<string, number> = {};
-  playerChoices.forEach(choice => {
-    const theme = choice.theme; // Use 'theme' field, not 'themecode'
-    themeCounts[theme] = (themeCounts[theme] || 0) + 1;
+  
+  console.log('🕷️ Processing player choices for spider chart:', playerChoices.length);
+  
+  playerChoices.forEach((choice, index) => {
+    const theme = choice.theme;
+    console.log(`🕷️ Choice ${index + 1}:`, {
+      code: choice.code,
+      theme: theme,
+      answer: choice.answer?.substring(0, 50) + '...'
+    });
+    
+    if (theme) {
+      themeCounts[theme] = (themeCounts[theme] || 0) + 1;
+    }
   });
 
+  console.log('🕷️ Theme counts calculated:', themeCounts);
+
+  // Map CSV themes to chart labels
+  const themeMapping: Record<string, string> = {
+    "Political Leadership and Regionalism": "Political Leadership",
+    "People Centered Development": "People Development", 
+    "Peace and Security": "Peace & Security",
+    "Resource and Economic Development": "Economic Development",
+    "Climate Change and Disasters": "Climate & Disasters",
+    "Ocean and Environment": "Ocean & Environment",
+    "Technology and Connectivity": "Technology"
+  };
 
   const themeLabels = [
     "Political Leadership",
@@ -199,10 +222,19 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     return 'LOW';
   };
 
-  // Convert theme counts to chart data
-  const chartData = themeLabels.map(theme => {
-    return themeCounts[theme] || 0;
+  // Convert theme counts to chart data using mapping
+  const chartData = themeLabels.map(shortLabel => {
+    // Find the full theme name that maps to this short label
+    const fullThemeName = Object.keys(themeMapping).find(
+      fullName => themeMapping[fullName] === shortLabel
+    );
+    
+    const count = fullThemeName ? (themeCounts[fullThemeName] || 0) : 0;
+    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${count}`);
+    return count;
   });
+
+  console.log('🕷️ Final chart data:', chartData);
 
   const data = {
     labels: themeLabels,
@@ -287,14 +319,27 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center min-h-[120px] flex flex-col justify-center">
         {hoveredTheme ? (
           <>
-            <h3 className="text-xl font-semibold text-white mb-3">
-              {hoveredTheme} ({getLevel(themeCounts[hoveredTheme] || 0)} Impact)
-            </h3>
-            <p className="text-base text-gray-200 leading-relaxed">
-              {spiderMap[hoveredTheme] && spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme] || 0)]
-                ? spiderMap[hoveredTheme][getLevel(themeCounts[hoveredTheme] || 0)]
-                : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
-            </p>
+            {(() => {
+              // Find the full theme name for this short label
+              const fullThemeName = Object.keys(themeMapping).find(
+                fullName => themeMapping[fullName] === hoveredTheme
+              );
+              const count = fullThemeName ? (themeCounts[fullThemeName] || 0) : 0;
+              const level = getLevel(count);
+              
+              return (
+                <>
+                  <h3 className="text-xl font-semibold text-white mb-3">
+                    {hoveredTheme} ({level} Impact - {count} choices)
+                  </h3>
+                  <p className="text-base text-gray-200 leading-relaxed">
+                    {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level]
+                      ? spiderMap[fullThemeName][level]
+                      : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
+                  </p>
+                </>
+              );
+            })()}
           </>
         ) : (
           <p className="text-base text-gray-300">
