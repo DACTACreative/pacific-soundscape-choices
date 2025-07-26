@@ -112,34 +112,50 @@ export default function LandingPage() {
       />
 
       {/* Overlay Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-between p-8">
-        {/* Top Content */}
-        <div className="flex flex-col items-center justify-center flex-1 text-center">
-          <div className="text-5xl font-bold text-white drop-shadow-2xl tracking-tight leading-tight">
-            <p>WELCOME TO PACIFIC FUTURE</p>
-            <p>AN IMMERSIVE VISUALISATION</p>
-            <br />
-            <p>MAKE THE RIGHT DECISION</p>
-            <p>AND CHANGE THE COURSE</p>
-            <p>OF OUR OCEAN</p>
-            <br />
-            <br />
-            <p>START THE JOURNEY TO 2050</p>
+      <div className="relative z-10 flex h-full flex-col items-center justify-center p-8">
+        {/* Main Content */}
+        <div className="flex flex-col items-center justify-center flex-1 text-center max-w-4xl">
+          {/* Headphone Warning */}
+          <div className="flex items-center space-x-2 mb-8 text-white/80 text-lg italic font-light">
+            <span className="text-2xl">🎧</span>
+            <p>For the best experience, please wear headphones.</p>
+          </div>
+          
+          {/* Main Narrative */}
+          <div className="text-white drop-shadow-2xl leading-relaxed space-y-6">
+            <p className="text-lg md:text-xl">
+              This journey is as much <strong>heard</strong> as it is seen. Close your eyes for a moment and listen – that's the sound of the Pacific's gentle tides today.
+            </p>
+            
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight my-8">
+              Choose Your Pacific Future
+            </h1>
+            
+            <p className="text-lg md:text-xl">
+              is about to take <strong>you</strong> on an immersive voyage from now to 2050. In this interactive story, you will guide the Blue Pacific through critical decisions. With each choice, data-driven visuals will show the impact – and an evolving soundscape will <strong>sonify</strong> our changing ocean.
+            </p>
+            
+            <p className="text-xl md:text-2xl font-semibold mt-8">
+              Are you ready to chart a course for the future?
+            </p>
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="flex flex-col items-center space-y-6">
+        {/* Scroll Indicator */}
+        <div className="flex flex-col items-center space-y-4 animate-bounce">
           <p className="text-white/90 text-lg font-medium tracking-wide">
-            (PUT YOUR HEADPHONES OR SOUND UP)
+            (Scroll to begin your journey...)
           </p>
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
+          </div>
           <Button
             onClick={handleStart}
             size="hero"
             variant="ocean"
             className="text-xl px-12 py-6 bg-white text-black hover:bg-white/90 transition-all duration-300 font-bold tracking-wide rounded-full border-none"
           >
-            START
+            BEGIN
           </Button>
         </div>
       </div>
