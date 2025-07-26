@@ -1,10 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface IntroScreenProps {
   onStart: () => void;
@@ -27,38 +23,6 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
           multiplier: 1,
           class: 'is-revealed',
         });
-
-        // GSAP ScrollTrigger integration
-        locomotiveScroll.on('scroll', ScrollTrigger.update);
-
-        ScrollTrigger.scrollerProxy(scrollRef.current, {
-          scrollTop(value) {
-            return arguments.length ? locomotiveScroll.scrollTo(value, 0, 0) : locomotiveScroll.scroll.instance.scroll.y;
-          },
-          getBoundingClientRect() {
-            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-          },
-          pinType: scrollRef.current!.style.transform ? "transform" : "fixed"
-        });
-
-        // Fade transitions for images
-        gsap.utils.toArray('.scroll-block__image').forEach((image: any, i) => {
-          gsap.fromTo(image, 
-            { opacity: 0 }, 
-            {
-              opacity: 1,
-              scrollTrigger: {
-                trigger: image,
-                start: "top 80%",
-                end: "bottom 20%",
-                scrub: true,
-                scroller: scrollRef.current
-              }
-            });
-        });
-
-        ScrollTrigger.addEventListener("refresh", () => locomotiveScroll.update());
-        ScrollTrigger.refresh();
       }
     };
 
@@ -68,7 +32,6 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       if (locomotiveScroll) {
         locomotiveScroll.destroy();
       }
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
@@ -78,196 +41,345 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   };
 
   return (
-    <div style={{ background: '#000000' }}>
-      <div ref={scrollRef} data-scroll-container style={{ background: '#000000' }}>
-        {/* Title Block */}
-        <section data-scroll-section className="scroll-block">
-          <div className="scroll-block__wrapper min-h-[120vh] relative px-[8vw] py-16">
-            <div className="scroll-block__text w-full max-w-none relative z-10" data-scroll>
-              <h1 className="text-white font-normal mb-4" style={{ fontSize: 'clamp(32px, 5vw, 64px)', letterSpacing: '0.1em' }}>
-                BLUE PACIFIC 2050
-              </h1>
-              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
-                Choose Your Pacific Future
-              </p>
-            </div>
-          </div>
-        </section>
+    <div ref={scrollRef} data-scroll-container className="bg-black text-white">
+      {/* Fixed Header */}
+      <div className="fixed top-6 left-6 z-50">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-1">BLUE PACIFIC 2050</h1>
+        <p className="text-sm md:text-lg font-light tracking-wide">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
+      </div>
 
-        {/* Block 1 */}
-        <section data-scroll-section className="scroll-block">
-          <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
-            <div 
-              className="scroll-block__image w-[45%] max-w-[500px] relative z-10" 
-              data-scroll 
-              data-scroll-sticky 
-              data-scroll-target=".scroll-block__wrapper"
-            >
-              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" 
-                  alt="Ocean Sound" 
-                  className="w-full h-full object-cover rounded-xl"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
-                  }}
-                />
-              </div>
-            </div>
-            
-            <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10" data-scroll>
-              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                This piece was created to create feeling.
-              </h2>
-              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
+      {/* Block 1 - Text Left, Image Right */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                This piece was created to <strong className="text-[#35c5f2]">create feeling</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
                 To create a sense of belonging and hope — a rare feeling in the face of climate change.
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Block 2 */}
-        <section data-scroll-section className="scroll-block">
-          <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
-            <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10 order-1" data-scroll>
-              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Fiji's tide recorded on October 10, 2024
-              </h2>
-              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
-                This exact sound recording captures the natural rhythm of Suva's coastline. Your decisions will shape how this sound evolves by 2050.
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                To show light.<br/>
+                To involve more people into decisions that concern us — like the <strong className="text-[#35c5f2]">Blue Pacific 2050 Strategy</strong>.
               </p>
-            </div>
-            
-            <div 
-              className="scroll-block__image w-[45%] max-w-[500px] relative z-10 order-2" 
-              data-scroll 
-              data-scroll-sticky 
-              data-scroll-target=".scroll-block__wrapper"
-            >
-              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb" 
-                  alt="Fiji Tide" 
-                  className="w-full h-full object-cover rounded-xl"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Block 3 */}
-        <section data-scroll-section className="scroll-block">
-          <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
-            <div 
-              className="scroll-block__image w-[45%] max-w-[500px] relative z-10" 
-              data-scroll 
-              data-scroll-sticky 
-              data-scroll-target=".scroll-block__wrapper"
-            >
-              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
-                  alt="Climate Scenario" 
-                  className="w-full h-full object-cover rounded-xl"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
-                  }}
-                />
-              </div>
-            </div>
-            
-            <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10" data-scroll>
-              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Your scenario is assigned randomly
-              </h2>
-              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
-                Like climate change itself, the outcome isn't entirely predictable. Your journey ends in one of three possible 2050 scenarios.
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                To bring us together as a region.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                We are mainly made of sea. We are so close… but so far.
+              </p>
+              <p className="text-sm md:text-base text-[#35c5f2] font-light">
+                The Pacific represents 10 million people across over 1,000 islands
               </p>
             </div>
           </div>
-        </section>
-
-        {/* Block 4 */}
-        <section data-scroll-section className="scroll-block">
-          <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
-            <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10 order-1" data-scroll>
-              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Based on Blue Pacific Strategy indicators
-              </h2>
-              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
-                Sea level rise, coral health, displacement, and resilience metrics drawn from Pacific data sources.
-              </p>
-            </div>
-            
-            <div 
-              className="scroll-block__image w-[45%] max-w-[500px] relative z-10 order-2" 
-              data-scroll 
-              data-scroll-sticky 
-              data-scroll-target=".scroll-block__wrapper"
-            >
-              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb" 
-                  alt="Blue Pacific Strategy" 
-                  className="w-full h-full object-cover rounded-xl"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
-                  }}
-                />
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-01">
+            <div id="block-01" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Ocean Sound" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-01-ocean-sound.jpg
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Block 5 */}
-        <section data-scroll-section className="scroll-block">
-          <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
-            <div 
-              className="scroll-block__image w-[45%] max-w-[500px] relative z-10" 
-              data-scroll 
-              data-scroll-sticky 
-              data-scroll-target=".scroll-block__wrapper"
-            >
-              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1517022812141-23620dba5c23" 
-                  alt="Resilience Choice" 
-                  className="w-full h-full object-cover rounded-xl"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
-                  }}
-                />
+      {/* Block 2 - Text Right, Image Left */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                The sea is what brings us together.<br/>
+                It's the backbone of our <strong className="text-[#35c5f2]">Pacific culture</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                That's why this piece focuses on sound — the sound of this ocean — to accompany your journey.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                When you begin the game, you will be projected into <strong className="text-[#35c5f2]">Fiji</strong>.<br/>
+                The date is October 10, 2024.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                The sound you'll hear? It's <strong className="text-[#35c5f2]">real</strong>. The actual tide, sonified.
+              </p>
+              <p className="text-base md:text-lg leading-relaxed">
+                Each high tide = water rising.<br/>
+                Each low = a retreat six hours later.
+              </p>
+              <p className="text-sm md:text-base text-[#35c5f2] font-light mt-4">
+                <strong className="text-[#35c5f2]">Sonification</strong> translates data into frequency-based sound.
+              </p>
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-02">
+            <div id="block-02" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Fiji Tide" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-02-fiji-tide.jpg
               </div>
             </div>
-            
-            <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10" data-scroll>
-              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Every choice echoes to 2050
-              </h2>
-              <p className="text-white leading-relaxed font-normal mb-8" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
-                Energy, adaptation, regional cooperation — your decisions shape the Pacific's climate future.
+          </div>
+        </div>
+      </section>
+
+      {/* Block 3 - Text Left, Image Right */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                We are already on the path to a <strong className="text-red-400">warmer Earth</strong>.
               </p>
-              
-              {!loading && (
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                The Pacific contributes less than <strong className="text-[#35c5f2]">0.03%</strong> of global carbon emissions.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Yet we face the consequences just as much as any other region.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Sea level rise is one of our most <strong className="text-[#35c5f2]">silent threats</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed">
+                So slow, so invisible… we forget.<br/>
+                But it's always there — like the background sound of this ocean.
+              </p>
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-03">
+            <div id="block-03" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Climate Scenario" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-03-climate-scenario.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Block 4 - Text Right, Image Left */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                During this game, you'll be projected into a series of <strong className="text-[#35c5f2]">decisions</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Every one of them is connected to the themes and indicators from the <strong className="text-[#35c5f2]">Blue Pacific 2050 Implementation Plan</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Some are policy-based. Others are small-scale utopias.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed">
+                Why utopia? Because <strong className="text-[#35c5f2]">keeping hope is a form of resistance</strong>.
+              </p>
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-04">
+            <div id="block-04" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Resilience Response" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-04-resilience-response.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Block 5 - Text Left, Image Right */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                This is a simplification. A <strong className="text-[#35c5f2]">gamification</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                A playable form of Monitoring, Evaluation, and Learning (MEL).
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Because sometimes impact gets buried in spreadsheets.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                And here — <strong className="text-[#35c5f2]">impact becomes immersive</strong>.<br/>
+                It becomes personal.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed">
+                Frameworks and policies are crucial, yes.<br/>
+                But <strong className="text-[#35c5f2]">emotion moves people</strong>. Feeling makes things real.
+              </p>
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-05">
+            <div id="block-05" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Blue Pacific Strategy" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-05-blue-pacific-strategy.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Block 6 - Text Right, Image Left */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                You'll make <strong className="text-[#35c5f2]">seven key decisions</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Each one maps directly to the seven <strong className="text-[#35c5f2]">Blue Pacific Strategy</strong> pillars:
+              </p>
+              <div className="text-base md:text-lg leading-relaxed space-y-2 ml-4 mb-6">
+                <p><strong className="text-[#35c5f2]">Political Leadership</strong></p>
+                <p><strong className="text-[#35c5f2]">People-Centered Development</strong></p>
+                <p><strong className="text-[#35c5f2]">Peace & Security</strong></p>
+                <p><strong className="text-[#35c5f2]">Resource & Economic Development</strong></p>
+                <p><strong className="text-[#35c5f2]">Climate Change</strong></p>
+                <p><strong className="text-[#35c5f2]">Oceans & Environment</strong></p>
+                <p><strong className="text-[#35c5f2]">Technology & Connectivity</strong></p>
+              </div>
+              <p className="text-lg md:text-xl leading-relaxed">
+                Each decision will shape our region in subtle, <strong className="text-[#35c5f2]">measurable ways</strong>.
+              </p>
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-06">
+            <div id="block-06" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="People Impacted" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-06-people-impacted.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Block 7 - Text Left, Image Right */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Once your decisions are made, the world moves forward.<br/>
+                <strong className="text-[#35c5f2]">Welcome to 2050</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                But here's the truth:
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                You do not decide the global <strong className="text-[#35c5f2]">climate scenario</strong>.<br/>
+                It is assigned — <strong className="text-red-400">randomly</strong> — based on global uncertainty.
+              </p>
+              <div className="text-base md:text-lg leading-relaxed space-y-2 ml-4 mb-6">
+                <p><strong className="text-green-400">1.5°C:</strong> Achieved through massive global cooperation</p>
+                <p><strong className="text-yellow-400">2.5°C:</strong> A fractured effort</p>
+                <p><strong className="text-red-400">3°C+:</strong> Inaction, delay, loss</p>
+              </div>
+              <p className="text-lg md:text-xl leading-relaxed">
+                This randomness mirrors our <strong className="text-[#35c5f2]">power imbalance</strong> in real life.<br/>
+                We are not the biggest polluters — yet we carry the weight.
+              </p>
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-07">
+            <div id="block-07" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Climate Uncertainty" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-07-climate-uncertainty.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Block 8 - Text Right, Image Left */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row-reverse items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Once <strong className="text-[#35c5f2]">2050</strong> loads, you'll see the consequences.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                How did your choices align with the Blue Pacific indicators?<br/>
+                How did they affect people on the ground?<br/>
+                How did regional strategies hold under climate pressure?
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed">
+                This section mixes <strong className="text-[#35c5f2]">narrative, visualisation, and strategy</strong>.<br/>
+                You'll meet people. Hear how one decision affected them. See a dashboard of change.
+              </p>
+            </div>
+          </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-08">
+            <div id="block-08" className="w-full max-w-md aspect-[3/4] bg-[#0026d7] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Impact Dashboard" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 left-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-08-impact-dashboard.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Block 9 - Final CTA - Text Left, Image Right */}
+      <section data-scroll-section className="min-h-screen flex items-center px-6 md:px-12 py-20">
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+          <div className="lg:w-1/2" data-scroll data-scroll-speed="1">
+            <div className="max-w-2xl">
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                Yes, the ocean is rising.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                But <strong className="text-[#35c5f2]">so are we</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                And each action — however small — <strong className="text-[#35c5f2]">creates a wave</strong>.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-6">
+                This experience is here to remind us:
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-8">
+                <strong className="text-[#35c5f2]">Hope is an act. Strategy is a tool. And unity is our strength.</strong>
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed mb-8">
+                Let's shape a future that looks like us — not one shaped without us.
+              </p>
+
+              <div className="mt-8">
                 <Button
                   onClick={handleStart}
-                  className="px-8 py-4 text-lg font-semibold bg-[#35c5f2] text-black hover:bg-[#0026d7] hover:text-white transition-all duration-300 rounded-lg"
+                  disabled={loading}
+                  size="lg"
+                  className="group relative px-8 py-4 text-base font-semibold bg-transparent border-2 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
                 >
-                  Begin Your Journey
+                  <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                  <span className="relative z-10">
+                    {loading ? 'Loading Audio...' : 'SHAPE OUR JOURNEY TO 2050'}
+                  </span>
                 </Button>
-              )}
+                
+                <p className="mt-4 text-sm md:text-base text-white font-light">
+                  Audio experience recommended for full immersion
+                </p>
+              </div>
             </div>
           </div>
-        </section>
-      </div>
+          <div className="lg:w-1/2 flex justify-center" data-scroll data-scroll-sticky data-scroll-target="#block-09">
+            <div id="block-09" className="w-full max-w-md aspect-[3/4] bg-[#0b3d26] rounded-lg overflow-hidden shadow-2xl">
+              <img src="/placeholder.svg" alt="Future Hope" className="w-full h-full object-cover" />
+              <div className="absolute bottom-4 right-4 text-xs bg-black bg-opacity-50 p-2 rounded">
+                block-09-future-hope.jpg
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
