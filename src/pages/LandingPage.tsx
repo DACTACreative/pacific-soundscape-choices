@@ -170,20 +170,21 @@ export default function LandingPage() {
             Headphones recommended
           </p>
           
-          {/* Clickable Start Text */}
-          <h3
+          {/* Minimalist Button */}
+          <button
             onClick={handleStart}
-            className="text-white font-bold uppercase tracking-wider leading-none cursor-pointer transition-all duration-300 hover:text-cyan-400"
+            className="group relative text-white font-bold uppercase tracking-wider transition-all duration-300 hover:text-cyan-400 border border-white/30 hover:border-cyan-400 px-8 py-4 bg-transparent hover:bg-white/5"
             style={{
               fontFamily: 'Space Grotesk, sans-serif',
-              fontWeight: '800',
-              fontSize: 'clamp(48px, 6vw, 80px)',
-              lineHeight: '1.1',
-              letterSpacing: '0.03em'
+              fontWeight: '700',
+              fontSize: 'clamp(18px, 2vw, 24px)',
+              letterSpacing: '0.03em',
+              borderRadius: '2px'
             }}
           >
-            SHAPE OUR JOURNEY TO 2050
-          </h3>
+            <span className="relative z-10">SHAPE OUR JOURNEY TO 2050</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+          </button>
         </div>
       </div>
     </div>
