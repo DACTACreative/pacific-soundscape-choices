@@ -40,23 +40,20 @@ export default function StoryScrollSection({
   return (
     <section 
       ref={sectionRef}
-      className={`relative h-screen flex items-center justify-center ${backgroundColor} ${className}`}
+      className={`relative h-screen flex items-center justify-center snap-start bg-black ${className}`}
     >
-      {/* Background Image */}
+      {/* Background Image - Hidden since we want pure black */}
       {backgroundImage && (
         <div 
-          className={`absolute inset-0 bg-cover bg-center transition-transform duration-1000 ${
-            parallax ? 'transform-gpu' : ''
-          }`}
+          className="absolute inset-0 bg-cover bg-center opacity-0"
           style={{ 
             backgroundImage: `url(${backgroundImage})`,
-            transform: parallax ? 'translateZ(0)' : 'none'
           }}
         />
       )}
       
-      {/* Overlay */}
-      <div className={`absolute inset-0 ${overlay}`} />
+      {/* Overlay - Pure black */}
+      <div className="absolute inset-0 bg-black" />
       
       {/* Content */}
       <div 

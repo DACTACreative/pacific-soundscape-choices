@@ -123,7 +123,7 @@ export default function LandingPage() {
           
           {/* Main Narrative */}
           <div className="text-white drop-shadow-2xl leading-relaxed space-y-6">
-            <p className="text-lg md:text-xl">
+            <p className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
               This journey is as much <strong>heard</strong> as it is seen. Close your eyes for a moment and listen – that's the sound of the Pacific's gentle tides today.
             </p>
             
@@ -131,11 +131,11 @@ export default function LandingPage() {
               Choose Your Pacific Future
             </h1>
             
-            <p className="text-lg md:text-xl">
+            <p className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
               is about to take <strong>you</strong> on an immersive voyage from now to 2050. In this interactive story, you will guide the Blue Pacific through critical decisions. With each choice, data-driven visuals will show the impact – and an evolving soundscape will <strong>sonify</strong> our changing ocean.
             </p>
             
-            <p className="text-xl md:text-2xl font-semibold mt-8">
+            <p className="text-4xl md:text-6xl font-bold tracking-tight leading-tight mt-8">
               Are you ready to chart a course for the future?
             </p>
           </div>
