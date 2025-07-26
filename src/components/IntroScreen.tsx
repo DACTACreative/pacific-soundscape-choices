@@ -29,84 +29,93 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     {
       id: 1,
       title: "Creating Feeling",
-      content: `This piece was created to create feeling.
-To create a sense of belonging and hope — a rare feeling in the face of climate change.
+      content: `This experience was created to stir something in you.
+To evoke belonging. To make space for the feeling of hope — that rare emotion when facing climate collapse.
 
-To show light.
-To involve more people into decisions that concern us — like the Blue Pacific 2050 Strategy.
-To bring us together as a region.
+To hold light.
+To draw more of us into decisions that shape our region — like the Blue Pacific 2050 Strategy.
+To remind us we are not isolated nations, but a collective body.
 
-We are mainly made of sea.
-We are so close… but so far.`,
+We are mostly made of ocean.
+We are close… but distant.
+This piece brings us together.`,
       reversed: false,
-      image: introImages[0]
+      image: introImages[9] // Using introJ image instead
     },
     {
       id: 2,
       title: "The Sound of Our Ocean",
-      content: `The sea is what brings us together.
-It's the backbone of our Pacific culture.
+      content: `The sea is our mother, our corridor, our food source, our song.
+It's the one voice that connects us across the Pacific.
 
-That's why this piece focuses on sound — the sound of this ocean — to accompany your journey.
+That's why this game begins with sound — the sound of our ocean — sonified.
+Each high tide is rendered in tone.
+Each low tide retreats, like breath.
 
-When you begin the game, you will be projected into Fiji.
-The date is October 10, 2024.
+You begin your journey in Fiji.
+The date: October 10, 2024.
+The sound you hear is real — tide data turned into rhythm.
 
-The sound you'll hear? It's real. The actual tide, sonified.
-Each high tide = water rising.
-Each low = a retreat six hours later.`,
+Listen closely. The ocean speaks.`,
       reversed: true,
-      image: introImages[1]
+      image: introImages[0] // Using introA image as requested
     },
     {
       id: 3,
       title: "The Reality We Face",
-      content: `We are already on the path to a warmer Earth.
+      content: `The Earth is already warming.
+The Pacific emits less than 0.03% of global emissions.
+Yet, we feel the waves first.
 
-The Pacific contributes less than 0.03% of global carbon emissions.
-Yet we face the consequences just as much as any other region.
+Sea level rise doesn't arrive like a storm.
+It creeps — slow, quiet, constant.
+We barely notice it until the water laps at our door.
 
-Sea level rise is one of our most silent threats.
-So slow, so invisible… we forget.
-But it's always there — like the background sound of this ocean.`,
+But the sound? The sound is always there.
+A gentle warning. A low hum of urgency.
+A background tide we must choose to hear.`,
       reversed: false,
       image: introImages[2]
     },
     {
       id: 4,
       title: "Your Role in This Journey",
-      content: `During this game, you'll be projected into a series of decisions.
+      content: `This is not a passive story. It's a path — and you are part of it.
 
-Every one of them is connected to the themes and indicators from the Blue Pacific 2050 Implementation Plan.
-Some are policy-based. Others are small-scale utopias.
+You'll make seven decisions.
+Each one maps to a key theme from the Blue Pacific 2050 Implementation Plan.
 
-Why utopia?
-Because keeping hope is a form of resistance.`,
+Some will feel small. Some will feel big.
+All are rooted in real dilemmas we face as a region.
+Many are inspired by what already exists — seeds of utopia in motion.
+
+This is a call to imagination.
+Because hope itself is a kind of resistance.`,
       reversed: true,
       image: introImages[3]
     },
     {
       id: 5,
-      title: "Block 5 – The Game as Framework",
-      content: `This is a simplification. A gamification.
+      title: "Why This Is a Game",
+      content: `What you're about to play is a framework in disguise.
 
-A playable form of Monitoring, Evaluation, and Learning (MEL).
-Because sometimes impact gets buried in spreadsheets.
+A simplified form of Monitoring, Evaluation, and Learning (MEL).
+Because spreadsheets rarely stir emotion — but this can.
+This lets us feel impact.
 
-And here — impact becomes immersive.
-It becomes personal.
+In this game, frameworks become story.
+Strategies become sound.
+Data becomes lived experience.
 
-Frameworks and policies are crucial, yes.
-But emotion moves people.
-Feeling makes things real.`,
+We are not rejecting systems. We are expanding them — into something you can see, hear, and feel.`,
       reversed: false,
       image: introImages[4]
     },
     {
       id: 6,
-      title: "Mechanics of the Game",
-      content: `You'll make seven key decisions.
-Each one maps directly to the seven Blue Pacific Strategy pillars:
+      title: "Your Decisions Shape the Region",
+      content: `There are seven decisions to make.
+Each one aligns to a Blue Pacific strategic pillar:
 
 • Political Leadership
 • People-Centered Development
@@ -116,62 +125,69 @@ Each one maps directly to the seven Blue Pacific Strategy pillars:
 • Oceans & Environment
 • Technology & Connectivity
 
-Each decision will shape our region in subtle, measurable ways.
-Your answers affect data points and Pacific indicators.`,
+Your answers shape the map.
+Each choice nudges indicators, themes, and future possibilities.
+You won't see everything at once — just like in real life.`,
       reversed: true,
       image: introImages[5]
     },
     {
       id: 7,
-      title: "The Twist",
-      content: `Once your decisions are made, the world moves forward.
-Welcome to 2050.
+      title: "But You Don't Control the World",
+      content: `Once your decisions are done, we fast forward.
+You land in the year 2050.
 
-But here's the truth:
-You do not decide the global climate scenario.
-It is assigned — randomly — based on global uncertainty.
+But here's the twist:
+You don't choose the climate scenario. The world does.
+Just like now — where the actions of distant nations shape our shores.
 
-You'll land in one of three outcomes:
+You may land in one of three futures:
 
-• 1.5°C: Achieved through massive global cooperation
-• 2.5°C: A fractured effort
-• 3°C+: Inaction, delay, loss
+• 1.5°C — a world of global cooperation
+• 2.5°C — a fractured, messy middle
+• 3°C+ — delayed action, heavy loss
 
-This randomness mirrors our power imbalance in real life.
-We are not the biggest polluters — yet we carry the weight.`,
+This isn't about fairness. It's about realism.
+We are not the biggest polluters.
+But we are among the first to adapt.`,
       reversed: false,
       image: introImages[6]
     },
     {
       id: 8,
-      title: "Seeing Your Impact",
-      content: `Once 2050 loads, you'll see the consequences.
+      title: "Your Ripple Effects in 2050",
+      content: `Then comes reflection.
 
-How did your choices align with the Blue Pacific indicators?
-How did they affect people on the ground?
-How did regional strategies hold under climate pressure?
+How did your decisions align with the Blue Pacific indicators?
+Which communities benefited? What ripples did you create?
 
-This section mixes narrative, visualisation, and strategy.
-You'll meet people.
-Hear how one decision affected them.
-See a dashboard of change.`,
+This section blends narrative, visualisation, and score.
+It's where your story meets the region's story.
+You'll hear from people. You'll see outcomes.
+
+Not everything you did will be perfect.
+But impact is rarely tidy.
+This is a place to learn — and keep shaping.`,
       reversed: true,
       image: introImages[7]
     },
     {
       id: 9,
-      title: "Last Words Before You Begin",
-      content: `Yes, the ocean is rising.
+      title: "One Last Thing Before You Begin",
+      content: `The ocean is rising.
 But so are we.
 
-And each action — however small — creates a wave.
+Each small action sends a wave.
+Each decision builds a current.
 
-This experience is here to remind us:
+This isn't just a game — it's a reflection.
+A way to remind ourselves:
+
 Hope is an act.
 Strategy is a tool.
-And unity is our strength.
+Unity is our strength.
 
-Let's shape a future that looks like us —
+Let's create a future that looks like us —
 Not one shaped without us.`,
       reversed: false,
       isLast: true,
