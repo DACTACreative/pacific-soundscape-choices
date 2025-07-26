@@ -15,10 +15,10 @@ export default function LandingPage() {
       if (!mounted || !vantaRef.current) return;
       
       // Check if VANTA is available
-      if ((window as any).VANTA && (window as any).VANTA.TRUNK) {
-        console.log('Initializing Vanta TRUNK effect');
+      if ((window as any).VANTA && (window as any).VANTA.BIRDS) {
+        console.log('Initializing Vanta BIRDS effect');
         try {
-          vantaEffect.current = (window as any).VANTA.TRUNK({
+          vantaEffect.current = (window as any).VANTA.BIRDS({
             el: vantaRef.current,
             mouseControls: true,
             touchControls: true,
@@ -27,11 +27,15 @@ export default function LandingPage() {
             minWidth: 200.00,
             scale: 1.00,
             scaleMobile: 1.00,
-            color: 0x4A90E2,      // Beautiful blue for the trunk structures
-            chaos: 8.00,
-            backgroundColor: 0x000000  // Pure black background
+            backgroundColor: 0x000000,
+            color1: 0x0087ff,
+            color2: 0x001eff,
+            colorMode: "lerp",
+            birdSize: 2.2,
+            wingSpan: 19.0,
+            quantity: 3.0
           });
-          console.log('Vanta TRUNK effect initialized successfully');
+          console.log('Vanta BIRDS effect initialized successfully');
         } catch (error) {
           console.error('Error initializing Vanta:', error);
         }
@@ -42,18 +46,18 @@ export default function LandingPage() {
     };
 
     const loadScripts = () => {
-      // Check if p5 is already loaded
-      if (!(window as any).p5) {
-        const p5Script = document.createElement('script');
-        p5Script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js';
-        p5Script.onload = () => {
-          console.log('p5.js loaded');
+      // Check if THREE.js is already loaded
+      if (!(window as any).THREE) {
+        const threeScript = document.createElement('script');
+        threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+        threeScript.onload = () => {
+          console.log('THREE.js loaded');
           loadVantaScript();
         };
-        p5Script.onerror = () => {
-          console.error('Failed to load p5.js');
+        threeScript.onerror = () => {
+          console.error('Failed to load THREE.js');
         };
-        document.head.appendChild(p5Script);
+        document.head.appendChild(threeScript);
       } else {
         loadVantaScript();
       }
@@ -62,7 +66,7 @@ export default function LandingPage() {
     const loadVantaScript = () => {
       if (!(window as any).VANTA) {
         const vantaScript = document.createElement('script');
-        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js';
+        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js';
         vantaScript.onload = () => {
           console.log('Vanta.js loaded');
           if (mounted) {
