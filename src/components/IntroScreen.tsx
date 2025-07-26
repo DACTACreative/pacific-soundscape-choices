@@ -17,79 +17,93 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     {
       id: 1,
       title: "Creating Feeling",
-      content: `This piece was created to create feeling.
-To create a sense of belonging and hope, a rare feeling in the face of climate change.
+      content: `To awaken a sense of belonging, of togetherness, of hope — a rare and sacred emotion when facing the planetary scale of climate change.
 
-To show light.
-To involve more people into decisions that concern us, like the Blue Pacific 2050 Strategy.
-To bring us together as a region.
+To shine light where despair often creeps in.
 
-We are mainly made of sea.
-We are so close… but so far.`,
+To invite more people into the conversations that shape our region — especially around the Blue Pacific 2050 Strategy.
+
+To stitch connection across distant shores.
+
+Because we are mostly sea — scattered, yet bound. So close… yet often made to feel far.
+
+This is a game, yes — but it's also a call to feel.`,
       reversed: false
     },
     {
       id: 2,
       title: "The Sound of Our Ocean",
       content: `The sea is what brings us together.
-It's the backbone of our Pacific culture.
+It is our memory, our movement, our story.
 
-That's why this piece focuses on sound, the sound of this ocean, to accompany your journey.
+This piece focuses on sound — the sound of our ocean — to carry you through this journey.
 
-When you begin the game, you will be projected into Fiji.
-The date is October 10, 2024.
+When you begin, you’ll be immersed in Fiji.
+The date: October 10, 2024.
 
-The sound you'll hear? It's real. The actual tide, sonified.
-Each high tide = water rising.
-Each low = a retreat six hours later.`,
+The sound you hear is real.
+It is the actual tide — sonified.
+
+Each high tide = rising water.
+Each low = its slow retreat six hours later.
+
+This soundscape grounds us. Because for the Pacific, the ocean is not background — it’s home.`,
       reversed: true
     },
     {
       id: 3,
       title: "The Reality We Face",
-      content: `We are already on the path to a warmer Earth.
+      content: `We are already living in a warmer world.
 
-The Pacific contributes less than 0.03% of global carbon emissions.
-Yet we face the consequences just as much as any other region.
+The Pacific emits less than 0.03% of global carbon emissions.
+Yet we stand on the frontlines of its consequences.
 
 Sea level rise is one of our most silent threats.
-So slow, so invisible… we forget.
-But it's always there, like the background sound of this ocean.`,
-      reversed: false
+It does not roar like a cyclone — it creeps. Quietly.
+And because it's invisible, we forget.
+
+But like the sound of waves — always returning — the threat remains.
+
+This is not alarmism. It’s presence. And we must respond with clarity and imagination.`,
+    reversed: false
     },
     {
       id: 4,
       title: "Your Role in This Journey",
-      content: `During this game, you'll be projected into a series of decisions.
+      content: `As you enter this experience, you'll face a series of seven decisions.
 
-Every one of them is connected to the themes and indicators from the Blue Pacific 2050 Implementation Plan.
-Some are policy-based. Others are small-scale utopias.
+Each is inspired by the Blue Pacific 2050 Implementation Plan — its real goals, real indicators, and real challenges.
 
-Why utopia?
-Because keeping hope is a form of resistance.`,
-      reversed: true
+Some choices reflect public policy. Others are visions of community-led futures — new models, small-scale utopias.
+
+Why utopias?
+
+Because in the Pacific, hope is not a luxury. It’s a lifeline.
+And imagining better is how we resist being written out of the future.`,
+    reversed: true
     },
     {
       id: 5,
-      title: "Block 5 – The Game as Framework",
-      content: `This is a simplification. A gamification.
+      title: "Why This Is a Game",
+      content: `This is a simplification — a gamified journey.
 
-A playable form of Monitoring, Evaluation, and Learning (MEL).
-Because sometimes impact gets buried in spreadsheets.
+It’s also a living form of Monitoring, Evaluation, and Learning (MEL).
+Because data shouldn’t just live in spreadsheets.
 
-And here, impact becomes immersive.
-It becomes personal.
+Here, it becomes visual. Sensory. Emotional.
 
-Frameworks and policies are crucial, yes.
-But emotion moves people.
-Feeling makes things real.`,
+Frameworks matter. Indicators matter. 
+But feelings move people. Stories hold power.
+
+This experience invites you to reflect not just on numbers — but on what we value, and how we act.`,
       reversed: false
     },
     {
       id: 6,
-      title: "Mechanics of the Game",
-      content: `You'll make seven key decisions.
-Each one maps directly to the seven Blue Pacific Strategy pillars:
+      title: "Your Decisions Shape the Region",
+      content: `You will make seven key decisions.
+
+Each one maps directly to a pillar of the Blue Pacific Strategy:
 
 • Political Leadership
 • People-Centered Development
@@ -99,44 +113,53 @@ Each one maps directly to the seven Blue Pacific Strategy pillars:
 • Oceans & Environment
 • Technology & Connectivity
 
-Each decision will shape our region in subtle, measurable ways.
-Your answers affect data points and Pacific indicators.`,
-      reversed: true
+Your choices affect these domains in subtle, interconnected ways.
+You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
+
+Because in the real world, outcomes are rarely binary.`,
+    reversed: true
     },
     {
       id: 7,
-      title: "The Twist",
-      content: `Once your decisions are made, the world moves forward.
-Welcome to 2050.
+      title: "But You Don’t Control the World",
+      content: `You will make seven key decisions.
 
-But here's the truth:
-You do not decide the global climate scenario.
-It is assigned, randomly, based on global uncertainty.
+Each one maps directly to a pillar of the Blue Pacific Strategy:
 
-You'll land in one of three outcomes:
+• Political Leadership
+• People-Centered Development
+• Peace & Security
+• Resource & Economic Development
+• Climate Change
+• Oceans & Environment
+• Technology & Connectivity
 
-• 1.5°C: Achieved through massive global cooperation
-• 2.5°C: A fractured effort
-• 3°C+: Inaction, delay, loss
+Your choices affect these domains in subtle, interconnected ways.
+You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
 
-This randomness mirrors our power imbalance in real life.
-We are not the biggest polluters, yet we carry the weight.`,
-      reversed: false
+Because in the real world, outcomes are rarely binary.`,
+   reversed: false
     },
     {
       id: 8,
-      title: "Seeing Your Impact",
-      content: `Once 2050 loads, you'll see the consequences.
+      title: "The Ripple Effects in 2050",
+      content: `You will make seven key decisions.
 
-How did your choices align with the Blue Pacific indicators?
-How did they affect people on the ground?
-How did regional strategies hold under climate pressure?
+Each one maps directly to a pillar of the Blue Pacific Strategy:
 
-This section mixes narrative, visualisation, and strategy.
-You'll meet people.
-Hear how one decision affected them.
-See a dashboard of change.`,
-      reversed: true
+• Political Leadership
+• People-Centered Development
+• Peace & Security
+• Resource & Economic Development
+• Climate Change
+• Oceans & Environment
+• Technology & Connectivity
+
+Your choices affect these domains in subtle, interconnected ways.
+You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
+
+Because in the real world, outcomes are rarely binary.`,
+     reversed: true
     },
     {
       id: 9,
@@ -144,16 +167,18 @@ See a dashboard of change.`,
       content: `Yes, the ocean is rising.
 But so are we.
 
-And each action, however small, creates a wave.
+Every small decision sends a signal.
+Every story is a compass.
 
-This experience is here to remind us:
-Hope is an act.
-Strategy is a tool.
-And unity is our strength.
+This game is a reminder:
+Hope is strategy.
+Unity is strength.
+And dreaming is action.
 
-Let's shape a future that looks like us —
-Not one shaped without us.`,
-      reversed: false,
+Let’s co-create a future shaped by us — not for us.
+
+Let’s begin.`,
+   reversed: false,
       isLast: true
     }
   ];
@@ -161,7 +186,7 @@ Not one shaped without us.`,
   return (
     <div className="bg-black text-white min-h-screen">
       {/* Fixed Header */}
-     <div className="fixed top-6 left-6 z-50 bg-black p-4 rounded-lg">
+     <div className="fixed top-6 left-6 z-50">
   <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-3 text-white">BLUE PACIFIC 2050</h1>
   <p className="text-2xl md:text-4xl font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
 </div>
@@ -207,23 +232,15 @@ Not one shaped without us.`,
                 {/* Image Side */}
                 <div className="w-full lg:w-1/2">
                   <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
-                    {block.id === 1 ? (
-                      <img 
-                        src="/lovable-uploads/2784ebb1-a1be-46fa-ad9d-c9fc952a0d6d.png" 
-                        alt="Blue Pacific 2050 Experience"
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                        <div className="text-center text-gray-400">
-                          <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
-                            <span className="text-2xl">🖼️</span>
-                          </div>
-                          <p className="text-sm">Image Placeholder</p>
-                          <p className="text-xs mt-1">Block {block.id}</p>
+                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                      <div className="text-center text-gray-400">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl">🖼️</span>
                         </div>
+                        <p className="text-sm">Image Placeholder</p>
+                        <p className="text-xs mt-1">Block {block.id}</p>
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
 
