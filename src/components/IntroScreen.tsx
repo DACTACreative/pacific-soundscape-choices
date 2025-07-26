@@ -1,37 +1,10 @@
-import heroImage from '@/assets/hero-pacific-future.jpg';
 import { useAudio, Scenario } from '@/context/AudioContext';
+import StoryScrollSection from './StoryScrollSection';
+import { Button } from './ui/button';
 
 interface IntroScreenProps {
   onStart: () => void;
 }
-
-const dataStats = [
-  {
-    title: "98%",
-    description: "of Pacific territory is ocean",
-    source: "Blue Pacific 2050 / SPC"
-  },
-  {
-    title: "0.03%",
-    description: "of global emissions come from Pacific nations",
-    source: "UN ESCAP / Climate Analytics"
-  },
-  {
-    title: "1.7 million",
-    description: "Pacific Islanders may be displaced by 2050",
-    source: "World Bank / Internal Displacement Monitoring Centre"
-  },
-  {
-    title: "99%",
-    description: "coral loss projected in high-emissions scenario",
-    source: "IPCC AR6 / Fiji Reef Resilience Study"
-  },
-  {
-    title: "830",
-    description: "Fijian communities at risk of relocation (worst case)",
-    source: "Fiji Climate Ministry / Dashboard projections"
-  }
-];
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
   const { loading, playScenario } = useAudio();
@@ -40,153 +13,127 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     playScenario(Scenario.Scenario0);
     onStart();
   };
+
   return (
-    <div className="min-h-screen bg-gradient-ocean relative overflow-hidden">
-      {/* Background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-15"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/90 via-ocean-deep/95 to-ocean-deep" />
-      
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-12">
-        {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-extralight tracking-wide text-wave-foam mb-4">
-            Sonification 2050
-          </h1>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-coral-warm to-transparent mx-auto mb-6" />
-          <p className="text-2xl md:text-3xl font-light text-coral-warm/80 tracking-wide">
-            Choose Your Pacific Future
+    <div className="min-h-screen">
+      {/* Story Scroll - Pacific Context (1) */}
+      <StoryScrollSection 
+        backgroundColor="bg-gradient-to-b from-ocean-deep to-ocean-mid"
+        parallax
+      >
+        <div className="font-inter text-white">
+          <p className="text-xl md:text-2xl leading-relaxed mb-8 font-light">
+            The Pacific Ocean is our home – a boundless blue that connects 10 million people across thousands of islands. We, the peoples of the Blue Pacific, are the custodians of <strong className="text-coral-warm font-semibold">nearly 20% of Earth's surface</strong> (our ocean and skies).
+          </p>
+          <p className="text-lg md:text-xl leading-relaxed font-light">
+            Our ancestors navigated by stars and swells, binding our islands into one community. Today, that unity lives on in the concept of the Blue Pacific Continent – numerous voices, but one ocean, one canoe.
           </p>
         </div>
+      </StoryScrollSection>
 
-        {/* Hero block */}
-        <div className="mb-20 text-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <h2 className="text-3xl md:text-4xl font-light text-wave-foam mb-8 leading-relaxed">
-            The ocean is rising. Will we rise with it?
+      {/* Story Scroll - Climate Inequity (2) */}
+      <StoryScrollSection 
+        backgroundColor="bg-gradient-to-b from-ocean-mid to-ocean-deep"
+        overlay="bg-black/60"
+      >
+        <div className="font-inter text-white">
+          <p className="text-xl md:text-2xl leading-relaxed mb-6 font-light">
+            Our islands release almost no carbon – only <strong className="text-orange-400 font-semibold">0.03% of global emissions</strong> – yet we face the fiercest storms. It isn't fair: climate change hits the Pacific first and worst.
+          </p>
+          <p className="text-lg md:text-xl leading-relaxed mb-6 font-light">
+            Rising seas eat away at ancestral shores where our grandparents are buried. In a single generation, we could lose villages, languages, and traditions to the encroaching ocean.
+          </p>
+          <p className="text-lg md:text-xl leading-relaxed font-light">
+            By 2050, up to <strong className="text-red-400 font-semibold">1.7 million Pacific Islanders</strong> may be displaced if the world stays on its current path. We are innocent navigators caught in a gathering storm.
+          </p>
+        </div>
+      </StoryScrollSection>
+
+      {/* Story Scroll - Collective Action (3) */}
+      <StoryScrollSection 
+        backgroundColor="bg-gradient-to-b from-ocean-deep to-ocean-light"
+        overlay="bg-blue-900/40"
+      >
+        <div className="font-inter text-white">
+          <p className="text-xl md:text-2xl leading-relaxed mb-6 font-light">
+            Yet, we are not merely victims. The Pacific Islands are leaders in resilience, teaching the world that <em className="text-wave-foam font-playfair text-2xl">"we are all in the same canoe."</em>
+          </p>
+          <p className="text-lg md:text-xl leading-relaxed mb-6 font-light">
+            Our Blue Pacific family knows that <strong className="text-green-400 font-semibold">only through unity and bold action</strong> can we navigate these rising seas. Regional solidarity – from Fiji to Tuvalu, from Palau to Vanuatu – gives us strength.
+          </p>
+          <p className="text-lg md:text-xl leading-relaxed font-light">
+            We raise our voices in unison at global forums, demand climate justice, and innovate homegrown solutions. If the world sails with us, we can chart a course to calmer waters.
+          </p>
+        </div>
+      </StoryScrollSection>
+
+      {/* Story Scroll - Future at Stake (4) */}
+      <StoryScrollSection 
+        backgroundColor="bg-gradient-to-br from-ocean-deep via-ocean-mid to-orange-900/20"
+        overlay="bg-gradient-to-t from-black/40 to-transparent"
+      >
+        <div className="font-inter text-white">
+          <p className="text-lg md:text-xl leading-relaxed mb-8 font-light">
+            The year is 2025. The tides are gentle today, and our islands remain. But on the horizon, 2050 looms with unanswered questions.
+          </p>
+          <div className="text-2xl md:text-3xl font-medium text-coral-warm mb-8 leading-tight">
+            <p>Will our children inherit thriving reefs and secure homes –</p>
+            <p>or will they inherit seawalls and uncertainty?</p>
+          </div>
+          <p className="text-lg md:text-xl leading-relaxed mb-6 font-light">
+            The <strong className="text-accent font-semibold">choices we make now</strong> will ripple across decades. In our culture, when we plan, we think of the next generation and those after.
+          </p>
+          <p className="text-lg md:text-xl leading-relaxed font-light">
+            This is your chance to do the same: to steer our canoe toward a future where the Pacific Ocean is a source of life and hope, not hardship.
+          </p>
+        </div>
+      </StoryScrollSection>
+
+      {/* Game Intro Blurb (Start Screen) */}
+      <StoryScrollSection 
+        backgroundColor="bg-ocean-deep"
+        className="min-h-screen"
+      >
+        <div className="max-w-3xl mx-auto bg-card/10 backdrop-blur-sm border border-ocean-light/20 rounded-2xl p-8 md:p-12">
+          <h2 className="text-3xl md:text-4xl font-playfair font-semibold text-wave-foam mb-8 flex items-center justify-center gap-3">
+            <span className="text-coral-warm">🧭</span>
+            Your Mission
           </h2>
-          <div className="max-w-3xl mx-auto space-y-6 text-lg text-card-foreground/90 leading-relaxed">
-            <p>
-              Sonification 2050 is not just a game — it's a sound-driven journey through possible futures.
-            </p>
-            <p>
-              You are invited to decide: Will Fiji meet the Blue Pacific 2050 goals?<br />
-              What will our shared ocean sound like in 25 years?
-            </p>
-          </div>
-        </div>
-
-        {/* Flowing narrative */}
-        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          <div className="max-w-3xl mx-auto space-y-8 text-lg text-card-foreground/80 leading-relaxed">
-            <p>
-              This project started from a simple desire: to create something beautiful, engaging — and a little alarming. Something that stirs you.
-            </p>
-            <p>
-              As Pacific people, our truth is unlike anywhere else. We are made of <strong className="text-accent">98% ocean</strong>. Scattered islands. Rich and diverse cultures. And what connects us is also what isolates us: the sea.
-            </p>
-            <p>
-              The ocean feeds us. It holds our stories. And now, it is rising.
-            </p>
-            <p>
-              <strong className="text-coral-warm">Sonification 2050</strong> is built around that truth. You will make 10 real-world choices about energy, land use, migration, tourism and more — and those decisions will shape Fiji's future.
-            </p>
-            <div className="border-l-2 border-coral-warm/30 pl-6 my-8">
-              <p className="text-card-foreground/90">
-                At the end, you'll receive:<br />
-                • A narrative of your 2050 outcome<br />
-                • A sonified soundtrack based on sea-level data<br />
-                • A dashboard of what changed — coral, communities, emissions, energy
-              </p>
-            </div>
-            <p className="text-coral-warm/90 font-medium">
-              This is a story made of data — and you are in it.
-            </p>
-          </div>
-        </div>
-
-        {/* Data carousel */}
-        <div className="mb-20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {dataStats.map((stat, index) => (
-              <div 
-                key={index} 
-                className="text-center p-6 border border-ocean-light/20 bg-card/5 backdrop-blur-sm"
-                style={{ animationDelay: `${0.8 + index * 0.1}s` }}
-              >
-                <div className="text-4xl font-light text-coral-warm mb-2">{stat.title}</div>
-                <div className="text-card-foreground/80 mb-3 leading-snug">{stat.description}</div>
-                <div className="text-xs text-wave-foam/50 font-light">{stat.source}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Quote block */}
-        <div className="mb-20 text-center animate-fade-in" style={{ animationDelay: '0.8s' }}>
-          <div className="max-w-3xl mx-auto">
-            <blockquote className="text-2xl md:text-3xl font-light text-wave-foam/90 leading-relaxed italic mb-4">
-              "Too long have we followed — colonisation, globalisation, occidentalisation. It's time to lead. This is about reclaiming our voice, our ocean, our power."
-            </blockquote>
-            <cite className="text-coral-warm/70 text-sm tracking-wide">— Sonification 2050 narrative</cite>
-          </div>
-        </div>
-
-        {/* Final section */}
-        <div className="mb-16 animate-fade-in" style={{ animationDelay: '1s' }}>
-          <div className="max-w-3xl mx-auto text-lg text-card-foreground/80 leading-relaxed space-y-6">
-            <p>
-              Each choice you make is mapped to real indicators from the <strong className="text-accent">Blue Pacific 2050 strategy</strong>:
-            </p>
-            <div className="grid md:grid-cols-3 gap-4 my-8">
-              <div className="text-center p-4">
-                <div className="text-coral-warm font-medium">Choose eco-tourism:</div>
-                <div className="text-sm text-card-foreground/70">support marine protected areas</div>
-              </div>
-              <div className="text-center p-4">
-                <div className="text-coral-warm font-medium">Switch to solar:</div>
-                <div className="text-sm text-card-foreground/70">grow energy independence</div>
-              </div>
-              <div className="text-center p-4">
-                <div className="text-coral-warm font-medium">Relocate now:</div>
-                <div className="text-sm text-card-foreground/70">protect lives and reduce GDP loss</div>
-              </div>
-            </div>
-            <p>
-              Will Fiji stay on course toward these goals — or drift?
-            </p>
-            <p className="text-coral-warm/90">
-              This is your chance to explore that future, with your ears, your heart, and your mind.
-            </p>
-          </div>
-        </div>
-
-        {/* Call to action */}
-        <div className="text-center animate-fade-in" style={{ animationDelay: '1.2s' }}>
-          <button 
-            onClick={handleStart}
-            disabled={loading}
-            className="group relative px-16 py-5 text-lg font-extralight tracking-[0.3em] text-wave-foam/70 
-                       border border-ocean-light/30 bg-transparent backdrop-blur-sm
-                       hover:text-wave-foam hover:border-coral-warm/50 
-                       transition-all duration-1000 ease-out uppercase
-                       before:absolute before:inset-0 before:border before:border-coral-warm/20 
-                       before:scale-95 before:opacity-0 before:transition-all before:duration-700
-                       hover:before:scale-100 hover:before:opacity-100
-                       disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <span className="relative z-10">
-              {loading ? 'loading audio...' : 'start the journey'}
-            </span>
-          </button>
           
-          <div className="mt-8 text-xs text-wave-foam/30 font-extralight tracking-widest">
-            audio recommended for full experience
+          <div className="font-inter text-white/90 space-y-6 text-lg leading-relaxed">
+            <p>
+              Make <strong className="text-coral-warm">10 choices</strong> for our Blue Pacific future. Each decision will affect our 2050 outcome – from the health of coral reefs to the height of the tides.
+            </p>
+            
+            <p>
+              <strong className="text-accent">No choice is trivial.</strong> Some will reduce global emissions, others will strengthen island resilience. Explore trade-offs, see the impacts, and discover the scenario you create.
+            </p>
+            
+            <p className="text-wave-foam">
+              Good luck, and <em className="font-playfair">vinaka vakalevu</em> (thank you) for taking the helm.
+            </p>
+            
+            <p className="text-coral-warm/80 text-center font-medium">
+              When you're ready, tap "Begin" to start the game.
+            </p>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Button
+              onClick={handleStart}
+              disabled={loading}
+              size="lg"
+              className="px-12 py-6 text-xl font-semibold bg-coral-warm hover:bg-coral-warm/90 text-ocean-deep rounded-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Loading Audio...' : 'Begin'}
+            </Button>
+            
+            <p className="mt-6 text-sm text-wave-foam/60 font-light">
+              Audio experience recommended for full immersion
+            </p>
           </div>
         </div>
-      </div>
+      </StoryScrollSection>
     </div>
   );
 }
