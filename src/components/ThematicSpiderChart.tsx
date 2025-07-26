@@ -35,7 +35,10 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     // Load selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
     
+    console.log('Selected codes from storage:', selectedCodes);
+    
     if (selectedCodes.length === 0) {
+      console.log('No selected codes found, using fallback data');
       setLoading(false);
       return;
     }
@@ -75,7 +78,10 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     );
   }
 
+  console.log('Rendering spider chart - playerChoices:', playerChoices.length, 'spiderMap:', !!spiderMap);
+
   if (playerChoices.length === 0 || !spiderMap) {
+    console.log('Using fallback chart data');
     // Provide fallback data showing a balanced Pacific 2050 scenario
     const fallbackData = {
       labels: [
@@ -106,6 +112,10 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     const fallbackOptions = {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: {
+        mode: 'nearest' as const,
+        intersect: false,
+      },
       scales: {
         r: {
           beginAtZero: true,
@@ -152,7 +162,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
     return (
       <div className={`relative ${className}`}>
-        <div className="w-full h-[500px] mx-auto relative">
+        <div className="w-full h-[500px] mx-auto relative z-20 bg-black/20 rounded-lg p-4">
           <Radar data={fallbackData} options={fallbackOptions} />
         </div>
         <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center">
