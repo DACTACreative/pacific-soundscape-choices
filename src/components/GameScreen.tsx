@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import questionsData from '@/data/questions.json';
 import Papa from 'papaparse';
+import * as THREE from 'three';
+import TRUNK from 'vanta/dist/vanta.trunk.min';
 
 interface GameQuestion {
   QuestionCode: string;
@@ -38,10 +40,36 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [answers, setAnswers] = useState<Record<string, GameAnswer>>({});
   const [loading, setLoading] = useState(true);
+  
+  const vantaRef = useRef(null);
+  const vantaEffect = useRef(null);
 
   const questions: GameQuestion[] = questionsData;
   const currentQuestion = questions[currentQuestionIndex];
   const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
+
+  useEffect(() => {
+    // Initialize VANTA background
+    if (!vantaEffect.current) {
+      vantaEffect.current = TRUNK({
+        el: vantaRef.current,
+        THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        backgroundColor: 0x222426,
+        color: 0x1149ac,
+        chaos: 3.0,
+      });
+    }
+    return () => {
+      if (vantaEffect.current) vantaEffect.current.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     // Load the mapping CSV
@@ -104,33 +132,30 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-ocean relative overflow-hidden flex items-center justify-center">
-        <div className="text-wave-foam text-xl">Loading game...</div>
+      <div ref={vantaRef} className="min-h-screen bg-black flex items-center justify-center text-white">
+        <div className="text-xl">Loading game...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-ocean relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-ocean-deep/90 via-ocean-deep/95 to-ocean-deep" />
-      
+    <div ref={vantaRef} className="min-h-screen bg-black flex items-center justify-center text-white">
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-12">
+      <div className="w-full max-w-4xl text-center px-6">
         
         {/* Progress indicator */}
-        <div className="mb-16 animate-fade-in">
+        <div className="mb-12">
           <div className="flex justify-between items-center mb-4">
-            <span className="text-sm font-extralight tracking-wider text-wave-foam/70 uppercase">
+            <span className="text-sm font-light tracking-wider text-white/70 uppercase">
               Question {currentQuestionIndex + 1} of {questions.length}
             </span>
-            <span className="text-sm text-coral-warm/60 font-light">
+            <span className="text-sm text-white/60 font-light">
               {Math.round(progressPercentage)}% complete
             </span>
           </div>
-          <div className="w-full bg-ocean-deep/50 h-px relative">
+          <div className="w-full bg-white/20 h-0.5 relative">
             <div 
-              className="absolute top-0 left-0 h-px bg-gradient-to-r from-coral-warm via-accent to-wave-foam transition-all duration-1000 ease-out"
+              className="absolute top-0 left-0 h-0.5 bg-white transition-all duration-1000 ease-out"
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
@@ -142,52 +167,34 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         }`}>
           
           {/* Question text */}
-          <div className="max-w-3xl mx-auto mb-16 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <p className="text-xl md:text-2xl font-light text-card-foreground/90 leading-relaxed text-center">
-              {currentQuestion.Question}
-            </p>
-          </div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-12 text-white">
+            {currentQuestion.Question}
+          </h1>
 
           {/* Options */}
-          <div className="max-w-2xl mx-auto space-y-6">
+          <div className="space-y-6">
             {currentQuestion.options.map((optionCode, index) => {
               const answerObj = answers[optionCode];
               return (
                 <button
                   key={index}
-                  className={`group relative w-full p-8 text-left
-                             bg-transparent border border-ocean-light/20 backdrop-blur-sm
-                             hover:border-coral-warm/40 hover:bg-ocean-light/5
-                             transition-all duration-700 ease-out
-                             animate-fade-in
-                             before:absolute before:inset-0 before:border before:border-coral-warm/10 
-                             before:scale-95 before:opacity-0 before:transition-all before:duration-500
-                             hover:before:scale-100 hover:before:opacity-100
-                             disabled:opacity-50 disabled:cursor-not-allowed`}
-                  style={{ animationDelay: `${0.4 + index * 0.2}s` }}
+                  className="group relative w-full py-6 px-8 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={() => handleOptionSelect(index)}
                   disabled={isTransitioning}
                 >
-                  <span className="relative z-10 text-lg font-light text-card-foreground/80 group-hover:text-wave-foam leading-relaxed tracking-wide">
+                  <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                  <span className="relative z-10">
                     {answerObj?.answer || optionCode}
                   </span>
-                  
-                  {/* Subtle hover effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-coral-warm/5 to-transparent 
-                                transform translate-x-[-100%] group-hover:translate-x-[100%] 
-                                transition-transform duration-1000 pointer-events-none" />
                 </button>
               );
             })}
           </div>
-
-          {/* Subtle atmospheric element */}
-          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-ocean-light/5 to-transparent pointer-events-none" />
         </div>
 
         {/* Debug info */}
         {process.env.NODE_ENV === 'development' && (
-          <div className="mt-16 text-center text-xs text-wave-foam/30 font-extralight tracking-wider">
+          <div className="mt-12 text-center text-xs text-white/30 font-light tracking-wider">
             Selected Codes: {selectedAnswerCodes.join(', ')}
           </div>
         )}
