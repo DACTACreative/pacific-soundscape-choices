@@ -170,11 +170,11 @@ Not one shaped without us.`,
       <div className="pt-32">
         {blocks.map((block) => (
           <section key={block.id} className="h-screen flex items-center py-8">
-            <div className="w-full px-8 md:px-16">
-              <div className={`flex flex-col lg:flex-row items-center gap-16 h-full ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
+            <div className="w-full px-16 md:px-24">
+              <div className={`flex flex-col lg:flex-row items-start gap-16 h-full ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
                 
                 {/* Text Side */}
-                <div className="w-full lg:w-1/2 px-4">
+                <div className="w-full lg:w-1/2 flex items-center">
                   <div className="w-full">
                     <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">{block.title}</h2>
 <div className="text-2xl md:text-3xl leading-relaxed whitespace-pre-line text-white">
@@ -188,7 +188,7 @@ Not one shaped without us.`,
                           onClick={handleStart}
                           disabled={loading}
                           size="lg"
-                          className="group relative px-8 py-4 text-base font-semibold bg-transparent border-2 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                          className="group relative px-12 py-8 text-4xl md:text-5xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
                         >
                           <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                           <span className="relative z-10">
@@ -196,7 +196,7 @@ Not one shaped without us.`,
                           </span>
                         </Button>
                         
-                        <p className="mt-4 text-sm md:text-base text-white font-light">
+                        <p className="mt-6 text-2xl md:text-3xl text-white font-light">
                           Audio experience recommended for full immersion
                         </p>
                       </div>
@@ -205,7 +205,7 @@ Not one shaped without us.`,
                 </div>
 
                 {/* Image Side */}
-                <div className="w-full lg:w-1/2 px-4">
+                <div className="w-full lg:w-1/2 flex items-center">
                   <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
                     <div className="w-full h-full bg-gray-800 flex items-center justify-center">
                       <div className="text-center text-gray-400">
