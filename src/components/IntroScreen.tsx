@@ -162,22 +162,22 @@ Not one shaped without us.`,
     <div className="bg-black text-white min-h-screen">
       {/* Fixed Header */}
      <div className="fixed top-6 left-6 z-50">
-  <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-1 text-white">BLUE PACIFIC 2050</h1>
-  <p className="text-sm md:text-lg font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
+  <h1 className="text-6xl md:text-9xl font-bold tracking-tight mb-3 text-white">BLUE PACIFIC 2050</h1>
+  <p className="text-3xl md:text-5xl font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
 </div>
 
       {/* Content Blocks */}
       <div className="pt-32">
         {blocks.map((block) => (
-          <section key={block.id} className="min-h-screen flex items-center py-20">
+          <section key={block.id} className="min-h-screen flex items-center py-8">
             <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
               <div className={`flex flex-col lg:flex-row items-center gap-12 ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
                 
                 {/* Text Side */}
                 <div className="w-full lg:w-1/2">
                   <div className="max-w-2xl mx-auto lg:mx-0">
-                    <h2 className="text-3xl md:text-5xl font-bold text-[#0026d7] mb-10">{block.title}</h2>
-<div className="text-xl md:text-2xl leading-loose whitespace-pre-line text-white">
+                    <h2 className="text-6xl md:text-8xl font-bold text-white mb-10">{block.title}</h2>
+<div className="text-4xl md:text-5xl leading-loose whitespace-pre-line text-white">
   {block.content}
 </div>
 
