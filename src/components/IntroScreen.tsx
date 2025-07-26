@@ -79,16 +79,21 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
 
   return (
     <div style={{ background: '#000000' }}>
-      {/* Fixed Header */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <h1 className="text-xl font-bold text-white tracking-wider">
-            BLUE PACIFIC 2050
-          </h1>
-        </div>
-      </div>
-
       <div ref={scrollRef} data-scroll-container style={{ background: '#000000' }}>
+        {/* Title Block */}
+        <section data-scroll-section className="scroll-block">
+          <div className="scroll-block__wrapper min-h-[120vh] relative px-[8vw] py-16">
+            <div className="scroll-block__text w-full max-w-none relative z-10" data-scroll>
+              <h1 className="text-white font-normal mb-4" style={{ fontSize: 'clamp(32px, 5vw, 64px)', letterSpacing: '0.1em' }}>
+                BLUE PACIFIC 2050
+              </h1>
+              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
+                Choose Your Pacific Future
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Block 1 */}
         <section data-scroll-section className="scroll-block">
           <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
@@ -98,18 +103,24 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
               data-scroll-sticky 
               data-scroll-target=".scroll-block__wrapper"
             >
-              <img 
-                src="/images/block-01-ocean-sound.jpg" 
-                alt="Ocean Sound" 
-                className="w-full h-auto block rounded-xl"
-              />
+              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
+                <img 
+                  src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" 
+                  alt="Ocean Sound" 
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
+                  }}
+                />
+              </div>
             </div>
             
             <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10" data-scroll>
-              <h2 className="text-[#35c5f2] font-bold mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                This piece was created to <span className="text-[#35c5f2]">create feeling</span>.
+              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
+                This piece was created to create feeling.
               </h2>
-              <p className="text-[#f4f4f0] leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
+              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
                 To create a sense of belonging and hope — a rare feeling in the face of climate change.
               </p>
             </div>
@@ -120,10 +131,10 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
         <section data-scroll-section className="scroll-block">
           <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
             <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10 order-1" data-scroll>
-              <h2 className="text-[#35c5f2] font-bold mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Fiji's tide recorded on <span className="text-[#35c5f2]">October 10, 2024</span>
+              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
+                Fiji's tide recorded on October 10, 2024
               </h2>
-              <p className="text-[#f4f4f0] leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
+              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
                 This exact sound recording captures the natural rhythm of Suva's coastline. Your decisions will shape how this sound evolves by 2050.
               </p>
             </div>
@@ -134,11 +145,17 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
               data-scroll-sticky 
               data-scroll-target=".scroll-block__wrapper"
             >
-              <img 
-                src="/images/block-02-fiji-tide.jpg" 
-                alt="Fiji Tide" 
-                className="w-full h-auto block rounded-xl"
-              />
+              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
+                <img 
+                  src="https://images.unsplash.com/photo-1482938289607-e9573fc25ebb" 
+                  alt="Fiji Tide" 
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
+                  }}
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -152,18 +169,24 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
               data-scroll-sticky 
               data-scroll-target=".scroll-block__wrapper"
             >
-              <img 
-                src="/images/block-03-climate-scenario.jpg" 
-                alt="Climate Scenario" 
-                className="w-full h-auto block rounded-xl"
-              />
+              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
+                <img 
+                  src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7" 
+                  alt="Climate Scenario" 
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
+                  }}
+                />
+              </div>
             </div>
             
             <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10" data-scroll>
-              <h2 className="text-[#35c5f2] font-bold mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Your scenario is assigned <span className="text-[#35c5f2]">randomly</span>
+              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
+                Your scenario is assigned randomly
               </h2>
-              <p className="text-[#f4f4f0] leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
+              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
                 Like climate change itself, the outcome isn't entirely predictable. Your journey ends in one of three possible 2050 scenarios.
               </p>
             </div>
@@ -174,10 +197,10 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
         <section data-scroll-section className="scroll-block">
           <div className="scroll-block__wrapper flex items-center justify-between min-h-[120vh] relative px-[8vw] py-16">
             <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10 order-1" data-scroll>
-              <h2 className="text-[#35c5f2] font-bold mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Based on <span className="text-[#35c5f2]">Blue Pacific Strategy</span> indicators
+              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
+                Based on Blue Pacific Strategy indicators
               </h2>
-              <p className="text-[#f4f4f0] leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
+              <p className="text-white leading-relaxed font-normal" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
                 Sea level rise, coral health, displacement, and resilience metrics drawn from Pacific data sources.
               </p>
             </div>
@@ -188,11 +211,17 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
               data-scroll-sticky 
               data-scroll-target=".scroll-block__wrapper"
             >
-              <img 
-                src="/images/block-04-blue-strategy.jpg" 
-                alt="Blue Pacific Strategy" 
-                className="w-full h-auto block rounded-xl"
-              />
+              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
+                <img 
+                  src="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb" 
+                  alt="Blue Pacific Strategy" 
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
+                  }}
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -206,18 +235,24 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
               data-scroll-sticky 
               data-scroll-target=".scroll-block__wrapper"
             >
-              <img 
-                src="/images/block-05-resilience-choice.jpg" 
-                alt="Resilience Choice" 
-                className="w-full h-auto block rounded-xl"
-              />
+              <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center">
+                <img 
+                  src="https://images.unsplash.com/photo-1517022812141-23620dba5c23" 
+                  alt="Resilience Choice" 
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.style.backgroundColor = '#d1d5db';
+                  }}
+                />
+              </div>
             </div>
             
             <div className="scroll-block__text w-[45%] max-w-[500px] relative z-10" data-scroll>
-              <h2 className="text-[#35c5f2] font-bold mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
-                Every choice echoes to <span className="text-[#35c5f2]">2050</span>
+              <h2 className="text-[#35c5f2] font-normal mb-4" style={{ fontSize: 'clamp(24px, 4vw, 48px)' }}>
+                Every choice echoes to 2050
               </h2>
-              <p className="text-[#f4f4f0] leading-relaxed font-normal mb-8" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
+              <p className="text-white leading-relaxed font-normal mb-8" style={{ fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: '1.6' }}>
                 Energy, adaptation, regional cooperation — your decisions shape the Pacific's climate future.
               </p>
               
