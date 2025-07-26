@@ -1,8 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import questionsData from '@/data/questions.json';
 import Papa from 'papaparse';
-import * as THREE from 'three';
-import TRUNK from 'vanta/dist/vanta.trunk.min';
+
+declare global {
+  interface Window {
+    VANTA: any;
+    THREE: any;
+  }
+}
 
 interface GameQuestion {
   QuestionCode: string;
@@ -50,24 +55,57 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
 
   useEffect(() => {
     // Initialize VANTA background
-    if (!vantaEffect.current) {
-      vantaEffect.current = TRUNK({
-        el: vantaRef.current,
-        THREE,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.0,
-        minWidth: 200.0,
-        scale: 1.0,
-        scaleMobile: 1.0,
-        backgroundColor: 0x222426,
-        color: 0x1149ac,
-        chaos: 3.0,
+    const initVanta = () => {
+      if (window.VANTA && window.THREE && !vantaEffect.current) {
+        vantaEffect.current = window.VANTA.TRUNK({
+          el: vantaRef.current,
+          THREE: window.THREE,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.0,
+          minWidth: 200.0,
+          scale: 1.0,
+          scaleMobile: 1.0,
+          backgroundColor: 0x000000,
+          color: 0x1149ac,
+          chaos: 3.0,
+        });
+      }
+    };
+
+    // Load scripts
+    const loadScript = (src: string) => {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
       });
-    }
+    };
+
+    const loadVanta = async () => {
+      try {
+        if (!window.THREE) {
+          await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
+        }
+        if (!window.VANTA) {
+          await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js');
+        }
+        initVanta();
+      } catch (error) {
+        console.error('Failed to load VANTA:', error);
+      }
+    };
+
+    loadVanta();
+
     return () => {
-      if (vantaEffect.current) vantaEffect.current.destroy();
+      if (vantaEffect.current) {
+        vantaEffect.current.destroy();
+        vantaEffect.current = null;
+      }
     };
   }, []);
 
@@ -178,11 +216,11 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
               return (
                 <button
                   key={index}
-                  className="group relative w-full py-6 px-8 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="group relative w-full py-6 px-8 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#003f7f] text-[#003f7f] hover:text-white overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={() => handleOptionSelect(index)}
                   disabled={isTransitioning}
                 >
-                  <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                  <span className="absolute inset-0 bg-[#003f7f] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                   <span className="relative z-10">
                     {answerObj?.answer || optionCode}
                   </span>
