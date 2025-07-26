@@ -57,24 +57,28 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     // Initialize VANTA background
     const initVanta = () => {
       if (window.VANTA && window.THREE && !vantaEffect.current && vantaRef.current) {
-        vantaEffect.current = window.VANTA.TRUNK({
-          el: vantaRef.current,
-          THREE: window.THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.0,
-          minWidth: 200.0,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          backgroundColor: 0x000000,
-          color: 0x1149ac,
-          chaos: 3.0,
-        });
+        try {
+          vantaEffect.current = window.VANTA.TRUNK({
+            el: vantaRef.current,
+            THREE: window.THREE,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.0,
+            minWidth: 200.0,
+            scale: 1.0,
+            scaleMobile: 1.0,
+            backgroundColor: 0x000000,
+            color: 0x1149ac,
+            chaos: 3.0,
+          });
+        } catch (error) {
+          console.error('VANTA initialization error:', error);
+        }
       }
     };
 
-    // Load scripts
+    // Load scripts with proper version compatibility
     const loadScript = (src: string) => {
       return new Promise((resolve, reject) => {
         if (document.querySelector(`script[src="${src}"]`)) {
@@ -91,14 +95,15 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
 
     const loadVanta = async () => {
       try {
+        // Use a specific compatible version of THREE.js
         if (!window.THREE) {
-          await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
+          await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js');
         }
         if (!window.VANTA) {
-          await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.trunk.min.js');
+          await loadScript('https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.trunk.min.js');
         }
-        // Small delay to ensure scripts are fully loaded
-        setTimeout(initVanta, 100);
+        // Give scripts time to load and register
+        setTimeout(initVanta, 200);
       } catch (error) {
         console.error('Failed to load VANTA:', error);
       }
@@ -107,7 +112,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     loadVanta();
 
     return () => {
-      // Safe cleanup: check if effect exists and if DOM element still exists
+      // Safe cleanup
       if (vantaEffect.current && vantaRef.current && document.contains(vantaRef.current)) {
         try {
           vantaEffect.current.destroy();
@@ -180,72 +185,80 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
 
   if (loading) {
     return (
-      <div ref={vantaRef} className="min-h-screen bg-black flex items-center justify-center text-white">
-        <div className="text-xl">Loading game...</div>
+      <div className="relative min-h-screen bg-black text-white overflow-hidden">
+        <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full"></div>
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="text-xl">Loading game...</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div ref={vantaRef} className="min-h-screen bg-black flex items-center justify-center text-white">
+    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+      {/* VANTA Background */}
+      <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full"></div>
+      
       {/* Content */}
-      <div className="w-full max-w-4xl text-center px-6">
-        
-        {/* Progress indicator */}
-        <div className="mb-12">
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-sm font-light tracking-wider text-white/70 uppercase">
-              Question {currentQuestionIndex + 1} of {questions.length}
-            </span>
-            <span className="text-sm text-white/60 font-light">
-              {Math.round(progressPercentage)}% complete
-            </span>
-          </div>
-          <div className="w-full bg-white/20 h-0.5 relative">
-            <div 
-              className="absolute top-0 left-0 h-0.5 bg-white transition-all duration-1000 ease-out"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Question */}
-        <div className={`transition-all duration-800 ${
-          isTransitioning ? 'opacity-30 transform translate-y-4' : 'opacity-100 transform translate-y-0'
-        }`}>
+      <div className="relative z-10 flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-4xl text-center px-6">
           
-          {/* Question text */}
-          <h1 className="text-4xl md:text-6xl font-bold mb-12 text-white">
-            {currentQuestion.Question}
-          </h1>
-
-          {/* Options */}
-          <div className="space-y-6">
-            {currentQuestion.options.map((optionCode, index) => {
-              const answerObj = answers[optionCode];
-              return (
-                <button
-                  key={index}
-                  className="group relative w-full py-6 px-8 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#003f7f] text-[#003f7f] hover:text-white overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  onClick={() => handleOptionSelect(index)}
-                  disabled={isTransitioning}
-                >
-                  <span className="absolute inset-0 bg-[#003f7f] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                  <span className="relative z-10">
-                    {answerObj?.answer || optionCode}
-                  </span>
-                </button>
-              );
-            })}
+          {/* Progress indicator */}
+          <div className="mb-12">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-sm font-light tracking-wider text-white/70 uppercase">
+                Question {currentQuestionIndex + 1} of {questions.length}
+              </span>
+              <span className="text-sm text-white/60 font-light">
+                {Math.round(progressPercentage)}% complete
+              </span>
+            </div>
+            <div className="w-full bg-white/20 h-0.5 relative">
+              <div 
+                className="absolute top-0 left-0 h-0.5 bg-white transition-all duration-1000 ease-out"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
           </div>
+
+          {/* Question */}
+          <div className={`transition-all duration-800 ${
+            isTransitioning ? 'opacity-30 transform translate-y-4' : 'opacity-100 transform translate-y-0'
+          }`}>
+            
+            {/* Question text */}
+            <h1 className="text-4xl md:text-6xl font-bold mb-12 text-white">
+              {currentQuestion.Question}
+            </h1>
+
+            {/* Options */}
+            <div className="space-y-6">
+              {currentQuestion.options.map((optionCode, index) => {
+                const answerObj = answers[optionCode];
+                return (
+                  <button
+                    key={index}
+                    className="group relative w-full py-6 px-8 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#003f7f] text-[#003f7f] hover:text-white overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    onClick={() => handleOptionSelect(index)}
+                    disabled={isTransitioning}
+                  >
+                    <span className="absolute inset-0 bg-[#003f7f] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                    <span className="relative z-10">
+                      {answerObj?.answer || optionCode}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Debug info */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mt-12 text-center text-xs text-white/30 font-light tracking-wider">
+              Selected Codes: {selectedAnswerCodes.join(', ')}
+            </div>
+          )}
         </div>
-
-        {/* Debug info */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="mt-12 text-center text-xs text-white/30 font-light tracking-wider">
-            Selected Codes: {selectedAnswerCodes.join(', ')}
-          </div>
-        )}
       </div>
     </div>
   );
