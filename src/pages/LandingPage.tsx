@@ -192,17 +192,7 @@ export default function LandingPage() {
           
         </div>
             
-<p 
-            className="text-white/80 mb-12"
-            style={{ 
-              fontFamily: 'Space Grotesk, sans-serif',
-              fontSize: 'clamp(11px, 2.5vw, 28px)',
-              fontWeight: '400'
-            }}
-          >
-           Official entry — Pacific DataViz Challenge 2025  
-https://pacificdatavizchallenge.org/
-          </p>
+
       </div>
     </div>
   );
