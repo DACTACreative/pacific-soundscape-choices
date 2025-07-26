@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
+import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 
 export default function Scenario1() {
   const vantaRef = useRef<HTMLDivElement>(null);
@@ -167,6 +168,9 @@ export default function Scenario1() {
             </div>
           </div>
         </section>
+
+        {/* Blue Pacific Stories of Impact & Outcome Mapping */}
+        <BluePacificStoriesSection />
 
         {/* Thematic Outcomes */}
         {thematicSections.map((section, index) => (
