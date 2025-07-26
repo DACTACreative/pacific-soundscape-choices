@@ -40,7 +40,8 @@ export default function StoryScrollSection({
   return (
     <section 
       ref={sectionRef}
-      className={`relative h-screen flex items-center justify-center snap-start bg-black ${className}`}
+      className={`relative h-screen flex items-center justify-center snap-start snap-always bg-black ${className}`}
+      style={{ scrollSnapAlign: 'start', scrollSnapStop: 'always' }}
     >
       {/* Background Image - Hidden since we want pure black */}
       {backgroundImage && (

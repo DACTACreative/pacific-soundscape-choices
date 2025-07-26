@@ -15,7 +15,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   };
 
   return (
-    <div className="snap-y snap-mandatory h-screen overflow-y-scroll">
+    <div className="snap-y snap-mandatory h-screen overflow-y-scroll" style={{ scrollBehavior: 'smooth', scrollSnapType: 'y mandatory' }}>
       {/* Story Scroll - Pacific Context (1) */}
       <StoryScrollSection>
         <div className="text-white font-bold tracking-tight">
