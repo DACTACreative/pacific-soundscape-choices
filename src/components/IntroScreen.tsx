@@ -1,5 +1,16 @@
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
+import introA from '@/data/intro-a.png';
+import introAA from '@/data/intro-aa.png';
+import introB from '@/data/intro-b.png';
+import introC from '@/data/intro-c.png';
+import introD from '@/data/intro-d.png';
+import introE from '@/data/intro-e.png';
+import introF from '@/data/intro-f.png';
+import introG from '@/data/intro-g.png';
+import introH from '@/data/intro-h.png';
+import introI from '@/data/intro-i.png';
+import introJ from '@/data/intro-j.png';
 
 interface IntroScreenProps {
   onStart: () => void;
@@ -12,6 +23,8 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     playScenario(Scenario.Scenario0);
     onStart();
   };
+
+  const introImages = [introA, introB, introC, introD, introE, introF, introG, introH, introI, introJ, introAA];
 
   const blocks = [
     {
@@ -232,15 +245,11 @@ Let’s begin.`,
                 {/* Image Side */}
                 <div className="w-full lg:w-1/2">
                   <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
-                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                      <div className="text-center text-gray-400">
-                        <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
-                          <span className="text-2xl">🖼️</span>
-                        </div>
-                        <p className="text-sm">Image Placeholder</p>
-                        <p className="text-xs mt-1">Block {block.id}</p>
-                      </div>
-                    </div>
+                    <img 
+                      src={introImages[(block.id - 1) % introImages.length]} 
+                      alt={`Intro image for ${block.title}`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
 
