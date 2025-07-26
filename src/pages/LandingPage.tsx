@@ -142,7 +142,7 @@ export default function LandingPage() {
               letterSpacing: '0.03em'
             }}
           >
-            A SONIFICATION STRATEGY CHALLENGE
+          AN IMMERSIVE EXPERIENCE INTO OUR FUTURE
           </h2>
           
           {/* Tagline */}
@@ -155,7 +155,7 @@ export default function LandingPage() {
               lineHeight: '1.3'
             }}
           >
-            An immersive experience in shaping our region's future
+            As the climate changes, can we as a Pacific community chart a future shaped by unity, care, and strength?
           </p>
           
           {/* Note */}
