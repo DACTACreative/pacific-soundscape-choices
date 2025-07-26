@@ -1,121 +1,95 @@
+import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
-
-// Import intro images
-import introA from '@/data/intro-a.png';
-import introAA from '@/data/intro-aa.png';
-import introB from '@/data/intro-b.png';
-import introC from '@/data/intro-c.png';
-import introD from '@/data/intro-d.png';
-import introE from '@/data/intro-e.png';
-import introF from '@/data/intro-f.png';
-import introG from '@/data/intro-g.png';
-import introH from '@/data/intro-h.png';
-import introI from '@/data/intro-i.png';
-import introJ from '@/data/intro-j.png';
 
 interface IntroScreenProps {
   onStart: () => void;
 }
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
+  const { loading, playScenario } = useAudio();
+
   const handleStart = () => {
+    playScenario(Scenario.Scenario0);
     onStart();
   };
-
-  // Array of intro images to use
-  const introImages = [introA, introB, introC, introD, introE, introF, introG, introH, introI, introJ, introAA];
 
   const blocks = [
     {
       id: 1,
       title: "Creating Feeling",
-      content: `This experience was created to stir something in you.
-To evoke belonging. To make space for the feeling of hope — that rare emotion when facing climate collapse.
+      content: `This piece was created to create feeling.
+To create a sense of belonging and hope, a rare feeling in the face of climate change.
 
-To hold light.
-To draw more of us into decisions that shape our region — like the Blue Pacific 2050 Strategy.
-To remind us we are not isolated nations, but a collective body.
+To show light.
+To involve more people into decisions that concern us, like the Blue Pacific 2050 Strategy.
+To bring us together as a region.
 
-We are mostly made of ocean.
-We are close… but distant.
-This piece brings us together.`,
-      reversed: false,
-      image: introImages[9] // Using introJ image instead
+We are mainly made of sea.
+We are so close… but so far.`,
+      reversed: false
     },
     {
       id: 2,
       title: "The Sound of Our Ocean",
-      content: `The sea is our mother, our corridor, our food source, our song.
-It's the one voice that connects us across the Pacific.
+      content: `The sea is what brings us together.
+It's the backbone of our Pacific culture.
 
-That's why this game begins with sound — the sound of our ocean — sonified.
-Each high tide is rendered in tone.
-Each low tide retreats, like breath.
+That's why this piece focuses on sound, the sound of this ocean, to accompany your journey.
 
-You begin your journey in Fiji.
-The date: October 10, 2024.
-The sound you hear is real — tide data turned into rhythm.
+When you begin the game, you will be projected into Fiji.
+The date is October 10, 2024.
 
-Listen closely. The ocean speaks.`,
-      reversed: true,
-      image: introImages[0] // Using introA image as requested
+The sound you'll hear? It's real. The actual tide, sonified.
+Each high tide = water rising.
+Each low = a retreat six hours later.`,
+      reversed: true
     },
     {
       id: 3,
       title: "The Reality We Face",
-      content: `The Earth is already warming.
-The Pacific emits less than 0.03% of global emissions.
-Yet, we feel the waves first.
+      content: `We are already on the path to a warmer Earth.
 
-Sea level rise doesn't arrive like a storm.
-It creeps — slow, quiet, constant.
-We barely notice it until the water laps at our door.
+The Pacific contributes less than 0.03% of global carbon emissions.
+Yet we face the consequences just as much as any other region.
 
-But the sound? The sound is always there.
-A gentle warning. A low hum of urgency.
-A background tide we must choose to hear.`,
-      reversed: false,
-      image: introImages[2]
+Sea level rise is one of our most silent threats.
+So slow, so invisible… we forget.
+But it's always there, like the background sound of this ocean.`,
+      reversed: false
     },
     {
       id: 4,
       title: "Your Role in This Journey",
-      content: `This is not a passive story. It's a path — and you are part of it.
+      content: `During this game, you'll be projected into a series of decisions.
 
-You'll make seven decisions.
-Each one maps to a key theme from the Blue Pacific 2050 Implementation Plan.
+Every one of them is connected to the themes and indicators from the Blue Pacific 2050 Implementation Plan.
+Some are policy-based. Others are small-scale utopias.
 
-Some will feel small. Some will feel big.
-All are rooted in real dilemmas we face as a region.
-Many are inspired by what already exists — seeds of utopia in motion.
-
-This is a call to imagination.
-Because hope itself is a kind of resistance.`,
-      reversed: true,
-      image: introImages[3]
+Why utopia?
+Because keeping hope is a form of resistance.`,
+      reversed: true
     },
     {
       id: 5,
-      title: "Why This Is a Game",
-      content: `What you're about to play is a framework in disguise.
+      title: "Block 5 – The Game as Framework",
+      content: `This is a simplification. A gamification.
 
-A simplified form of Monitoring, Evaluation, and Learning (MEL).
-Because spreadsheets rarely stir emotion — but this can.
-This lets us feel impact.
+A playable form of Monitoring, Evaluation, and Learning (MEL).
+Because sometimes impact gets buried in spreadsheets.
 
-In this game, frameworks become story.
-Strategies become sound.
-Data becomes lived experience.
+And here, impact becomes immersive.
+It becomes personal.
 
-We are not rejecting systems. We are expanding them — into something you can see, hear, and feel.`,
-      reversed: false,
-      image: introImages[4]
+Frameworks and policies are crucial, yes.
+But emotion moves people.
+Feeling makes things real.`,
+      reversed: false
     },
     {
       id: 6,
-      title: "Your Decisions Shape the Region",
-      content: `There are seven decisions to make.
-Each one aligns to a Blue Pacific strategic pillar:
+      title: "Mechanics of the Game",
+      content: `You'll make seven key decisions.
+Each one maps directly to the seven Blue Pacific Strategy pillars:
 
 • Political Leadership
 • People-Centered Development
@@ -125,73 +99,62 @@ Each one aligns to a Blue Pacific strategic pillar:
 • Oceans & Environment
 • Technology & Connectivity
 
-Your answers shape the map.
-Each choice nudges indicators, themes, and future possibilities.
-You won't see everything at once — just like in real life.`,
-      reversed: true,
-      image: introImages[5]
+Each decision will shape our region in subtle, measurable ways.
+Your answers affect data points and Pacific indicators.`,
+      reversed: true
     },
     {
       id: 7,
-      title: "But You Don't Control the World",
-      content: `Once your decisions are done, we fast forward.
-You land in the year 2050.
+      title: "The Twist",
+      content: `Once your decisions are made, the world moves forward.
+Welcome to 2050.
 
-But here's the twist:
-You don't choose the climate scenario. The world does.
-Just like now — where the actions of distant nations shape our shores.
+But here's the truth:
+You do not decide the global climate scenario.
+It is assigned, randomly, based on global uncertainty.
 
-You may land in one of three futures:
+You'll land in one of three outcomes:
 
-• 1.5°C — a world of global cooperation
-• 2.5°C — a fractured, messy middle
-• 3°C+ — delayed action, heavy loss
+• 1.5°C: Achieved through massive global cooperation
+• 2.5°C: A fractured effort
+• 3°C+: Inaction, delay, loss
 
-This isn't about fairness. It's about realism.
-We are not the biggest polluters.
-But we are among the first to adapt.`,
-      reversed: false,
-      image: introImages[6]
+This randomness mirrors our power imbalance in real life.
+We are not the biggest polluters, yet we carry the weight.`,
+      reversed: false
     },
     {
       id: 8,
-      title: "Your Ripple Effects in 2050",
-      content: `Then comes reflection.
+      title: "Seeing Your Impact",
+      content: `Once 2050 loads, you'll see the consequences.
 
-How did your decisions align with the Blue Pacific indicators?
-Which communities benefited? What ripples did you create?
+How did your choices align with the Blue Pacific indicators?
+How did they affect people on the ground?
+How did regional strategies hold under climate pressure?
 
-This section blends narrative, visualisation, and score.
-It's where your story meets the region's story.
-You'll hear from people. You'll see outcomes.
-
-Not everything you did will be perfect.
-But impact is rarely tidy.
-This is a place to learn — and keep shaping.`,
-      reversed: true,
-      image: introImages[7]
+This section mixes narrative, visualisation, and strategy.
+You'll meet people.
+Hear how one decision affected them.
+See a dashboard of change.`,
+      reversed: true
     },
     {
       id: 9,
-      title: "One Last Thing Before You Begin",
-      content: `The ocean is rising.
+      title: "Last Words Before You Begin",
+      content: `Yes, the ocean is rising.
 But so are we.
 
-Each small action sends a wave.
-Each decision builds a current.
+And each action, however small, creates a wave.
 
-This isn't just a game — it's a reflection.
-A way to remind ourselves:
-
+This experience is here to remind us:
 Hope is an act.
 Strategy is a tool.
-Unity is our strength.
+And unity is our strength.
 
-Let's create a future that looks like us —
+Let's shape a future that looks like us —
 Not one shaped without us.`,
       reversed: false,
-      isLast: true,
-      image: introImages[8]
+      isLast: true
     }
   ];
 
@@ -206,32 +169,34 @@ Not one shaped without us.`,
       {/* Content Blocks */}
       <div className="pt-32">
         {blocks.map((block) => (
-          <section key={block.id} className="min-h-screen py-24 md:py-48 flex items-center">
-            <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-              <div className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 h-full max-w-7xl mx-auto ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
+          <section key={block.id} className="min-h-screen py-48 flex items-center">
+            <div className="w-full px-6 md:px-12">
+              <div className={`flex flex-col lg:flex-row items-start gap-16 h-full ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
                 
                 {/* Text Side */}
                 <div className="w-full lg:w-1/2">
-                  <div className={`w-full ${block.reversed ? 'lg:ml-auto lg:mr-0' : 'lg:mr-auto lg:ml-0'}`}>
-                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 lg:mb-8">{block.title}</h2>
-                    <div className="text-lg md:text-xl lg:text-2xl leading-relaxed whitespace-pre-line text-white text-justify">
-                      {block.content}
-                    </div>
+                  <div className="w-full max-w-2xl mx-auto lg:mx-0">
+                    <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">{block.title}</h2>
+<div className="text-2xl md:text-3xl leading-relaxed whitespace-pre-line text-white">
+  {block.content}
+</div>
 
+                    
                     {block.isLast && (
-                      <div className="mt-8 lg:mt-12">
+                      <div className="mt-12">
                         <Button
                           onClick={handleStart}
+                          disabled={loading}
                           size="lg"
-                          className="group relative px-8 md:px-12 py-6 md:py-8 text-2xl md:text-3xl lg:text-4xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                          className="group relative px-12 py-8 text-4xl md:text-5xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
                         >
                           <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                           <span className="relative z-10">
-                            START YOUR JOURNEY TO 2050
+                            {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
                           </span>
                         </Button>
                         
-                        <p className="mt-6 text-lg md:text-xl lg:text-2xl text-white font-light">
+                        <p className="mt-6 text-2xl md:text-3xl text-white font-light">
                           Audio experience recommended for full immersion
                         </p>
                       </div>
@@ -241,13 +206,15 @@ Not one shaped without us.`,
 
                 {/* Image Side */}
                 <div className="w-full lg:w-1/2">
-                  <div className={`w-full max-w-lg mx-auto ${block.reversed ? 'lg:mr-auto lg:ml-0' : 'lg:ml-auto lg:mr-0'}`}>
-                    <div className="rounded-lg overflow-hidden shadow-2xl">
-                      <img 
-                        src={block.image} 
-                        alt={`Illustration for ${block.title}`}
-                        className="w-full h-auto object-contain"
-                      />
+                  <div className="w-full max-w-md mx-auto aspect-[4/3] bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
+                    <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                      <div className="text-center text-gray-400">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
+                          <span className="text-2xl">🖼️</span>
+                        </div>
+                        <p className="text-sm">Image Placeholder</p>
+                        <p className="text-xs mt-1">Block {block.id}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
