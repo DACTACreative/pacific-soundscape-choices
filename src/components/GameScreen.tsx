@@ -3,6 +3,8 @@ import { useAudio, Scenario } from '@/context/AudioContext';
 import questionsData from '@/data/questions.json';
 import Papa from 'papaparse';
 import DebugPanel from './DebugPanel';
+import ErrorBoundary from './ErrorBoundary';
+import LoadingSpinner from './LoadingSpinner';
 
 declare global {
   interface Window {
@@ -137,40 +139,76 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
       return;
     }
 
-    // Load scripts
+    // Load scripts with retry logic
     const loadScripts = async () => {
+      let scriptRetries = 0;
+      const maxScriptRetries = 2;
+      
+      const loadScriptWithRetry = async (url: string, name: string, checkFn: () => boolean) => {
+        while (scriptRetries < maxScriptRetries && !checkFn()) {
+          try {
+            await new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = url;
+              script.onload = resolve;
+              script.onerror = reject;
+              script.onerror = () => reject(new Error(`Failed to load ${name}`));
+              document.head.appendChild(script);
+            });
+            console.log(`${name} loaded successfully`);
+            break;
+          } catch (error) {
+            scriptRetries++;
+            console.warn(`${name} load attempt ${scriptRetries} failed:`, error);
+            if (scriptRetries >= maxScriptRetries) {
+              console.error(`Failed to load ${name} after ${maxScriptRetries} attempts`);
+              return false;
+            }
+            await new Promise(resolve => setTimeout(resolve, 1000 * scriptRetries));
+          }
+        }
+        return checkFn();
+      };
+
       try {
         // Load THREE.js first
         if (!window.THREE) {
-          await new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js';
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-          });
-          console.log('THREE.js loaded');
+          const threeLoaded = await loadScriptWithRetry(
+            'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js',
+            'THREE.js',
+            () => !!window.THREE
+          );
+          if (!threeLoaded) {
+            console.warn('THREE.js failed to load, VANTA will not work');
+            return;
+          }
         }
+
+        // Reset retry counter for VANTA
+        scriptRetries = 0;
 
         // Load VANTA
         if (!window.VANTA) {
-          await new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.trunk.min.js';
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-          });
-          console.log('VANTA loaded');
+          const vantaLoaded = await loadScriptWithRetry(
+            'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.trunk.min.js',
+            'VANTA',
+            () => !!window.VANTA
+          );
+          if (!vantaLoaded) {
+            console.warn('VANTA failed to load, using fallback background');
+            return;
+          }
         }
 
-        // Initialize after a short delay to ensure DOM is ready
+        // Initialize after ensuring scripts are loaded
         setTimeout(() => {
           requestAnimationFrame(initVanta);
         }, 100);
 
       } catch (error) {
-        console.error('Script loading failed:', error);
+        console.error('Script loading failed completely:', error);
+        // Fallback: just use the CSS animated background
+        console.log('Using CSS fallback background');
       }
     };
 
@@ -190,39 +228,60 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   }, []);
 
   useEffect(() => {
-    // Load the mapping CSV
-    fetch('/data/Mapping - Question BPC - Sheet1.csv')
-      .then(res => res.text())
-      .then(csvText => {
+    let retryCount = 0;
+    const maxRetries = 3;
+    
+    const loadCSVWithRetry = async () => {
+      try {
+        const response = await fetch('/data/Mapping - Question BPC - Sheet1.csv', {
+          cache: 'no-cache',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const csvText = await response.text();
         console.log('🔍 CSV loaded successfully, length:', csvText.length);
-        console.log('🔍 First 200 chars:', csvText.substring(0, 200));
+        
+        // Validate CSV content
+        if (!csvText || csvText.length < 100) {
+          throw new Error('CSV file appears to be empty or corrupted');
+        }
         
         Papa.parse(csvText, {
           header: true,
           skipEmptyLines: true,
           transformHeader: (header) => header.trim(),
           transform: (value, field) => {
-            // Clean up multiline values and preserve line breaks
             if (typeof value === 'string') {
               return value.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
             }
             return value;
           },
           complete: (results) => {
-            console.log('🔍 CSV parsing complete:', {
-              rows: results.data.length,
-              errors: results.errors,
-              meta: results.meta
-            });
+            if (results.errors.length > 0) {
+              console.warn('🚨 CSV parsing warnings:', results.errors);
+            }
+            
+            if (!results.data || results.data.length === 0) {
+              throw new Error('No valid data found in CSV');
+            }
             
             const answersMap: Record<string, GameAnswer> = {};
-            results.data.forEach((row: any, index) => {
-              if (row.code && row.code.trim()) {
+            let validAnswers = 0;
+            
+            results.data.forEach((row: any) => {
+              if (row.code && row.code.trim() && row.answer && row.answer.trim()) {
                 const cleanCode = row.code.trim();
                 answersMap[cleanCode] = {
                   code: cleanCode,
                   themecode: row.themecode?.trim() || '',
-                  answer: row.answer?.trim() || '',
+                  answer: row.answer?.trim() || cleanCode,
                   theme: row.theme?.trim() || '',
                   QuestionCode: row.QuestionCode?.trim() || '',
                   Question: row.Question?.trim() || '',
@@ -230,43 +289,84 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
                   impact: row.impact?.trim() || '',
                   narrative: row.narrative?.trim() || ''
                 };
-                
-                // Debug first few answers
-                if (index < 3) {
-                  console.log(`🔍 Answer ${cleanCode}:`, {
-                    answer: row.answer?.substring(0, 100) + '...',
-                    theme: row.theme,
-                    narrative: row.narrative?.substring(0, 100) + '...'
-                  });
-                }
+                validAnswers++;
               }
             });
             
-            console.log('🔍 Answers map created:', {
-              totalAnswers: Object.keys(answersMap).length,
-              sampleCodes: Object.keys(answersMap).slice(0, 10),
-              sampleAnswer: answersMap['A1']
+            console.log('🔍 Answers processed:', {
+              totalRows: results.data.length,
+              validAnswers,
+              answersCreated: Object.keys(answersMap).length
             });
+            
+            if (validAnswers === 0) {
+              throw new Error('No valid answers found in CSV data');
+            }
             
             setAnswers(answersMap);
             setLoading(false);
             
-            // Start Scenario0 audio when the first question loads
+            // Start audio only after successful data load
             if (!audioStarted) {
-              playScenario(Scenario.Scenario0);
-              setAudioStarted(true);
+              try {
+                playScenario(Scenario.Scenario0);
+                setAudioStarted(true);
+              } catch (audioError) {
+                console.warn('🔊 Audio start failed:', audioError);
+              }
             }
           },
-          error: (error) => {
-            console.error('🚨 CSV parsing error:', error);
-            setLoading(false);
+          error: (parseError) => {
+            throw new Error(`CSV parsing failed: ${parseError.message}`);
           }
         });
-      })
-      .catch(err => {
-        console.error('🚨 Failed to load mapping CSV:', err);
-        setLoading(false);
-      });
+        
+      } catch (error) {
+        console.error(`🚨 CSV load attempt ${retryCount + 1} failed:`, error);
+        
+        if (retryCount < maxRetries) {
+          retryCount++;
+          console.log(`🔄 Retrying CSV load in ${retryCount * 1000}ms...`);
+          setTimeout(loadCSVWithRetry, retryCount * 1000);
+        } else {
+          console.error('🚨 All CSV load attempts failed, using fallback');
+          // Create minimal fallback answers
+          const fallbackAnswers: Record<string, GameAnswer> = {};
+          
+          // Generate fallback answers for each question's options
+          questions.forEach((question) => {
+            question.options.forEach((optionCode, index) => {
+              fallbackAnswers[optionCode] = {
+                code: optionCode,
+                themecode: '',
+                answer: `Option ${index + 1}`,
+                theme: 'General Pacific Development',
+                QuestionCode: question.QuestionCode,
+                Question: question.Question,
+                outcome: 'Mixed outcomes for Pacific communities',
+                impact: 'Moderate impact on regional development',
+                narrative: 'This choice contributes to Pacific Island resilience and sustainability.'
+              };
+            });
+          });
+          
+          setAnswers(fallbackAnswers);
+          setLoading(false);
+          
+          // Try to start audio even with fallback
+          if (!audioStarted) {
+            try {
+              playScenario(Scenario.Scenario0);
+              setAudioStarted(true);
+            } catch (audioError) {
+              console.warn('🔊 Audio start failed with fallback:', audioError);
+            }
+          }
+        }
+      }
+    };
+    
+    loadCSVWithRetry();
   }, []);
 
   const handleOptionSelect = (optionIndex: number) => {
@@ -298,28 +398,29 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
       <div className="relative min-h-screen bg-black text-white overflow-hidden">
         <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full animated-bg-fallback" data-vanta="true"></div>
         <div className="relative z-10 flex items-center justify-center min-h-screen">
-          <div className="text-xl">Loading game...</div>
+          <LoadingSpinner message="Loading your Pacific journey..." />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* VANTA Background with fallback */}
-      <div 
-        ref={vantaRef} 
-        className="absolute inset-0 -z-10 w-full h-full animated-bg-fallback" 
-        data-vanta="true"
-        style={{ 
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: -10
-        }}
-      ></div>
+    <ErrorBoundary>
+      <div className="relative min-h-screen bg-black text-white overflow-hidden font-inter">
+        {/* VANTA Background with enhanced fallback */}
+        <div 
+          ref={vantaRef} 
+          className="absolute inset-0 -z-10 w-full h-full animated-bg-fallback" 
+          data-vanta="true"
+          style={{ 
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: -10
+          }}
+        ></div>
       
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen">
@@ -386,8 +487,9 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         </div>
       </div>
       
-      {/* Debug Panel - Only in development */}
-      {process.env.NODE_ENV === 'development' && <DebugPanel />}
-    </div>
+        {/* Debug Panel - Only in development */}
+        {process.env.NODE_ENV === 'development' && <DebugPanel />}
+      </div>
+    </ErrorBoundary>
   );
 }

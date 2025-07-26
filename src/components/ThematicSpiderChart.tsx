@@ -10,6 +10,8 @@ import {
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import Papa from 'papaparse';
+import LoadingSpinner from './LoadingSpinner';
+import ErrorBoundary from './ErrorBoundary';
 
 // Register Chart.js components
 ChartJS.register(
@@ -43,37 +45,86 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       return;
     }
 
-    // Load mapping CSV and spider map data
-    Promise.all([
-      fetch('/data/Mapping - Question BPC - Sheet1.csv').then(res => res.text()),
-      fetch('/data/SpiderMap.json').then(res => res.json())
-    ])
-    .then(([csvText, spiderMapData]) => {
-      // Parse CSV
-      Papa.parse(csvText, {
-        header: true,
-        complete: (results) => {
-          // Find matching answers for selected codes
-          const matchedAnswers = selectedCodes.map((code: string) => 
-            results.data.find((row: any) => row.code === code)
-          ).filter(Boolean);
-          
-          setPlayerChoices(matchedAnswers);
-          setSpiderMap(spiderMapData);
+    // Load mapping CSV and spider map data with retry logic
+    let retryCount = 0;
+    const maxRetries = 3;
+    
+    const loadDataWithRetry = async () => {
+      try {
+        const [csvResponse, spiderMapResponse] = await Promise.all([
+          fetch('/data/Mapping - Question BPC - Sheet1.csv', {
+            cache: 'no-cache',
+            headers: { 'Cache-Control': 'no-cache' }
+          }),
+          fetch('/data/SpiderMap.json', {
+            cache: 'no-cache',
+            headers: { 'Cache-Control': 'no-cache' }
+          })
+        ]);
+        
+        if (!csvResponse.ok || !spiderMapResponse.ok) {
+          throw new Error(`HTTP Error: CSV ${csvResponse.status}, SpiderMap ${spiderMapResponse.status}`);
+        }
+        
+        const [csvText, spiderMapData] = await Promise.all([
+          csvResponse.text(),
+          spiderMapResponse.json()
+        ]);
+        
+        if (!csvText || csvText.length < 100) {
+          throw new Error('CSV data appears corrupted');
+        }
+        
+        // Parse CSV with error handling
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            if (results.errors.length > 0) {
+              console.warn('🕷️ CSV parsing warnings:', results.errors);
+            }
+            
+            // Find matching answers for selected codes
+            const matchedAnswers = selectedCodes.map((code: string) => 
+              results.data.find((row: any) => row.code === code)
+            ).filter(Boolean);
+            
+            console.log('🕷️ Spider chart data loaded:', {
+              selectedCodes: selectedCodes.length,
+              matchedAnswers: matchedAnswers.length,
+              spiderMapKeys: Object.keys(spiderMapData).length
+            });
+            
+            setPlayerChoices(matchedAnswers);
+            setSpiderMap(spiderMapData);
+            setLoading(false);
+          },
+          error: (parseError) => {
+            throw new Error(`CSV parsing failed: ${parseError.message}`);
+          }
+        });
+        
+      } catch (error) {
+        console.error(`🕷️ Data load attempt ${retryCount + 1} failed:`, error);
+        
+        if (retryCount < maxRetries) {
+          retryCount++;
+          console.log(`🔄 Retrying spider chart data load in ${retryCount * 1000}ms...`);
+          setTimeout(loadDataWithRetry, retryCount * 1000);
+        } else {
+          console.error('🕷️ All data load attempts failed for spider chart');
           setLoading(false);
         }
-      });
-    })
-    .catch(err => {
-      console.error('Failed to load data:', err);
-      setLoading(false);
-    });
+      }
+    };
+    
+    loadDataWithRetry();
   }, []);
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-white text-lg">Loading your thematic impact...</div>
+        <LoadingSpinner message="Loading your thematic impact..." />
       </div>
     );
   }
@@ -259,14 +310,21 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     responsive: true,
     maintainAspectRatio: false,
     onHover: (event: any, chartElements: any) => {
-      console.log('🕷️ Chart hover event:', chartElements.length > 0 ? chartElements[0].index : 'none');
-      if (chartElements.length) {
+      if (chartElements && chartElements.length > 0) {
         const index = chartElements[0].index;
         const theme = themeLabels[index];
         console.log('🕷️ Setting hovered theme:', theme);
         setHoveredTheme(theme);
       } else {
         setHoveredTheme(null);
+      }
+    },
+    onClick: (event: any, chartElements: any) => {
+      // Add click support for mobile/touch devices
+      if (chartElements && chartElements.length > 0) {
+        const index = chartElements[0].index;
+        const theme = themeLabels[index];
+        setHoveredTheme(theme);
       }
     },
     interaction: {
@@ -318,10 +376,11 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   };
 
   return (
-    <div className={`relative ${className}`}>
-      <div className="w-full h-[400px] sm:h-[500px] mx-auto relative z-20">
-        <Radar data={data} options={options} />
-      </div>
+    <ErrorBoundary>
+      <div className={`relative ${className} font-inter`}>
+        <div className="w-full h-[400px] sm:h-[500px] mx-auto relative z-20">
+          <Radar data={data} options={options} />
+        </div>
       
       {/* Hover Info Box */}
       <div className="mt-6 p-4 sm:p-6 bg-black/40 rounded-lg border border-white/20 text-center min-h-[120px] flex flex-col justify-center font-inter">
@@ -359,6 +418,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         )}
       </div>
 
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 }
