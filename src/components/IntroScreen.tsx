@@ -289,30 +289,64 @@ Let’s begin.`,
         </div>
       </div>
 
-      {/* First Block - Simplified Layout */}
+      {/* First Block - Full Page Layout */}
       <section 
         key={blocks[0].id} 
-        className="relative min-h-screen flex items-center justify-center p-8 lg:p-16 bg-black"
+        data-scroll-section
+        className="relative h-screen flex flex-col lg:flex-row"
         id="section-0"
       >
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-          {/* Text Content - Left Side */}
-          <div className="flex-1 text-center lg:text-left">
+        {/* Sticky Image Container for first section - Hidden on mobile */}
+        <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+          <div 
+            className="fixed-image"
+            data-scroll
+            data-scroll-sticky
+            data-scroll-target="#section-0"
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '40vw',
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '2rem',
+              overflow: 'hidden'
+            }}
+          >
+            <div className="w-full h-full flex items-center justify-center">
+              <img 
+                src={scenarioO}
+                alt="Blue Pacific 2050 Experience"
+                className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+                style={{ width: 'auto', height: 'auto' }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Image - Visible only on mobile */}
+        <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+          <div className="w-full h-full flex items-center justify-center">
+            <img 
+              src={scenarioO}
+              alt="Blue Pacific 2050 Experience"
+              className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+            />
+          </div>
+        </div>
+
+        {/* Text Content - Left Side */}
+        <div className="w-full lg:w-[60%] h-full flex items-center p-8 lg:p-16 bg-black">
+          <div className="max-w-2xl">
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
               {blocks[0].title}
             </h2>
             <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
               {blocks[0].content}
             </div>
-          </div>
-          
-          {/* Image - Right Side */}
-          <div className="flex-1 flex items-center justify-center">
-            <img 
-              src="/lovable-uploads/1b523c0c-3528-4d99-92a9-ebb700771cd7.png"
-              alt="Pacific Future Vision"
-              className="max-w-full h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-            />
           </div>
         </div>
       </section>
