@@ -103,10 +103,11 @@ export default function LandingPage() {
       <div className="absolute inset-0 bg-black/50 z-5" />
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-center" style={{
+      <div className="relative z-10 h-full flex items-center justify-between" style={{
       padding: '5vh 10vw'
     }}>
-        <div className="max-w-4xl">
+        {/* Left side text content */}
+        <div className="max-w-4xl lg:max-w-2xl">
           {/* Main Title */}
           <h1 className="text-white font-bold uppercase tracking-wider leading-none mb-4" style={{
           fontFamily: 'Space Grotesk, sans-serif',
@@ -163,8 +164,18 @@ export default function LandingPage() {
       
           
         </div>
-            
 
+        {/* Right side image placeholder */}
+        <div className="hidden lg:block flex-shrink-0 w-1/2 max-w-2xl">
+          <div className="relative w-full h-[80vh] rounded-lg overflow-hidden shadow-2xl border border-white/20">
+            <img 
+              src="/lovable-uploads/0546b7e7-5117-4849-9466-37a58117c896.png"
+              alt="Blue Pacific Future Vision"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+          </div>
+        </div>
       </div>
     </div>;
 }
