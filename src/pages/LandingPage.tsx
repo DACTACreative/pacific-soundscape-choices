@@ -145,14 +145,13 @@ will we shape a future that reflects us?</p>
           </p>
           
           {/* Minimalist Button */}
-          <button onClick={handleStart} className="group relative bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 px-6 py-4 text-lg md:text-xl lg:text-2xl font-bold" style={{
-          fontFamily: 'Space Grotesk, sans-serif',
-          fontWeight: '700',
-          letterSpacing: '0.03em'
-        }}>
-            <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-            <span className="relative z-10">SHAPE OUR JOURNEY TO 2050</span>
-          </button>
+          <Button 
+            onClick={handleStart} 
+            variant="pacific" 
+            size="pacific"
+          >
+            SHAPE OUR JOURNEY TO 2050
+          </Button>
 
 
 

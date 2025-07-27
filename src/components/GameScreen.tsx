@@ -233,7 +233,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     // Load answers from JSON file instead of CSV for better reliability
     const loadAnswersData = async () => {
       try {
-        const response = await fetch('/src/data/answers.json');
+        const response = await fetch('/data/answers.json');
         if (!response.ok) {
           throw new Error(`Failed to load answers: ${response.status}`);
         }

@@ -27,7 +27,7 @@ export default function FloodingDaysVisualization() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch('/src/data/Projected flooding days  - Sheet1.csv');
+        const response = await fetch('/data/Projected flooding days - Sheet1.csv');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

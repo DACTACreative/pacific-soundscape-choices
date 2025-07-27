@@ -1,0 +1,10 @@
+Flooding threshold,Warming level,Sea rise level (m),Projected flooding days low,Projected flooding days high,estimated year min ,estimated year max
+0.5 m above MHHW,tlim1.5win0.25,0.1,1,7,2022,2042
+0.5 m above MHHW,tlim1.5win0.25,0.3,33,69,2052,2089
+0.5 m above MHHW,tlim1.5win0.25,0.6,214,273,2091,2100
+0.5 m above MHHW,tlim3.0win0.25,0.1,1,7,2022,2037
+0.5 m above MHHW,tlim3.0win0.25,0.3,33,69,2048,2070
+0.5 m above MHHW,tlim3.0win0.25,0.6,214,273,2076,2100
+0.5 m above MHHW,tlim5.0win0.25,0.1,1,7,2021,2036
+0.5 m above MHHW,tlim5.0win0.25,0.3,33,69,2040,2067
+0.5 m above MHHW,tlim5.0win0.25,0.6,214,273,2058,2098

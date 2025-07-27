@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerTabsSection from '../components/AnswerTabsSection';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
@@ -112,24 +113,20 @@ export default function Scenario2() {
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto text-center space-y-8">
               <div className="flex flex-col md:flex-row gap-6 justify-center">
-                <button 
-                  className="group relative bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 px-6 py-4 text-lg md:text-xl lg:text-2xl font-bold"
+                <Button 
+                  variant="pacific" 
+                  size="pacific"
                   onClick={() => window.location.href = '/scenario-1'}
                 >
-                  <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                  <span className="relative z-10">
-                    ← SCENARIO 1
-                  </span>
-                </button>
-                <button 
-                  className="group relative bg-transparent border-4 border-red-500 text-red-500 hover:text-white overflow-hidden transition-all duration-500 px-6 py-4 text-lg md:text-xl lg:text-2xl font-bold"
+                  ← SCENARIO 1
+                </Button>
+                <Button 
+                  variant="pacific" 
+                  size="pacific"
                   onClick={() => window.location.href = '/scenario-3'}
                 >
-                  <span className="absolute inset-0 bg-red-500 transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                  <span className="relative z-10">
-                    SCENARIO 3 →
-                  </span>
-                </button>
+                  SCENARIO 3 →
+                </Button>
               </div>
             </div>
           </div>

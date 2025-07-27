@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
@@ -95,12 +96,13 @@ export default function Scenario1() {
             <p className="text-xl text-white/70 mb-8">
               Explore different pathways and their consequences for the Pacific's future.
             </p>
-            <button className="group relative bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 px-6 py-4 text-lg md:text-xl lg:text-2xl font-bold" onClick={() => window.location.href = '/scenario-2'}>
-              <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-              <span className="relative z-10">
-                EXPLORE SCENARIO 2 →
-              </span>
-            </button>
+            <Button 
+              variant="pacific" 
+              size="pacific"
+              onClick={() => window.location.href = '/scenario-2'}
+            >
+              EXPLORE SCENARIO 2 →
+            </Button>
           </div>
         </BlockSection>
       </div>
