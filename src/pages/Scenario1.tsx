@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
-import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
+
 import OutcomeBlock from '../components/OutcomeBlock';
 import StoryBlock from '../components/StoryBlock';
 import DebugOutcomes from '../components/DebugOutcomes';
@@ -112,11 +112,6 @@ export default function Scenario1() {
               <ThematicSpiderChart className="w-full h-full" />
             </div>
           </div>
-        </section>
-
-        {/* Blue Pacific Stories of Impact & Outcome Mapping */}
-        <section className="min-h-screen flex items-center justify-center">
-          <BluePacificStoriesSection />
         </section>
 
         {/* Dynamic Outcome Blocks */}
