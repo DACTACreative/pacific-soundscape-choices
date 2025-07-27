@@ -70,18 +70,16 @@ export default function Scenario2() {
         {/* Blue Pacific 2050 Reality */}
         <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto">
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 text-center">
-                Blue Pacific 2050 Reality
-              </h2>
-              <div className="max-w-5xl mx-auto mb-12">
-                <p className="text-xl md:text-2xl leading-relaxed text-white text-center">
-                  This spider chart visualizes how your choices shaped Fiji's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
+            <div className="max-w-7xl mx-auto space-y-8">
+              <div className="text-center space-y-6">
+                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
+                  Blue Pacific 2050 Reality
+                </h2>
+                <p className="text-xl md:text-2xl leading-relaxed text-white max-w-4xl mx-auto">
+                  This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
                 </p>
-              </div>
-              <div className="text-center mb-8">
-                <p className="text-lg text-white/80">
-                  Hover over each axis to explore how your choices influenced that theme
+                <p className="text-lg md:text-xl leading-relaxed text-gray-300 max-w-4xl mx-auto">
+                  The chart's broad but imperfect shape illustrates a future built on successful yet realistic trade-offs. It's a living portrait of the Pacific's navigation through uncertainty, strength, and resilience.
                 </p>
               </div>
               <div className="w-full min-h-[70vh] relative z-10">

@@ -312,46 +312,49 @@ export default function ThematicSpiderChart({
 
   return (
     <ErrorBoundary>
-      <div className={`relative ${className} space-y-8`}>
-        {/* Chart Container */}
-        <div className="w-full h-[700px] mx-auto relative bg-black/20 rounded-lg p-6 border border-white/10">
-          <Radar data={data} options={options} />
-        </div>
-        
-        {/* Static Theme Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {themeLabels.map((shortLabel, index) => {
-            // Find the full theme name for this short label
-            const fullThemeName = Object.keys(themeMapping).find(fullName => 
-              themeMapping[fullName] === shortLabel
-            );
-            const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-            const level = getLevel(rawCount);
-            const description = fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] 
-              ? spiderMap[fullThemeName][level] 
-              : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.';
+      <div className={`relative ${className}`}>
+        {/* Two-column layout: Chart left, Themes right */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Chart Container - Left Side */}
+          <div className="w-full h-[700px] relative bg-black/20 rounded-lg p-6 border border-white/10">
+            <Radar data={data} options={options} />
+          </div>
+          
+          {/* Theme Cards - Right Side */}
+          <div className="space-y-4">
+            {themeLabels.map((shortLabel, index) => {
+              // Find the full theme name for this short label
+              const fullThemeName = Object.keys(themeMapping).find(fullName => 
+                themeMapping[fullName] === shortLabel
+              );
+              const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
+              const level = getLevel(rawCount);
+              const description = fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] 
+                ? spiderMap[fullThemeName][level] 
+                : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.';
 
-            return (
-              <Card key={shortLabel} className="bg-black/40 border-white/20">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg text-white">{shortLabel}</CardTitle>
-                    <Badge variant={getBadgeVariant(level)} className="ml-2">
-                      {level}
-                    </Badge>
-                  </div>
-                  <div className="text-sm text-white/60">
-                    {rawCount} {rawCount === 1 ? 'choice' : 'choices'}
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-sm text-white/80 leading-relaxed">
-                    {description}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
+              return (
+                <Card key={shortLabel} className="bg-black/40 border-white/20">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-lg text-white">{shortLabel}</CardTitle>
+                      <Badge variant={getBadgeVariant(level)} className="ml-2">
+                        {level}
+                      </Badge>
+                    </div>
+                    <div className="text-sm text-white/60">
+                      {rawCount} {rawCount === 1 ? 'choice' : 'choices'}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="text-sm text-white/80 leading-relaxed">
+                      {description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </div>
       </div>
     </ErrorBoundary>

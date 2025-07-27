@@ -18,7 +18,7 @@ export default function Scenario1() {
       {/* Content */}
       <div className="relative z-10">
         {/* Block 1: Hero Section - Content Left, Image Right */}
-        <BlockSection imageLeft={false} imageUrl="https://images.unsplash.com/photo-1500375592092-40eb2168fd21">
+        <BlockSection imageLeft={false} imageUrl="/lovable-uploads/c87e8f14-688e-4226-8644-0339ccb4e52d.png">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-7xl font-bold tracking-tight text-white">
               Limiting Warming to Well Below 2°C
@@ -30,7 +30,7 @@ export default function Scenario1() {
         </BlockSection>
 
         {/* Block 2: Global Pathways - Image Left, Content Right */}
-        <BlockSection imageLeft={true} imageUrl="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb">
+        <BlockSection imageLeft={true} imageUrl="/lovable-uploads/78d90a25-3910-4b66-a54b-d21c9d715656.png">
           <div className="space-y-6">
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
               What Happened during the last 25 Years
@@ -42,7 +42,7 @@ export default function Scenario1() {
         </BlockSection>
 
         {/* Block 3: Sonification - Content Left, Image Right */}
-        <BlockSection imageLeft={false} imageUrl="https://images.unsplash.com/photo-1493397212122-2b85dda8106b">
+        <BlockSection imageLeft={false} imageUrl="/lovable-uploads/33e5c143-7349-48dd-b270-01b8573f2161.png">
           <div className="space-y-6">
             <h2 className="text-3xl md:text-5xl font-bold text-white lg:text-6xl">
               The Sound of the Ocean Sonified
@@ -56,21 +56,23 @@ export default function Scenario1() {
           </div>
         </BlockSection>
 
-        {/* Block 4: Blue Pacific Reality - Text Left, Chart Right */}
-        <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-4 md:px-8 lg:px-12 xl:px-16">
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-6xl font-bold text-white">
-              Blue Pacific 2050 Reality
-            </h2>
-            <p className="text-lg md:text-xl leading-relaxed text-gray-300 font-medium">
-              This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
-            </p>
-            <p className="text-lg md:text-xl leading-relaxed text-gray-300">
-              The chart's broad but imperfect shape illustrates a future built on successful yet realistic trade-offs. It's a living portrait of the Pacific's navigation through uncertainty, strength, and resilience.
-            </p>
-          </div>
-          <div className="w-full min-h-[70vh] relative z-10">
-            <ThematicSpiderChart className="w-full h-full" />
+        {/* Block 4: Blue Pacific Reality */}
+        <div className="min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16 py-24">
+          <div className="w-full max-w-7xl mx-auto space-y-8">
+            <div className="text-center space-y-6">
+              <h2 className="text-4xl md:text-6xl font-bold text-white">
+                Blue Pacific 2050 Reality
+              </h2>
+              <p className="text-lg md:text-xl leading-relaxed text-gray-300 font-medium max-w-4xl mx-auto">
+                This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
+              </p>
+              <p className="text-lg md:text-xl leading-relaxed text-gray-300 max-w-4xl mx-auto">
+                The chart's broad but imperfect shape illustrates a future built on successful yet realistic trade-offs. It's a living portrait of the Pacific's navigation through uncertainty, strength, and resilience.
+              </p>
+            </div>
+            <div className="w-full min-h-[70vh] relative z-10">
+              <ThematicSpiderChart className="w-full h-full" />
+            </div>
           </div>
         </div>
 
@@ -78,14 +80,14 @@ export default function Scenario1() {
         <AnswerBlockDisplay />
 
         {/* Block 6: Blue Pacific Stories - Image Left, Content Right */}
-        <BlockSection imageLeft={true} imageUrl="https://images.unsplash.com/photo-1501854140801-50d01698950b">
+        <BlockSection imageLeft={true} imageUrl="/lovable-uploads/449ec207-9ff8-4b64-9e5b-01da1a9f76e2.png">
           <div className="space-y-6">
             <BluePacificStoriesSection />
           </div>
         </BlockSection>
 
         {/* Block 7: Navigation - Content Left, Image Right */}
-        <BlockSection imageLeft={false} imageUrl="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b">
+        <BlockSection imageLeft={false} imageUrl="/lovable-uploads/33e5c143-7349-48dd-b270-01b8573f2161.png">
           <div className="space-y-6 text-center">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
               Continue Your Journey
