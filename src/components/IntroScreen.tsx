@@ -318,8 +318,8 @@ Let’s begin.`,
           >
             <div className="w-full h-full flex items-center justify-center">
               <img 
-                src={scenarioO}
-                alt="Blue Pacific 2050 Experience"
+                src="/lovable-uploads/1b523c0c-3528-4d99-92a9-ebb700771cd7.png"
+                alt="Pacific Future Vision"
                 className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
                 style={{ width: 'auto', height: 'auto' }}
               />
