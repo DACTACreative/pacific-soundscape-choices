@@ -294,14 +294,18 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
       {
         label: 'Your Pacific Impact',
         data: chartData,
+        fill: true,
         backgroundColor: 'rgba(53, 197, 242, 0.2)',
         borderColor: '#35c5f2',
         borderWidth: 2,
         pointBackgroundColor: '#35c5f2',
         pointBorderColor: '#ffffff',
-        pointBorderWidth: 1,
-        pointRadius: 4,
-        pointHoverRadius: 6,
+        pointHoverBackgroundColor: '#ffffff',
+        pointHoverBorderColor: '#35c5f2',
+        pointRadius: 10,
+        pointHoverRadius: 14,
+        pointStyle: 'circle',
+        pointBorderWidth: 3,
       }
     ]
   };
@@ -309,11 +313,20 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    onHover: (event: any, chartElements: any) => {
-      if (chartElements && chartElements.length > 0) {
-        const index = chartElements[0].index;
+    hover: {
+      mode: 'nearest' as const,
+      intersect: false,
+      animationDuration: 0
+    },
+    interaction: {
+      mode: 'nearest' as const,
+      intersect: false,
+    },
+    onHover: (event: any, elements: any[]) => {
+      console.log('🎯 Chart hover:', { event, elements });
+      if (elements && elements.length > 0) {
+        const index = elements[0].index;
         const theme = themeLabels[index];
-        console.log('🕷️ Setting hovered theme:', theme);
         setHoveredTheme(theme);
       } else {
         setHoveredTheme(null);
@@ -327,9 +340,17 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         setHoveredTheme(theme);
       }
     },
-    interaction: {
-      mode: 'nearest' as const,
-      intersect: false,
+    elements: {
+      point: {
+        hitRadius: 25,
+        hoverRadius: 16,
+        radius: 12,
+        borderWidth: 4,
+        backgroundColor: '#35c5f2',
+        borderColor: '#ffffff',
+        hoverBackgroundColor: '#ffffff',
+        hoverBorderColor: '#35c5f2'
+      }
     },
     scales: {
       r: {
@@ -337,31 +358,41 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         min: 0,
         max: 3,
         angleLines: {
-          color: 'rgba(255, 255, 255, 0.1)'
+          color: 'rgba(255, 255, 255, 0.1)',
+          lineWidth: 2
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)'
+          color: 'rgba(255, 255, 255, 0.1)',
+          lineWidth: 2
         },
         pointLabels: {
           font: {
-            size: 12,
-            family: '"Inter", system-ui, sans-serif'
+            size: 20,
+            family: '"Inter", system-ui, sans-serif',
+            weight: 600
           },
-          color: '#ffffff'
+          color: '#ffffff',
+          padding: 20
         },
         ticks: {
           stepSize: 1,
+          beginAtZero: true,
+          max: 3,
+          display: true,
           callback: function(value: any) {
             if (value === 1) return 'LOW';
             if (value === 2) return 'MED';
             if (value === 3) return 'HIGH';
             return '';
           },
-          color: '#e5e7eb',
+          color: '#ffffff',
           backdropColor: 'transparent',
           font: {
-            size: 10
-          }
+            size: 18,
+            weight: 600,
+            family: '"Inter", system-ui, sans-serif'
+          },
+          padding: 15
         }
       }
     },
@@ -370,54 +401,82 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         display: false
       },
       tooltip: {
-        enabled: false
+        enabled: true,
+        mode: 'nearest' as const,
+        intersect: false,
+        callbacks: {
+          label: (context: any) => {
+            const index = context.dataIndex;
+            const theme = themeLabels[index];
+            return `${theme}: ${context.raw}`;
+          }
+        }
       }
     }
   };
 
   return (
     <ErrorBoundary>
-      <div className={`relative ${className} font-inter`}>
-        <div className="w-full h-[400px] sm:h-[500px] mx-auto relative z-20">
-          <Radar data={data} options={options} />
-        </div>
-      
-      {/* Hover Info Box */}
-      <div className="mt-6 p-4 sm:p-6 bg-black/40 rounded-lg border border-white/20 text-center min-h-[120px] flex flex-col justify-center font-inter">
-        {hoveredTheme ? (
-          <>
-             {(() => {
-               // Find the full theme name for this short label
-               const fullThemeName = Object.keys(themeMapping).find(
-                 fullName => themeMapping[fullName] === hoveredTheme
-               );
-               const rawCount = fullThemeName ? (themeCounts[fullThemeName] || 0) : 0;
-               const level = getLevel(rawCount);
-               
-               console.log(`🕷️ Hover: ${hoveredTheme} -> ${fullThemeName} -> ${level} (${rawCount} choices)`);
-               console.log(`🕷️ SpiderMap lookup:`, spiderMap[fullThemeName]?.[level]);
-               
-               return (
-                 <>
-                   <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 font-inter">
-                     {hoveredTheme} ({level} Impact - {rawCount} choices)
-                   </h3>
-                   <p className="text-sm sm:text-base text-gray-200 leading-relaxed font-inter">
-                     {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level]
-                       ? spiderMap[fullThemeName][level]
-                       : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
-                   </p>
-                 </>
-               );
-             })()}
-          </>
-        ) : (
-          <p className="text-sm sm:text-base text-gray-300 font-inter">
-            Hover over a theme in the chart to see your detailed impact.
+      <div className={`relative ${className} font-inter snap-y snap-mandatory h-screen overflow-y-auto isolate`}>
+        <div className="snap-start min-h-screen flex flex-col items-center justify-center px-6 py-12">
+          <h1 className="text-4xl md:text-6xl font-bold mb-12 text-center">Blue Pacific 2050 Reality</h1>
+          <p className="text-xl md:text-2xl text-center mb-12 max-w-4xl mx-auto">
+            This spider chart visualizes how your choices shaped Fiji's future across the seven pillars
+            of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the
+            shape shows the cumulative impact of your decisions throughout the game.
           </p>
+          <div 
+              className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative"
+              onMouseMove={(e) => {
+                console.log('🎯 Mouse move:', {
+                  x: e.nativeEvent.offsetX,
+                  y: e.nativeEvent.offsetY,
+                  target: (e.target as HTMLElement)?.tagName
+                });
+              }}
+          >
+                <Radar 
+                  data={data} 
+                  options={options} 
+                />
+          </div>
+        </div>
+      {/* Hover Info Box - Positioned on the side */}
+      <div className="fixed top-1/2 right-8 transform -translate-y-1/2 w-96 transition-all duration-300 ease-in-out z-50"
+           style={{ opacity: hoveredTheme ? 1 : 0, transform: `translate(${hoveredTheme ? '0' : '20px'}, -50%)`}}>
+        {hoveredTheme ? (
+          (() => {
+            // Find the full theme name for this short label
+            const fullThemeName = Object.keys(themeMapping).find(
+              fullName => themeMapping[fullName] === hoveredTheme
+            );
+            const rawCount = fullThemeName ? (themeCounts[fullThemeName] || 0) : 0;
+            const level = getLevel(rawCount);
+            
+            return (
+              <div className="space-y-4 bg-black/80 backdrop-blur-lg shadow-xl p-6 rounded-2xl border border-blue-500/20">
+                <h3 className="text-3xl font-bold text-white mb-2">
+                  {hoveredTheme}
+                </h3>
+                <p className="text-xl text-white/90 leading-relaxed mb-4">
+                  {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level]
+                    ? spiderMap[fullThemeName][level]
+                    : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
+                </p>
+                <div className="text-lg text-blue-300 font-semibold">
+                  {level} Impact • {rawCount} choices
+                </div>
+              </div>
+            );
+          })()
+        ) : (
+          <div className="bg-black/40 backdrop-blur-sm p-6 rounded-2xl">
+            <p className="text-lg text-gray-300 font-inter">
+              Hover over a theme in the chart to see your detailed impact.
+            </p>
+          </div>
         )}
       </div>
-
       </div>
     </ErrorBoundary>
   );

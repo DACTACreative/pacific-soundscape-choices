@@ -150,8 +150,8 @@ export default function Scenario2() {
                   Hover over each axis to explore how your choices influenced that theme
                 </p>
               </div>
-              <div className="flex justify-center">
-                <ThematicSpiderChart className="w-full max-w-4xl" />
+              <div className="w-full min-h-[70vh] relative z-10">
+                <ThematicSpiderChart className="w-full h-full" />
               </div>
             </div>
           </div>

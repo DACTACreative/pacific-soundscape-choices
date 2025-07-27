@@ -233,7 +233,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     
     const loadCSVWithRetry = async () => {
       try {
-        const response = await fetch('/data/Mapping - Question BPC - Sheet1.csv', {
+        const response = await fetch(import.meta.env.BASE_URL + 'data/Mapping - Question BPC - Sheet1.csv', {
           cache: 'no-cache',
           headers: {
             'Cache-Control': 'no-cache',

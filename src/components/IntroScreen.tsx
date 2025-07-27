@@ -1,5 +1,8 @@
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
+import { useEffect, useRef } from 'react';
+import LocomotiveScroll from 'locomotive-scroll';
+import 'locomotive-scroll/dist/locomotive-scroll.css';
 import introA from '@/data/intro-a.png';
 import introAA from '@/data/intro-aa.png';
 import introB from '@/data/intro-b.png';
@@ -11,6 +14,7 @@ import introG from '@/data/intro-g.png';
 import introH from '@/data/intro-h.png';
 import introI from '@/data/intro-i.png';
 import introJ from '@/data/intro-j.png';
+import scenarioO from '@/data/Scenario-o.png';
 
 interface IntroScreenProps {
   onStart: () => void;
@@ -18,13 +22,75 @@ interface IntroScreenProps {
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
   const { loading, playScenario } = useAudio();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
 
   const handleStart = () => {
-    playScenario(Scenario.Scenario0);
-    onStart();
+    try {
+      playScenario(Scenario.Scenario0);
+      onStart();
+    } catch (error) {
+      console.error('Error starting scenario:', error);
+    }
   };
 
-  const introImages = [introA, introB, introC, introD, introE, introF, introG, introH, introI, introJ, introAA];
+  // Reordered to have introAA first, then introA, then the rest in order
+  // Using introJ instead of introB in the array
+  const introImages = [introAA, introA, introJ, introC, introD, introE, introF, introG, introH, introI, introB];
+
+  // Initialize Locomotive Scroll
+  useEffect(() => {
+    if (scrollRef.current) {
+      locomotiveScrollRef.current = new LocomotiveScroll({
+        el: scrollRef.current,
+        smooth: true,
+        multiplier: 1,
+        class: 'is-revealed'
+      });
+    }
+
+    return () => {
+      if (locomotiveScrollRef.current) {
+        locomotiveScrollRef.current.destroy();
+      }
+    };
+  }, []);
+
+  // Debug logging
+  useEffect(() => {
+    console.log('IntroScreen mounted');
+    console.log('Loading state:', loading);
+    console.log('Images loaded:', introImages.length);
+    console.log('First image src:', introImages[0]);
+    
+    // Check if image element exists and log its src
+    const imageElement = document.getElementById('intro-image') as HTMLImageElement;
+    if (imageElement) {
+      console.log('Image element found, current src:', imageElement.src);
+      console.log('Image element style:', imageElement.style.cssText);
+    } else {
+      console.log('Image element not found');
+    }
+    
+    return () => console.log('IntroScreen unmounted');
+  }, []);
+
+  // Additional effect to monitor image loading
+  useEffect(() => {
+    const imageElement = document.getElementById('intro-image') as HTMLImageElement;
+    if (imageElement) {
+      const handleLoad = () => console.log('✅ Image loaded successfully:', imageElement.src);
+      const handleError = (e: any) => console.error('❌ Image failed to load:', e);
+      
+      imageElement.addEventListener('load', handleLoad);
+      imageElement.addEventListener('error', handleError);
+      
+      return () => {
+        imageElement.removeEventListener('load', handleLoad);
+        imageElement.removeEventListener('error', handleError);
+      };
+    }
+  }, []);
 
   const blocks = [
     {
@@ -197,67 +263,168 @@ Let’s begin.`,
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen">
-      {/* Fixed Header */}
-     <div className="fixed top-6 left-6 z-50">
-  <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-3 text-white">BLUE PACIFIC 2050</h1>
-  <p className="text-2xl md:text-4xl font-light tracking-wide text-white">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
-</div>
-
-      {/* Content Blocks */}
-      <div className="pt-32">
-        {blocks.map((block) => (
-          <section key={block.id} className="min-h-screen py-48 flex items-center">
-            <div className="w-full px-6 md:px-12">
-              <div className={`flex flex-col lg:flex-row items-start gap-16 h-full ${block.reversed ? 'lg:flex-row-reverse' : ''}`}>
-                
-                {/* Text Side */}
-                <div className="w-full lg:w-1/2">
-                  <div className="w-full max-w-2xl mx-auto lg:mx-0">
-                    <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">{block.title}</h2>
-<div className="text-2xl md:text-3xl leading-relaxed whitespace-pre-line text-white">
-  {block.content}
-</div>
-
-                    
-                    {block.isLast && (
-                      <div className="mt-12">
-                        <Button
-                          onClick={handleStart}
-                          disabled={loading}
-                          size="lg"
-                          className="group relative px-12 py-8 text-4xl md:text-5xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
-                        >
-                          <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                          <span className="relative z-10">
-                            {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
-                          </span>
-                        </Button>
-                        
-                        <p className="mt-6 text-2xl md:text-3xl text-white font-light">
-                          Audio experience recommended for full immersion
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Image Side */}
-                <div className="w-full lg:w-1/2">
-                  <div className="w-full max-w-md mx-auto bg-gradient-to-br from-[#0b3d26] to-[#0026d7] rounded-lg overflow-hidden shadow-2xl relative">
-                    <img 
-                      src={block.id === 1 ? introImages[1] : block.id === 2 ? introImages[0] : introImages[(block.id - 1) % introImages.length]} 
-                      alt={`Intro image for ${block.title}`}
-                      className="w-full h-auto object-contain"
-                    />
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </section>
-        ))}
+    <div ref={scrollRef} data-scroll-container className="bg-black text-white">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-black border-b border-white/10">
+        <div className="px-8 py-6">
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-white">BLUE PACIFIC 2050</h1>
+          <p className="text-lg md:text-xl font-light tracking-wide text-white/80">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
+        </div>
       </div>
+
+      {/* First Block - Full Page Layout */}
+      <section 
+        key={blocks[0].id} 
+        data-scroll-section
+        className="relative h-screen flex flex-col lg:flex-row"
+        id="section-0"
+      >
+        {/* Sticky Image Container for first section - Hidden on mobile */}
+        <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+          <div 
+            className="fixed-image"
+            data-scroll
+            data-scroll-sticky
+            data-scroll-target="#section-0"
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '40vw',
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '2rem',
+              overflow: 'hidden'
+            }}
+          >
+            <div className="w-full h-full flex items-center justify-center">
+              <img 
+                src={scenarioO}
+                alt="Blue Pacific 2050 Experience"
+                className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+                style={{ width: 'auto', height: 'auto' }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Image - Visible only on mobile */}
+        <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+          <div className="w-full h-full flex items-center justify-center">
+            <img 
+              src={scenarioO}
+              alt="Blue Pacific 2050 Experience"
+              className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+            />
+          </div>
+        </div>
+
+        {/* Text Content - Left Side */}
+        <div className="w-full lg:w-[60%] h-full flex items-center p-8 lg:p-16 bg-black">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
+              {blocks[0].title}
+            </h2>
+            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
+              {blocks[0].content}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Rest of the blocks with sticky behavior */}
+      {blocks.slice(1).map((block, index) => (
+        <section 
+          key={block.id} 
+          data-scroll-section
+          className="relative"
+          id={`section-${index + 1}`}
+        >
+          {/* Fixed Image Container for this section - Hidden on mobile */}
+          <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+              <div 
+                className="fixed-image"
+                data-scroll
+                data-scroll-sticky
+                data-scroll-target={`#section-${index + 1}`}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  width: '40vw',
+                  height: '100vh',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '2rem',
+                  overflow: 'hidden'
+                }}
+              >
+                <div className="w-full h-full flex items-center justify-center">
+                  <img 
+                    src={introImages[index + 1] || introImages[0]}
+                    alt="Blue Pacific 2050 Experience"
+                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+                    style={{ width: 'auto', height: 'auto' }}
+                  />
+                </div>
+            </div>
+          </div>
+
+          {/* Mobile Image - Visible only on mobile */}
+          <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+            <div className="w-full h-full flex items-center justify-center">
+              <img 
+                src={introImages[index + 1] || introImages[0]}
+                alt="Blue Pacific 2050 Experience"
+                className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+              />
+            </div>
+          </div>
+
+          {/* Scrolling Text Content */}
+          <div className="scroll-text lg:mr-[40vw] mr-0 p-8 lg:p-16 min-h-screen flex items-center bg-black">
+            <div className="max-w-2xl">
+              <h2 
+                className="text-4xl md:text-6xl font-bold text-white mb-8"
+                data-scroll
+                data-scroll-speed="0.5"
+              >
+                {block.title}
+              </h2>
+              <div 
+                className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
+                data-scroll
+                data-scroll-speed="0.3"
+              >
+                {block.content}
+              </div>
+              
+              {block.isLast && (
+                <div className="mt-12" data-scroll data-scroll-speed="0.2">
+                  <Button
+                    onClick={handleStart}
+                    disabled={loading}
+                    size="lg"
+                    className="group relative px-8 py-6 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                  >
+                    <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                    <span className="relative z-10">
+                      {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
+                    </span>
+                  </Button>
+                  
+                  <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
+                    Audio experience recommended for full immersion
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      ))}
     </div>
   );
 }

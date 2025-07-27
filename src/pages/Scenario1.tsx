@@ -1,78 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 
 export default function Scenario1() {
-  const vantaRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let vantaEffect: any = null;
-
-    const loadVanta = async () => {
-      try {
-        // Load VANTA script
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.trunk.min.js';
-        script.onload = () => {
-          if (window.VANTA && vantaRef.current) {
-            vantaEffect = window.VANTA.TRUNK({
-              el: vantaRef.current,
-              THREE: THREE,
-              mouseControls: true,
-              touchControls: true,
-              gyroControls: false,
-              minHeight: 200.00,
-              minWidth: 200.00,
-              scale: 1.00,
-              scaleMobile: 1.00,
-              color: 0x35c5f2,
-              backgroundColor: 0x000000,
-              spacing: 1.50,
-              chaos: 1.20
-            });
-          }
-        };
-        document.head.appendChild(script);
-      } catch (error) {
-        console.log('VANTA loading error:', error);
-      }
-    };
-
-    loadVanta();
-
-    return () => {
-      if (vantaEffect) {
-        vantaEffect.destroy();
-      }
-    };
-  }, []);
-
-  const thematicSections = [
-    {
-      title: "1.0 Health and Wellbeing",
-      content: "You chose to launch a nationwide Cellule of Knowledge initiative—mobile health stations equipped with AI-powered diagnostic tools that reach remote villages. By 2050, these units have prevented three major outbreaks and reduced child mortality by 40%. Traditional healers work alongside medical professionals, creating a hybrid care system that honors both innovation and ancestral knowledge.",
-      impact: "In Hela Province, solar-powered health clinics now serve 15,000 people. Papua New Guinea's International Health Regulations (IHR) capacity has improved dramatically, making the region a model for pandemic preparedness."
-    },
-    {
-      title: "2.0 Economic Development", 
-      content: "Your decision to prioritize blue economy initiatives over extractive industries paid dividends. Sustainable aquaculture farms now produce 60% more protein than traditional fishing, while marine protected areas have become eco-tourism magnets. The transition was difficult—many fishing families needed retraining—but by 2050, coastal communities earn 30% more than they did in 2025.",
-      impact: "Suva's new Blue Economy Hub processes $2 billion in sustainable ocean commerce annually. Traditional navigation knowledge is now part of international maritime curricula."
-    },
-    {
-      title: "3.0 Peace & Security",
-      content: "Regional cooperation in climate adaptation prevented resource conflicts that plagued other regions. The Pacific Peace Fund you helped establish has mediated 40+ climate-induced disputes over water and land. Early warning systems for both natural disasters and social tensions have kept communities stable during the most challenging transitions.",
-      impact: "Zero climate-related conflicts in the Pacific region since 2030. The Suva Accords on Climate Justice are now studied globally as a model for peaceful adaptation."
-    }
-  ];
 
   return (
-    <div className="bg-black text-white min-h-screen relative">
-      {/* VANTA Background */}
-      <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full" />
-      
+    <div className="min-h-screen bg-black text-white overflow-hidden relative">
       {/* Content */}
       <div className="relative z-10 pt-32">
         
@@ -138,9 +72,9 @@ export default function Scenario1() {
         </section>
 
         {/* Blue Pacific 2050 Reality */}
-        <section className="pt-24 pb-32 md:px-12 text-white">
+        <section className="min-h-screen snap-start py-24 md:px-12 text-white flex flex-col justify-center">
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8">Blue Pacific 2050 Reality</h2>
+            <h2 className="text-6xl md:text-7xl font-bold mb-8 text-center">Blue Pacific 2050 Reality</h2>
             
             <p className="text-xl md:text-2xl max-w-4xl leading-relaxed mb-6">
               <strong>Thematic Spider Chart – A Snapshot of Hard-Won Outcomes</strong>
@@ -164,8 +98,8 @@ export default function Scenario1() {
               </p>
             </div>
 
-            <div className="w-full min-h-[500px] relative z-10">
-              <ThematicSpiderChart className="w-full" />
+            <div className="w-full min-h-[70vh] relative z-10">
+              <ThematicSpiderChart className="w-full h-full" />
             </div>
           </div>
         </section>
@@ -173,28 +107,6 @@ export default function Scenario1() {
         {/* Blue Pacific Stories of Impact & Outcome Mapping */}
         <BluePacificStoriesSection />
 
-        {/* Thematic Outcomes */}
-        {thematicSections.map((section, index) => (
-          <section key={index} className="min-h-screen py-24 md:py-48 flex items-center">
-            <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-              <div className="max-w-7xl mx-auto">
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                  {section.title}
-                </h2>
-                <div className="max-w-5xl mx-auto space-y-6">
-                  <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white text-justify">
-                    {section.content}
-                  </p>
-                  <div className="pl-6 border-l-4 border-[#35c5f2]">
-                    <p className="text-lg md:text-xl text-white/80 text-justify">
-                      → {section.impact}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        ))}
 
         {/* Navigation */}
         <section className="py-24 flex items-center">
