@@ -1,9 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Legend } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import Papa from 'papaparse';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorBoundary from './ErrorBoundary';
+import { Badge } from './ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
 // Register Chart.js components - REMOVED Tooltip to prevent conflicts
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Legend);
@@ -17,18 +19,6 @@ export default function ThematicSpiderChart({
   const [playerChoices, setPlayerChoices] = useState<any[]>([]);
   const [spiderMap, setSpiderMap] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const chartRef = useRef<any>(null);
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     // Load selected answer codes from sessionStorage
@@ -255,68 +245,12 @@ export default function ThematicSpiderChart({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    // DISABLE ALL BUILT-IN TOOLTIPS to prevent conflicts
     plugins: {
       tooltip: {
         enabled: false
       },
       legend: {
         display: false
-      }
-    },
-    hover: {
-      mode: 'point' as const,
-      intersect: true,
-      animationDuration: 0 // Disable animation for smoother interaction
-    },
-    interaction: {
-      mode: 'point' as const,
-      intersect: true,
-      includeInvisible: false
-    },
-    onHover: (event: any, elements: any[]) => {
-      console.log('🎯 Chart hover event:', {
-        elementsCount: elements?.length,
-        hoveredTheme: hoveredTheme,
-        mousePosition: { x: event.x, y: event.y }
-      });
-      
-      // Clear existing timeout
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-        hoverTimeoutRef.current = null;
-      }
-      
-      if (elements && elements.length > 0) {
-        const index = elements[0].index;
-        const theme = themeLabels[index];
-        console.log(`✅ Hovering theme: ${theme} at index ${index}`);
-        setHoveredTheme(theme);
-      } else {
-        console.log('❌ No elements detected, clearing hover');
-        // Immediate clear for better responsiveness
-        setHoveredTheme(null);
-      }
-    },
-    onClick: (event: any, chartElements: any) => {
-      console.log('🖱️ Chart click:', chartElements);
-      if (chartElements && chartElements.length > 0) {
-        const clickedElementIndex = chartElements[0].index;
-        const clickedTheme = themeLabels[clickedElementIndex];
-        console.log(`Clicked on theme: ${clickedTheme}`);
-        setHoveredTheme(clickedTheme); // Set on click as fallback
-      }
-    },
-    elements: {
-      point: {
-        hitRadius: 15, // Reduced for more precise detection
-        hoverRadius: 25,
-        radius: 12,
-        borderWidth: 4,
-        backgroundColor: '#35c5f2',
-        borderColor: '#ffffff',
-        hoverBackgroundColor: '#ffffff',
-        hoverBorderColor: '#35c5f2'
       }
     },
     scales: {
@@ -334,12 +268,12 @@ export default function ThematicSpiderChart({
         },
         pointLabels: {
           font: {
-            size: 24,
+            size: 18,
             family: '"Inter", system-ui, sans-serif',
-            weight: 700
+            weight: 600
           },
           color: '#ffffff',
-          padding: 30
+          padding: 25
         },
         ticks: {
           stepSize: 1,
@@ -355,71 +289,69 @@ export default function ThematicSpiderChart({
           color: '#ffffff',
           backdropColor: 'transparent',
           font: {
-            size: 20,
-            weight: 700,
+            size: 16,
+            weight: 600,
             family: '"Inter", system-ui, sans-serif'
           },
-          padding: 20
+          padding: 15
         }
       }
     },
   };
-  return <ErrorBoundary>
-      <div className={`relative ${className} font-inter isolate`}>
-        {/* SIMPLIFIED CONTAINER - No scroll-snap to prevent mouse event interference */}
-        <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 relative">
-          
-          {/* Chart Container - Optimized for mouse interaction */}
-          <div 
-            className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative"
-            onMouseEnter={() => console.log('🎯 Container mouse enter')}
-            onMouseLeave={() => console.log('🎯 Container mouse leave')}
-          >
-            <Radar 
-              ref={chartRef}
-              data={data} 
-              options={options}
-            />
-          </div>
-          
-          {/* Debug Info - Only in development */}
-          {process.env.NODE_ENV === 'development' && (
-            <div className="mt-4 p-2 bg-background/80 rounded text-sm text-muted-foreground">
-              Current hover: {hoveredTheme || 'None'}
-            </div>
-          )}
+  // Get badge variant based on impact level
+  const getBadgeVariant = (level: string) => {
+    switch (level) {
+      case 'HIGH': return 'default';
+      case 'MEDIUM': return 'secondary';
+      case 'LOW': return 'destructive';
+      default: return 'outline';
+    }
+  };
+
+  return (
+    <ErrorBoundary>
+      <div className={`relative ${className} space-y-8`}>
+        {/* Chart Container */}
+        <div className="w-full h-[500px] mx-auto relative bg-black/20 rounded-lg p-4">
+          <Radar data={data} options={options} />
         </div>
         
-        {/* Hover Info Box - Positioned outside chart for zero interference */}
-        <div 
-          className="fixed top-1/2 right-8 w-96 transform -translate-y-1/2 transition-all duration-200 ease-out z-[100] pointer-events-none"
-          style={{
-            opacity: hoveredTheme ? 1 : 0,
-            transform: `translate(${hoveredTheme ? '0' : '50px'}, -50%) scale(${hoveredTheme ? '1' : '0.98'})`
-          }}
-        >
-        {hoveredTheme ? (() => {
-          // Find the full theme name for this short label
-          const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === hoveredTheme);
-          const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-          const level = getLevel(rawCount);
-          return <div className="space-y-4 bg-black/90 backdrop-blur-lg shadow-2xl p-8 rounded-2xl border-2 border-blue-500/30">
-                <h3 className="text-4xl font-bold text-white mb-3">
-                  {hoveredTheme}
-                </h3>
-                <p className="text-xl text-white/95 leading-relaxed mb-6">
-                  {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] ? spiderMap[fullThemeName][level] : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
-                </p>
-                <div className="text-xl text-blue-300 font-bold">
-                  {level} Impact • {rawCount} choices
-                </div>
-              </div>;
-        })() : <div className="bg-black/50 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
-            <p className="text-xl text-gray-300 font-inter">
-              Hover over a theme in the chart to see your detailed impact.
-            </p>
-          </div>}
+        {/* Static Theme Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {themeLabels.map((shortLabel, index) => {
+            // Find the full theme name for this short label
+            const fullThemeName = Object.keys(themeMapping).find(fullName => 
+              themeMapping[fullName] === shortLabel
+            );
+            const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
+            const level = getLevel(rawCount);
+            const description = fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] 
+              ? spiderMap[fullThemeName][level] 
+              : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.';
+
+            return (
+              <Card key={shortLabel} className="bg-black/40 border-white/20">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg text-white">{shortLabel}</CardTitle>
+                    <Badge variant={getBadgeVariant(level)} className="ml-2">
+                      {level}
+                    </Badge>
+                  </div>
+                  <div className="text-sm text-white/60">
+                    {rawCount} {rawCount === 1 ? 'choice' : 'choices'}
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <p className="text-sm text-white/80 leading-relaxed">
+                    {description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
-      </div>
-    </ErrorBoundary>;
+    </ErrorBoundary>
+  );
 }
