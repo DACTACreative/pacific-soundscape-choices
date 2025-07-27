@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
-import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Legend } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import Papa from 'papaparse';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorBoundary from './ErrorBoundary';
 
-// Register Chart.js components
-ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+// Register Chart.js components - REMOVED Tooltip to prevent conflicts
+ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Legend);
 
 interface ThematicSpiderChartProps {
   className?: string;
@@ -19,6 +19,17 @@ export default function ThematicSpiderChart({
   const [loading, setLoading] = useState(true);
   const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const chartRef = useRef<any>(null);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     // Load selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
@@ -244,10 +255,19 @@ export default function ThematicSpiderChart({
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    // DISABLE ALL BUILT-IN TOOLTIPS to prevent conflicts
+    plugins: {
+      tooltip: {
+        enabled: false
+      },
+      legend: {
+        display: false
+      }
+    },
     hover: {
       mode: 'point' as const,
       intersect: true,
-      animationDuration: 200
+      animationDuration: 0 // Disable animation for smoother interaction
     },
     interaction: {
       mode: 'point' as const,
@@ -255,6 +275,12 @@ export default function ThematicSpiderChart({
       includeInvisible: false
     },
     onHover: (event: any, elements: any[]) => {
+      console.log('🎯 Chart hover event:', {
+        elementsCount: elements?.length,
+        hoveredTheme: hoveredTheme,
+        mousePosition: { x: event.x, y: event.y }
+      });
+      
       // Clear existing timeout
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
@@ -264,28 +290,29 @@ export default function ThematicSpiderChart({
       if (elements && elements.length > 0) {
         const index = elements[0].index;
         const theme = themeLabels[index];
+        console.log(`✅ Hovering theme: ${theme} at index ${index}`);
         setHoveredTheme(theme);
       } else {
-        // Delay clearing to prevent flickering when moving between points
-        hoverTimeoutRef.current = setTimeout(() => {
-          setHoveredTheme(null);
-        }, 150);
+        console.log('❌ No elements detected, clearing hover');
+        // Immediate clear for better responsiveness
+        setHoveredTheme(null);
       }
     },
     onClick: (event: any, chartElements: any) => {
-      // Add click support for mobile/touch devices
+      console.log('🖱️ Chart click:', chartElements);
       if (chartElements && chartElements.length > 0) {
-        const index = chartElements[0].index;
-        const theme = themeLabels[index];
-        setHoveredTheme(theme);
+        const clickedElementIndex = chartElements[0].index;
+        const clickedTheme = themeLabels[clickedElementIndex];
+        console.log(`Clicked on theme: ${clickedTheme}`);
+        setHoveredTheme(clickedTheme); // Set on click as fallback
       }
     },
     elements: {
       point: {
-        hitRadius: 25,
-        hoverRadius: 20,
-        radius: 14,
-        borderWidth: 5,
+        hitRadius: 15, // Reduced for more precise detection
+        hoverRadius: 25,
+        radius: 12,
+        borderWidth: 4,
         backgroundColor: '#35c5f2',
         borderColor: '#ffffff',
         hoverBackgroundColor: '#ffffff',
@@ -336,40 +363,39 @@ export default function ThematicSpiderChart({
         }
       }
     },
-    plugins: {
-      legend: {
-        display: false
-      },
-      tooltip: {
-        enabled: true,
-        mode: 'nearest' as const,
-        intersect: false,
-        callbacks: {
-          label: (context: any) => {
-            const index = context.dataIndex;
-            const theme = themeLabels[index];
-            return `${theme}: ${context.raw}`;
-          }
-        }
-      }
-    }
   };
   return <ErrorBoundary>
-      <div className={`relative ${className} font-inter snap-y snap-mandatory h-screen overflow-y-auto isolate`}>
-        <div className="snap-start min-h-screen flex flex-col items-center justify-center px-6 py-12">
+      <div className={`relative ${className} font-inter isolate`}>
+        {/* SIMPLIFIED CONTAINER - No scroll-snap to prevent mouse event interference */}
+        <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 relative">
           
-          
-          <div className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative">
-            <Radar data={data} options={options} />
+          {/* Chart Container - Optimized for mouse interaction */}
+          <div 
+            className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative"
+            onMouseEnter={() => console.log('🎯 Container mouse enter')}
+            onMouseLeave={() => console.log('🎯 Container mouse leave')}
+          >
+            <Radar 
+              ref={chartRef}
+              data={data} 
+              options={options}
+            />
           </div>
+          
+          {/* Debug Info - Only in development */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mt-4 p-2 bg-background/80 rounded text-sm text-muted-foreground">
+              Current hover: {hoveredTheme || 'None'}
+            </div>
+          )}
         </div>
         
-        {/* Hover Info Box - Positioned outside chart container to prevent interference */}
+        {/* Hover Info Box - Positioned outside chart for zero interference */}
         <div 
-          className="fixed top-1/2 right-8 w-96 transform -translate-y-1/2 transition-all duration-300 ease-out z-50 pointer-events-none"
+          className="fixed top-1/2 right-8 w-96 transform -translate-y-1/2 transition-all duration-200 ease-out z-[100] pointer-events-none"
           style={{
             opacity: hoveredTheme ? 1 : 0,
-            transform: `translate(${hoveredTheme ? '0' : '100px'}, -50%) scale(${hoveredTheme ? '1' : '0.95'})`
+            transform: `translate(${hoveredTheme ? '0' : '50px'}, -50%) scale(${hoveredTheme ? '1' : '0.98'})`
           }}
         >
         {hoveredTheme ? (() => {
