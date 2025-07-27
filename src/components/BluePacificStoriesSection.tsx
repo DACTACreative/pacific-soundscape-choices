@@ -78,11 +78,16 @@ export default function BluePacificStoriesSection() {
       return;
     }
 
-    // Load answers.json data
-    fetch('/data/answers.json')
-      .then(res => res.json())
+    // Load ANSWERMAPPINGNEWjson.json data
+    fetch('/data/ANSWERMAPPINGNEWjson.json')
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then(answersData => {
-        console.log('📖 Answers data loaded:', Object.keys(answersData).length, 'total answers');
+        console.log('📖 New answers data loaded:', Object.keys(answersData).length, 'total answers');
         
         // Find matching answers for selected codes
         const matchedAnswers = selectedCodes.map((code: string) => {
@@ -103,7 +108,10 @@ export default function BluePacificStoriesSection() {
         setLoading(false);
       })
       .catch(err => {
-        console.error('📖 Failed to load answers data:', err);
+        console.error('📖 Failed to load new answers data:', err);
+        // Fallback error handling
+        console.log('📖 Falling back to empty answers array');
+        setSelectedAnswers([]);
         setLoading(false);
       });
   }, []);
