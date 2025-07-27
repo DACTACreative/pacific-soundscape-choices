@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import Papa from 'papaparse';
@@ -7,6 +7,7 @@ import ErrorBoundary from './ErrorBoundary';
 
 // Register Chart.js components
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+
 interface ThematicSpiderChartProps {
   className?: string;
 }
@@ -17,6 +18,7 @@ export default function ThematicSpiderChart({
   const [spiderMap, setSpiderMap] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     // Load selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
@@ -243,25 +245,31 @@ export default function ThematicSpiderChart({
     responsive: true,
     maintainAspectRatio: false,
     hover: {
-      mode: 'nearest' as const,
-      intersect: false,
-      animationDuration: 0
+      mode: 'point' as const,
+      intersect: true,
+      animationDuration: 200
     },
     interaction: {
-      mode: 'nearest' as const,
-      intersect: false
+      mode: 'point' as const,
+      intersect: true,
+      includeInvisible: false
     },
     onHover: (event: any, elements: any[]) => {
-      console.log('🎯 Chart hover:', {
-        event,
-        elements
-      });
+      // Clear existing timeout
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+      
       if (elements && elements.length > 0) {
         const index = elements[0].index;
         const theme = themeLabels[index];
         setHoveredTheme(theme);
       } else {
-        setHoveredTheme(null);
+        // Delay clearing to prevent flickering when moving between points
+        hoverTimeoutRef.current = setTimeout(() => {
+          setHoveredTheme(null);
+        }, 150);
       }
     },
     onClick: (event: any, chartElements: any) => {
@@ -274,7 +282,7 @@ export default function ThematicSpiderChart({
     },
     elements: {
       point: {
-        hitRadius: 35,
+        hitRadius: 25,
         hoverRadius: 20,
         radius: 14,
         borderWidth: 5,
@@ -351,21 +359,19 @@ export default function ThematicSpiderChart({
         <div className="snap-start min-h-screen flex flex-col items-center justify-center px-6 py-12">
           
           
-          <div className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative" onMouseMove={e => {
-          console.log('🎯 Mouse move:', {
-            x: e.nativeEvent.offsetX,
-            y: e.nativeEvent.offsetY,
-            target: (e.target as HTMLElement)?.tagName
-          });
-        }}>
-                <Radar data={data} options={options} />
+          <div className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative">
+            <Radar data={data} options={options} />
           </div>
         </div>
-      {/* Hover Info Box - Positioned on the side */}
-      <div className="fixed top-1/2 right-8 transform -translate-y-1/2 w-[420px] transition-all duration-300 ease-in-out z-50" style={{
-        opacity: hoveredTheme ? 1 : 0,
-        transform: `translate(${hoveredTheme ? '0' : '20px'}, -50%)`
-      }}>
+        
+        {/* Hover Info Box - Positioned outside chart container to prevent interference */}
+        <div 
+          className="fixed top-1/2 right-8 w-96 transform -translate-y-1/2 transition-all duration-300 ease-out z-50 pointer-events-none"
+          style={{
+            opacity: hoveredTheme ? 1 : 0,
+            transform: `translate(${hoveredTheme ? '0' : '100px'}, -50%) scale(${hoveredTheme ? '1' : '0.95'})`
+          }}
+        >
         {hoveredTheme ? (() => {
           // Find the full theme name for this short label
           const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === hoveredTheme);
