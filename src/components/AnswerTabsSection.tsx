@@ -102,7 +102,7 @@ export default function AnswerTabsSection() {
       </div>
 
       <Tabs defaultValue={themesWithAnswers[0]} className="w-full">
-        <TabsList className="grid w-full mb-8" style={{ gridTemplateColumns: `repeat(${themesWithAnswers.length}, 1fr)` }}>
+        <TabsList className="grid grid-cols-3 w-full mb-8 gap-2">
           {themesWithAnswers.map((theme) => (
             <TabsTrigger 
               key={theme} 
