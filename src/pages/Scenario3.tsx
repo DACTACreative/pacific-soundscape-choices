@@ -14,7 +14,7 @@ export default function Scenario3() {
     
     if (selectedCodes.length > 0) {
       // Load answers.json data
-      fetch('/src/data/answers.json')
+      fetch('/data/answers.json')
         .then(response => response.json())
         .then(answersData => {
           const outcomes = selectedCodes.map((code: string) => answersData[code]).filter(Boolean);
