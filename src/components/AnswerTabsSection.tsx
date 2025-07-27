@@ -107,7 +107,7 @@ export default function AnswerTabsSection() {
             <TabsTrigger 
               key={theme} 
               value={theme}
-              className="text-xs md:text-sm p-2 md:p-3"
+              className="text-sm md:text-base px-4 py-3 md:px-6 md:py-4 bg-white/10 hover:bg-white/20 data-[state=active]:bg-white data-[state=active]:text-black font-medium rounded-lg transition-all duration-200"
             >
               {theme.replace(' and ', ' & ')}
             </TabsTrigger>
