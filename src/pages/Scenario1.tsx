@@ -156,7 +156,7 @@ export default function Scenario1() {
           </div>
         </section>
       
-      {/* Debug Panel removed */}
+      {/* All debugging components removed */}
     </div>
   );
 }
