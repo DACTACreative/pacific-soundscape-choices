@@ -66,7 +66,7 @@ export default function Scenario1() {
             <h2 className="text-6xl md:text-7xl font-bold mb-8 text-center">Blue Pacific 2050 Reality</h2>
             
             <p className="text-xl md:text-2xl max-w-4xl leading-relaxed mb-6">
-              <strong>Thematic Spider Chart</strong>
+              
             </p>
             
             <p className="text-lg md:text-xl max-w-4xl leading-relaxed mb-6 text-gray-300 font-medium">This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.</p>
@@ -78,9 +78,7 @@ export default function Scenario1() {
             
 
             <div className="bg-black/80 rounded-xl p-6 mb-8 text-center">
-              <p className="text-lg md:text-xl text-gray-300">
-                Hover over a theme in the chart to see the real-world impact of your choices.
-              </p>
+              
             </div>
 
             <div className="w-full min-h-[70vh] relative z-10">
