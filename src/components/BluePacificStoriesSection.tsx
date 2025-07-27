@@ -136,10 +136,10 @@ export default function BluePacificStoriesSection() {
       {/* Section Header */}
       <div className="mb-24">
         <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6">
-          Your Choices for the Pacific Future
+          Blue Pacific Stories of Impact & Outcome Mapping
         </h2>
         <p className="text-lg text-white/70 leading-relaxed max-w-4xl">
-          In this section, we explore how your specific choices during the journey shaped the Pacific region's path to 2050. Each theme represents a critical arena of the Blue Pacific 2050 Strategy where your policy decisions translated into real-world outcomes. These are the stories behind your choices – showing how individual decisions contributed to the collective future of the Blue Pacific.
+          In this section, we delve deeper into specific thematic areas to illustrate the impact of decisions and initiatives that shaped the Pacific region's journey to 2050. Each theme is part of the Blue Pacific Strategy and represents a critical arena where policy choices translated into real-world outcomes. These are the human stories behind the spider chart's data points – "Blue Pacific" stories of impact that show how collective action and innovation made a difference.
         </p>
       </div>
 
