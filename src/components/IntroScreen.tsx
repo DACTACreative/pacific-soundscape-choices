@@ -1,20 +1,20 @@
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
-import { useEffect, useRef, useState } from 'react';
-
-// Updated image imports to use absolute GitHub URLs for Lovable compatibility
-const introA = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-a.png';
-const introAA = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-aa.png';
-const introB = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-b.png';
-const introC = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-c.png';
-const introD = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-d.png';
-const introE = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-e.png';
-const introF = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-f.png';
-const introG = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-g.png';
-const introH = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-h.png';
-const introI = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-i.png';
-const introJ = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-j.png';
-const scenarioO = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/Scenario-o.png';
+import { useEffect, useRef } from 'react';
+import LocomotiveScroll from 'locomotive-scroll';
+import 'locomotive-scroll/dist/locomotive-scroll.css';
+import introA from '@/data/intro-a.png';
+import introAA from '@/data/intro-aa.png';
+import introB from '@/data/intro-b.png';
+import introC from '@/data/intro-c.png';
+import introD from '@/data/intro-d.png';
+import introE from '@/data/intro-e.png';
+import introF from '@/data/intro-f.png';
+import introG from '@/data/intro-g.png';
+import introH from '@/data/intro-h.png';
+import introI from '@/data/intro-i.png';
+import introJ from '@/data/intro-j.png';
+import scenarioO from '@/data/Scenario-o.png';
 
 interface IntroScreenProps {
   onStart: () => void;
@@ -23,9 +23,7 @@ interface IntroScreenProps {
 export default function IntroScreen({ onStart }: IntroScreenProps) {
   const { loading, playScenario } = useAudio();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const locoScrollRef = useRef<any>(null);
-  const [isLocoLoaded, setIsLocoLoaded] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
 
   const handleStart = () => {
     try {
@@ -37,131 +35,79 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   };
 
   // Reordered to have introAA first, then introA, then the rest in order
+  // Using introJ instead of introB in the array
   const introImages = [introAA, introA, introJ, introC, introD, introE, introF, introG, introH, introI, introB];
 
-  // Preload images
+  // Initialize Locomotive Scroll
   useEffect(() => {
-    const preloadImages = async () => {
-      console.log('🖼️ Preloading images...');
-      const imagePromises = [scenarioO, ...introImages].map((src) => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => {
-            console.log('✅ Image loaded:', src.split('/').pop());
-            resolve(src);
-          };
-          img.onerror = () => {
-            console.warn('❌ Image failed to load:', src.split('/').pop());
-            resolve(src); // Resolve anyway to not block the process
-          };
-          img.src = src;
-        });
-      });
-
-      await Promise.all(imagePromises);
-      setImagesLoaded(true);
-      console.log('🖼️ All images preloaded');
-    };
-
-    preloadImages();
-  }, []);
-
-  // Initialize Locomotive Scroll after images are loaded
-  useEffect(() => {
-    if (!imagesLoaded) return;
-
-    const initLocomotiveScroll = async () => {
-      try {
-        console.log('🚂 Initializing Locomotive Scroll...');
-        
-        // Wait for DOM to be ready
-        await new Promise(resolve => {
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', resolve);
-          } else {
-            resolve(void 0);
-          }
-        });
-
-        // Additional delay to ensure all images are rendered
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // Dynamically import locomotive-scroll
-        const LocomotiveScroll = (await import('locomotive-scroll')).default;
-        
-        if (scrollRef.current && !locoScrollRef.current) {
-          console.log('🚂 Creating Locomotive Scroll instance...');
-          
-          locoScrollRef.current = new LocomotiveScroll({
+    let scrollInstance: LocomotiveScroll | null = null;
+    
+    const initScroll = () => {
+      if (scrollRef.current && !scrollInstance) {
+        try {
+          scrollInstance = new LocomotiveScroll({
             el: scrollRef.current,
-            smooth: window.innerWidth > 768,
-            multiplier: 0.8,
-            class: 'is-revealed',
-            smartphone: {
-              smooth: false
-            },
-            tablet: {
-              smooth: false
-            },
-            reloadOnContextChange: true,
-            resetNativeScroll: true
+            smooth: true,
+            multiplier: 1,
+            class: 'is-revealed'
           });
-          
-          // Wait for locomotive to fully initialize
-          setTimeout(() => {
-            if (locoScrollRef.current) {
-              locoScrollRef.current.update();
-              setIsLocoLoaded(true);
-              console.log('✅ Locomotive Scroll initialized successfully');
-            }
-          }, 500);
-
-          // Update on window resize
-          const handleResize = () => {
-            if (locoScrollRef.current) {
-              setTimeout(() => {
-                locoScrollRef.current.update();
-              }, 100);
-            }
-          };
-
-          window.addEventListener('resize', handleResize);
-          
-          return () => {
-            window.removeEventListener('resize', handleResize);
-          };
+          locomotiveScrollRef.current = scrollInstance;
+          console.log('Locomotive Scroll initialized successfully');
+        } catch (error) {
+          console.error('Failed to initialize Locomotive Scroll:', error);
         }
-      } catch (error) {
-        console.error('❌ Error initializing Locomotive Scroll:', error);
-        setIsLocoLoaded(true); // Set to true even if locomotive fails
       }
     };
 
-    const timeoutId = setTimeout(initLocomotiveScroll, 100);
+    // Delay initialization to ensure DOM is ready
+    const timer = setTimeout(initScroll, 100);
 
     return () => {
-      clearTimeout(timeoutId);
-      if (locoScrollRef.current) {
-        console.log('🚂 Destroying Locomotive Scroll...');
+      clearTimeout(timer);
+      if (scrollInstance) {
         try {
-          locoScrollRef.current.destroy();
-          locoScrollRef.current = null;
+          scrollInstance.destroy();
+          console.log('Locomotive Scroll destroyed');
         } catch (error) {
-          console.warn('Warning destroying Locomotive Scroll:', error);
+          console.error('Error destroying Locomotive Scroll:', error);
         }
       }
+      locomotiveScrollRef.current = null;
     };
-  }, [imagesLoaded]);
+  }, []);
 
   // Debug logging
   useEffect(() => {
-    console.log('IntroScreen state:', {
-      loading,
-      imagesLoaded,
-      isLocoLoaded,
-      firstImageSrc: scenarioO
-    });
-  }, [loading, imagesLoaded, isLocoLoaded]);
+    console.log('IntroScreen mounted');
+    console.log('Loading state:', loading);
+    console.log('Images loaded:', introImages.length);
+    console.log('First image src:', introImages[0]);
+    
+    // Check if scroll container exists
+    if (scrollRef.current) {
+      console.log('Scroll container found');
+    } else {
+      console.log('Scroll container not found');
+    }
+    
+    return () => console.log('IntroScreen unmounted');
+  }, []);
+
+  // Update locomotive scroll when content changes
+  useEffect(() => {
+    if (locomotiveScrollRef.current) {
+      const timer = setTimeout(() => {
+        try {
+          locomotiveScrollRef.current?.update();
+          console.log('Locomotive Scroll updated');
+        } catch (error) {
+          console.error('Error updating Locomotive Scroll:', error);
+        }
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   const blocks = [
     {
@@ -372,8 +318,8 @@ Let’s begin.`,
           >
             <div className="w-full h-full flex items-center justify-center">
               <img 
-                src={scenarioO}
-                alt="Blue Pacific 2050 Experience"
+                src="/lovable-uploads/1b523c0c-3528-4d99-92a9-ebb700771cd7.png"
+                alt="Pacific Future Vision"
                 className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
                 style={{ width: 'auto', height: 'auto' }}
               />
