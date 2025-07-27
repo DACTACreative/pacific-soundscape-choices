@@ -27,19 +27,19 @@ export default function Scenario1() {
   }, []);
 
   return (
-    <div ref={scrollRef} data-scroll-container className="min-h-screen bg-black text-white overflow-hidden relative">
-      {/* Content */}
-      <div className="relative z-10 pt-32">
-        
-        {/* Fixed Header */}
-        <div className="fixed top-6 left-6 z-50">
-          <Link 
-            to="/"
-            className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500"
-          >
-            ← RETURN TO JOURNEY
-          </Link>
-        </div>
+    <div className="min-h-screen bg-black text-white relative">
+      {/* Fixed Header - Outside scroll container */}
+      <div className="fixed top-6 left-6 z-50">
+        <Link 
+          to="/"
+          className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500"
+        >
+          ← RETURN TO JOURNEY
+        </Link>
+      </div>
+      
+      {/* Locomotive Scroll Container */}
+      <div ref={scrollRef} data-scroll-container className="relative z-10">
 
         {/* Scenario Title */}
         <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>

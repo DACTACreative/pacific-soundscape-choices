@@ -88,23 +88,22 @@ export default function Scenario3() {
   ];
 
   return (
-    <div ref={scrollRef} data-scroll-container className="bg-black text-white min-h-screen relative">
-      {/* VANTA Background */}
-      <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full" />
+    <div className="bg-black text-white min-h-screen relative">
+      {/* VANTA Background - Outside scroll container */}
+      <div ref={vantaRef} className="fixed inset-0 -z-10 w-full h-full" />
       
-      {/* Content */}
-      <div className="relative z-10 pt-32">
-        
-        {/* Fixed Header */}
-        <div className="fixed top-6 left-6 z-50">
-          <Link 
-            to="/"
-            className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500"
-          >
-            ← RETURN TO JOURNEY
-          </Link>
-        </div>
-
+      {/* Fixed Header - Outside scroll container */}
+      <div className="fixed top-6 left-6 z-50">
+        <Link 
+          to="/"
+          className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500"
+        >
+          ← RETURN TO JOURNEY
+        </Link>
+      </div>
+      
+      {/* Locomotive Scroll Container */}
+      <div ref={scrollRef} data-scroll-container className="relative z-10">
         {/* Scenario Title */}
         <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">

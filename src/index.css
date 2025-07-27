@@ -299,7 +299,7 @@ canvas.vanta-canvas,
 
 /* Locomotive Scroll Container */
 [data-scroll-container] {
-  overflow: hidden;
+  /* Remove overflow: hidden as it can cause issues */
 }
 
 /* Optional: Smooth transitions for scroll blocks */
