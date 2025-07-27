@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Papa from 'papaparse';
 
 interface ThemeData {
   thematic_summary: string;
@@ -8,12 +7,14 @@ interface ThemeData {
   bp2050_indicators: string;
 }
 
-interface PlayerChoice {
+interface AnswerData {
+  code: string;
   theme: string;
   answer: string;
   narrative: string;
   impact: string;
   outcome: string;
+  Question: string;
 }
 
 const THEME_DATA: Record<string, ThemeData> = {
@@ -62,7 +63,7 @@ const THEME_DATA: Record<string, ThemeData> = {
 };
 
 export default function BluePacificStoriesSection() {
-  const [playerChoices, setPlayerChoices] = useState<PlayerChoice[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<AnswerData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -77,68 +78,48 @@ export default function BluePacificStoriesSection() {
       return;
     }
 
-    // Load mapping CSV data
-    fetch('/data/Mapping - Question BPC - Sheet1.csv')
-      .then(res => res.text())
-      .then(csvText => {
-        Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true,
-          transformHeader: (header) => header.trim(),
-          transform: (value, field) => {
-            if (typeof value === 'string') {
-              return value.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            }
-            return value;
-          },
-          complete: (results) => {
-            console.log('📖 CSV parsed for stories:', results.data.length, 'rows');
-            
-            // Find matching answers for selected codes
-            const matchedAnswers = selectedCodes.map((code: string) => {
-              const row = results.data.find((row: any) => row.code && row.code.trim() === code.trim()) as any;
-              if (row) {
-                console.log(`📖 Found match for ${code}:`, {
-                  theme: row.theme,
-                  answer: row.answer?.substring(0, 50) + '...',
-                  narrative: row.narrative?.substring(0, 50) + '...'
-                });
-                return {
-                  theme: (row.theme as string)?.trim() || '',
-                  answer: (row.answer as string)?.trim() || '',
-                  narrative: (row.narrative as string)?.trim() || '',
-                  impact: (row.impact as string)?.trim() || '',
-                  outcome: (row.outcome as string)?.trim() || ''
-                };
-              }
-              console.log(`📖 No match found for code: ${code}`);
-              return null;
-            }).filter((item): item is PlayerChoice => item !== null);
-            
-            console.log('📖 Final matched answers:', matchedAnswers.length);
-            setPlayerChoices(matchedAnswers as PlayerChoice[]);
-            setLoading(false);
+    // Load answers.json data
+    fetch('/data/answers.json')
+      .then(res => res.json())
+      .then(answersData => {
+        console.log('📖 Answers data loaded:', Object.keys(answersData).length, 'total answers');
+        
+        // Find matching answers for selected codes
+        const matchedAnswers = selectedCodes.map((code: string) => {
+          const answerData = answersData[code];
+          if (answerData) {
+            console.log(`📖 Found answer for ${code}:`, {
+              theme: answerData.theme,
+              answer: answerData.answer?.substring(0, 50) + '...',
+            });
+            return answerData;
           }
-        });
+          console.log(`📖 No answer found for code: ${code}`);
+          return null;
+        }).filter((item): item is AnswerData => item !== null);
+        
+        console.log('📖 Final matched answers:', matchedAnswers.length);
+        setSelectedAnswers(matchedAnswers);
+        setLoading(false);
       })
       .catch(err => {
-        console.error('📖 Failed to load story data:', err);
+        console.error('📖 Failed to load answers data:', err);
         setLoading(false);
       });
   }, []);
 
-  // Group choices by theme
-  const choicesByTheme = playerChoices.reduce((acc: Record<string, PlayerChoice[]>, choice) => {
-    if (choice.theme && THEME_DATA[choice.theme]) {
-      if (!acc[choice.theme]) {
-        acc[choice.theme] = [];
+  // Group answers by theme
+  const answersByTheme = selectedAnswers.reduce((acc: Record<string, AnswerData[]>, answer) => {
+    if (answer.theme && THEME_DATA[answer.theme]) {
+      if (!acc[answer.theme]) {
+        acc[answer.theme] = [];
       }
-      acc[choice.theme].push(choice);
+      acc[answer.theme].push(answer);
     }
     return acc;
   }, {});
   
-  console.log('📖 Choices grouped by theme:', choicesByTheme);
+  console.log('📖 Answers grouped by theme:', answersByTheme);
 
   if (loading) {
     return (
@@ -162,7 +143,7 @@ export default function BluePacificStoriesSection() {
 
       {/* Thematic Blocks */}
       {Object.entries(THEME_DATA).map(([themeName, themeData]) => {
-        const playerChoice = choicesByTheme[themeName];
+        const themeAnswers = answersByTheme[themeName];
         
         return (
           <div key={themeName} className="mb-16">
@@ -183,24 +164,27 @@ export default function BluePacificStoriesSection() {
             </p>
 
             {/* Dynamic: Player's choice outcome */}
-            {playerChoice && playerChoice.length > 0 ? (
+            {themeAnswers && themeAnswers.length > 0 ? (
               <div className="space-y-4 mb-6">
-                {playerChoice.map((choice, index) => (
-                  <div key={index} className="bg-black/40 border border-white/20 p-6 rounded-lg">
+                {themeAnswers.map((answer, index) => (
+                  <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
                     <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                      Your 2050 Outcome {playerChoice.length > 1 ? `#${index + 1}` : ''}
+                      Your 2050 Outcome - {answer.code} {themeAnswers.length > 1 ? `(${index + 1}/${themeAnswers.length})` : ''}
                     </h3>
                     <p className="text-white/90 text-base leading-relaxed mb-3">
-                      <strong>Your Choice:</strong> {choice.answer}
+                      <strong>Question:</strong> {answer.Question}
+                    </p>
+                    <p className="text-white/90 text-base leading-relaxed mb-3">
+                      <strong>Your Choice:</strong> {answer.answer}
                     </p>
                     <p className="text-white/70 text-base leading-relaxed mb-3">
-                      <strong>Narrative:</strong> {choice.narrative}
+                      <strong>Narrative:</strong> {answer.narrative}
                     </p>
                     <p className="text-orange-300 text-base leading-relaxed mb-3">
-                      <strong>Impact:</strong> {choice.impact}
+                      <strong>Impact:</strong> {answer.impact}
                     </p>
                     <p className="text-green-300 text-base leading-relaxed">
-                      <strong>Outcome:</strong> {choice.outcome}
+                      <strong>Outcome:</strong> {answer.outcome}
                     </p>
                   </div>
                 ))}
