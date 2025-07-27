@@ -1,21 +1,20 @@
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
-import { useEffect, useRef, useState } from 'react';
-
-// 🌐 LOVABLE COMPATIBILITY: Using absolute GitHub URLs instead of local imports
-// This is CRITICAL for Lovable - local imports won't work in embedded environments
-const scenarioO = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/Scenario-o.png';
-const introA = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-a.png';
-const introAA = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-aa.png';
-const introB = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-b.png';
-const introC = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-c.png';
-const introD = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-d.png';
-const introE = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-e.png';
-const introF = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-f.png';
-const introG = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-g.png';
-const introH = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-h.png';
-const introI = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-i.png';
-const introJ = 'https://raw.githubusercontent.com/DACTACreative/pacific-soundscape-choices/main/public/data/intro-j.png';
+import { useEffect, useRef } from 'react';
+import LocomotiveScroll from 'locomotive-scroll';
+import 'locomotive-scroll/dist/locomotive-scroll.css';
+import introA from '@/data/intro-a.png';
+import introAA from '@/data/intro-aa.png';
+import introB from '@/data/intro-b.png';
+import introC from '@/data/intro-c.png';
+import introD from '@/data/intro-d.png';
+import introE from '@/data/intro-e.png';
+import introF from '@/data/intro-f.png';
+import introG from '@/data/intro-g.png';
+import introH from '@/data/intro-h.png';
+import introI from '@/data/intro-i.png';
+import introJ from '@/data/intro-j.png';
+import scenarioO from '@/data/Scenario-o.png';
 
 interface IntroScreenProps {
   onStart: () => void;
@@ -23,12 +22,8 @@ interface IntroScreenProps {
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
   const { loading, playScenario } = useAudio();
-  
-  // 🚂 LOCOMOTIVE SCROLL SETUP FOR LOVABLE
-  const scrollRef = useRef<HTMLDivElement>(null); // Main scroll container
-  const locoScrollRef = useRef<any>(null); // Locomotive Scroll instance
-  const [isLocoLoaded, setIsLocoLoaded] = useState(false); // Track initialization
-  const [imagesLoaded, setImagesLoaded] = useState(false); // Track image preloading
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
 
   const handleStart = () => {
     try {
@@ -39,129 +34,80 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     }
   };
 
+  // Reordered to have introAA first, then introA, then the rest in order
+  // Using introJ instead of introB in the array
   const introImages = [introAA, introA, introJ, introC, introD, introE, introF, introG, introH, introI, introB];
 
-  // 🖼️ LOVABLE COMPATIBILITY: Preload images before Locomotive Scroll
-  // This prevents layout shifts and ensures smooth scrolling works properly
+  // Initialize Locomotive Scroll
   useEffect(() => {
-    const preloadImages = async () => {
-      console.log('🖼️ Preloading images for Lovable compatibility...');
-      
-      const allImages = [scenarioO, ...introImages];
-      const imagePromises = allImages.map((src, index) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => {
-            console.log(`✅ Image ${index + 1}/${allImages.length} loaded`);
-            resolve(src);
-          };
-          img.onerror = () => {
-            console.warn(`❌ Image ${index + 1}/${allImages.length} failed to load`);
-            resolve(src); // Resolve anyway to prevent hanging
-          };
-          img.src = src;
-        });
-      });
-
-      await Promise.all(imagePromises);
-      setImagesLoaded(true);
-      console.log('🖼️ All images preloaded - ready for Locomotive Scroll');
-    };
-
-    preloadImages();
-  }, []);
-
-  // 🚂 LOCOMOTIVE SCROLL FOR LOVABLE: Enhanced initialization
-  // This setup ensures Locomotive Scroll works properly in embedded environments
-  useEffect(() => {
-    if (!imagesLoaded) return; // Wait for images first
-
-    const initLocomotiveScroll = async () => {
-      try {
-        console.log('🚂 Initializing Locomotive Scroll for Lovable...');
-        
-        // 📱 LOVABLE COMPATIBILITY: Wait for DOM readiness
-        await new Promise(resolve => {
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', resolve);
-          } else {
-            resolve(void 0);
-          }
-        });
-
-        // Additional delay for embedded environments
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // 🚂 DYNAMIC IMPORT: Prevents SSR issues in Lovable
-        const LocomotiveScroll = (await import('locomotive-scroll')).default;
-        
-        if (scrollRef.current && !locoScrollRef.current) {
-          console.log('🚂 Creating Locomotive Scroll instance...');
-          
-          locoScrollRef.current = new LocomotiveScroll({
+    let scrollInstance: LocomotiveScroll | null = null;
+    
+    const initScroll = () => {
+      if (scrollRef.current && !scrollInstance) {
+        try {
+          scrollInstance = new LocomotiveScroll({
             el: scrollRef.current,
-            smooth: window.innerWidth > 768, // Disable on mobile for better performance
-            multiplier: 0.8, // Slower, more controlled scrolling
-            class: 'is-revealed', // CSS class for reveal animations
-            smartphone: {
-              smooth: false // Disable smooth scroll on mobile
-            },
-            tablet: {
-              smooth: false // Disable smooth scroll on tablet
-            },
-            reloadOnContextChange: true, // Important for Lovable
-            resetNativeScroll: true // Reset browser scroll behavior
+            smooth: true,
+            multiplier: 1,
+            class: 'is-revealed'
           });
-          
-          // 🎯 LOVABLE COMPATIBILITY: Delayed activation
-          setTimeout(() => {
-            if (locoScrollRef.current) {
-              locoScrollRef.current.update();
-              setIsLocoLoaded(true);
-              console.log('✅ Locomotive Scroll ready for Lovable');
-            }
-          }, 500);
-
-          // 📱 RESPONSIVE: Update on window resize
-          const handleResize = () => {
-            if (locoScrollRef.current) {
-              setTimeout(() => locoScrollRef.current.update(), 100);
-            }
-          };
-
-          window.addEventListener('resize', handleResize);
-          return () => window.removeEventListener('resize', handleResize);
+          locomotiveScrollRef.current = scrollInstance;
+          console.log('Locomotive Scroll initialized successfully');
+        } catch (error) {
+          console.error('Failed to initialize Locomotive Scroll:', error);
         }
-      } catch (error) {
-        console.error('❌ Locomotive Scroll failed:', error);
-        setIsLocoLoaded(true); // Continue without smooth scrolling
       }
     };
 
-    const timeoutId = setTimeout(initLocomotiveScroll, 100);
+    // Delay initialization to ensure DOM is ready
+    const timer = setTimeout(initScroll, 100);
 
     return () => {
-      clearTimeout(timeoutId);
-      if (locoScrollRef.current) {
+      clearTimeout(timer);
+      if (scrollInstance) {
         try {
-          locoScrollRef.current.destroy();
-          locoScrollRef.current = null;
+          scrollInstance.destroy();
+          console.log('Locomotive Scroll destroyed');
         } catch (error) {
-          console.warn('Warning destroying Locomotive Scroll:', error);
+          console.error('Error destroying Locomotive Scroll:', error);
         }
       }
+      locomotiveScrollRef.current = null;
     };
-  }, [imagesLoaded]);
+  }, []);
 
-  // 🐛 DEBUG: Enhanced logging for Lovable troubleshooting
+  // Debug logging
   useEffect(() => {
-    console.log('🌊 IntroScreen state:', {
-      loading,
-      imagesLoaded,
-      isLocoLoaded,
-      firstImageUrl: scenarioO
-    });
-  }, [loading, imagesLoaded, isLocoLoaded]);
+    console.log('IntroScreen mounted');
+    console.log('Loading state:', loading);
+    console.log('Images loaded:', introImages.length);
+    console.log('First image src:', introImages[0]);
+    
+    // Check if scroll container exists
+    if (scrollRef.current) {
+      console.log('Scroll container found');
+    } else {
+      console.log('Scroll container not found');
+    }
+    
+    return () => console.log('IntroScreen unmounted');
+  }, []);
+
+  // Update locomotive scroll when content changes
+  useEffect(() => {
+    if (locomotiveScrollRef.current) {
+      const timer = setTimeout(() => {
+        try {
+          locomotiveScrollRef.current?.update();
+          console.log('Locomotive Scroll updated');
+        } catch (error) {
+          console.error('Error updating Locomotive Scroll:', error);
+        }
+      }, 500);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   const blocks = [
     {
@@ -188,7 +134,7 @@ It is our memory, our movement, our story.
 
 This piece focuses on sound — the sound of our ocean — to carry you through this journey.
 
-When you begin, you'll be immersed in Fiji.
+When you begin, you’ll be immersed in Fiji.
 The date: October 10, 2024.
 
 The sound you hear is real.
@@ -197,7 +143,7 @@ It is the actual tide — sonified.
 Each high tide = rising water.
 Each low = its slow retreat six hours later.
 
-This soundscape grounds us. Because for the Pacific, the ocean is not background — it's home.`,
+This soundscape grounds us. Because for the Pacific, the ocean is not background — it’s home.`,
       reversed: true
     },
     {
@@ -214,7 +160,7 @@ And because it's invisible, we forget.
 
 But like the sound of waves — always returning — the threat remains.
 
-This is not alarmism. It's presence. And we must respond with clarity and imagination.`,
+This is not alarmism. It’s presence. And we must respond with clarity and imagination.`,
     reversed: false
     },
     {
@@ -228,7 +174,7 @@ Some choices reflect public policy. Others are visions of community-led futures 
 
 Why utopias?
 
-Because in the Pacific, hope is not a luxury. It's a lifeline.
+Because in the Pacific, hope is not a luxury. It’s a lifeline.
 And imagining better is how we resist being written out of the future.`,
     reversed: true
     },
@@ -237,8 +183,8 @@ And imagining better is how we resist being written out of the future.`,
       title: "Why This Is a Game",
       content: `This is a simplification — a gamified journey.
 
-It's also a living form of Monitoring, Evaluation, and Learning (MEL).
-Because data shouldn't just live in spreadsheets.
+It’s also a living form of Monitoring, Evaluation, and Learning (MEL).
+Because data shouldn’t just live in spreadsheets.
 
 Here, it becomes visual. Sensory. Emotional.
 
@@ -255,37 +201,37 @@ This experience invites you to reflect not just on numbers — but on what we va
 
 Each one maps directly to a pillar of the Blue Pacific Strategy:
 
-- Political Leadership
-- People-Centered Development
-- Peace & Security
-- Resource & Economic Development
-- Climate Change
-- Oceans & Environment
-- Technology & Connectivity
+• Political Leadership
+• People-Centered Development
+• Peace & Security
+• Resource & Economic Development
+• Climate Change
+• Oceans & Environment
+• Technology & Connectivity
 
 Your choices affect these domains in subtle, interconnected ways.
-You won't get a score — you'll get ripple effects. Shifting indicators. Lived futures.
+You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
 
 Because in the real world, outcomes are rarely binary.`,
     reversed: true
     },
     {
       id: 7,
-      title: "But You Don't Control the World",
+      title: "But You Don’t Control the World",
       content: `You will make seven key decisions.
 
 Each one maps directly to a pillar of the Blue Pacific Strategy:
 
-- Political Leadership
-- People-Centered Development
-- Peace & Security
-- Resource & Economic Development
-- Climate Change
-- Oceans & Environment
-- Technology & Connectivity
+• Political Leadership
+• People-Centered Development
+• Peace & Security
+• Resource & Economic Development
+• Climate Change
+• Oceans & Environment
+• Technology & Connectivity
 
 Your choices affect these domains in subtle, interconnected ways.
-You won't get a score — you'll get ripple effects. Shifting indicators. Lived futures.
+You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
 
 Because in the real world, outcomes are rarely binary.`,
    reversed: false
@@ -297,16 +243,16 @@ Because in the real world, outcomes are rarely binary.`,
 
 Each one maps directly to a pillar of the Blue Pacific Strategy:
 
-- Political Leadership
-- People-Centered Development
-- Peace & Security
-- Resource & Economic Development
-- Climate Change
-- Oceans & Environment
-- Technology & Connectivity
+• Political Leadership
+• People-Centered Development
+• Peace & Security
+• Resource & Economic Development
+• Climate Change
+• Oceans & Environment
+• Technology & Connectivity
 
 Your choices affect these domains in subtle, interconnected ways.
-You won't get a score — you'll get ripple effects. Shifting indicators. Lived futures.
+You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
 
 Because in the real world, outcomes are rarely binary.`,
      reversed: true
@@ -325,28 +271,16 @@ Hope is strategy.
 Unity is strength.
 And dreaming is action.
 
-Let's co-create a future shaped by us — not for us.
+Let’s co-create a future shaped by us — not for us.
 
-Let's begin.`,
+Let’s begin.`,
    reversed: false,
       isLast: true
     }
   ];
 
   return (
-    <div 
-      ref={scrollRef} 
-      data-scroll-container 
-      className="bg-black text-white overflow-x-hidden"
-      style={{ width: '100vw', height: '100vh' }} // 📱 LOVABLE: Full viewport
-    >
-      {/* 🔄 LOVABLE COMPATIBILITY: Loading indicator */}
-      {!imagesLoaded && (
-        <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-          <div className="text-white text-xl animate-pulse">Loading Pacific Soundscape...</div>
-        </div>
-      )}
-
+    <div ref={scrollRef} data-scroll-container className="bg-black text-white">
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 bg-black border-b border-white/10">
         <div className="px-8 py-6">
@@ -355,99 +289,69 @@ Let's begin.`,
         </div>
       </div>
 
-      {/* 🎯 FIRST BLOCK - FIXED FOR LOVABLE */}
+      {/* First Block - Full Page Layout */}
       <section 
+        key={blocks[0].id} 
         data-scroll-section
-        className="relative min-h-screen flex flex-col lg:flex-row"
+        className="relative h-screen flex flex-col lg:flex-row"
         id="section-0"
       >
-        {/* 🖥️ DESKTOP LAYOUT */}
-        <div className="hidden lg:flex lg:w-full lg:min-h-screen">
-          {/* Text Content - Left 60% */}
-          <div className="w-[60%] min-h-screen flex items-center p-8 lg:p-16 bg-black">
-            <div className="max-w-2xl">
-              <h2 
-                className="text-4xl md:text-6xl font-bold text-white mb-8"
-                {...(isLocoLoaded && {
-                  'data-scroll': '',
-                  'data-scroll-speed': '0.5'
-                })}
-              >
-                {blocks[0].title}
-              </h2>
-              <div 
-                className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
-                {...(isLocoLoaded && {
-                  'data-scroll': '',
-                  'data-scroll-speed': '0.3'
-                })}
-              >
-                {blocks[0].content}
-              </div>
-            </div>
-          </div>
-
-          {/* 🖼️ FIXED IMAGE DISPLAY - Right 40% */}
-          <div className="w-[40%] relative">
-            <div 
-              className="sticky top-0 w-full h-screen flex items-center justify-center p-8 bg-black"
-              {...(isLocoLoaded && {
-                'data-scroll': '',
-                'data-scroll-sticky': '',
-                'data-scroll-target': '#section-0'
-              })}
-            >
-              <div className="w-full h-full flex items-center justify-center">
-                <img 
-                  src={scenarioO}
-                  alt="Pacific Future Vision"
-                  className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                  loading="eager"
-                  onLoad={() => {
-                    console.log('✅ First image displayed successfully');
-                    if (locoScrollRef.current) {
-                      setTimeout(() => locoScrollRef.current.update(), 100);
-                    }
-                  }}
-                  onError={(e) => {
-                    console.error('❌ First image failed to load:', e);
-                  }}
-                  style={{ 
-                    minHeight: '300px',
-                    backgroundColor: '#1a1a1a', // Fallback background
-                    display: 'block' // Force display
-                  }}
-                />
-              </div>
+        {/* Sticky Image Container for first section - Hidden on mobile */}
+        <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+          <div 
+            className="fixed-image"
+            data-scroll
+            data-scroll-sticky
+            data-scroll-target="#section-0"
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '40vw',
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '2rem',
+              overflow: 'hidden'
+            }}
+          >
+            <div className="w-full h-full flex items-center justify-center">
+              <img 
+                src={scenarioO}
+                alt="Blue Pacific 2050 Experience"
+                className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+                style={{ width: 'auto', height: 'auto' }}
+              />
             </div>
           </div>
         </div>
 
-        {/* 📱 MOBILE LAYOUT */}
-        <div className="lg:hidden">
-          <div className="w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+        {/* Mobile Image - Visible only on mobile */}
+        <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+          <div className="w-full h-full flex items-center justify-center">
             <img 
               src={scenarioO}
-              alt="Pacific Future Vision"
+              alt="Blue Pacific 2050 Experience"
               className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-              loading="eager"
-              style={{ minHeight: '200px', backgroundColor: '#1a1a1a' }}
             />
           </div>
-          <div className="w-full p-8 bg-black">
-            <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
-                {blocks[0].title}
-              </h2>
-              <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
-                {blocks[0].content}
-              </div>
+        </div>
+
+        {/* Text Content - Left Side */}
+        <div className="w-full lg:w-[60%] h-full flex items-center p-8 lg:p-16 bg-black">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
+              {blocks[0].title}
+            </h2>
+            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
+              {blocks[0].content}
             </div>
           </div>
         </div>
       </section>
 
-      {/* 📜 REST OF THE BLOCKS */}
+      {/* Rest of the blocks with sticky behavior */}
       {blocks.slice(1).map((block, index) => (
         <section 
           key={block.id} 
@@ -455,122 +359,85 @@ Let's begin.`,
           className="relative"
           id={`section-${index + 1}`}
         >
-          {/* 🖥️ DESKTOP LAYOUT */}
-          <div className="hidden lg:flex lg:min-h-screen">
-            <div className="w-[60%] min-h-screen flex items-center p-8 lg:p-16 bg-black">
-              <div className="max-w-2xl">
-                <h2 
-                  className="text-4xl md:text-6xl font-bold text-white mb-8"
-                  {...(isLocoLoaded && {
-                    'data-scroll': '',
-                    'data-scroll-speed': '0.5'
-                  })}
-                >
-                  {block.title}
-                </h2>
-                <div 
-                  className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
-                  {...(isLocoLoaded && {
-                    'data-scroll': '',
-                    'data-scroll-speed': '0.3'
-                  })}
-                >
-                  {block.content}
-                </div>
-                
-                {block.isLast && (
-                  <div 
-                    className="mt-12"
-                    {...(isLocoLoaded && {
-                      'data-scroll': '',
-                      'data-scroll-speed': '0.2'
-                    })}
-                  >
-                    <Button
-                      onClick={handleStart}
-                      disabled={loading}
-                      size="lg"
-                      className="group relative px-8 py-6 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
-                    >
-                      <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                      <span className="relative z-10">
-                        {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
-                      </span>
-                    </Button>
-                    
-                    <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
-                      Audio experience recommended for full immersion
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="w-[40%] relative">
+          {/* Fixed Image Container for this section - Hidden on mobile */}
+          <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
               <div 
-                className="sticky top-0 w-full h-screen flex items-center justify-center p-8 bg-black"
-                {...(isLocoLoaded && {
-                  'data-scroll': '',
-                  'data-scroll-sticky': '',
-                  'data-scroll-target': `#section-${index + 1}`
-                })}
+                className="fixed-image"
+                data-scroll
+                data-scroll-sticky
+                data-scroll-target={`#section-${index + 1}`}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  width: '40vw',
+                  height: '100vh',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '2rem',
+                  overflow: 'hidden'
+                }}
               >
-                <img 
-                  src={introImages[index + 1] || introImages[0]}
-                  alt={`Pacific Vision - ${block.title}`}
-                  className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                  loading="lazy"
-                  onLoad={() => {
-                    if (locoScrollRef.current) {
-                      setTimeout(() => locoScrollRef.current.update(), 100);
-                    }
-                  }}
-                  style={{ minHeight: '200px', backgroundColor: '#1a1a1a' }}
-                />
-              </div>
+                <div className="w-full h-full flex items-center justify-center">
+                  <img 
+                    src={introImages[index + 1] || introImages[0]}
+                    alt="Blue Pacific 2050 Experience"
+                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+                    style={{ width: 'auto', height: 'auto' }}
+                  />
+                </div>
             </div>
           </div>
 
-          {/* 📱 MOBILE LAYOUT */}
-          <div className="lg:hidden">
-            <div className="w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+          {/* Mobile Image - Visible only on mobile */}
+          <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+            <div className="w-full h-full flex items-center justify-center">
               <img 
                 src={introImages[index + 1] || introImages[0]}
-                alt={`Pacific Vision - ${block.title}`}
+                alt="Blue Pacific 2050 Experience"
                 className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                loading="lazy"
-                style={{ minHeight: '200px', backgroundColor: '#1a1a1a' }}
               />
             </div>
-            <div className="w-full p-8 bg-black">
-              <div className="max-w-2xl">
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
-                  {block.title}
-                </h2>
-                <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
-                  {block.content}
-                </div>
-                
-                {block.isLast && (
-                  <div className="mt-12">
-                    <Button
-                      onClick={handleStart}
-                      disabled={loading}
-                      size="lg"
-                      className="group relative px-8 py-6 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
-                    >
-                      <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                      <span className="relative z-10">
-                        {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
-                      </span>
-                    </Button>
-                    
-                    <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
-                      Audio experience recommended for full immersion
-                    </p>
-                  </div>
-                )}
+          </div>
+
+          {/* Scrolling Text Content */}
+          <div className="scroll-text lg:mr-[40vw] mr-0 p-8 lg:p-16 min-h-screen flex items-center bg-black">
+            <div className="max-w-2xl">
+              <h2 
+                className="text-4xl md:text-6xl font-bold text-white mb-8"
+                data-scroll
+                data-scroll-speed="0.5"
+              >
+                {block.title}
+              </h2>
+              <div 
+                className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
+                data-scroll
+                data-scroll-speed="0.3"
+              >
+                {block.content}
               </div>
+              
+              {block.isLast && (
+                <div className="mt-12" data-scroll data-scroll-speed="0.2">
+                  <Button
+                    onClick={handleStart}
+                    disabled={loading}
+                    size="lg"
+                    className="group relative px-8 py-6 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                  >
+                    <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                    <span className="relative z-10">
+                      {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
+                    </span>
+                  </Button>
+                  
+                  <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
+                    Audio experience recommended for full immersion
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </section>
