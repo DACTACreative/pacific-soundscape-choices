@@ -20,6 +20,7 @@ interface CounterConfig {
 }
 
 interface PlayerChoice {
+  code: string;
   theme: string;
   answer: string;
   narrative: string;
@@ -86,48 +87,98 @@ export default function BluePacificStoriesSection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Debug sessionStorage
+    const rawData = sessionStorage.getItem('selectedAnswerCodes');
+    console.log("📊 SessionStorage Raw:", rawData);
+    
     // Load selected answer codes from sessionStorage
-    const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
-    console.log('🔍 Selected codes:', selectedCodes);
+    const selectedCodes = JSON.parse(rawData || '[]');
+    console.log('🔍 Selected codes parsed:', selectedCodes);
     
     if (selectedCodes.length === 0) {
+      console.warn('⚠️ No selected codes found!');
       setLoading(false);
       return;
     }
 
     // Load answers.json data to get charts and counters
     fetch('/data/answers.json')
-      .then(response => response.json())
+      .then(response => {
+        console.log('📊 Fetch response status:', response.status);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+      })
       .then(answersData => {
-        console.log('✅ Answers data loaded');
+        console.log('✅ Answers data loaded successfully');
+        console.log('📊 Total keys in answers.json:', Object.keys(answersData).length);
+        console.log('📊 Available keys:', Object.keys(answersData));
         
-        // Map ALL selected answers including charts/counters
+        // Debug: Check for chart-enabled answers
+        console.log("📊 All Chart-enabled answers:");
+        Object.entries(answersData).forEach(([key, val]: any) => {
+          if (val.chart) console.log("👉", key, val.chart.title || "Unnamed chart");
+        });
+        
+        // Debug: Check for counter-enabled answers
+        console.log("📊 All Counter-enabled answers:");
+        Object.entries(answersData).forEach(([key, val]: any) => {
+          if (val.counter) console.log("👉", key, val.counter.title || "Unnamed counter");
+        });
+        
+        // Map ALL selected answers with defensive fallbacks
         const outcomes = selectedCodes.map((code: string) => {
           const answer = answersData[code];
           if (!answer) {
-            console.warn('❌ No answer found for code:', code);
+            console.warn(`❌ Code not found in answers.json: ${code}`);
             return null;
           }
-          return {
+          
+          console.log(`✅ Processing ${code}:`, {
             theme: answer.theme,
-            answer: answer.answer,
-            narrative: answer.narrative,
-            impact: answer.impact,
-            outcome: answer.outcome,
-            chart: answer.chart,
-            counter: answer.counter
+            hasChart: !!answer.chart,
+            hasCounter: !!answer.counter,
+            chartTitle: answer.chart?.title,
+            counterTitle: answer.counter?.title
+          });
+          
+          return {
+            code: code,
+            theme: answer.theme || 'Unknown Theme',
+            answer: answer.answer || 'No answer text',
+            narrative: answer.narrative || 'No narrative',
+            impact: answer.impact || 'No impact description',
+            outcome: answer.outcome || 'No outcome description',
+            // Defensive chart validation
+            chart: answer.chart?.type && answer.chart?.data ? answer.chart : null,
+            // Defensive counter validation  
+            counter: answer.counter?.value !== undefined ? answer.counter : null
           };
         }).filter(Boolean);
         
-        console.log('🎯 Total outcomes:', outcomes.length);
+        console.log('🎯 Total valid outcomes processed:', outcomes.length);
+        console.log('🎯 Outcomes with charts:', outcomes.filter(o => o.chart).length);
+        console.log('🎯 Outcomes with counters:', outcomes.filter(o => o.counter).length);
+        
+        if (outcomes.length === 0) {
+          console.error('🚨 No valid outcomes found! Check code matching.');
+        }
+        
         setPlayerChoices(outcomes);
         setLoading(false);
       })
       .catch(error => {
-        console.error('Failed to load answers data:', error);
+        console.error('🚨 Failed to load answers data:', error);
+        console.error('🚨 Error details:', error.message);
+        // Try to manually check if file exists
+        console.log('🔍 Try visiting: ' + window.location.origin + '/data/answers.json');
         setLoading(false);
       });
   }, []);
+
+  console.log('🔍 Final state - playerChoices:', playerChoices.length);
+  console.log('🔍 Final state - loading:', loading);
 
   if (loading) {
     return (
@@ -140,7 +191,13 @@ export default function BluePacificStoriesSection() {
   if (playerChoices.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white text-lg">No choices found. Please complete the game first.</div>
+        <div className="text-center">
+          <div className="text-white text-lg mb-4">No choices found</div>
+          <div className="text-white/60 text-sm">
+            SessionStorage keys: {Object.keys(sessionStorage).join(', ')}<br/>
+            Check console for detailed debugging info
+          </div>
+        </div>
       </div>
     );
   }
@@ -160,10 +217,10 @@ export default function BluePacificStoriesSection() {
       {/* Display ALL player choices directly */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {playerChoices.map((choice, index) => (
-          <div key={index} className="bg-black/40 border border-white/20 p-6 rounded-lg">
+          <div key={choice.code || index} className="bg-black/40 border border-white/20 p-6 rounded-lg">
             <div className="mb-4">
               <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                {choice.theme}
+                {choice.theme} (Code: {choice.code})
               </h3>
               <h4 className="text-white text-lg font-semibold mb-3">
                 Choice #{index + 1}
@@ -191,18 +248,32 @@ export default function BluePacificStoriesSection() {
                 <p className="text-white/80 mt-1">{choice.outcome}</p>
               </div>
 
-              {/* Charts and Counters */}
-              {choice.chart && (
+              {/* Charts and Counters with better debugging */}
+              {choice.chart ? (
                 <div className="mt-6 p-4 bg-black/60 rounded border border-white/10">
                   <h5 className="text-white font-semibold mb-3">📊 Data Visualization</h5>
+                  <div className="text-xs text-white/50 mb-2">
+                    Chart Type: {choice.chart.type}, Data Points: {choice.chart.data?.length || 0}
+                  </div>
                   <DynamicChart {...choice.chart} />
+                </div>
+              ) : (
+                <div className="mt-6 p-4 bg-red-900/20 rounded border border-red-500/20">
+                  <p className="text-red-300 text-sm">No chart data available for this choice</p>
                 </div>
               )}
 
-              {choice.counter && (
+              {choice.counter ? (
                 <div className="mt-6 p-4 bg-black/60 rounded border border-white/10 text-center">
                   <h5 className="text-white font-semibold mb-3">🔢 Impact Metric</h5>
+                  <div className="text-xs text-white/50 mb-2">
+                    Counter Value: {choice.counter.value}, Unit: {choice.counter.unit || 'N/A'}
+                  </div>
                   <CountUp {...choice.counter} />
+                </div>
+              ) : (
+                <div className="mt-6 p-4 bg-yellow-900/20 rounded border border-yellow-500/20">
+                  <p className="text-yellow-300 text-sm">No counter data available for this choice</p>
                 </div>
               )}
             </div>
