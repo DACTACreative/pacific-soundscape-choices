@@ -115,9 +115,7 @@ export default function LandingPage() {
           fontSize: 'clamp(48px, 6vw, 80px)',
           lineHeight: '1.1',
           letterSpacing: '0.03em'
-        }}>
-            BLUE PACIFIC 2050
-          </h1>
+        }}>BLUE LENSE</h1>
           
           {/* Subtitle */}
           <h2 style={{
@@ -134,9 +132,8 @@ export default function LandingPage() {
           fontSize: 'clamp(24px, 3vw, 36px)',
           fontWeight: '600',
           lineHeight: '1.3'
-        }} className="mb-6 text-4xl text-[#2bc5ef]">
-            As the climate changes, can we shape a future that reflects our cultures, our knowledge, and our strength?
-          </p>
+        }} className="mb-6 text-4xl text-slate-50">As the climate changes,
+will we shape a future that reflects us?</p>
           
           {/* Note */}
           <p className="text-white/80 mb-12" style={{
