@@ -426,13 +426,10 @@ Let’s begin.`,
                   <Button
                     onClick={handleStart}
                     disabled={loading}
-                    size="lg"
-                    className="group relative px-8 py-6 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                    variant="pacific"
+                    size="pacific"
                   >
-                    <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                    <span className="relative z-10">
-                      {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
-                    </span>
+                    {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
                   </Button>
                   
                   <p className="mt-6 text-lg md:text-xl text-white/80 font-light">

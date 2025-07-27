@@ -6,6 +6,7 @@ import Papa from 'papaparse';
 import DebugPanel from './DebugPanel';
 import ErrorBoundary from './ErrorBoundary';
 import LoadingSpinner from './LoadingSpinner';
+import { Button } from './ui/button';
 
 declare global {
   interface Window {
@@ -461,17 +462,16 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
               {currentQuestion.options.map((optionCode, index) => {
                 const answerObj = answers[optionCode];
                 return (
-                  <button
-                    key={index}
-                    className="group relative w-full py-6 px-8 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#003f7f] text-[#003f7f] hover:text-white overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                    onClick={() => handleOptionSelect(index)}
-                    disabled={isTransitioning}
-                  >
-                    <span className="absolute inset-0 bg-[#003f7f] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                    <span className="relative z-10">
+                    <Button
+                      key={index}
+                      variant="pacific"
+                      size="pacific"
+                      onClick={() => handleOptionSelect(index)}
+                      disabled={isTransitioning}
+                      className="w-full"
+                    >
                       {answerObj?.answer || `Loading... (${optionCode})`}
-                    </span>
-                  </button>
+                    </Button>
                 );
               })}
             </div>
