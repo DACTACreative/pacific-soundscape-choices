@@ -230,145 +230,53 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   }, []);
 
   useEffect(() => {
-    let retryCount = 0;
-    const maxRetries = 3;
-    
-    const loadCSVWithRetry = async () => {
+    // Load answers from JSON file instead of CSV for better reliability
+    const loadAnswersData = async () => {
       try {
-        const response = await fetch(import.meta.env.BASE_URL + 'data/Mapping - Question BPC - Sheet1.csv', {
-          cache: 'no-cache',
-          headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
-          }
-        });
-        
+        const response = await fetch('/src/data/answers.json');
         if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          throw new Error(`Failed to load answers: ${response.status}`);
         }
+        const answersData = await response.json();
+        setAnswers(answersData);
+        setLoading(false);
         
-        const csvText = await response.text();
-        console.log('🔍 CSV loaded successfully, length:', csvText.length);
-        
-        // Validate CSV content
-        if (!csvText || csvText.length < 100) {
-          throw new Error('CSV file appears to be empty or corrupted');
-        }
-        
-        Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true,
-          transformHeader: (header) => header.trim(),
-          transform: (value, field) => {
-            if (typeof value === 'string') {
-              return value.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            }
-            return value;
-          },
-          complete: (results) => {
-            if (results.errors.length > 0) {
-              console.warn('🚨 CSV parsing warnings:', results.errors);
-            }
-            
-            if (!results.data || results.data.length === 0) {
-              throw new Error('No valid data found in CSV');
-            }
-            
-            const answersMap: Record<string, GameAnswer> = {};
-            let validAnswers = 0;
-            
-            results.data.forEach((row: any) => {
-              if (row.code && row.code.trim() && row.answer && row.answer.trim()) {
-                const cleanCode = row.code.trim();
-                answersMap[cleanCode] = {
-                  code: cleanCode,
-                  themecode: row.themecode?.trim() || '',
-                  answer: row.answer?.trim() || cleanCode,
-                  theme: row.theme?.trim() || '',
-                  QuestionCode: row.QuestionCode?.trim() || '',
-                  Question: row.Question?.trim() || '',
-                  outcome: row.outcome?.trim() || '',
-                  impact: row.impact?.trim() || '',
-                  narrative: row.narrative?.trim() || ''
-                };
-                validAnswers++;
-              }
-            });
-            
-            console.log('🔍 Answers processed:', {
-              totalRows: results.data.length,
-              validAnswers,
-              answersCreated: Object.keys(answersMap).length
-            });
-            
-            if (validAnswers === 0) {
-              throw new Error('No valid answers found in CSV data');
-            }
-            
-            setAnswers(answersMap);
-            setLoading(false);
-            
-            // Start audio only after successful data load
-            if (!audioStarted) {
-              try {
-                playScenario(Scenario.Scenario0);
-                setAudioStarted(true);
-              } catch (audioError) {
-                console.warn('🔊 Audio start failed:', audioError);
-              }
-            }
-          },
-          error: (parseError) => {
-            throw new Error(`CSV parsing failed: ${parseError.message}`);
+        // Start audio after successful data load
+        if (!audioStarted) {
+          try {
+            playScenario(Scenario.Scenario0);
+            setAudioStarted(true);
+          } catch (audioError) {
+            console.warn('🔊 Audio start failed:', audioError);
           }
+        }
+      } catch (error) {
+        console.error('🚨 Failed to load answers JSON:', error);
+        // Create minimal fallback answers
+        const fallbackAnswers: Record<string, GameAnswer> = {};
+        
+        questions.forEach((question) => {
+          question.options.forEach((optionCode, index) => {
+            fallbackAnswers[optionCode] = {
+              code: optionCode,
+              themecode: '',
+              answer: `Option ${index + 1}`,
+              theme: 'General Pacific Development',
+              QuestionCode: question.QuestionCode,
+              Question: question.Question,
+              outcome: 'Mixed outcomes for Pacific communities',
+              impact: 'Moderate impact on regional development',
+              narrative: 'This choice contributes to Pacific Island resilience and sustainability.'
+            };
+          });
         });
         
-      } catch (error) {
-        console.error(`🚨 CSV load attempt ${retryCount + 1} failed:`, error);
-        
-        if (retryCount < maxRetries) {
-          retryCount++;
-          console.log(`🔄 Retrying CSV load in ${retryCount * 1000}ms...`);
-          setTimeout(loadCSVWithRetry, retryCount * 1000);
-        } else {
-          console.error('🚨 All CSV load attempts failed, using fallback');
-          // Create minimal fallback answers
-          const fallbackAnswers: Record<string, GameAnswer> = {};
-          
-          // Generate fallback answers for each question's options
-          questions.forEach((question) => {
-            question.options.forEach((optionCode, index) => {
-              fallbackAnswers[optionCode] = {
-                code: optionCode,
-                themecode: '',
-                answer: `Option ${index + 1}`,
-                theme: 'General Pacific Development',
-                QuestionCode: question.QuestionCode,
-                Question: question.Question,
-                outcome: 'Mixed outcomes for Pacific communities',
-                impact: 'Moderate impact on regional development',
-                narrative: 'This choice contributes to Pacific Island resilience and sustainability.'
-              };
-            });
-          });
-          
-          setAnswers(fallbackAnswers);
-          setLoading(false);
-          
-          // Try to start audio even with fallback
-          if (!audioStarted) {
-            try {
-              playScenario(Scenario.Scenario0);
-              setAudioStarted(true);
-            } catch (audioError) {
-              console.warn('🔊 Audio start failed with fallback:', audioError);
-            }
-          }
-        }
+        setAnswers(fallbackAnswers);
+        setLoading(false);
       }
     };
     
-    loadCSVWithRetry();
+    loadAnswersData();
   }, []);
 
   const handleOptionSelect = (optionIndex: number) => {

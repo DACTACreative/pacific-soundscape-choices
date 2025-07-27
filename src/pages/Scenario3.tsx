@@ -112,24 +112,24 @@ export default function Scenario3() {
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto text-center space-y-8">
               <div className="flex flex-col md:flex-row gap-6 justify-center">
-                <Link 
-                  to="/scenario-1"
-                  className="group relative inline-block px-8 md:px-12 py-6 md:py-8 text-xl md:text-2xl lg:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                <button 
+                  className="group relative bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 px-6 py-4 text-lg md:text-xl lg:text-2xl font-bold"
+                  onClick={() => window.location.href = '/scenario-1'}
                 >
                   <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                   <span className="relative z-10">
                     ← SCENARIO 1
                   </span>
-                </Link>
-                <Link 
-                  to="/scenario-2"
-                  className="group relative inline-block px-8 md:px-12 py-6 md:py-8 text-xl md:text-2xl lg:text-3xl font-bold bg-transparent border-4 border-orange-400 text-orange-400 hover:text-black overflow-hidden transition-all duration-500"
+                </button>
+                <button 
+                  className="group relative bg-transparent border-4 border-orange-400 text-orange-400 hover:text-black overflow-hidden transition-all duration-500 px-6 py-4 text-lg md:text-xl lg:text-2xl font-bold"
+                  onClick={() => window.location.href = '/scenario-2'}
                 >
                   <span className="absolute inset-0 bg-orange-400 transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                   <span className="relative z-10">
                     ← SCENARIO 2
                   </span>
-                </Link>
+                </button>
               </div>
             </div>
           </div>

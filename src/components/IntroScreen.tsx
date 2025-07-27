@@ -291,7 +291,7 @@ Let’s begin.`,
         </div>
       </div>
 
-      {/* First Block - Full Page Layout */}
+          {/* First Block - Full Page Layout */}
       <section 
         key={blocks[0].id} 
         data-scroll-section
@@ -320,7 +320,7 @@ Let’s begin.`,
           >
             <div className="w-full h-full flex items-center justify-center">
               <img 
-                src={scenarioO}
+                src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
                 alt="Blue Pacific 2050 Experience"
                 className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
                 style={{ width: 'auto', height: 'auto' }}
@@ -333,7 +333,7 @@ Let’s begin.`,
         <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
           <div className="w-full h-full flex items-center justify-center">
             <img 
-              src={scenarioO}
+              src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
               alt="Blue Pacific 2050 Experience"
               className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
             />
