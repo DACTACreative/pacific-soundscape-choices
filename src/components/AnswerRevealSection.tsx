@@ -42,10 +42,6 @@ export default function AnswerRevealSection({ answer, index }: AnswerRevealSecti
       >
         <div className="absolute inset-0 bg-black/60" />
         <div className="max-w-4xl text-center relative z-10">
-          <h3 className="text-4xl md:text-6xl text-white font-bold mb-12 leading-relaxed">
-            {answer.Question}
-          </h3>
-          
           <div className="p-8">
             <h4 className="text-4xl md:text-6xl text-white font-bold mb-8">Your Choice</h4>
             <p className="text-white text-2xl md:text-4xl leading-relaxed font-bold">
