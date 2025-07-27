@@ -88,6 +88,8 @@ export default function BluePacificStoriesSection() {
       })
       .then(answersData => {
         console.log('📖 New answers data loaded:', Object.keys(answersData).length, 'total answers');
+        console.log('📖 Selected codes from sessionStorage:', selectedCodes);
+        console.log('📖 Available answer codes in JSON:', Object.keys(answersData).slice(0, 10));
         
         // Find matching answers for selected codes
         const matchedAnswers = selectedCodes.map((code: string) => {
@@ -104,6 +106,7 @@ export default function BluePacificStoriesSection() {
         }).filter((item): item is AnswerData => item !== null);
         
         console.log('📖 Final matched answers:', matchedAnswers.length);
+        console.log('📖 Matched answers details:', matchedAnswers);
         setSelectedAnswers(matchedAnswers);
         setLoading(false);
       })

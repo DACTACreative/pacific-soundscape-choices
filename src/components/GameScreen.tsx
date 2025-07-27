@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAudio, Scenario } from '@/context/AudioContext';
 import questionsData from '@/data/questions.json';
 import Papa from 'papaparse';
@@ -44,6 +45,7 @@ interface GameScreenProps {
 }
 
 export default function GameScreen({ onComplete }: GameScreenProps) {
+  const navigate = useNavigate();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswerCodes, setSelectedAnswerCodes] = useState<string[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -388,7 +390,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         // Redirect to random scenario (1, 2, or 3)
         const scenarioNum = Math.floor(Math.random() * 3) + 1;
         console.log('Redirecting to scenario:', scenarioNum);
-        window.location.href = `/scenario-${scenarioNum}`;
+        navigate(`/scenario-${scenarioNum}`);
       }
     }, 800);
   };
