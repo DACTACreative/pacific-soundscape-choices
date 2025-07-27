@@ -1,8 +1,6 @@
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
-import { useEffect, useRef } from 'react';
-import LocomotiveScroll from 'locomotive-scroll';
-import 'locomotive-scroll/dist/locomotive-scroll.css';
+import { useEffect, useRef, useState } from 'react';
 import introA from '@/data/intro-a.png';
 import introAA from '@/data/intro-aa.png';
 import introB from '@/data/intro-b.png';
@@ -23,7 +21,7 @@ interface IntroScreenProps {
 export default function IntroScreen({ onStart }: IntroScreenProps) {
   const { loading, playScenario } = useAudio();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
+  const [isLocoLoaded, setIsLocoLoaded] = useState(false);
 
   const handleStart = () => {
     try {
@@ -38,20 +36,40 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   // Using introJ instead of introB in the array
   const introImages = [introAA, introA, introJ, introC, introD, introE, introF, introG, introH, introI, introB];
 
-  // Initialize Locomotive Scroll
+  // Initialize Locomotive Scroll with proper loading
   useEffect(() => {
-    if (scrollRef.current) {
-      locomotiveScrollRef.current = new LocomotiveScroll({
-        el: scrollRef.current,
-        smooth: true,
-        multiplier: 1,
-        class: 'is-revealed'
-      });
-    }
+    let locoScroll: any = null;
+    
+    const initLocomotiveScroll = async () => {
+      try {
+        // Dynamically import locomotive-scroll to avoid SSR issues
+        const LocomotiveScroll = (await import('locomotive-scroll')).default;
+        
+        if (scrollRef.current) {
+          locoScroll = new LocomotiveScroll({
+            el: scrollRef.current,
+            smooth: window.innerWidth > 768, // Disable smooth scrolling on mobile
+            multiplier: 0.8,
+            class: 'is-revealed'
+          });
+          
+          // Wait for locomotive to initialize
+          setTimeout(() => {
+            locoScroll?.update();
+            setIsLocoLoaded(true);
+          }, 100);
+        }
+      } catch (error) {
+        console.error('Error initializing Locomotive Scroll:', error);
+        setIsLocoLoaded(true); // Set to true even if locomotive fails
+      }
+    };
+
+    initLocomotiveScroll();
 
     return () => {
-      if (locomotiveScrollRef.current) {
-        locomotiveScrollRef.current.destroy();
+      if (locoScroll) {
+        locoScroll.destroy();
       }
     };
   }, []);
@@ -263,7 +281,7 @@ Let’s begin.`,
   ];
 
   return (
-    <div ref={scrollRef} data-scroll-container className="bg-black text-white">
+    <div ref={scrollRef} data-scroll-container className="bg-black text-white overflow-x-hidden">
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 bg-black border-b border-white/10">
         <div className="px-8 py-6">
@@ -280,24 +298,14 @@ Let’s begin.`,
         id="section-0"
       >
         {/* Sticky Image Container for first section - Hidden on mobile */}
-        <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+        <div className="sticky-section hidden lg:block lg:w-[40%]">
           <div 
-            className="fixed-image"
-            data-scroll
-            data-scroll-sticky
-            data-scroll-target="#section-0"
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '40vw',
-              height: '100vh',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '2rem',
-              overflow: 'hidden'
-            }}
+            className="fixed-image lg:fixed lg:top-0 lg:right-0 lg:w-[40vw] lg:h-screen flex items-center justify-center p-8"
+            {...(isLocoLoaded && {
+              'data-scroll': true,
+              'data-scroll-sticky': true,
+              'data-scroll-target': '#section-0'
+            })}
           >
             <div className="w-full h-full flex items-center justify-center">
               <img 
@@ -343,24 +351,14 @@ Let’s begin.`,
           id={`section-${index + 1}`}
         >
           {/* Fixed Image Container for this section - Hidden on mobile */}
-          <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+          <div className="sticky-section hidden lg:block lg:w-[40%]">
               <div 
-                className="fixed-image"
-                data-scroll
-                data-scroll-sticky
-                data-scroll-target={`#section-${index + 1}`}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  width: '40vw',
-                  height: '100vh',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '2rem',
-                  overflow: 'hidden'
-                }}
+                className="fixed-image lg:fixed lg:top-0 lg:right-0 lg:w-[40vw] lg:h-screen flex items-center justify-center p-8"
+                {...(isLocoLoaded && {
+                  'data-scroll': true,
+                  'data-scroll-sticky': true,
+                  'data-scroll-target': `#section-${index + 1}`
+                })}
               >
                 <div className="w-full h-full flex items-center justify-center">
                   <img 
@@ -385,25 +383,35 @@ Let’s begin.`,
           </div>
 
           {/* Scrolling Text Content */}
-          <div className="scroll-text lg:mr-[40vw] mr-0 p-8 lg:p-16 min-h-screen flex items-center bg-black">
+          <div className="scroll-text lg:w-[60%] lg:mr-[40vw] mr-0 p-8 lg:p-16 min-h-screen flex items-center bg-black">
             <div className="max-w-2xl">
               <h2 
                 className="text-4xl md:text-6xl font-bold text-white mb-8"
-                data-scroll
-                data-scroll-speed="0.5"
+                {...(isLocoLoaded && {
+                  'data-scroll': true,
+                  'data-scroll-speed': '0.5'
+                })}
               >
                 {block.title}
               </h2>
               <div 
                 className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
-                data-scroll
-                data-scroll-speed="0.3"
+                {...(isLocoLoaded && {
+                  'data-scroll': true,
+                  'data-scroll-speed': '0.3'
+                })}
               >
                 {block.content}
               </div>
               
               {block.isLast && (
-                <div className="mt-12" data-scroll data-scroll-speed="0.2">
+                <div 
+                  className="mt-12"
+                  {...(isLocoLoaded && {
+                    'data-scroll': true,
+                    'data-scroll-speed': '0.2'
+                  })}
+                >
                   <Button
                     onClick={handleStart}
                     disabled={loading}
