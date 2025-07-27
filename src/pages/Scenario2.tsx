@@ -11,18 +11,36 @@ export default function Scenario2() {
   useEffect(() => {
     // Load user's selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    console.log('Selected answer codes:', selectedCodes);
     
     if (selectedCodes.length > 0) {
       // Load answers.json data
       fetch('/data/answers.json')
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(answersData => {
-          const outcomes = selectedCodes.map((code: string) => answersData[code]).filter(Boolean);
+          console.log('Loaded answers data:', answersData);
+          // Map ALL selected answers (don't filter by theme - show all outcomes)
+          const outcomes = selectedCodes.map((code: string) => {
+            const answer = answersData[code];
+            if (!answer) {
+              console.warn(`No answer found for code: ${code}`);
+              return null;
+            }
+            return answer;
+          }).filter(Boolean);
+          console.log('User outcomes to display:', outcomes);
           setUserOutcomes(outcomes);
         })
         .catch(error => {
           console.error('Error loading answers data:', error);
         });
+    } else {
+      console.log('No selected answer codes found in sessionStorage');
     }
   }, []);
 
@@ -88,11 +106,27 @@ export default function Scenario2() {
         </section>
 
         {/* Dynamic Outcome Blocks */}
-        {userOutcomes.length > 0 && (
+        {userOutcomes.length > 0 ? (
           <div className="outcomes-section">
             {userOutcomes.map((outcome, index) => (
               <OutcomeBlock key={outcome.code || index} data={outcome} />
             ))}
+          </div>
+        ) : (
+          <div className="min-h-screen py-24 flex items-center justify-center">
+            <div className="text-center">
+              <h3 className="text-2xl text-white mb-4">No Personal Outcomes Available</h3>
+              <p className="text-white/60 mb-8">Complete the game to see your personalized outcome blocks here.</p>
+              <button 
+                onClick={() => {
+                  sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(['A1', 'B2', 'C3', 'D1']));
+                  window.location.reload();
+                }}
+                className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              >
+                Load Sample Data (Testing)
+              </button>
+            </div>
           </div>
         )}
 

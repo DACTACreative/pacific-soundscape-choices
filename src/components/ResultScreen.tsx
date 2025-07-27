@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import answersData from '@/data/answers.json';
+// Remove direct import - we'll fetch dynamically like the other components
 
 interface ResultScreenProps {}
 
 export default function ResultScreen({}: ResultScreenProps) {
   const [gameData, setGameData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [answersData, setAnswersData] = useState<any>({});
 
   useEffect(() => {
     // Get game data from sessionStorage
@@ -13,6 +14,13 @@ export default function ResultScreen({}: ResultScreenProps) {
     if (storedData) {
       setGameData(JSON.parse(storedData));
     }
+    
+    // Load answers data
+    fetch('/data/answers.json')
+      .then(response => response.json())
+      .then(data => setAnswersData(data))
+      .catch(error => console.error('Error loading answers data:', error));
+    
     setLoading(false);
   }, []);
 
