@@ -1,40 +1,19 @@
 import { useEffect, useState } from 'react';
-import DynamicChart from './DynamicChart';
-import CountUp from './CountUp';
-
-interface ChartConfig {
-  type: string;
-  title: string;
-  unit?: string;
-  data: Array<{
-    label: string;
-    value: number;
-  }>;
-}
-
-interface CounterConfig {
-  type: string;
-  title: string;
-  value: number;
-  unit?: string;
-}
-
-interface PlayerChoice {
-  code: string;
-  theme: string;
-  answer: string;
-  narrative: string;
-  impact: string;
-  outcome: string;
-  chart?: ChartConfig;
-  counter?: CounterConfig;
-}
+import Papa from 'papaparse';
 
 interface ThemeData {
   thematic_summary: string;
   level_of_ambition: string;
   present_day_problematic: string;
   bp2050_indicators: string;
+}
+
+interface PlayerChoice {
+  theme: string;
+  answer: string;
+  narrative: string;
+  impact: string;
+  outcome: string;
 }
 
 const THEME_DATA: Record<string, ThemeData> = {
@@ -87,117 +66,84 @@ export default function BluePacificStoriesSection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Debug sessionStorage
-    const rawData = sessionStorage.getItem('selectedAnswerCodes');
-    console.log("📊 SessionStorage Raw:", rawData);
-    
     // Load selected answer codes from sessionStorage
-    const selectedCodes = JSON.parse(rawData || '[]');
-    console.log('🔍 Selected codes parsed:', selectedCodes);
+    const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    
+    console.log('📖 Stories Section - Selected codes:', selectedCodes);
     
     if (selectedCodes.length === 0) {
-      console.warn('⚠️ No selected codes found!');
+      console.log('📖 No selected codes found for stories section');
       setLoading(false);
       return;
     }
 
-    // Load answers.json data to get charts and counters
-    fetch('/data/answers.json')
-      .then(response => {
-        console.log('📊 Fetch response status:', response.status);
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        return response.json();
-      })
-      .then(answersData => {
-        console.log('✅ Answers data loaded successfully');
-        console.log('📊 Total keys in answers.json:', Object.keys(answersData).length);
-        console.log('📊 Available keys:', Object.keys(answersData));
-        
-        // Debug: Check for chart-enabled answers
-        console.log("📊 All Chart-enabled answers:");
-        Object.entries(answersData).forEach(([key, val]: any) => {
-          if (val.chart) console.log("👉", key, val.chart.title || "Unnamed chart");
-        });
-        
-        // Debug: Check for counter-enabled answers
-        console.log("📊 All Counter-enabled answers:");
-        Object.entries(answersData).forEach(([key, val]: any) => {
-          if (val.counter) console.log("👉", key, val.counter.title || "Unnamed counter");
-        });
-        
-        // Map ALL selected answers with defensive fallbacks
-        const outcomes = selectedCodes.map((code: string) => {
-          const answer = answersData[code];
-          if (!answer) {
-            console.warn(`❌ Code not found in answers.json: ${code}`);
-            return null;
+    // Load mapping CSV data
+    fetch('/data/Mapping - Question BPC - Sheet1.csv')
+      .then(res => res.text())
+      .then(csvText => {
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          transformHeader: (header) => header.trim(),
+          transform: (value, field) => {
+            if (typeof value === 'string') {
+              return value.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            }
+            return value;
+          },
+          complete: (results) => {
+            console.log('📖 CSV parsed for stories:', results.data.length, 'rows');
+            
+            // Find matching answers for selected codes
+            const matchedAnswers = selectedCodes.map((code: string) => {
+              const row = results.data.find((row: any) => row.code && row.code.trim() === code.trim()) as any;
+              if (row) {
+                console.log(`📖 Found match for ${code}:`, {
+                  theme: row.theme,
+                  answer: row.answer?.substring(0, 50) + '...',
+                  narrative: row.narrative?.substring(0, 50) + '...'
+                });
+                return {
+                  theme: (row.theme as string)?.trim() || '',
+                  answer: (row.answer as string)?.trim() || '',
+                  narrative: (row.narrative as string)?.trim() || '',
+                  impact: (row.impact as string)?.trim() || '',
+                  outcome: (row.outcome as string)?.trim() || ''
+                };
+              }
+              console.log(`📖 No match found for code: ${code}`);
+              return null;
+            }).filter((item): item is PlayerChoice => item !== null);
+            
+            console.log('📖 Final matched answers:', matchedAnswers.length);
+            setPlayerChoices(matchedAnswers as PlayerChoice[]);
+            setLoading(false);
           }
-          
-          console.log(`✅ Processing ${code}:`, {
-            theme: answer.theme,
-            hasChart: !!answer.chart,
-            hasCounter: !!answer.counter,
-            chartTitle: answer.chart?.title,
-            counterTitle: answer.counter?.title
-          });
-          
-          return {
-            code: code,
-            theme: answer.theme || 'Unknown Theme',
-            answer: answer.answer || 'No answer text',
-            narrative: answer.narrative || 'No narrative',
-            impact: answer.impact || 'No impact description',
-            outcome: answer.outcome || 'No outcome description',
-            // Defensive chart validation
-            chart: answer.chart?.type && answer.chart?.data ? answer.chart : null,
-            // Defensive counter validation  
-            counter: answer.counter?.value !== undefined ? answer.counter : null
-          };
-        }).filter(Boolean);
-        
-        console.log('🎯 Total valid outcomes processed:', outcomes.length);
-        console.log('🎯 Outcomes with charts:', outcomes.filter(o => o.chart).length);
-        console.log('🎯 Outcomes with counters:', outcomes.filter(o => o.counter).length);
-        
-        if (outcomes.length === 0) {
-          console.error('🚨 No valid outcomes found! Check code matching.');
-        }
-        
-        setPlayerChoices(outcomes);
-        setLoading(false);
+        });
       })
-      .catch(error => {
-        console.error('🚨 Failed to load answers data:', error);
-        console.error('🚨 Error details:', error.message);
-        // Try to manually check if file exists
-        console.log('🔍 Try visiting: ' + window.location.origin + '/data/answers.json');
+      .catch(err => {
+        console.error('📖 Failed to load story data:', err);
         setLoading(false);
       });
   }, []);
 
-  console.log('🔍 Final state - playerChoices:', playerChoices.length);
-  console.log('🔍 Final state - loading:', loading);
+  // Group choices by theme
+  const choicesByTheme = playerChoices.reduce((acc: Record<string, PlayerChoice[]>, choice) => {
+    if (choice.theme && THEME_DATA[choice.theme]) {
+      if (!acc[choice.theme]) {
+        acc[choice.theme] = [];
+      }
+      acc[choice.theme].push(choice);
+    }
+    return acc;
+  }, {});
+  
+  console.log('📖 Choices grouped by theme:', choicesByTheme);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white text-lg">Loading your choices...</div>
-      </div>
-    );
-  }
-
-  if (playerChoices.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-white text-lg mb-4">No choices found</div>
-          <div className="text-white/60 text-sm">
-            SessionStorage keys: {Object.keys(sessionStorage).join(', ')}<br/>
-            Check console for detailed debugging info
-          </div>
-        </div>
+        <div className="text-white text-lg">Loading Pacific stories...</div>
       </div>
     );
   }
@@ -207,79 +153,81 @@ export default function BluePacificStoriesSection() {
       {/* Section Header */}
       <div className="mb-24">
         <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6">
-          Your Pacific Future Choices
+          Blue Pacific Stories of Impact & Outcome Mapping
         </h2>
         <p className="text-lg text-white/70 leading-relaxed max-w-4xl">
-          Here are the {playerChoices.length} choices you made that shaped the Pacific region's journey to 2050.
+          In this section, we delve deeper into specific thematic areas to illustrate the impact of decisions and initiatives that shaped the Pacific region's journey to 2050. Each theme is part of the Blue Pacific Strategy and represents a critical arena where policy choices translated into real-world outcomes. These are the human stories behind the spider chart's data points – "Blue Pacific" stories of impact that show how collective action and innovation made a difference.
         </p>
       </div>
 
-      {/* Display ALL player choices directly */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {playerChoices.map((choice, index) => (
-          <div key={choice.code || index} className="bg-black/40 border border-white/20 p-6 rounded-lg">
-            <div className="mb-4">
+      {/* Thematic Blocks */}
+      {Object.entries(THEME_DATA).map(([themeName, themeData]) => {
+        const playerChoice = choicesByTheme[themeName];
+        
+        return (
+          <div key={themeName} className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-semibold text-white mb-6">
+              {themeName}
+            </h2>
+
+            <p className="text-lg text-white/80 font-light mb-4">
+              <strong>Thematic Summary:</strong> {themeData.thematic_summary}
+            </p>
+
+            <p className="text-lg text-white/80 font-light mb-4">
+              <strong>Level of Ambition:</strong> {themeData.level_of_ambition}
+            </p>
+
+            <p className="text-lg text-white/80 font-light mb-8">
+              <strong>Present-Day Problematic (2025):</strong> {themeData.present_day_problematic}
+            </p>
+
+            {/* Dynamic: Player's choice outcome */}
+            {playerChoice && playerChoice.length > 0 ? (
+              <div className="space-y-4 mb-6">
+                {playerChoice.map((choice, index) => (
+                  <div key={index} className="bg-black/40 border border-white/20 p-6 rounded-lg">
+                    <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
+                      Your 2050 Outcome {playerChoice.length > 1 ? `#${index + 1}` : ''}
+                    </h3>
+                    <p className="text-white/90 text-base leading-relaxed mb-3">
+                      <strong>Your Choice:</strong> {choice.answer}
+                    </p>
+                    <p className="text-white/70 text-base leading-relaxed mb-3">
+                      <strong>Narrative:</strong> {choice.narrative}
+                    </p>
+                    <p className="text-orange-300 text-base leading-relaxed mb-3">
+                      <strong>Impact:</strong> {choice.impact}
+                    </p>
+                    <p className="text-green-300 text-base leading-relaxed">
+                      <strong>Outcome:</strong> {choice.outcome}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-black/40 border border-white/20 p-6 rounded-lg mb-6">
+                <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
+                  Potential 2050 Outcome
+                </h3>
+                <p className="text-white/70 text-base leading-relaxed">
+                  In this theme, Pacific leaders implemented innovative approaches that strengthened regional cooperation and created lasting positive change for communities across the Blue Pacific.
+                </p>
+              </div>
+            )}
+
+            {/* Static indicators */}
+            <div className="bg-black/40 border border-[#35c5f2]/20 p-6 rounded-lg">
               <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                {choice.theme} (Code: {choice.code})
+                BP2050 Indicators
               </h3>
-              <h4 className="text-white text-lg font-semibold mb-3">
-                Choice #{index + 1}
-              </h4>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <strong className="text-white">Your Choice:</strong>
-                <p className="text-white/90 mt-1">{choice.answer}</p>
-              </div>
-
-              <div>
-                <strong className="text-orange-300">Impact:</strong>
-                <p className="text-white/80 mt-1">{choice.impact}</p>
-              </div>
-
-              <div>
-                <strong className="text-green-300">Narrative:</strong>
-                <p className="text-white/70 mt-1 italic">{choice.narrative}</p>
-              </div>
-
-              <div>
-                <strong className="text-blue-300">Outcome:</strong>
-                <p className="text-white/80 mt-1">{choice.outcome}</p>
-              </div>
-
-              {/* Charts and Counters with better debugging */}
-              {choice.chart ? (
-                <div className="mt-6 p-4 bg-black/60 rounded border border-white/10">
-                  <h5 className="text-white font-semibold mb-3">📊 Data Visualization</h5>
-                  <div className="text-xs text-white/50 mb-2">
-                    Chart Type: {choice.chart.type}, Data Points: {choice.chart.data?.length || 0}
-                  </div>
-                  <DynamicChart {...choice.chart} />
-                </div>
-              ) : (
-                <div className="mt-6 p-4 bg-red-900/20 rounded border border-red-500/20">
-                  <p className="text-red-300 text-sm">No chart data available for this choice</p>
-                </div>
-              )}
-
-              {choice.counter ? (
-                <div className="mt-6 p-4 bg-black/60 rounded border border-white/10 text-center">
-                  <h5 className="text-white font-semibold mb-3">🔢 Impact Metric</h5>
-                  <div className="text-xs text-white/50 mb-2">
-                    Counter Value: {choice.counter.value}, Unit: {choice.counter.unit || 'N/A'}
-                  </div>
-                  <CountUp {...choice.counter} />
-                </div>
-              ) : (
-                <div className="mt-6 p-4 bg-yellow-900/20 rounded border border-yellow-500/20">
-                  <p className="text-yellow-300 text-sm">No counter data available for this choice</p>
-                </div>
-              )}
+              <p className="text-white/70 text-base leading-relaxed">
+                {themeData.bp2050_indicators}
+              </p>
             </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
     </section>
   );
 }
