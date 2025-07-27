@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { DataVisualization } from './DataVisualization';
 
 interface ThemeData {
   thematic_summary: string;
@@ -7,14 +8,39 @@ interface ThemeData {
   bp2050_indicators: string;
 }
 
+interface ChartData {
+  type: string;
+  title: string;
+  unit: string;
+  data: Array<{ label: string; value: number }>;
+}
+
+interface CounterData {
+  title: string;
+  unit: string;
+  value: number;
+  comparison?: string;
+}
+
+interface MetricData {
+  label: string;
+  value: string | number;
+  unit?: string;
+}
+
 interface AnswerData {
   code: string;
+  themecode: string;
   theme: string;
   answer: string;
   narrative: string;
   impact: string;
   outcome: string;
   Question: string;
+  QuestionCode: string;
+  chart?: ChartData;
+  counter?: CounterData;
+  metrics?: MetricData[];
 }
 
 const THEME_DATA: Record<string, ThemeData> = {
@@ -197,6 +223,13 @@ export default function BluePacificStoriesSection() {
                     <p className="text-green-300 text-base leading-relaxed">
                       <strong>Outcome:</strong> {answer.outcome}
                     </p>
+                    
+                    {/* Data Visualizations */}
+                    <DataVisualization 
+                      chart={answer.chart}
+                      counter={answer.counter}
+                      metrics={answer.metrics}
+                    />
                   </div>
                 ))}
               </div>
