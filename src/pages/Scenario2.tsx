@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
-
+import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import StoryBlock from '../components/StoryBlock';
 import OutcomeBlock from '../components/OutcomeBlock';
 
@@ -92,6 +92,15 @@ export default function Scenario2() {
               <div className="w-full min-h-[70vh] relative z-10">
                 <ThematicSpiderChart className="w-full h-full" />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Blue Pacific Stories */}
+        <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
+          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
+            <div className="max-w-7xl mx-auto">
+              <BluePacificStoriesSection />
             </div>
           </div>
         </section>
