@@ -31,24 +31,24 @@ export default function AnswerRevealSection({ answer, index }: AnswerRevealSecti
       <div 
         data-reveal="answer"
         className={`
-          min-h-screen flex items-center justify-center px-8 transition-all duration-1000
+          min-h-screen flex items-center justify-center px-8 transition-all duration-1000 relative
           ${isVisible('answer') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
         `}
+        style={{
+          backgroundImage: `url(https://images.unsplash.com/photo-1500375592092-40eb2168fd21?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
       >
-        <div className="max-w-4xl text-center">
-          <div className="mb-6">
-            <span className="text-[hsl(var(--primary))] text-lg font-medium">
-              Question {answer.QuestionCode}
-            </span>
-          </div>
-          
-          <h3 className="text-2xl md:text-3xl text-white/80 mb-8 leading-relaxed">
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="max-w-4xl text-center relative z-10">
+          <h3 className="text-4xl md:text-6xl text-white font-bold mb-12 leading-relaxed">
             {answer.Question}
           </h3>
           
-          <div className="bg-gradient-to-r from-[hsl(var(--primary))]/20 to-transparent p-8 rounded-2xl border-l-4 border-[hsl(var(--primary))]">
-            <h4 className="text-[hsl(var(--primary))] text-xl font-bold mb-4">Your Choice</h4>
-            <p className="text-white text-xl md:text-2xl leading-relaxed font-light">
+          <div className="p-8">
+            <h4 className="text-4xl md:text-6xl text-white font-bold mb-8">Your Choice</h4>
+            <p className="text-white text-2xl md:text-4xl leading-relaxed font-bold">
               {answer.answer}
             </p>
           </div>
@@ -59,14 +59,20 @@ export default function AnswerRevealSection({ answer, index }: AnswerRevealSecti
       <div 
         data-reveal="narrative"
         className={`
-          min-h-screen flex items-center px-8 transition-all duration-1000 delay-300
+          min-h-screen flex items-center px-8 transition-all duration-1000 delay-300 relative
           ${isVisible('narrative') ? 'opacity-100 translate-x-0 translate-y-0' : 'opacity-0 translate-x-20 translate-y-10'}
         `}
+        style={{
+          backgroundImage: `url(https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
       >
-        <div className="max-w-5xl ml-auto mr-16">
-          <div className="bg-black/60 backdrop-blur-lg p-8 rounded-2xl border border-white/20 transform rotate-1">
-            <h4 className="text-purple-300 text-xl font-bold mb-6">The Story</h4>
-            <p className="text-white/90 text-lg leading-relaxed italic">
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="max-w-5xl ml-auto mr-16 relative z-10">
+          <div className="p-8">
+            <h4 className="text-4xl md:text-6xl text-white font-bold mb-8">The Story</h4>
+            <p className="text-white text-2xl md:text-4xl leading-relaxed font-bold">
               {answer.narrative}
             </p>
           </div>
@@ -77,14 +83,20 @@ export default function AnswerRevealSection({ answer, index }: AnswerRevealSecti
       <div 
         data-reveal="impact"
         className={`
-          min-h-screen flex items-center px-8 transition-all duration-1000 delay-600
+          min-h-screen flex items-center px-8 transition-all duration-1000 delay-600 relative
           ${isVisible('impact') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
         `}
+        style={{
+          backgroundImage: `url(https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
       >
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 p-8 rounded-2xl border border-orange-300/30">
-            <h4 className="text-orange-300 text-xl font-bold mb-6">Regional Impact</h4>
-            <p className="text-orange-100 text-lg leading-relaxed">
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="p-8">
+            <h4 className="text-4xl md:text-6xl text-white font-bold mb-8">Regional Impact</h4>
+            <p className="text-white text-2xl md:text-4xl leading-relaxed font-bold">
               {answer.impact}
             </p>
           </div>
@@ -95,25 +107,31 @@ export default function AnswerRevealSection({ answer, index }: AnswerRevealSecti
       <div 
         data-reveal="outcome"
         className={`
-          min-h-screen flex items-center justify-center px-8 transition-all duration-1000 delay-900
+          min-h-screen flex items-center justify-center px-8 transition-all duration-1000 delay-900 relative
           ${isVisible('outcome') ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
         `}
+        style={{
+          backgroundImage: `url(https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
       >
-        <div className="max-w-4xl text-center">
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="max-w-4xl text-center relative z-10">
           {/* Final Message */}
           <div className="mb-12">
-            <h4 className="text-3xl md:text-4xl text-white font-light leading-relaxed mb-8">
+            <h4 className="text-4xl md:text-6xl text-white font-bold leading-relaxed mb-8">
               Through this path, your decision advanced a key pillar of the 
-              <span className="text-[hsl(var(--primary))] font-bold"> Blue Pacific 2050 Strategy</span>:
+              <span className="text-white font-bold"> Blue Pacific 2050 Strategy</span>:
             </h4>
           </div>
           
           {/* Outcome */}
-          <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 p-10 rounded-3xl border-2 border-green-300/30">
-            <h5 className="text-green-300 text-lg font-bold mb-4 uppercase tracking-wide">
+          <div className="p-10">
+            <h5 className="text-4xl md:text-6xl text-white font-bold mb-8 uppercase tracking-wide">
               Measured Outcome
             </h5>
-            <p className="text-green-100 text-xl md:text-2xl leading-relaxed font-medium">
+            <p className="text-white text-2xl md:text-4xl leading-relaxed font-bold">
               {answer.outcome}
             </p>
           </div>
