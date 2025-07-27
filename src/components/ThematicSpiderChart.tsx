@@ -41,9 +41,10 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   useEffect(() => {
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
     console.log('🕷️ Loading spider chart data for codes:', selectedCodes);
+    console.log('🕷️ Selected codes length:', selectedCodes.length);
     
     if (selectedCodes.length === 0) {
-      console.log('No selected codes, using fallback');
+      console.log('❌ No selected codes, using fallback');
       setLoading(false);
       return;
     }
@@ -92,13 +93,19 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     return acc;
   }, {} as { [key: string]: number });
 
+  console.log('🕷️ Theme counts:', themeCounts);
+  console.log('🕷️ Player choices length:', playerChoices.length);
+
   // Prepare chart data
   const themeLabels = Object.values(themeMapping);
   const chartData = themeLabels.map(shortLabel => {
     const fullTheme = Object.keys(themeMapping).find(key => themeMapping[key] === shortLabel);
     const count = fullTheme ? (themeCounts[fullTheme] || 0) : 0;
+    console.log(`🕷️ ${shortLabel} -> ${fullTheme} = ${count}`);
     return Math.min(count, 3); // Cap at 3
   });
+
+  console.log('🕷️ Final chart data:', chartData);
 
   const data = {
     labels: themeLabels,
@@ -215,7 +222,41 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   };
 
   if (loading) {
+    console.log('🕷️ Still loading...');
     return <LoadingSpinner />;
+  }
+
+  if (playerChoices.length === 0) {
+    console.log('🕷️ No player choices - showing fallback');
+    // Show fallback chart with sample data
+    const fallbackData = {
+      labels: themeLabels,
+      datasets: [{
+        label: 'Balanced Blue Pacific 2050',
+        data: [2, 2, 2, 2, 2, 2, 2], // Balanced scenario
+        backgroundColor: 'rgba(53, 197, 242, 0.2)',
+        borderColor: '#35c5f2',
+        borderWidth: 3,
+        pointBackgroundColor: '#35c5f2',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 3,
+        pointRadius: 8,
+        pointHoverRadius: 12,
+      }]
+    };
+
+    return (
+      <ErrorBoundary>
+        <div className={`relative ${className} font-inter`}>
+          <div className="w-full h-[600px] max-w-7xl mx-auto relative">
+            <Radar data={fallbackData} options={options} style={{ width: '100%', height: '100%' }} />
+            <div className="absolute top-4 left-4 bg-red-500/80 text-white p-2 rounded text-xs z-20">
+              No Data - Showing Fallback
+            </div>
+          </div>
+        </div>
+      </ErrorBoundary>
+    );
   }
 
   return (
