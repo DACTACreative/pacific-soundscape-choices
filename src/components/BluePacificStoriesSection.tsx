@@ -153,7 +153,7 @@ export default function BluePacificStoriesSection() {
 
       {/* Tabbed Thematic Blocks */}
       <Tabs defaultValue={THEME_DISPLAY_ORDER[0]} className="w-full">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-8">
+        <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-8 bg-transparent p-0 h-auto">
           {THEME_DISPLAY_ORDER.map((themeName) => (
             <TabsTrigger 
               key={themeName} 
@@ -163,7 +163,7 @@ export default function BluePacificStoriesSection() {
               {themeName.replace(' and ', ' & ')}
             </TabsTrigger>
           ))}
-        </div>
+        </TabsList>
 
         {THEME_DISPLAY_ORDER.map((themeName) => {
           const themeData = THEME_DATA[themeName];
