@@ -23,7 +23,6 @@ const buttonVariants = cva(
         wave: "bg-gradient-to-r from-ocean-mid to-ocean-light text-foreground border border-wave-foam/20 hover:from-ocean-light hover:to-accent hover:shadow-ocean hover:scale-105 active:scale-95",
         coral: "bg-gradient-coral text-foreground hover:shadow-coral hover:scale-105 active:scale-95",
         choice: "bg-card/50 backdrop-blur-sm text-card-foreground border border-ocean-light/30 hover:bg-ocean-light/20 hover:border-accent hover:shadow-ocean hover:scale-[1.02] active:scale-95",
-        pacific: "bg-background/5 backdrop-blur-sm text-cyan-400 border-2 border-cyan-400 hover:bg-cyan-400/10 hover:text-cyan-300 hover:border-cyan-300 hover:shadow-lg hover:shadow-cyan-400/25 transition-all duration-300 font-semibold tracking-wide",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -32,7 +31,6 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
         choice: "h-auto min-h-16 px-6 py-4 text-base",
         hero: "h-14 px-8 py-4 text-lg font-semibold",
-        pacific: "h-16 px-10 py-5 text-xl font-bold tracking-wider",
       },
     },
     defaultVariants: {
