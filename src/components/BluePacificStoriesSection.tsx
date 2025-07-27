@@ -88,6 +88,7 @@ export default function BluePacificStoriesSection() {
   useEffect(() => {
     // Load selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    console.log('🔍 Selected codes:', selectedCodes);
     
     if (selectedCodes.length === 0) {
       setLoading(false);
@@ -98,21 +99,15 @@ export default function BluePacificStoriesSection() {
     fetch('/data/answers.json')
       .then(response => response.json())
       .then(answersData => {
-        console.log('🔍 BluePacific: Loaded answers data, total keys:', Object.keys(answersData).length);
-        console.log('🔍 BluePacific: Selected codes:', selectedCodes);
+        console.log('✅ Answers data loaded');
         
         // Map ALL selected answers including charts/counters
         const outcomes = selectedCodes.map((code: string) => {
           const answer = answersData[code];
           if (!answer) {
-            console.warn('❌ BluePacific: No answer found for code:', code);
+            console.warn('❌ No answer found for code:', code);
             return null;
           }
-          console.log(`✅ BluePacific: Found answer for ${code}:`, {
-            theme: answer.theme,
-            hasChart: !!answer.chart,
-            hasCounter: !!answer.counter
-          });
           return {
             theme: answer.theme,
             answer: answer.answer,
@@ -124,10 +119,7 @@ export default function BluePacificStoriesSection() {
           };
         }).filter(Boolean);
         
-        console.log('🎯 BluePacific: Total outcomes processed:', outcomes.length);
-        console.log('🎯 BluePacific: Themes found:', [...new Set(outcomes.map(o => o.theme))]);
-        console.log('🎯 BluePacific: THEME_DATA keys:', Object.keys(THEME_DATA));
-        
+        console.log('🎯 Total outcomes:', outcomes.length);
         setPlayerChoices(outcomes);
         setLoading(false);
       })
@@ -137,24 +129,18 @@ export default function BluePacificStoriesSection() {
       });
   }, []);
 
-  // Group choices by theme
-  const choicesByTheme = playerChoices.reduce((acc: Record<string, PlayerChoice[]>, choice) => {
-    if (choice.theme && THEME_DATA[choice.theme]) {
-      if (!acc[choice.theme]) {
-        acc[choice.theme] = [];
-      }
-      acc[choice.theme].push(choice);
-    }
-    return acc;
-  }, {});
-
-  console.log('🔍 BluePacific: Choices by theme:', choicesByTheme);
-  console.log('🔍 BluePacific: Player choices total:', playerChoices.length);
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white text-lg">Loading Pacific stories...</div>
+        <div className="text-white text-lg">Loading your choices...</div>
+      </div>
+    );
+  }
+
+  if (playerChoices.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-white text-lg">No choices found. Please complete the game first.</div>
       </div>
     );
   }
@@ -164,107 +150,65 @@ export default function BluePacificStoriesSection() {
       {/* Section Header */}
       <div className="mb-24">
         <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6">
-          Blue Pacific Stories of Impact & Outcome Mapping
+          Your Pacific Future Choices
         </h2>
         <p className="text-lg text-white/70 leading-relaxed max-w-4xl">
-          In this section, we delve deeper into specific thematic areas to illustrate the impact of decisions and initiatives that shaped the Pacific region's journey to 2050. Each theme is part of the Blue Pacific Strategy and represents a critical arena where policy choices translated into real-world outcomes. These are the human stories behind the spider chart's data points – "Blue Pacific" stories of impact that show how collective action and innovation made a difference.
+          Here are the {playerChoices.length} choices you made that shaped the Pacific region's journey to 2050.
         </p>
       </div>
 
-      {/* Thematic Blocks */}
-      {Object.entries(THEME_DATA).map(([themeName, themeData]) => {
-        const playerChoice = choicesByTheme[themeName];
-        
-        return (
-          <div key={themeName} className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-semibold text-white mb-6">
-              {themeName}
-            </h2>
-
-            <p className="text-lg text-white/80 font-light mb-4">
-              <strong>Thematic Summary:</strong> {themeData.thematic_summary}
-            </p>
-
-            <p className="text-lg text-white/80 font-light mb-4">
-              <strong>Level of Ambition:</strong> {themeData.level_of_ambition}
-            </p>
-
-            <p className="text-lg text-white/80 font-light mb-8">
-              <strong>Present-Day Problematic (2025):</strong> {themeData.present_day_problematic}
-            </p>
-
-            {/* Dynamic: Player's choice outcome */}
-            {playerChoice && playerChoice.length > 0 ? (
-              <div className="space-y-6 mb-6">
-                {playerChoice.map((choice, index) => (
-                  <div key={index} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Left Column - Content */}
-                    <div className="bg-black/40 border border-white/20 p-6 rounded-lg">
-                      <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                        Your 2050 Outcome {playerChoice.length > 1 ? `#${index + 1}` : ''}
-                      </h3>
-                      <p className="text-white/90 text-base leading-relaxed mb-3">
-                        <strong>Your Choice:</strong> {choice.answer}
-                      </p>
-                      <p className="text-white/70 text-base leading-relaxed mb-3 italic">
-                        <strong>Narrative:</strong> {choice.narrative}
-                      </p>
-                      <p className="text-orange-300 text-base leading-relaxed mb-3">
-                        <strong>Impact:</strong> {choice.impact}
-                      </p>
-                      <p className="text-green-300 text-base leading-relaxed">
-                        <strong>Outcome:</strong> {choice.outcome}
-                      </p>
-                    </div>
-
-                    {/* Right Column - Visualizations */}
-                    <div className="space-y-4">
-                      {choice.chart && (
-                        <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                          <h4 className="text-lg font-semibold text-white mb-4">📊 Data Visualization</h4>
-                          <DynamicChart {...choice.chart} />
-                        </div>
-                      )}
-
-                      {choice.counter && (
-                        <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/20 text-center">
-                          <h4 className="text-lg font-semibold text-white mb-4">🔢 Impact Metric</h4>
-                          <CountUp {...choice.counter} />
-                        </div>
-                      )}
-                      
-                      {!choice.chart && !choice.counter && (
-                        <div className="bg-black/20 backdrop-blur-sm p-6 rounded-lg border border-white/10 text-center">
-                          <p className="text-white/60">No specific data visualization for this outcome</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="bg-black/40 border border-white/20 p-6 rounded-lg mb-6">
-                <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                  Potential 2050 Outcome
-                </h3>
-                <p className="text-white/70 text-base leading-relaxed">
-                  In this theme, Pacific leaders implemented innovative approaches that strengthened regional cooperation and created lasting positive change for communities across the Blue Pacific.
-                </p>
-              </div>
-            )}
-
-            {/* Static indicators */}
-            <div className="bg-black/40 border border-[#35c5f2]/20 p-6 rounded-lg">
+      {/* Display ALL player choices directly */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {playerChoices.map((choice, index) => (
+          <div key={index} className="bg-black/40 border border-white/20 p-6 rounded-lg">
+            <div className="mb-4">
               <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                BP2050 Indicators
+                {choice.theme}
               </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                {themeData.bp2050_indicators}
-              </p>
+              <h4 className="text-white text-lg font-semibold mb-3">
+                Choice #{index + 1}
+              </h4>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <strong className="text-white">Your Choice:</strong>
+                <p className="text-white/90 mt-1">{choice.answer}</p>
+              </div>
+
+              <div>
+                <strong className="text-orange-300">Impact:</strong>
+                <p className="text-white/80 mt-1">{choice.impact}</p>
+              </div>
+
+              <div>
+                <strong className="text-green-300">Narrative:</strong>
+                <p className="text-white/70 mt-1 italic">{choice.narrative}</p>
+              </div>
+
+              <div>
+                <strong className="text-blue-300">Outcome:</strong>
+                <p className="text-white/80 mt-1">{choice.outcome}</p>
+              </div>
+
+              {/* Charts and Counters */}
+              {choice.chart && (
+                <div className="mt-6 p-4 bg-black/60 rounded border border-white/10">
+                  <h5 className="text-white font-semibold mb-3">📊 Data Visualization</h5>
+                  <DynamicChart {...choice.chart} />
+                </div>
+              )}
+
+              {choice.counter && (
+                <div className="mt-6 p-4 bg-black/60 rounded border border-white/10 text-center">
+                  <h5 className="text-white font-semibold mb-3">🔢 Impact Metric</h5>
+                  <CountUp {...choice.counter} />
+                </div>
+              )}
             </div>
           </div>
-        );
-      })}
+        ))}
+      </div>
     </section>
   );
 }
