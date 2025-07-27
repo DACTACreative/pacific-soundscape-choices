@@ -289,6 +289,31 @@ canvas.vanta-canvas,
   animation-delay: 300ms;
 }
 
+/* Locomotive Scroll Block Styles */
+.scroll-block {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 1.5rem;
+}
+
+/* Locomotive Scroll Container */
+[data-scroll-container] {
+  /* Remove overflow: hidden as it can cause issues */
+}
+
+/* Optional: Smooth transitions for scroll blocks */
+.scroll-block[data-scroll] {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-block.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Ensure VANTA container is visible */
 [data-vanta="true"] {
   position: absolute !important;
