@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
+import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 
 export default function Scenario3() {
@@ -88,7 +89,16 @@ export default function Scenario3() {
           </div>
         </section>
 
-        {/* Blue Pacific Stories - Now the unified section */}
+        {/* Answer Blocks Section */}
+        <section className="py-24 md:py-32">
+          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
+            <div className="max-w-7xl mx-auto">
+              <AnswerBlockDisplay />
+            </div>
+          </div>
+        </section>
+
+        {/* Blue Pacific Stories */}
         <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
