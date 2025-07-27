@@ -115,17 +115,17 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       title: "Creating Feeling",
       content: `This piece was created to spark feeling.
 
-To awaken a sense of belonging, of togetherness, of hope — a rare and sacred emotion when facing the planetary scale of climate change.
+To awaken a sense of belonging, of togetherness, of hope, a rare and sacred emotion when facing the planetary scale of climate change.
 
 To shine light where despair often creeps in.
 
-To invite more people into the conversations that shape our region — especially around the Blue Pacific 2050 Strategy.
+To invite more people into the conversations that shape our region, especially around the Blue Pacific 2050 Strategy.
 
 To stitch connection across distant shores.
 
-Because we are mostly sea — scattered, yet bound. So close… yet often made to feel far.
+Because we are mostly sea, scattered, yet bound. So close… yet often made to feel far.
 
-This is a game, yes — but it's also a call to feel.`,
+This is a game, yes, but it's also a call to feel.`,
       reversed: false
     },
     {
@@ -134,18 +134,18 @@ This is a game, yes — but it's also a call to feel.`,
       content: `The sea is what brings us together.
 It is our memory, our movement, our story.
 
-This piece focuses on sound — the sound of our ocean — to carry you through this journey.
+This piece focuses on sound, the sound of our ocean, to carry you through this journey.
 
 When you begin, you’ll be immersed in Fiji.
 The date: October 10, 2024.
 
 The sound you hear is real.
-It is the actual tide — sonified.
+It is the actual tide, sonified.
 
 Each high tide = rising water.
 Each low = its slow retreat six hours later.
 
-This soundscape grounds us. Because for the Pacific, the ocean is not background — it’s home.`,
+This soundscape grounds us. Because for the Pacific, the ocean is not background, it’s home.`,
       reversed: true
     },
     {
@@ -157,10 +157,10 @@ The Pacific emits less than 0.03% of global carbon emissions.
 Yet we stand on the frontlines of its consequences.
 
 Sea level rise is one of our most silent threats.
-It does not roar like a cyclone — it creeps. Quietly.
+It does not roar like a cyclone, it creeps. Quietly.
 And because it's invisible, we forget.
 
-But like the sound of waves — always returning — the threat remains.
+But like the sound of waves, always returning, the threat remains.
 
 This is not alarmism. It’s presence. And we must respond with clarity and imagination.`,
     reversed: false
@@ -170,9 +170,9 @@ This is not alarmism. It’s presence. And we must respond with clarity and imag
       title: "Your Role in This Journey",
       content: `As you enter this experience, you'll face a series of seven decisions.
 
-Each is inspired by the Blue Pacific 2050 Implementation Plan — its real goals, real indicators, and real challenges.
+Each is inspired by the Blue Pacific 2050 Implementation Plan, its real goals, real indicators, and real challenges.
 
-Some choices reflect public policy. Others are visions of community-led futures — new models, small-scale utopias.
+Some choices reflect public policy. Others are visions of community-led futures, new models, small-scale utopias.
 
 Why utopias?
 
@@ -183,7 +183,7 @@ And imagining better is how we resist being written out of the future.`,
     {
       id: 5,
       title: "Why This Is a Game",
-      content: `This is a simplification — a gamified journey.
+      content: `This is a simplification, a gamified journey.
 
 It’s also a living form of Monitoring, Evaluation, and Learning (MEL).
 Because data shouldn’t just live in spreadsheets.
@@ -193,7 +193,7 @@ Here, it becomes visual. Sensory. Emotional.
 Frameworks matter. Indicators matter. 
 But feelings move people. Stories hold power.
 
-This experience invites you to reflect not just on numbers — but on what we value, and how we act.`,
+This experience invites you to reflect not just on numbers, but on what we value, and how we act.`,
       reversed: false
     },
     {
@@ -212,7 +212,7 @@ Each one maps directly to a pillar of the Blue Pacific Strategy:
 • Technology & Connectivity
 
 Your choices affect these domains in subtle, interconnected ways.
-You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
+You won’t get a score, you’ll get ripple effects. Shifting indicators. Lived futures.
 
 Because in the real world, outcomes are rarely binary.`,
     reversed: true
@@ -233,7 +233,7 @@ Each one maps directly to a pillar of the Blue Pacific Strategy:
 • Technology & Connectivity
 
 Your choices affect these domains in subtle, interconnected ways.
-You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
+You won’t get a score, you’ll get ripple effects. Shifting indicators. Lived futures.
 
 Because in the real world, outcomes are rarely binary.`,
    reversed: false
@@ -254,7 +254,7 @@ Each one maps directly to a pillar of the Blue Pacific Strategy:
 • Technology & Connectivity
 
 Your choices affect these domains in subtle, interconnected ways.
-You won’t get a score — you’ll get ripple effects. Shifting indicators. Lived futures.
+You won’t get a score, you’ll get ripple effects. Shifting indicators. Lived futures.
 
 Because in the real world, outcomes are rarely binary.`,
      reversed: true
@@ -273,7 +273,7 @@ Hope is strategy.
 Unity is strength.
 And dreaming is action.
 
-Let’s co-create a future shaped by us — not for us.
+Let’s co-create a future shaped by us, not for us.
 
 Let’s begin.`,
    reversed: false,
