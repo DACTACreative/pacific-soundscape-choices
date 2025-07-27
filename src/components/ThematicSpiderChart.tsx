@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Legend } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import Papa from 'papaparse';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorBoundary from './ErrorBoundary';
 
-// Register Chart.js components - NO TOOLTIP
+// Register Chart.js components
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Legend);
 
 interface ThematicSpiderChartProps {
@@ -16,9 +16,6 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
   const [playerChoices, setPlayerChoices] = useState<any[]>([]);
   const [spiderMap, setSpiderMap] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [hoveredTheme, setHoveredTheme] = useState<string | null>(null);
-  const chartRef = useRef<any>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Theme mapping
   const themeMapping: { [key: string]: string } = {
@@ -123,61 +120,11 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     }]
   };
 
-  // SIMPLE MOUSE TRACKING APPROACH
-  const handleCanvasMouseMove = useCallback((event: MouseEvent) => {
-    if (!chartRef.current || !canvasRef.current) return;
-
-    const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    // Get chart instance
-    const chart = chartRef.current;
-    if (!chart) return;
-
-    // Get elements at this position
-    const elements = chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
-    
-    console.log('🎯 Mouse move - elements found:', elements.length);
-    
-    if (elements.length > 0) {
-      const element = elements[0];
-      const index = element.index;
-      const theme = themeLabels[index];
-      console.log('✅ Found theme:', theme, 'at index:', index);
-      setHoveredTheme(theme);
-    } else {
-      setHoveredTheme(null);
-    }
-  }, [themeLabels]);
-
-  const handleCanvasMouseLeave = useCallback(() => {
-    console.log('🎯 Mouse left canvas');
-    setHoveredTheme(null);
-  }, []);
-
-  // Setup canvas event listeners
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    canvas.addEventListener('mousemove', handleCanvasMouseMove);
-    canvas.addEventListener('mouseleave', handleCanvasMouseLeave);
-
-    return () => {
-      canvas.removeEventListener('mousemove', handleCanvasMouseMove);
-      canvas.removeEventListener('mouseleave', handleCanvasMouseLeave);
-    };
-  }, [handleCanvasMouseMove, handleCanvasMouseLeave]);
-
-  // Get canvas ref after chart renders
-  useEffect(() => {
-    if (chartRef.current) {
-      canvasRef.current = chartRef.current.canvas;
-      console.log('📊 Canvas ref set:', !!canvasRef.current);
-    }
-  }, [loading]);
+  const getLevelColor = (level: string): string => {
+    if (level === 'LOW') return 'border-red-500 bg-red-500/10 text-red-300';
+    if (level === 'MED') return 'border-yellow-500 bg-yellow-500/10 text-yellow-300';
+    return 'border-green-500 bg-green-500/10 text-green-300';
+  };
 
   const options = {
     responsive: true,
@@ -261,50 +208,47 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
 
   return (
     <ErrorBoundary>
-      <div className={`relative ${className} font-inter`}>
+      <div className={`${className} font-inter space-y-8`}>
         {/* Chart Container */}
-        <div className="w-full h-[600px] max-w-7xl mx-auto relative">
+        <div className="w-full h-[600px] max-w-7xl mx-auto">
           <Radar 
-            ref={chartRef}
             data={data} 
             options={options}
             style={{ width: '100%', height: '100%' }}
           />
-          
-          {/* Debug Info */}
-          <div className="absolute top-4 left-4 bg-black/80 text-white p-2 rounded text-xs z-20">
-            Hover: {hoveredTheme || 'None'}
-          </div>
         </div>
         
-        {/* Info Box */}
-        {hoveredTheme && (
-          <div className="fixed top-1/2 right-8 w-96 transform -translate-y-1/2 z-50 pointer-events-none">
-            <div className="bg-black/90 backdrop-blur-lg shadow-2xl p-8 rounded-2xl border-2 border-blue-500/30">
-              <h3 className="text-4xl font-bold text-white mb-3">
-                {hoveredTheme}
-              </h3>
-              <p className="text-xl text-white/95 leading-relaxed mb-6">
-                {(() => {
-                  const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === hoveredTheme);
-                  const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-                  const level = getLevel(rawCount);
-                  return fullThemeName && spiderMap?.[fullThemeName]?.[level] 
-                    ? spiderMap[fullThemeName][level] 
-                    : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.';
-                })()}
-              </p>
-              <div className="text-xl text-blue-300 font-bold">
-                {(() => {
-                  const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === hoveredTheme);
-                  const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-                  const level = getLevel(rawCount);
-                  return `${level} Impact • ${rawCount} choices`;
-                })()}
-              </div>
-            </div>
+        {/* Static Theme Cards */}
+        <div className="max-w-7xl mx-auto">
+          <h3 className="text-2xl font-bold text-white mb-6 text-center">
+            Your Blue Pacific 2050 Impact
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {Object.entries(themeMapping).map(([fullTheme, shortTheme]) => {
+              const count = themeCounts[fullTheme] || 0;
+              const level = getLevel(count);
+              const colorClass = getLevelColor(level);
+              const description = spiderMap?.[fullTheme]?.[level] || 'Progress toward Blue Pacific 2050 vision';
+              
+              return (
+                <div 
+                  key={fullTheme}
+                  className={`p-4 rounded-lg border-2 ${colorClass} backdrop-blur-sm`}
+                >
+                  <h4 className="font-bold text-lg mb-2">
+                    {shortTheme}
+                  </h4>
+                  <div className="text-sm opacity-90 mb-3">
+                    {description}
+                  </div>
+                  <div className="text-xs font-bold">
+                    {level} Impact • {count} choices
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        )}
+        </div>
       </div>
     </ErrorBoundary>
   );
