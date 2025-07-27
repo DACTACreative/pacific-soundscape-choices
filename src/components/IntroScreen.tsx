@@ -113,7 +113,9 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     {
       id: 1,
       title: "Creating Feeling",
-      content: `To awaken a sense of belonging, of togetherness, of hope — a rare and sacred emotion when facing the planetary scale of climate change.
+      content: `This piece was created to spark feeling.
+
+To awaken a sense of belonging, of togetherness, of hope — a rare and sacred emotion when facing the planetary scale of climate change.
 
 To shine light where despair often creeps in.
 
@@ -123,7 +125,7 @@ To stitch connection across distant shores.
 
 Because we are mostly sea — scattered, yet bound. So close… yet often made to feel far.
 
-This is a game, yes — but it's also a call to feel.`,
+This is a game, yes — but it's also a call to feel.,
       reversed: false
     },
     {
