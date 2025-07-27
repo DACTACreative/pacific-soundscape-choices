@@ -120,21 +120,21 @@ export default function LandingPage() {
           </h1>
           
           {/* Subtitle */}
-          <h2 className="text-white font-bold uppercase tracking-wider leading-none mb-6" style={{
+          <h2 style={{
           fontFamily: 'Space Grotesk, sans-serif',
           fontWeight: '800',
           fontSize: 'clamp(42px, 5.5vw, 72px)',
           lineHeight: '1.1',
           letterSpacing: '0.03em'
-        }}>AN IMMERSIVE EXPERIENCE INTO WHAT OUR FUTURE COULD LOOK LIKE</h2>
+        }} className="text-white uppercase tracking-wider leading-none mb-6 text-4xl font-extrabold">AN IMMERSIVE EXPERIENCE INTO WHAT OUR FUTURE COULD LOOK LIKE</h2>
           
           {/* Tagline */}
-          <p className="text-white mb-6" style={{
+          <p style={{
           fontFamily: 'Space Grotesk, sans-serif',
           fontSize: 'clamp(24px, 3vw, 36px)',
           fontWeight: '600',
           lineHeight: '1.3'
-        }}>
+        }} className="mb-6 text-4xl text-[#2bc5ef]">
             As the climate changes, can we shape a future that reflects our cultures, our knowledge, and our strength?
           </p>
           
@@ -168,11 +168,7 @@ export default function LandingPage() {
         {/* Right side image placeholder */}
         <div className="hidden lg:block flex-shrink-0 w-1/2 max-w-2xl">
           <div className="relative w-full h-[80vh] rounded-lg overflow-hidden shadow-2xl border border-white/20">
-            <img 
-              src="/lovable-uploads/0546b7e7-5117-4849-9466-37a58117c896.png"
-              alt="Blue Pacific Future Vision"
-              className="w-full h-full object-cover"
-            />
+            <img src="/lovable-uploads/0546b7e7-5117-4849-9466-37a58117c896.png" alt="Blue Pacific Future Vision" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>
         </div>
