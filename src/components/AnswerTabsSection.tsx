@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { DataVisualization } from './DataVisualization';
-
 interface AnswerData {
   code: string;
   themecode: string;
@@ -16,48 +15,32 @@ interface AnswerData {
   counter?: any;
   metrics?: any[];
 }
-
-const THEME_DISPLAY_ORDER = [
-  "Political Leadership and Regionalism",
-  "People Centered Development", 
-  "Peace and Security",
-  "Resource and Economic Development",
-  "Climate Change and Disasters",
-  "Ocean and Environment",
-  "Technology and Connectivity"
-];
-
+const THEME_DISPLAY_ORDER = ["Political Leadership and Regionalism", "People Centered Development", "Peace and Security", "Resource and Economic Development", "Climate Change and Disasters", "Ocean and Environment", "Technology and Connectivity"];
 export default function AnswerTabsSection() {
   const [selectedAnswers, setSelectedAnswers] = useState<AnswerData[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     // Load selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
-    
     if (selectedCodes.length === 0) {
       setLoading(false);
       return;
     }
 
     // Load ANSWERMAPPINGNEWjson.json data
-    fetch('/data/ANSWERMAPPINGNEWjson.json')
-      .then(res => res.json())
-      .then(answersData => {
-        // Find matching answers for selected codes
-        const matchedAnswers = selectedCodes.map((code: string) => {
-          const answerData = answersData[code];
-          return answerData || null;
-        }).filter((item): item is AnswerData => item !== null);
-        
-        setSelectedAnswers(matchedAnswers);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Failed to load answers data:', err);
-        setSelectedAnswers([]);
-        setLoading(false);
-      });
+    fetch('/data/ANSWERMAPPINGNEWjson.json').then(res => res.json()).then(answersData => {
+      // Find matching answers for selected codes
+      const matchedAnswers = selectedCodes.map((code: string) => {
+        const answerData = answersData[code];
+        return answerData || null;
+      }).filter((item): item is AnswerData => item !== null);
+      setSelectedAnswers(matchedAnswers);
+      setLoading(false);
+    }).catch(err => {
+      console.error('Failed to load answers data:', err);
+      setSelectedAnswers([]);
+      setLoading(false);
+    });
   }, []);
 
   // Group answers by theme
@@ -73,25 +56,17 @@ export default function AnswerTabsSection() {
 
   // Always show all themes, even if they have no answers
   const themesWithAnswers = THEME_DISPLAY_ORDER;
-
   if (loading) {
-    return (
-      <div className="py-12 text-center">
+    return <div className="py-12 text-center">
         <div className="text-white text-lg">Loading your choices...</div>
-      </div>
-    );
+      </div>;
   }
-
   if (selectedAnswers.length === 0) {
-    return (
-      <div className="py-12 text-center">
+    return <div className="py-12 text-center">
         <p className="text-white/70">No choices were recorded for this session.</p>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <section className="py-12">
+  return <section className="py-12">
       <div className="mb-8">
         <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4">
           Your Choices for the Pacific Future
@@ -103,19 +78,12 @@ export default function AnswerTabsSection() {
 
       <Tabs defaultValue={themesWithAnswers[0]} className="w-full">
         <TabsList className="grid grid-cols-3 w-full mb-8 gap-2">
-          {themesWithAnswers.map((theme) => (
-            <TabsTrigger 
-              key={theme} 
-              value={theme}
-              className="text-sm md:text-base px-4 py-3 md:px-6 md:py-4 bg-white/10 hover:bg-white/20 data-[state=active]:bg-white data-[state=active]:text-black font-medium rounded-lg transition-all duration-200"
-            >
+          {themesWithAnswers.map(theme => <TabsTrigger key={theme} value={theme} className="text-sm md:text-base px-4 py-3 md:px-6 md:py-4 bg-white/10 hover:bg-white/20 data-[state=active]:bg-white data-[state=active]:text-black font-medium rounded-lg transition-all duration-200">
               {theme.replace(' and ', ' & ')}
-            </TabsTrigger>
-          ))}
+            </TabsTrigger>)}
         </TabsList>
 
-        {themesWithAnswers.map((theme) => (
-          <TabsContent key={theme} value={theme} className="space-y-6">
+        {themesWithAnswers.map(theme => <TabsContent key={theme} value={theme} className="space-y-6 py-0 my-[210px]">
             <div className="text-center mb-6">
               <h3 className="text-2xl md:text-3xl font-semibold text-white mb-2">
                 {theme}
@@ -125,14 +93,10 @@ export default function AnswerTabsSection() {
               </p>
             </div>
 
-            {(answersByTheme[theme] || []).length === 0 ? (
-              <div className="text-center py-8">
+            {(answersByTheme[theme] || []).length === 0 ? <div className="text-center py-8">
                 <p className="text-white/50">No choices made in this theme</p>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {answersByTheme[theme].map((answer, index) => (
-                  <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
+              </div> : <div className="space-y-6">
+                {answersByTheme[theme].map((answer, index) => <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-[#35c5f2] text-sm font-semibold uppercase tracking-wide">
                         Choice {answer.code}
@@ -181,19 +145,11 @@ export default function AnswerTabsSection() {
                       </div>
 
                       {/* Data Visualizations */}
-                      <DataVisualization 
-                        chart={answer.chart}
-                        counter={answer.counter}
-                        metrics={answer.metrics}
-                      />
+                      <DataVisualization chart={answer.chart} counter={answer.counter} metrics={answer.metrics} />
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-        ))}
+                  </div>)}
+              </div>}
+          </TabsContent>)}
       </Tabs>
-    </section>
-  );
+    </section>;
 }
