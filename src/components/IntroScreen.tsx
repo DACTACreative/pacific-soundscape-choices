@@ -125,7 +125,7 @@ To stitch connection across distant shores.
 
 Because we are mostly sea — scattered, yet bound. So close… yet often made to feel far.
 
-This is a game, yes — but it's also a call to feel.,
+This is a game, yes — but it's also a call to feel.`,
       reversed: false
     },
     {
