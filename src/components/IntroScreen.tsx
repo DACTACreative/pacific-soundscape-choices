@@ -36,42 +36,9 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   // Using introJ instead of introB in the array
   const introImages = [introAA, introA, introJ, introC, introD, introE, introF, introG, introH, introI, introB];
 
-  // Initialize Locomotive Scroll with proper loading
+  // Remove locomotive scroll - just set loaded to true
   useEffect(() => {
-    let locoScroll: any = null;
-    
-    const initLocomotiveScroll = async () => {
-      try {
-        // Dynamically import locomotive-scroll to avoid SSR issues
-        const LocomotiveScroll = (await import('locomotive-scroll')).default;
-        
-        if (scrollRef.current) {
-          locoScroll = new LocomotiveScroll({
-            el: scrollRef.current,
-            smooth: window.innerWidth > 768, // Disable smooth scrolling on mobile
-            multiplier: 0.8,
-            class: 'is-revealed'
-          });
-          
-          // Wait for locomotive to initialize
-          setTimeout(() => {
-            locoScroll?.update();
-            setIsLocoLoaded(true);
-          }, 100);
-        }
-      } catch (error) {
-        console.error('Error initializing Locomotive Scroll:', error);
-        setIsLocoLoaded(true); // Set to true even if locomotive fails
-      }
-    };
-
-    initLocomotiveScroll();
-
-    return () => {
-      if (locoScroll) {
-        locoScroll.destroy();
-      }
-    };
+    setIsLocoLoaded(true);
   }, []);
 
   // Debug logging
@@ -281,7 +248,7 @@ Let’s begin.`,
   ];
 
   return (
-    <div ref={scrollRef} data-scroll-container className="bg-black text-white overflow-x-hidden">
+    <div className="bg-black text-white overflow-x-hidden">
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 bg-black border-b border-white/10">
         <div className="px-8 py-6">
@@ -290,128 +257,82 @@ Let’s begin.`,
         </div>
       </div>
 
-      {/* First Block - Full Page Layout */}
-      <section 
-        key={blocks[0].id} 
-        data-scroll-section
-        className="relative h-screen flex flex-col lg:flex-row"
-        id="section-0"
-      >
-        {/* Sticky Image Container for first section - Hidden on mobile */}
-        <div className="sticky-section hidden lg:block lg:w-[40%]">
-          <div 
-            className="fixed-image lg:fixed lg:top-0 lg:right-0 lg:w-[40vw] lg:h-screen flex items-center justify-center p-8"
-            {...(isLocoLoaded && {
-              'data-scroll': true,
-              'data-scroll-sticky': true,
-              'data-scroll-target': '#section-0'
-            })}
-          >
-            <div className="w-full h-full flex items-center justify-center">
-              <img 
-                src={scenarioO}
-                alt="Blue Pacific 2050 Experience"
-                className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                style={{ width: 'auto', height: 'auto' }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Image - Visible only on mobile */}
-        <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
-          <div className="w-full h-full flex items-center justify-center">
-            <img 
-              src={scenarioO}
-              alt="Blue Pacific 2050 Experience"
-              className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-            />
-          </div>
-        </div>
-
-        {/* Text Content - Left Side */}
-        <div className="w-full lg:w-[60%] h-full flex items-center p-8 lg:p-16 bg-black">
-          <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
-              {blocks[0].title}
-            </h2>
-            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
-              {blocks[0].content}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Rest of the blocks with sticky behavior */}
-      {blocks.slice(1).map((block, index) => (
+      {/* All blocks with consistent layout */}
+      {blocks.map((block, index) => (
         <section 
           key={block.id} 
-          data-scroll-section
-          className="relative"
-          id={`section-${index + 1}`}
+          className="relative min-h-screen flex flex-col lg:flex-row"
+          id={`section-${index}`}
         >
-          {/* Fixed Image Container for this section - Hidden on mobile */}
-          <div className="sticky-section hidden lg:block lg:w-[40%]">
-              <div 
-                className="fixed-image lg:fixed lg:top-0 lg:right-0 lg:w-[40vw] lg:h-screen flex items-center justify-center p-8"
-                {...(isLocoLoaded && {
-                  'data-scroll': true,
-                  'data-scroll-sticky': true,
-                  'data-scroll-target': `#section-${index + 1}`
-                })}
-              >
-                <div className="w-full h-full flex items-center justify-center">
-                  <img 
-                    src={introImages[index + 1] || introImages[0]}
-                    alt="Blue Pacific 2050 Experience"
-                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                    style={{ width: 'auto', height: 'auto' }}
-                  />
-                </div>
-            </div>
-          </div>
-
           {/* Mobile Image - Visible only on mobile */}
           <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
             <div className="w-full h-full flex items-center justify-center">
               <img 
-                src={introImages[index + 1] || introImages[0]}
+                src={index === 0 ? scenarioO : (introImages[index] || introImages[0])}
                 alt="Blue Pacific 2050 Experience"
                 className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
               />
             </div>
           </div>
 
-          {/* Scrolling Text Content */}
-          <div className="scroll-text lg:w-[60%] lg:mr-[40vw] mr-0 p-8 lg:p-16 min-h-screen flex items-center bg-black">
-            <div className="max-w-2xl">
-              <h2 
-                className="text-4xl md:text-6xl font-bold text-white mb-8"
-                {...(isLocoLoaded && {
-                  'data-scroll': true,
-                  'data-scroll-speed': '0.5'
-                })}
-              >
+          {/* Desktop Layout */}
+          <div className="hidden lg:flex lg:w-full lg:h-screen">
+            {/* Image Side */}
+            <div className="w-[40%] h-full flex items-center justify-center p-8 bg-black">
+              <div className="w-full h-full flex items-center justify-center">
+                <img 
+                  src={index === 0 ? scenarioO : (introImages[index] || introImages[0])}
+                  alt="Blue Pacific 2050 Experience"
+                  className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
+                />
+              </div>
+            </div>
+
+            {/* Text Side */}
+            <div className="w-[60%] h-full flex items-center p-8 lg:p-16 bg-black">
+              <div className="max-w-2xl">
+                <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
+                  {block.title}
+                </h2>
+                <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
+                  {block.content}
+                </div>
+                
+                {block.isLast && (
+                  <div className="mt-12">
+                    <Button
+                      onClick={handleStart}
+                      disabled={loading}
+                      size="lg"
+                      className="group relative px-8 py-6 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500"
+                    >
+                      <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                      <span className="relative z-10">
+                        {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
+                      </span>
+                    </Button>
+                    
+                    <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
+                      Audio experience recommended for full immersion
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Text Content */}
+          <div className="lg:hidden w-full flex items-center p-8 bg-black min-h-[50vh]">
+            <div className="max-w-2xl mx-auto">
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
                 {block.title}
               </h2>
-              <div 
-                className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
-                {...(isLocoLoaded && {
-                  'data-scroll': true,
-                  'data-scroll-speed': '0.3'
-                })}
-              >
+              <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
                 {block.content}
               </div>
               
               {block.isLast && (
-                <div 
-                  className="mt-12"
-                  {...(isLocoLoaded && {
-                    'data-scroll': true,
-                    'data-scroll-speed': '0.2'
-                  })}
-                >
+                <div className="mt-12">
                   <Button
                     onClick={handleStart}
                     disabled={loading}
@@ -433,6 +354,7 @@ Let’s begin.`,
           </div>
         </section>
       ))}
+
     </div>
   );
 }
