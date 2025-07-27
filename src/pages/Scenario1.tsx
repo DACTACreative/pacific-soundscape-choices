@@ -12,7 +12,7 @@ export default function Scenario1() {
   useEffect(() => {
     // Load user's selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
-    console.log('Selected answer codes:', selectedCodes);
+    console.log('🔍 Raw selectedAnswerCodes:', selectedCodes);
     
     if (selectedCodes.length > 0) {
       // Load answers.json data
@@ -24,24 +24,31 @@ export default function Scenario1() {
           return response.json();
         })
         .then(answersData => {
-          console.log('Loaded answers data:', answersData);
-          // Map ALL selected answers (don't filter by theme - show all outcomes)
+          console.log('📊 Loaded answers data keys:', Object.keys(answersData));
+          
+          // Map ALL selected answers - NO FILTERING by theme, show EVERY answer
           const outcomes = selectedCodes.map((code: string) => {
             const answer = answersData[code];
             if (!answer) {
-              console.warn(`No answer found for code: ${code}`);
+              console.warn(`❌ No answer found for code: ${code}`);
               return null;
             }
+            console.log(`✅ Found answer for ${code}:`, {
+              theme: answer.theme,
+              hasChart: !!answer.chart,
+              hasCounter: !!answer.counter
+            });
             return answer;
           }).filter(Boolean);
-          console.log('User outcomes to display:', outcomes);
+          
+          console.log(`🎯 Total outcomes to display: ${outcomes.length}`, outcomes.map(o => o.code));
           setUserOutcomes(outcomes);
         })
         .catch(error => {
-          console.error('Error loading answers data:', error);
+          console.error('💥 Error loading answers data:', error);
         });
     } else {
-      console.log('No selected answer codes found in sessionStorage');
+      console.log('⚠️ No selected answer codes found in sessionStorage');
     }
   }, []);
 
@@ -126,8 +133,8 @@ export default function Scenario1() {
               <p className="text-white/60 mb-8">Complete the game to see your personalized outcome blocks here.</p>
               <button 
                 onClick={() => {
-                  // Add some sample data for testing
-                  sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(['A1', 'B2', 'C3', 'D1']));
+                  // Use your ACTUAL selected codes from the game
+                  sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(['A1', 'C2', 'A3', 'E3', 'B2', 'B3', 'C1', 'G1', 'D2', 'G2', 'F3']));
                   window.location.reload();
                 }}
                 className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"

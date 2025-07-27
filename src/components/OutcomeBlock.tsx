@@ -100,13 +100,21 @@ const OutcomeBlock: React.FC<OutcomeBlockProps> = ({ data }) => {
           <div className="space-y-8">
             {data.chart && (
               <div className="bg-black/40 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                <h4 className="text-xl font-semibold text-white mb-4">📊 Data Visualization</h4>
                 <DynamicChart {...data.chart} />
               </div>
             )}
 
             {data.counter && (
               <div className="bg-black/40 backdrop-blur-sm p-8 rounded-2xl border border-white/20 text-center">
+                <h4 className="text-xl font-semibold text-white mb-4">🔢 Impact Metric</h4>
                 <CountUp {...data.counter} />
+              </div>
+            )}
+            
+            {!data.chart && !data.counter && (
+              <div className="bg-black/20 backdrop-blur-sm p-8 rounded-2xl border border-white/10 text-center">
+                <p className="text-white/60">No specific data visualization for this outcome</p>
               </div>
             )}
           </div>
