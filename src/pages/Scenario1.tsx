@@ -1,12 +1,33 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import LocomotiveScroll from 'locomotive-scroll';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 
 export default function Scenario1() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let locomotiveScroll: LocomotiveScroll | null = null;
+
+    if (scrollRef.current) {
+      locomotiveScroll = new LocomotiveScroll({
+        el: scrollRef.current,
+        smooth: true,
+        multiplier: 1.2
+      });
+    }
+
+    return () => {
+      if (locomotiveScroll) {
+        locomotiveScroll.destroy();
+      }
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative">
+    <div ref={scrollRef} data-scroll-container className="min-h-screen bg-black text-white overflow-hidden relative">
       {/* Content */}
       <div className="relative z-10 pt-32">
         
@@ -21,7 +42,7 @@ export default function Scenario1() {
         </div>
 
         {/* Scenario Title */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto text-center">
               <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
@@ -37,7 +58,7 @@ export default function Scenario1() {
         </section>
 
         {/* Global Pathways */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
@@ -53,7 +74,7 @@ export default function Scenario1() {
         </section>
 
         {/* Sonification */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
@@ -72,7 +93,7 @@ export default function Scenario1() {
         </section>
 
         {/* Blue Pacific 2050 Reality */}
-        <section className="min-h-screen snap-start py-24 md:px-12 text-white flex flex-col justify-center">
+        <section className="scroll-block min-h-screen py-24 md:px-12 text-white flex flex-col justify-center" data-scroll-section>
           <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
             <h2 className="text-6xl md:text-7xl font-bold mb-8 text-center">Blue Pacific 2050 Reality</h2>
             
@@ -105,11 +126,13 @@ export default function Scenario1() {
         </section>
 
         {/* Blue Pacific Stories of Impact & Outcome Mapping */}
-        <BluePacificStoriesSection />
+        <section className="scroll-block min-h-screen flex items-center justify-center" data-scroll-section>
+          <BluePacificStoriesSection />
+        </section>
 
 
         {/* Navigation */}
-        <section className="py-24 flex items-center">
+        <section className="scroll-block min-h-screen py-24 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto text-center space-y-8">
               <Link 

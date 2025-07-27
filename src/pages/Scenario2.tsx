@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import LocomotiveScroll from 'locomotive-scroll';
 import * as THREE from 'three';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 
 export default function Scenario2() {
   const vantaRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let vantaEffect: any = null;
@@ -49,6 +51,24 @@ export default function Scenario2() {
     };
   }, []);
 
+  useEffect(() => {
+    let locomotiveScroll: LocomotiveScroll | null = null;
+
+    if (scrollRef.current) {
+      locomotiveScroll = new LocomotiveScroll({
+        el: scrollRef.current,
+        smooth: true,
+        multiplier: 1.2
+      });
+    }
+
+    return () => {
+      if (locomotiveScroll) {
+        locomotiveScroll.destroy();
+      }
+    };
+  }, []);
+
   const thematicSections = [
     {
       title: "1.0 Health and Wellbeing",
@@ -68,7 +88,7 @@ export default function Scenario2() {
   ];
 
   return (
-    <div className="bg-black text-white min-h-screen relative">
+    <div ref={scrollRef} data-scroll-container className="bg-black text-white min-h-screen relative">
       {/* VANTA Background */}
       <div ref={vantaRef} className="absolute inset-0 -z-10 w-full h-full" />
       
@@ -86,7 +106,7 @@ export default function Scenario2() {
         </div>
 
         {/* Scenario Title */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto text-center">
               <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
@@ -102,7 +122,7 @@ export default function Scenario2() {
         </section>
 
         {/* Global Pathways */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
@@ -118,7 +138,7 @@ export default function Scenario2() {
         </section>
 
         {/* Sonification */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
@@ -134,7 +154,7 @@ export default function Scenario2() {
         </section>
 
         {/* Blue Pacific 2050 Reality */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 text-center">
@@ -158,7 +178,7 @@ export default function Scenario2() {
         </section>
 
         {/* Blue Pacific Stories */}
-        <section className="py-24 md:py-48">
+        <section className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto">
               <BluePacificStoriesSection />
@@ -168,7 +188,7 @@ export default function Scenario2() {
 
         {/* Thematic Outcomes */}
         {thematicSections.map((section, index) => (
-          <section key={index} className="min-h-screen py-24 md:py-48 flex items-center">
+          <section key={index} className="scroll-block min-h-screen py-24 md:py-48 flex items-center justify-center" data-scroll-section>
             <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
               <div className="max-w-7xl mx-auto">
                 <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
@@ -190,7 +210,7 @@ export default function Scenario2() {
         ))}
 
         {/* Navigation */}
-        <section className="py-24 flex items-center">
+        <section className="scroll-block min-h-screen py-24 flex items-center justify-center" data-scroll-section>
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto text-center space-y-8">
               <div className="flex flex-col md:flex-row gap-6 justify-center">
