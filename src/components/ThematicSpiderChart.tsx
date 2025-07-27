@@ -309,10 +309,10 @@ export default function ThematicSpiderChart({
     },
     elements: {
       point: {
-        hitRadius: 15, // Reduced for more precise detection
-        hoverRadius: 25,
-        radius: 12,
-        borderWidth: 4,
+        hitRadius: 30, // Increased for easier detection  
+        hoverRadius: 35,
+        radius: 15,
+        borderWidth: 3,
         backgroundColor: '#35c5f2',
         borderColor: '#ffffff',
         hoverBackgroundColor: '#ffffff',
@@ -364,62 +364,59 @@ export default function ThematicSpiderChart({
       }
     },
   };
+  
   return <ErrorBoundary>
-      <div className={`relative ${className} font-inter isolate`}>
-        {/* SIMPLIFIED CONTAINER - No scroll-snap to prevent mouse event interference */}
-        <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 relative">
+      <div className={`relative ${className} font-inter`}>
+        {/* COMPLETELY SIMPLIFIED CONTAINER FOR HOVER */}
+        <div className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative bg-transparent">
+          <Radar 
+            ref={chartRef}
+            data={data} 
+            options={options}
+            style={{ 
+              width: '100%', 
+              height: '100%',
+              position: 'relative',
+              zIndex: 10
+            }}
+          />
           
-          {/* Chart Container - Optimized for mouse interaction */}
-          <div 
-            className="w-full h-[600px] sm:h-[70vh] max-w-7xl mx-auto relative"
-            onMouseEnter={() => console.log('🎯 Container mouse enter')}
-            onMouseLeave={() => console.log('🎯 Container mouse leave')}
-          >
-            <Radar 
-              ref={chartRef}
-              data={data} 
-              options={options}
-            />
-          </div>
-          
-          {/* Debug Info - Only in development */}
+          {/* Debug hover state */}
           {process.env.NODE_ENV === 'development' && (
-            <div className="mt-4 p-2 bg-background/80 rounded text-sm text-muted-foreground">
-              Current hover: {hoveredTheme || 'None'}
+            <div className="absolute top-4 left-4 bg-black/80 text-white p-2 rounded text-xs z-20">
+              Hover: {hoveredTheme || 'None'}
             </div>
           )}
         </div>
         
-        {/* Hover Info Box - Positioned outside chart for zero interference */}
-        <div 
-          className="fixed top-1/2 right-8 w-96 transform -translate-y-1/2 transition-all duration-200 ease-out z-[100] pointer-events-none"
-          style={{
-            opacity: hoveredTheme ? 1 : 0,
-            transform: `translate(${hoveredTheme ? '0' : '50px'}, -50%) scale(${hoveredTheme ? '1' : '0.98'})`
-          }}
-        >
-        {hoveredTheme ? (() => {
-          // Find the full theme name for this short label
-          const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === hoveredTheme);
-          const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-          const level = getLevel(rawCount);
-          return <div className="space-y-4 bg-black/90 backdrop-blur-lg shadow-2xl p-8 rounded-2xl border-2 border-blue-500/30">
-                <h3 className="text-4xl font-bold text-white mb-3">
-                  {hoveredTheme}
-                </h3>
-                <p className="text-xl text-white/95 leading-relaxed mb-6">
-                  {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] ? spiderMap[fullThemeName][level] : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
-                </p>
-                <div className="text-xl text-blue-300 font-bold">
-                  {level} Impact • {rawCount} choices
-                </div>
-              </div>;
-        })() : <div className="bg-black/50 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
-            <p className="text-xl text-gray-300 font-inter">
-              Hover over a theme in the chart to see your detailed impact.
-            </p>
-          </div>}
-      </div>
+        {/* Info Box - Simple positioning */}
+        {hoveredTheme && (
+          <div className="fixed top-1/2 right-8 w-96 transform -translate-y-1/2 z-50 pointer-events-none">
+            <div className="bg-black/90 backdrop-blur-lg shadow-2xl p-8 rounded-2xl border-2 border-blue-500/30">
+              <h3 className="text-4xl font-bold text-white mb-3">
+                {hoveredTheme}
+              </h3>
+              <p className="text-xl text-white/95 leading-relaxed mb-6">
+                {(() => {
+                  const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === hoveredTheme);
+                  const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
+                  const level = getLevel(rawCount);
+                  return fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] 
+                    ? spiderMap[fullThemeName][level] 
+                    : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.';
+                })()}
+              </p>
+              <div className="text-xl text-blue-300 font-bold">
+                {(() => {
+                  const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === hoveredTheme);
+                  const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
+                  const level = getLevel(rawCount);
+                  return `${level} Impact • ${rawCount} choices`;
+                })()}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </ErrorBoundary>;
 }
