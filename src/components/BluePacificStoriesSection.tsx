@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react';
-import Papa from 'papaparse';
+import DynamicChart from './DynamicChart';
+import CountUp from './CountUp';
 
-interface ThemeData {
-  thematic_summary: string;
-  level_of_ambition: string;
-  present_day_problematic: string;
-  bp2050_indicators: string;
+interface ChartConfig {
+  type: string;
+  title: string;
+  unit?: string;
+  data: Array<{
+    label: string;
+    value: number;
+  }>;
+}
+
+interface CounterConfig {
+  type: string;
+  title: string;
+  value: number;
+  unit?: string;
 }
 
 interface PlayerChoice {
@@ -14,6 +25,15 @@ interface PlayerChoice {
   narrative: string;
   impact: string;
   outcome: string;
+  chart?: ChartConfig;
+  counter?: CounterConfig;
+}
+
+interface ThemeData {
+  thematic_summary: string;
+  level_of_ambition: string;
+  present_day_problematic: string;
+  bp2050_indicators: string;
 }
 
 const THEME_DATA: Record<string, ThemeData> = {
@@ -69,60 +89,37 @@ export default function BluePacificStoriesSection() {
     // Load selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
     
-    console.log('📖 Stories Section - Selected codes:', selectedCodes);
-    
     if (selectedCodes.length === 0) {
-      console.log('📖 No selected codes found for stories section');
       setLoading(false);
       return;
     }
 
-    // Load mapping CSV data
-    fetch('/data/Mapping - Question BPC - Sheet1.csv')
-      .then(res => res.text())
-      .then(csvText => {
-        Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true,
-          transformHeader: (header) => header.trim(),
-          transform: (value, field) => {
-            if (typeof value === 'string') {
-              return value.trim().replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            }
-            return value;
-          },
-          complete: (results) => {
-            console.log('📖 CSV parsed for stories:', results.data.length, 'rows');
-            
-            // Find matching answers for selected codes
-            const matchedAnswers = selectedCodes.map((code: string) => {
-              const row = results.data.find((row: any) => row.code && row.code.trim() === code.trim()) as any;
-              if (row) {
-                console.log(`📖 Found match for ${code}:`, {
-                  theme: row.theme,
-                  answer: row.answer?.substring(0, 50) + '...',
-                  narrative: row.narrative?.substring(0, 50) + '...'
-                });
-                return {
-                  theme: (row.theme as string)?.trim() || '',
-                  answer: (row.answer as string)?.trim() || '',
-                  narrative: (row.narrative as string)?.trim() || '',
-                  impact: (row.impact as string)?.trim() || '',
-                  outcome: (row.outcome as string)?.trim() || ''
-                };
-              }
-              console.log(`📖 No match found for code: ${code}`);
-              return null;
-            }).filter((item): item is PlayerChoice => item !== null);
-            
-            console.log('📖 Final matched answers:', matchedAnswers.length);
-            setPlayerChoices(matchedAnswers as PlayerChoice[]);
-            setLoading(false);
+    // Load answers.json data to get charts and counters
+    fetch('/data/answers.json')
+      .then(response => response.json())
+      .then(answersData => {
+        // Map ALL selected answers including charts/counters
+        const outcomes = selectedCodes.map((code: string) => {
+          const answer = answersData[code];
+          if (!answer) {
+            return null;
           }
-        });
+          return {
+            theme: answer.theme,
+            answer: answer.answer,
+            narrative: answer.narrative,
+            impact: answer.impact,
+            outcome: answer.outcome,
+            chart: answer.chart,
+            counter: answer.counter
+          };
+        }).filter(Boolean);
+        
+        setPlayerChoices(outcomes);
+        setLoading(false);
       })
-      .catch(err => {
-        console.error('📖 Failed to load story data:', err);
+      .catch(error => {
+        console.error('Failed to load answers data:', error);
         setLoading(false);
       });
   }, []);
@@ -137,8 +134,6 @@ export default function BluePacificStoriesSection() {
     }
     return acc;
   }, {});
-  
-  console.log('📖 Choices grouped by theme:', choicesByTheme);
 
   if (loading) {
     return (
@@ -184,24 +179,50 @@ export default function BluePacificStoriesSection() {
 
             {/* Dynamic: Player's choice outcome */}
             {playerChoice && playerChoice.length > 0 ? (
-              <div className="space-y-4 mb-6">
+              <div className="space-y-6 mb-6">
                 {playerChoice.map((choice, index) => (
-                  <div key={index} className="bg-black/40 border border-white/20 p-6 rounded-lg">
-                    <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                      Your 2050 Outcome {playerChoice.length > 1 ? `#${index + 1}` : ''}
-                    </h3>
-                    <p className="text-white/90 text-base leading-relaxed mb-3">
-                      <strong>Your Choice:</strong> {choice.answer}
-                    </p>
-                    <p className="text-white/70 text-base leading-relaxed mb-3">
-                      <strong>Narrative:</strong> {choice.narrative}
-                    </p>
-                    <p className="text-orange-300 text-base leading-relaxed mb-3">
-                      <strong>Impact:</strong> {choice.impact}
-                    </p>
-                    <p className="text-green-300 text-base leading-relaxed">
-                      <strong>Outcome:</strong> {choice.outcome}
-                    </p>
+                  <div key={index} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {/* Left Column - Content */}
+                    <div className="bg-black/40 border border-white/20 p-6 rounded-lg">
+                      <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
+                        Your 2050 Outcome {playerChoice.length > 1 ? `#${index + 1}` : ''}
+                      </h3>
+                      <p className="text-white/90 text-base leading-relaxed mb-3">
+                        <strong>Your Choice:</strong> {choice.answer}
+                      </p>
+                      <p className="text-white/70 text-base leading-relaxed mb-3 italic">
+                        <strong>Narrative:</strong> {choice.narrative}
+                      </p>
+                      <p className="text-orange-300 text-base leading-relaxed mb-3">
+                        <strong>Impact:</strong> {choice.impact}
+                      </p>
+                      <p className="text-green-300 text-base leading-relaxed">
+                        <strong>Outcome:</strong> {choice.outcome}
+                      </p>
+                    </div>
+
+                    {/* Right Column - Visualizations */}
+                    <div className="space-y-4">
+                      {choice.chart && (
+                        <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/20">
+                          <h4 className="text-lg font-semibold text-white mb-4">📊 Data Visualization</h4>
+                          <DynamicChart {...choice.chart} />
+                        </div>
+                      )}
+
+                      {choice.counter && (
+                        <div className="bg-black/40 backdrop-blur-sm p-6 rounded-lg border border-white/20 text-center">
+                          <h4 className="text-lg font-semibold text-white mb-4">🔢 Impact Metric</h4>
+                          <CountUp {...choice.counter} />
+                        </div>
+                      )}
+                      
+                      {!choice.chart && !choice.counter && (
+                        <div className="bg-black/20 backdrop-blur-sm p-6 rounded-lg border border-white/10 text-center">
+                          <p className="text-white/60">No specific data visualization for this outcome</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
