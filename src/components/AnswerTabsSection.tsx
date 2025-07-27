@@ -68,10 +68,10 @@ export default function AnswerTabsSection() {
   }
   return <section className="py-12">
       <div className="mb-8">
-        <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4">
+        <h2 className="text-3xl font-semibold text-white mb-4 text-center my-[50px] md:text-6xl">
           Your Choices for the Pacific Future
         </h2>
-        <p className="text-lg text-white/70 leading-relaxed max-w-4xl">
+        <p className="text-white/70 leading-relaxed max-w-4xl my-0 py-[20px] text-xl font-medium text-center px-0 mx-0">
           These are the decisions you made during your journey, organized by the seven pillars of the Blue Pacific 2050 Strategy. Each choice contributes to shaping the future scenario you experienced.
         </p>
       </div>
@@ -98,9 +98,7 @@ export default function AnswerTabsSection() {
               </div> : <div className="space-y-6">
                 {answersByTheme[theme].map((answer, index) => <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-[#35c5f2] text-sm font-semibold uppercase tracking-wide">
-                        Choice {answer.code}
-                      </span>
+                      
                       <span className="text-white/50 text-xs">
                         Question {answer.QuestionCode}
                       </span>
@@ -122,7 +120,7 @@ export default function AnswerTabsSection() {
                       </div>
 
                       <div>
-                        <h4 className="text-white/70 font-medium mb-2">Story</h4>
+                        <h4 className="text-white/70 font-medium mb-2">Narrative</h4>
                         <p className="text-white/70 text-sm leading-relaxed">
                           {answer.narrative}
                         </p>

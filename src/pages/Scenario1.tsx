@@ -69,7 +69,7 @@ export default function Scenario1() {
               <strong>Thematic Spider Chart</strong>
             </p>
             
-            <p className="text-lg md:text-xl max-w-4xl leading-relaxed mb-6 text-gray-300">This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.</p>
+            <p className="text-lg md:text-xl max-w-4xl leading-relaxed mb-6 text-gray-300 font-medium">This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.</p>
             
             <p className="text-lg md:text-xl max-w-4xl leading-relaxed mb-6 text-gray-300">
               The chart's broad but imperfect shape illustrates a future built on successful yet realistic trade-offs. It's a living portrait of the Pacific's navigation through uncertainty, strength, and resilience.
