@@ -8,7 +8,7 @@
     "Question": "Many remote villages feel left behind by national development. How will you reconnect and empower your communities?",
     "outcome": "1.3 Improved enabling environment for increased representation and participation of all Pacific peoples, including women and girls in all their diversity in leadership to ensure, inclusive and equitable sharing of resources and opportunities.",
     "impact": "The proportion of seats held by women in Vanuatu's national parliament rose from 2% in 2025 to 27% by 2050. Broader participation of women and girls in political leadership was observed across the region, particularly in local governance and youth councils.",
-    "narrative": "In Luganville, a climate awareness tour stopped at the local school. Among the students was Litia, 16, who stayed behind after the session to ask questions about political organising. Inspired by the speakers, she formed a girls' climate club — which later evolved into a civic leadership group. A decade later, Litia won her local council seat and helped write the island's first youth-inclusive environmental charter."
+    "narrative": "In Luganville, a climate awareness tour stopped at the local school. Among the students was Litia, 16, who stayed behind after the session to ask questions about political organising. Inspired by the speakers, she formed a girls' climate club — which later evolved into a civic leadership group. A decade later, Litia won her local council seat and helped write the island's first youth-inclusive environmental charter.",
     "chart": {
   "type": "bar",
   "title": "Women in Vanuatu Parliament (%)",
@@ -17,8 +17,7 @@
     { "label": "2025", "value": 2 },
     { "label": "2050", "value": 27 }
   ]
-}
-  
+    }
   },
   "A2": {
     "code": "A2",
@@ -31,7 +30,7 @@
     "impact": "The Ina i-Tu model was formalised across six countries as part of the regional governance system. By 2050, it became a recognised mechanism within the Pacific Islands Forum — ensuring that traditional leaders, women, and rural youth had a seat in climate and development negotiations.",
     "narrative": "In North Tarawa, community leader Tekiera joined her first Ina i-Tu circle — one of dozens launched across the islands. Discussions once confined to government halls were now taking place under trees and beside canoes. Her voice — rooted in ancestral knowledge and lived climate experience — soon echoed beyond her village. Within five years, she was appointed to Kiribati's national adaptation taskforce. Her presence shifted the tone of regional meetings: local wisdom was no longer symbolic — it was strategy."
   },
- "A3": {
+  "A3": {
   "code": "A3",
   "themecode": "Political_Leadership_and_Regionalism",
   "answer": "The Solomon Islands invests 25% of aid into a Sovereign Oversight Commission to regulate foreign investment and launch the SolPower plan. All new investments must allocate at least 30% toward Blue Pacific 2050 priorities.",
@@ -50,8 +49,7 @@
       { "label": "2035", "value": 1000 }
     ]
   }
-}
-
+  },
   "A4": {
   "code": "A4",
   "themecode": "Political_Leadership_and_Regionalism",
@@ -69,11 +67,10 @@
     "data": [
       { "label": "Community-led Adaptation", "value": 43 },
       { "label": "Other Allocations", "value": 57 }
-    ]
+  ]
   }
-}
-
-"B1": {
+  },
+  "B1": {
   "code": "B1",
   "themecode": "People_Centered_Development",
   "answer": "Launch a nationwide \"Cellule of Knowledge\" initiative that bridges formal healthcare with Indigenous practices. Local elders, healers, and youth are trained as co-practitioners, revitalising trust in health services and embedding cultural protocols into care delivery — especially in remote areas.",
@@ -92,7 +89,7 @@
       { "label": "2040", "value": 89 }
     ]
   }
-}
+  },
   "B2": {
   "code": "B2",
   "themecode": "People_Centered_Development",
@@ -112,8 +109,7 @@
       { "label": "2050", "value": 89 }
     ]
   }
-}
-
+  },
   "B3": {
     "code": "B3",
     "themecode": "People_Centered_Development",
@@ -141,8 +137,7 @@
     "unit": "countries",
     "value": 15
   }
-}
-
+  },
   "C2": {
   "code": "C2",
   "themecode": "Peace_and_Security",
@@ -159,9 +154,8 @@
     "unit": "%",
     "value": 50
   }
-}
-
- "C3": {
+  },
+  "C3": {
   "code": "C3",
   "themecode": "Peace_and_Security",
   "answer": "Kiribati launches a national training program to equip remote communities to co-design low-tech resilience stations. These hubs combine traditional knowledge with open-source climate tools, enabling early warning, local monitoring, and stronger climate preparedness.",
@@ -177,9 +171,8 @@
     "unit": "%",
     "value": 70
   }
-}
-
- "D1": {
+  },
+  "D1": {
   "code": "D1",
   "themecode": "Resource_and_Economic_Development",
   "answer": "Vanuatu enacts a revised Investment Reform Act that prioritises landowner negotiation, biodiversity safeguards, and shared ownership models for all medium- to large-scale ventures.",
@@ -209,9 +202,8 @@
       "note": "As of 2045"
     }
   ]
-}
-
- "D2": {
+  },
+  "D2": {
   "code": "D2",
   "themecode": "Resource_and_Economic_Development",
   "answer": "Tonga launches the \"Island Micro Works\" scheme — offering low-interest loans, training, and market access to rural cooperatives making eco-goods, food products, and craft tools from traditional materials.",
@@ -236,8 +228,7 @@
     "unit": "%",
     "value": 63
   }
-}
-
+  },
   "D3": {
   "code": "D3",
   "themecode": "Resource_and_Economic_Development",
@@ -268,9 +259,8 @@
       "note": "increase from 2025"
     }
   ]
-}
-
- "E1": {
+  },
+  "E1": {
   "code": "E1",
   "themecode": "Climate_Change_and_Disasters",
   "answer": "The Solomon Islands launches a Customary Loss Registry with local leaders, while the Pacific Islands Forum creates a regional \"1.5°C Story & Strategy Cohort\" — training young negotiators in diplomacy, Indigenous knowledge, and non-economic loss advocacy.",
@@ -286,9 +276,8 @@
     "unit": "countries",
     "value": 5
   }
-}
-
-"E2": {
+  },
+  "E2": {
   "code": "E2",
   "themecode": "Climate_Change_and_Disasters",
   "answer": "New Caledonia launches Climate Avenir, a regional scholarship and placement scheme sending local youth to leading technical universities in Asia and the Pacific, focused on engineering climate resilience.",
@@ -312,9 +301,8 @@
       "note": "as of 2050"
     }
   ]
-}
-
-"E3": {
+  },
+  "E3": {
   "code": "E3",
   "themecode": "Climate_Change_and_Disasters",
   "answer": "Micronesia launches \"Blue Garden\" pilot zones — perma-ecological mitigation sites combining coral restoration, offshore wind, and low-tech seaweed farming — co-managed by local schools, women's collectives, and fisher cooperatives.",
@@ -339,9 +327,8 @@
     "unit": "%",
     "value": 85
   }
-}
-
- "F1": {
+  },
+  "F1": {
   "code": "F1",
   "themecode": "Ocean_and_Environment",
   "answer": "Launch the Pollinator Villages Network in the Cook Islands — certifying communities that protect native bees, plant nectar corridors, and revive ceremonial floral practices across five islands.",
@@ -366,8 +353,7 @@
     "unit": "%",
     "value": 70
   }
-}
-
+  },
   "F2": {
   "code": "F2",
   "themecode": "Ocean_and_Environment",
@@ -392,9 +378,8 @@
     "unit": "%",
     "value": 92
   }
-}
-
- "F3": {
+  },
+  "F3": {
   "code": "F3",
   "themecode": "Ocean_and_Environment",
   "answer": "Tonga launches the Pacific Peer Learning Platform on Climate Change, starting with a regional campaign on plastic replacement. Solomon Islands, New Caledonia, and Fiji contribute examples of cultural alternatives. The platform hosts community challenges, knowledge exchanges, and a public archive of locally driven solutions.",
@@ -418,8 +403,7 @@
     "unit": "countries",
     "value": 12
   }
-}
-
+  },
   "G1": {
   "code": "G1",
   "themecode": "Technology_and_Connectivity",
@@ -436,9 +420,8 @@
     "unit": "%",
     "value": 65
   }
-}
-
- "G2": {
+  },
+  "G2": {
   "code": "G2",
   "themecode": "Technology_and_Connectivity",
   "answer": "Solomon Islands establishes PacificSekaNet — a solar-powered, low-emission regional intranet combining cultural archives, public services, and knowledge hubs, managed through community cooperatives and reinforced with local encryption standards.",
@@ -454,9 +437,8 @@
     "unit": "%",
     "value": 60
   }
-}
-
-"G3": {
+  },
+  "G3": {
   "code": "G3",
   "themecode": "Technology_and_Connectivity",
   "answer": "Fund and deploy the Fiji Public Service AI & Data Fellowship — a new civil servant upskilling program that trains 200+ officers per year to use AI tools and open data for local climate response projects.",
@@ -480,5 +462,6 @@
     "title": "Civil Servants Trained in AI",
     "unit": "",
     "value": 1500
+  }
   }
 }
