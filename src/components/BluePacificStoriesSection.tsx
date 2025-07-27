@@ -3,6 +3,12 @@ import { useEffect, useState } from 'react';
 import { DataVisualization } from './DataVisualization';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
+// Utility function to truncate text
+const shortenText = (text: string, maxLength: number): string => {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength).trim() + '...';
+};
+
 interface ThemeData {
   thematic_summary: string;
   level_of_ambition: string;
@@ -83,6 +89,7 @@ const THEME_DISPLAY_ORDER = [
 export default function BluePacificStoriesSection() {
   const [selectedAnswers, setSelectedAnswers] = useState<AnswerData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     // Load selected answer codes from sessionStorage
@@ -146,17 +153,17 @@ export default function BluePacificStoriesSection() {
 
       {/* Tabbed Thematic Blocks */}
       <Tabs defaultValue={THEME_DISPLAY_ORDER[0]} className="w-full">
-        <TabsList className="grid w-full bg-black/40 border border-white/20 p-1 mb-8" style={{ gridTemplateColumns: `repeat(7, 1fr)` }}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-8">
           {THEME_DISPLAY_ORDER.map((themeName) => (
             <TabsTrigger 
               key={themeName} 
               value={themeName}
-              className="text-xs md:text-sm p-2 md:p-3 data-[state=active]:bg-[#35c5f2] data-[state=active]:text-black text-white/70 hover:text-white/90"
+              className="px-4 py-2 rounded-full text-sm font-semibold data-[state=active]:bg-[#35c5f2] data-[state=active]:text-black bg-white/10 text-white hover:bg-white/20 transition-all duration-200"
             >
               {themeName.replace(' and ', ' & ')}
             </TabsTrigger>
           ))}
-        </TabsList>
+        </div>
 
         {THEME_DISPLAY_ORDER.map((themeName) => {
           const themeData = THEME_DATA[themeName];
@@ -192,64 +199,99 @@ export default function BluePacificStoriesSection() {
                     </p>
 
                     <div className="space-y-6">
-                      {userChoices.map((answer) => (
-                        <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
-                          <div className="flex items-center justify-between mb-4">
-                            <span className="text-[#35c5f2] text-sm font-semibold uppercase tracking-wide">
-                              Choice {answer.code}
-                            </span>
-                            <span className="text-white/50 text-xs">
-                              Question {answer.QuestionCode}
-                            </span>
-                          </div>
+                      {userChoices.map((answer) => {
+                        const isExpanded = expandedCards.has(answer.code);
+                        const toggleExpanded = () => {
+                          const newSet = new Set(expandedCards);
+                          if (isExpanded) {
+                            newSet.delete(answer.code);
+                          } else {
+                            newSet.add(answer.code);
+                          }
+                          setExpandedCards(newSet);
+                        };
 
-                          <div className="space-y-4">
-                            <div>
-                              <h4 className="text-white font-medium mb-2">Question</h4>
-                              <p className="text-white/80 text-sm leading-relaxed">
-                                {answer.Question}
-                              </p>
+                        return (
+                          <div key={answer.code} className="bg-black/60 border border-white/10 p-6 rounded-lg transition hover:shadow-lg">
+                            {/* Theme Header */}
+                            <h3 className="text-sm text-[#35c5f2] uppercase tracking-wide mb-1">
+                              {answer.theme}
+                            </h3>
+                            
+                            {/* Choice Preview */}
+                            <h4 className="text-white text-xl font-semibold mb-2">
+                              {shortenText(answer.answer, 100)}
+                            </h4>
+                            
+                            {/* Narrative Preview */}
+                            <p className="text-white/80 mb-2 italic">
+                              {shortenText(answer.narrative, 120)}
+                            </p>
+                            
+                            {/* Impact and Button Row */}
+                            <div className="flex justify-between items-center mt-4 mb-4">
+                              <span className="text-green-300 font-medium">
+                                Impact: {shortenText(answer.impact, 60)}
+                              </span>
+                              <button 
+                                className="text-sm bg-[#35c5f2] text-black px-3 py-1 rounded hover:bg-[#35c5f2]/80 transition-colors"
+                                onClick={toggleExpanded}
+                              >
+                                {isExpanded ? 'Hide Details' : 'View Outcome'}
+                              </button>
                             </div>
 
-                            <div>
-                              <h4 className="text-[#35c5f2] font-medium mb-2">Your Choice</h4>
-                              <p className="text-white text-base leading-relaxed">
-                                {answer.answer}
-                              </p>
-                            </div>
+                            {/* Expanded Content */}
+                            {isExpanded && (
+                              <div className="border-t border-white/20 pt-4 space-y-4">
+                                <div>
+                                  <h4 className="text-white font-medium mb-2">Question</h4>
+                                  <p className="text-white/80 text-sm leading-relaxed">
+                                    {answer.Question}
+                                  </p>
+                                </div>
 
-                            <div>
-                              <h4 className="text-white/70 font-medium mb-2">Story</h4>
-                              <p className="text-white/70 text-sm leading-relaxed">
-                                {answer.narrative}
-                              </p>
-                            </div>
+                                <div>
+                                  <h4 className="text-[#35c5f2] font-medium mb-2">Your Full Choice</h4>
+                                  <p className="text-white text-base leading-relaxed">
+                                    {answer.answer}
+                                  </p>
+                                </div>
 
-                            <div className="grid md:grid-cols-2 gap-4">
-                              <div>
-                                <h4 className="text-orange-300 font-medium mb-2">Impact</h4>
-                                <p className="text-orange-200 text-sm leading-relaxed">
-                                  {answer.impact}
-                                </p>
+                                <div>
+                                  <h4 className="text-white/70 font-medium mb-2">Complete Story</h4>
+                                  <p className="text-white/70 text-sm leading-relaxed">
+                                    {answer.narrative}
+                                  </p>
+                                </div>
+
+                                <div className="grid md:grid-cols-2 gap-4">
+                                  <div>
+                                    <h4 className="text-orange-300 font-medium mb-2">Full Impact</h4>
+                                    <p className="text-orange-200 text-sm leading-relaxed">
+                                      {answer.impact}
+                                    </p>
+                                  </div>
+
+                                  <div>
+                                    <h4 className="text-green-300 font-medium mb-2">Complete Outcome</h4>
+                                    <p className="text-green-200 text-sm leading-relaxed">
+                                      {answer.outcome}
+                                    </p>
+                                  </div>
+                                </div>
+
+                                {/* Data Visualizations */}
+                                <DataVisualization 
+                                  chart={answer.chart}
+                                  counter={answer.counter}
+                                  metrics={answer.metrics}
+                                />
                               </div>
-
-                              <div>
-                                <h4 className="text-green-300 font-medium mb-2">Outcome</h4>
-                                <p className="text-green-200 text-sm leading-relaxed">
-                                  {answer.outcome}
-                                </p>
-                              </div>
-                            </div>
-
-                            {/* Data Visualizations */}
-                            <DataVisualization 
-                              chart={answer.chart}
-                              counter={answer.counter}
-                              metrics={answer.metrics}
-                            />
+                            )}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
