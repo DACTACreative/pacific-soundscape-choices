@@ -3,24 +3,6 @@ import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 
 export default function Scenario3() {
-  const thematicSections = [
-    {
-      title: "1.0 Health and Wellbeing",
-      content: "The health system collapsed under the weight of cascading crises. Hospitals flooded repeatedly, medical supplies became unreliable due to damaged infrastructure, and the health workforce emigrated to higher, safer ground. Vector-borne diseases exploded as changing rainfall patterns created new breeding grounds for mosquitoes, while food insecurity led to widespread malnutrition.",
-      impact: "Suva's main hospital has been abandoned after the fifth major flood. Life expectancy dropped by eight years as treatable diseases became fatal due to lack of medical care."
-    },
-    {
-      title: "2.0 Economic Development", 
-      content: "The economy effectively ceased to function as a modern market system. Tourism disappeared entirely—there are no reefs to see, no stable weather patterns to plan around, and no infrastructure to support visitors. The currency became worthless as the government lost taxation capacity. Most economic activity reverted to subsistence and barter systems.",
-      impact: "Nadi Airport operates only sporadically when not flooded. The tourism industry, once 40% of GDP, recorded zero international visitors for eighteen consecutive months. Most resorts are now refugee shelters."
-    },
-    {
-      title: "3.0 Peace & Security",
-      content: "Social cohesion fractured under existential pressure. Competition for shrinking freshwater sources led to violent conflicts between communities. The government lost legitimacy as it failed to protect citizens from climate impacts, leading to a breakdown of law and order. International relations became dominated by desperate negotiations for mass resettlement rights.",
-      impact: "Fiji's government operates from Suva only during low tide seasons. Two violent conflicts over freshwater access left thirty-seven dead. New Zealand and Australia closed their borders to climate migrants after social unrest."
-    }
-  ];
-
   return (
     <div className="bg-black text-white min-h-screen relative">
       {/* Fixed Header */}
@@ -115,29 +97,6 @@ export default function Scenario3() {
             </div>
           </div>
         </section>
-
-        {/* Thematic Outcomes */}
-        {thematicSections.map((section, index) => (
-          <section key={index} className="min-h-screen py-24 md:py-48 flex items-center justify-center">
-            <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-              <div className="max-w-7xl mx-auto">
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                  {section.title}
-                </h2>
-                <div className="max-w-5xl mx-auto space-y-6">
-                  <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white text-justify">
-                    {section.content}
-                  </p>
-                  <div className="pl-6 border-l-4 border-red-500">
-                    <p className="text-lg md:text-xl text-white/80 text-justify">
-                      → {section.impact}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        ))}
 
         {/* Navigation */}
         <section className="min-h-screen py-24 flex items-center justify-center">

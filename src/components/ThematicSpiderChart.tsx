@@ -342,10 +342,10 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
     },
     elements: {
       point: {
-        hitRadius: 25,
-        hoverRadius: 16,
-        radius: 12,
-        borderWidth: 4,
+        hitRadius: 35,
+        hoverRadius: 20,
+        radius: 14,
+        borderWidth: 5,
         backgroundColor: '#35c5f2',
         borderColor: '#ffffff',
         hoverBackgroundColor: '#ffffff',
@@ -367,12 +367,12 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
         },
         pointLabels: {
           font: {
-            size: 20,
+            size: 24,
             family: '"Inter", system-ui, sans-serif',
-            weight: 600
+            weight: 700
           },
           color: '#ffffff',
-          padding: 20
+          padding: 30
         },
         ticks: {
           stepSize: 1,
@@ -388,11 +388,11 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
           color: '#ffffff',
           backdropColor: 'transparent',
           font: {
-            size: 18,
-            weight: 600,
+            size: 20,
+            weight: 700,
             family: '"Inter", system-ui, sans-serif'
           },
-          padding: 15
+          padding: 20
         }
       }
     },
@@ -442,7 +442,7 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
           </div>
         </div>
       {/* Hover Info Box - Positioned on the side */}
-      <div className="fixed top-1/2 right-8 transform -translate-y-1/2 w-96 transition-all duration-300 ease-in-out z-50"
+      <div className="fixed top-1/2 right-8 transform -translate-y-1/2 w-[420px] transition-all duration-300 ease-in-out z-50"
            style={{ opacity: hoveredTheme ? 1 : 0, transform: `translate(${hoveredTheme ? '0' : '20px'}, -50%)`}}>
         {hoveredTheme ? (
           (() => {
@@ -454,24 +454,24 @@ export default function ThematicSpiderChart({ className }: ThematicSpiderChartPr
             const level = getLevel(rawCount);
             
             return (
-              <div className="space-y-4 bg-black/80 backdrop-blur-lg shadow-xl p-6 rounded-2xl border border-blue-500/20">
-                <h3 className="text-3xl font-bold text-white mb-2">
+              <div className="space-y-4 bg-black/90 backdrop-blur-lg shadow-2xl p-8 rounded-2xl border-2 border-blue-500/30">
+                <h3 className="text-4xl font-bold text-white mb-3">
                   {hoveredTheme}
                 </h3>
-                <p className="text-xl text-white/90 leading-relaxed mb-4">
+                <p className="text-xl text-white/95 leading-relaxed mb-6">
                   {fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level]
                     ? spiderMap[fullThemeName][level]
                     : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.'}
                 </p>
-                <div className="text-lg text-blue-300 font-semibold">
+                <div className="text-xl text-blue-300 font-bold">
                   {level} Impact • {rawCount} choices
                 </div>
               </div>
             );
           })()
         ) : (
-          <div className="bg-black/40 backdrop-blur-sm p-6 rounded-2xl">
-            <p className="text-lg text-gray-300 font-inter">
+          <div className="bg-black/50 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+            <p className="text-xl text-gray-300 font-inter">
               Hover over a theme in the chart to see your detailed impact.
             </p>
           </div>

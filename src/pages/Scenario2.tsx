@@ -3,24 +3,6 @@ import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 
 export default function Scenario2() {
-  const thematicSections = [
-    {
-      title: "1.0 Health and Wellbeing",
-      content: "Your hybrid approach to health infrastructure showed mixed results. While urban areas thrived with new digital health platforms, rural communities still struggle with inconsistent connectivity. Maternal mortality improved by 15%, but chronic disease management remains challenging as traditional diets shift due to changing fish availability and crop patterns.",
-      impact: "Suva General Hospital now operates at 150% capacity during cyclone seasons. Three rural health centers closed due to repeated flooding, forcing longer travel times for care."
-    },
-    {
-      title: "2.0 Economic Development", 
-      content: "Tourism adapted to the new normal—visitors now come for 'resilience tourism,' learning about adaptation while contributing to local economies. However, the industry is 40% smaller than in 2025, with frequent weather disruptions. Fishing income dropped substantially, but government retraining programs helped 60% of displaced fishers transition to aquaculture.",
-      impact: "Coral Coast resorts now host 'climate reality' tours, generating modest revenue while raising awareness. The Great Astrolabe Reef is mostly dead, ending decades of dive tourism."
-    },
-    {
-      title: "3.0 Peace & Security",
-      content: "Regional cooperation prevented major conflicts, but tensions remain high over freshwater access and relocation rights. The Pacific Migration Compact you supported provides legal pathways for climate migrants, but integration challenges persist. Some communities split between those who stayed and those who moved to higher ground.",
-      impact: "The Koro Island relocation to Ovalau created lasting social divisions. Maritime boundaries required renegotiation as three small islands became permanently submerged."
-    }
-  ];
-
   return (
     <div className="bg-black text-white min-h-screen relative">
 
@@ -116,29 +98,6 @@ export default function Scenario2() {
             </div>
           </div>
         </section>
-
-        {/* Thematic Outcomes */}
-        {thematicSections.map((section, index) => (
-          <section key={index} className="min-h-screen py-24 md:py-48 flex items-center justify-center">
-            <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-              <div className="max-w-7xl mx-auto">
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                  {section.title}
-                </h2>
-                <div className="max-w-5xl mx-auto space-y-6">
-                  <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white text-justify">
-                    {section.content}
-                  </p>
-                  <div className="pl-6 border-l-4 border-orange-400">
-                    <p className="text-lg md:text-xl text-white/80 text-justify">
-                      → {section.impact}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        ))}
 
         {/* Navigation */}
         <section className="min-h-screen py-24 flex items-center justify-center">
