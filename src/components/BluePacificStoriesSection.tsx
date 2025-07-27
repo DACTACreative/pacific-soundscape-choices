@@ -98,12 +98,21 @@ export default function BluePacificStoriesSection() {
     fetch('/data/answers.json')
       .then(response => response.json())
       .then(answersData => {
+        console.log('🔍 BluePacific: Loaded answers data, total keys:', Object.keys(answersData).length);
+        console.log('🔍 BluePacific: Selected codes:', selectedCodes);
+        
         // Map ALL selected answers including charts/counters
         const outcomes = selectedCodes.map((code: string) => {
           const answer = answersData[code];
           if (!answer) {
+            console.warn('❌ BluePacific: No answer found for code:', code);
             return null;
           }
+          console.log(`✅ BluePacific: Found answer for ${code}:`, {
+            theme: answer.theme,
+            hasChart: !!answer.chart,
+            hasCounter: !!answer.counter
+          });
           return {
             theme: answer.theme,
             answer: answer.answer,
@@ -114,6 +123,10 @@ export default function BluePacificStoriesSection() {
             counter: answer.counter
           };
         }).filter(Boolean);
+        
+        console.log('🎯 BluePacific: Total outcomes processed:', outcomes.length);
+        console.log('🎯 BluePacific: Themes found:', [...new Set(outcomes.map(o => o.theme))]);
+        console.log('🎯 BluePacific: THEME_DATA keys:', Object.keys(THEME_DATA));
         
         setPlayerChoices(outcomes);
         setLoading(false);
@@ -134,6 +147,9 @@ export default function BluePacificStoriesSection() {
     }
     return acc;
   }, {});
+
+  console.log('🔍 BluePacific: Choices by theme:', choicesByTheme);
+  console.log('🔍 BluePacific: Player choices total:', playerChoices.length);
 
   if (loading) {
     return (
