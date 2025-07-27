@@ -36,7 +36,7 @@ const OutcomeBlock: React.FC<OutcomeBlockProps> = ({ data }) => {
   
   return (
     <section
-      className="scroll-block outcome-block min-h-screen py-24 md:py-48 flex items-center justify-center"
+      className="scroll-block outcome-block py-16 md:py-20"
       data-scroll-section
       style={{ 
         background: '#111', 
