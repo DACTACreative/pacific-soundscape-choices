@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { DataVisualization } from './DataVisualization';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 interface ThemeData {
   thematic_summary: string;
@@ -143,114 +144,130 @@ export default function BluePacificStoriesSection() {
         </p>
       </div>
 
-      {/* Thematic Blocks */}
-      {THEME_DISPLAY_ORDER.map((themeName) => {
-        const themeData = THEME_DATA[themeName];
-        const userChoices = answersByTheme[themeName] || [];
-        
-        return (
-          <div key={themeName} className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-semibold text-white mb-6">
-              {themeName}
-            </h2>
+      {/* Tabbed Thematic Blocks */}
+      <Tabs defaultValue={THEME_DISPLAY_ORDER[0]} className="w-full">
+        <TabsList className="grid w-full bg-black/40 border border-white/20 p-1 mb-8" style={{ gridTemplateColumns: `repeat(7, 1fr)` }}>
+          {THEME_DISPLAY_ORDER.map((themeName) => (
+            <TabsTrigger 
+              key={themeName} 
+              value={themeName}
+              className="text-xs md:text-sm p-2 md:p-3 data-[state=active]:bg-[#35c5f2] data-[state=active]:text-black text-white/70 hover:text-white/90"
+            >
+              {themeName.replace(' and ', ' & ')}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-            <p className="text-lg text-white/80 font-light mb-4">
-              <strong>Thematic Summary:</strong> {themeData.thematic_summary}
-            </p>
+        {THEME_DISPLAY_ORDER.map((themeName) => {
+          const themeData = THEME_DATA[themeName];
+          const userChoices = answersByTheme[themeName] || [];
+          
+          return (
+            <TabsContent key={themeName} value={themeName} className="mt-8">
+              <div className="space-y-8">
+                <h2 className="text-3xl md:text-4xl font-semibold text-white mb-6">
+                  {themeName}
+                </h2>
 
-            <p className="text-lg text-white/80 font-light mb-4">
-              <strong>Level of Ambition:</strong> {themeData.level_of_ambition}
-            </p>
-
-            <p className="text-lg text-white/80 font-light mb-8">
-              <strong>Present-Day Problematic (2025):</strong> {themeData.present_day_problematic}
-            </p>
-
-            {/* User Choices Section - only show if there are choices for this theme */}
-            {userChoices.length > 0 && (
-              <div className="mb-8">
-                <h3 className="text-2xl md:text-3xl font-semibold text-[#35c5f2] mb-4">
-                  Your Choices in This Theme
-                </h3>
-                <p className="text-white/60 text-sm mb-6">
-                  {userChoices.length} choice{userChoices.length !== 1 ? 's' : ''} made in this theme
+                <p className="text-lg text-white/80 font-light mb-4">
+                  <strong>Thematic Summary:</strong> {themeData.thematic_summary}
                 </p>
 
-                <div className="space-y-6">
-                  {userChoices.map((answer) => (
-                    <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-[#35c5f2] text-sm font-semibold uppercase tracking-wide">
-                          Choice {answer.code}
-                        </span>
-                        <span className="text-white/50 text-xs">
-                          Question {answer.QuestionCode}
-                        </span>
-                      </div>
+                <p className="text-lg text-white/80 font-light mb-4">
+                  <strong>Level of Ambition:</strong> {themeData.level_of_ambition}
+                </p>
 
-                      <div className="space-y-4">
-                        <div>
-                          <h4 className="text-white font-medium mb-2">Question</h4>
-                          <p className="text-white/80 text-sm leading-relaxed">
-                            {answer.Question}
-                          </p>
-                        </div>
+                <p className="text-lg text-white/80 font-light mb-8">
+                  <strong>Present-Day Problematic (2025):</strong> {themeData.present_day_problematic}
+                </p>
 
-                        <div>
-                          <h4 className="text-[#35c5f2] font-medium mb-2">Your Choice</h4>
-                          <p className="text-white text-base leading-relaxed">
-                            {answer.answer}
-                          </p>
-                        </div>
+                {/* User Choices Section - only show if there are choices for this theme */}
+                {userChoices.length > 0 && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl md:text-3xl font-semibold text-[#35c5f2] mb-4">
+                      Your Choices in This Theme
+                    </h3>
+                    <p className="text-white/60 text-sm mb-6">
+                      {userChoices.length} choice{userChoices.length !== 1 ? 's' : ''} made in this theme
+                    </p>
 
-                        <div>
-                          <h4 className="text-white/70 font-medium mb-2">Story</h4>
-                          <p className="text-white/70 text-sm leading-relaxed">
-                            {answer.narrative}
-                          </p>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div>
-                            <h4 className="text-orange-300 font-medium mb-2">Impact</h4>
-                            <p className="text-orange-200 text-sm leading-relaxed">
-                              {answer.impact}
-                            </p>
+                    <div className="space-y-6">
+                      {userChoices.map((answer) => (
+                        <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
+                          <div className="flex items-center justify-between mb-4">
+                            <span className="text-[#35c5f2] text-sm font-semibold uppercase tracking-wide">
+                              Choice {answer.code}
+                            </span>
+                            <span className="text-white/50 text-xs">
+                              Question {answer.QuestionCode}
+                            </span>
                           </div>
 
-                          <div>
-                            <h4 className="text-green-300 font-medium mb-2">Outcome</h4>
-                            <p className="text-green-200 text-sm leading-relaxed">
-                              {answer.outcome}
-                            </p>
+                          <div className="space-y-4">
+                            <div>
+                              <h4 className="text-white font-medium mb-2">Question</h4>
+                              <p className="text-white/80 text-sm leading-relaxed">
+                                {answer.Question}
+                              </p>
+                            </div>
+
+                            <div>
+                              <h4 className="text-[#35c5f2] font-medium mb-2">Your Choice</h4>
+                              <p className="text-white text-base leading-relaxed">
+                                {answer.answer}
+                              </p>
+                            </div>
+
+                            <div>
+                              <h4 className="text-white/70 font-medium mb-2">Story</h4>
+                              <p className="text-white/70 text-sm leading-relaxed">
+                                {answer.narrative}
+                              </p>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <div>
+                                <h4 className="text-orange-300 font-medium mb-2">Impact</h4>
+                                <p className="text-orange-200 text-sm leading-relaxed">
+                                  {answer.impact}
+                                </p>
+                              </div>
+
+                              <div>
+                                <h4 className="text-green-300 font-medium mb-2">Outcome</h4>
+                                <p className="text-green-200 text-sm leading-relaxed">
+                                  {answer.outcome}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Data Visualizations */}
+                            <DataVisualization 
+                              chart={answer.chart}
+                              counter={answer.counter}
+                              metrics={answer.metrics}
+                            />
                           </div>
                         </div>
-
-                        {/* Data Visualizations */}
-                        <DataVisualization 
-                          chart={answer.chart}
-                          counter={answer.counter}
-                          metrics={answer.metrics}
-                        />
-                      </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+                )}
+
+                {/* BP2050 Indicators - always show */}
+                <div className="bg-black/40 border border-[#35c5f2]/20 p-6 rounded-lg">
+                  <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
+                    BP2050 Indicators
+                  </h3>
+                  <p className="text-white/70 text-base leading-relaxed">
+                    {themeData.bp2050_indicators}
+                  </p>
                 </div>
               </div>
-            )}
-
-            {/* BP2050 Indicators - always show */}
-            <div className="bg-black/40 border border-[#35c5f2]/20 p-6 rounded-lg">
-              <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                BP2050 Indicators
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                {themeData.bp2050_indicators}
-              </p>
-            </div>
-          </div>
-        );
-      })}
+            </TabsContent>
+          );
+        })}
+      </Tabs>
     </section>
   );
 }
