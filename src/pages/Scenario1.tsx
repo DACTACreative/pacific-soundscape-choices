@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
+import AnswerTabsSection from '../components/AnswerTabsSection';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 
@@ -99,6 +100,15 @@ export default function Scenario1() {
 
             <div className="w-full min-h-[70vh] relative z-10">
               <ThematicSpiderChart className="w-full h-full" />
+            </div>
+          </div>
+        </section>
+
+        {/* Answer Tabs Section */}
+        <section className="py-24 md:py-32">
+          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
+            <div className="max-w-7xl mx-auto">
+              <AnswerTabsSection />
             </div>
           </div>
         </section>

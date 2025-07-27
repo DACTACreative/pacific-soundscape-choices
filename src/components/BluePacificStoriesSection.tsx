@@ -89,82 +89,7 @@ const THEME_DATA: Record<string, ThemeData> = {
 };
 
 export default function BluePacificStoriesSection() {
-  const [selectedAnswers, setSelectedAnswers] = useState<AnswerData[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Load selected answer codes from sessionStorage
-    const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
-    
-    console.log('📖 Stories Section - Selected codes:', selectedCodes);
-    
-    if (selectedCodes.length === 0) {
-      console.log('📖 No selected codes found for stories section');
-      setLoading(false);
-      return;
-    }
-
-    // Load ANSWERMAPPINGNEWjson.json data
-    fetch('/data/ANSWERMAPPINGNEWjson.json')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then(answersData => {
-        console.log('📖 New answers data loaded:', Object.keys(answersData).length, 'total answers');
-        console.log('📖 Selected codes from sessionStorage:', selectedCodes);
-        console.log('📖 Available answer codes in JSON:', Object.keys(answersData).slice(0, 10));
-        
-        // Find matching answers for selected codes
-        const matchedAnswers = selectedCodes.map((code: string) => {
-          const answerData = answersData[code];
-          if (answerData) {
-            console.log(`📖 Found answer for ${code}:`, {
-              theme: answerData.theme,
-              answer: answerData.answer?.substring(0, 50) + '...',
-            });
-            return answerData;
-          }
-          console.log(`📖 No answer found for code: ${code}`);
-          return null;
-        }).filter((item): item is AnswerData => item !== null);
-        
-        console.log('📖 Final matched answers:', matchedAnswers.length);
-        console.log('📖 Matched answers details:', matchedAnswers);
-        setSelectedAnswers(matchedAnswers);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('📖 Failed to load new answers data:', err);
-        // Fallback error handling
-        console.log('📖 Falling back to empty answers array');
-        setSelectedAnswers([]);
-        setLoading(false);
-      });
-  }, []);
-
-  // Group answers by theme
-  const answersByTheme = selectedAnswers.reduce((acc: Record<string, AnswerData[]>, answer) => {
-    if (answer.theme && THEME_DATA[answer.theme]) {
-      if (!acc[answer.theme]) {
-        acc[answer.theme] = [];
-      }
-      acc[answer.theme].push(answer);
-    }
-    return acc;
-  }, {});
-  
-  console.log('📖 Answers grouped by theme:', answersByTheme);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white text-lg">Loading Pacific stories...</div>
-      </div>
-    );
-  }
+  // No longer fetching user choices - this is now pure stories section
 
   return (
     <section className="py-24 px-6 md:px-12">
@@ -180,8 +105,6 @@ export default function BluePacificStoriesSection() {
 
       {/* Thematic Blocks */}
       {Object.entries(THEME_DATA).map(([themeName, themeData]) => {
-        const themeAnswers = answersByTheme[themeName];
-        
         return (
           <div key={themeName} className="mb-16">
             <h2 className="text-3xl md:text-4xl font-semibold text-white mb-6">
@@ -200,49 +123,15 @@ export default function BluePacificStoriesSection() {
               <strong>Present-Day Problematic (2025):</strong> {themeData.present_day_problematic}
             </p>
 
-            {/* Dynamic: Player's choice outcome */}
-            {themeAnswers && themeAnswers.length > 0 ? (
-              <div className="space-y-4 mb-6">
-                {themeAnswers.map((answer, index) => (
-                  <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
-                    <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                      Your 2050 Outcome - {answer.code} {themeAnswers.length > 1 ? `(${index + 1}/${themeAnswers.length})` : ''}
-                    </h3>
-                    <p className="text-white/90 text-base leading-relaxed mb-3">
-                      <strong>Question:</strong> {answer.Question}
-                    </p>
-                    <p className="text-white/90 text-base leading-relaxed mb-3">
-                      <strong>Your Choice:</strong> {answer.answer}
-                    </p>
-                    <p className="text-white/70 text-base leading-relaxed mb-3">
-                      <strong>Narrative:</strong> {answer.narrative}
-                    </p>
-                    <p className="text-orange-300 text-base leading-relaxed mb-3">
-                      <strong>Impact:</strong> {answer.impact}
-                    </p>
-                    <p className="text-green-300 text-base leading-relaxed">
-                      <strong>Outcome:</strong> {answer.outcome}
-                    </p>
-                    
-                    {/* Data Visualizations */}
-                    <DataVisualization 
-                      chart={answer.chart}
-                      counter={answer.counter}
-                      metrics={answer.metrics}
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="bg-black/40 border border-white/20 p-6 rounded-lg mb-6">
-                <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                  Potential 2050 Outcome
-                </h3>
-                <p className="text-white/70 text-base leading-relaxed">
-                  In this theme, Pacific leaders implemented innovative approaches that strengthened regional cooperation and created lasting positive change for communities across the Blue Pacific.
-                </p>
-              </div>
-            )}
+            {/* Example story of success in this theme */}
+            <div className="bg-black/40 border border-white/20 p-6 rounded-lg mb-6">
+              <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
+                2050 Stories of Impact
+              </h3>
+              <p className="text-white/70 text-base leading-relaxed">
+                In this theme, Pacific leaders implemented innovative approaches that strengthened regional cooperation and created lasting positive change for communities across the Blue Pacific.
+              </p>
+            </div>
 
             {/* Static indicators */}
             <div className="bg-black/40 border border-[#35c5f2]/20 p-6 rounded-lg">
