@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { DataVisualization } from './DataVisualization';
 
@@ -6,26 +7,6 @@ interface ThemeData {
   level_of_ambition: string;
   present_day_problematic: string;
   bp2050_indicators: string;
-}
-
-interface ChartData {
-  type: string;
-  title: string;
-  unit: string;
-  data: Array<{ label: string; value: number }>;
-}
-
-interface CounterData {
-  title: string;
-  unit: string;
-  value: number;
-  comparison?: string;
-}
-
-interface MetricData {
-  label: string;
-  value: string | number;
-  unit?: string;
 }
 
 interface AnswerData {
@@ -38,9 +19,9 @@ interface AnswerData {
   outcome: string;
   Question: string;
   QuestionCode: string;
-  chart?: ChartData;
-  counter?: CounterData;
-  metrics?: MetricData[];
+  chart?: any;
+  counter?: any;
+  metrics?: any[];
 }
 
 const THEME_DATA: Record<string, ThemeData> = {
@@ -88,23 +69,85 @@ const THEME_DATA: Record<string, ThemeData> = {
   }
 };
 
+const THEME_DISPLAY_ORDER = [
+  "Political Leadership and Regionalism",
+  "People Centered Development", 
+  "Peace and Security",
+  "Resource and Economic Development",
+  "Climate Change and Disasters",
+  "Ocean and Environment",
+  "Technology and Connectivity"
+];
+
 export default function BluePacificStoriesSection() {
-  // No longer fetching user choices - this is now pure stories section
+  const [selectedAnswers, setSelectedAnswers] = useState<AnswerData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Load selected answer codes from sessionStorage
+    const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    
+    if (selectedCodes.length === 0) {
+      setLoading(false);
+      return;
+    }
+
+    // Load ANSWERMAPPINGNEWjson.json data
+    fetch('/data/ANSWERMAPPINGNEWjson.json')
+      .then(res => res.json())
+      .then(answersData => {
+        // Find matching answers for selected codes
+        const matchedAnswers = selectedCodes.map((code: string) => {
+          const answerData = answersData[code];
+          return answerData || null;
+        }).filter((item): item is AnswerData => item !== null);
+        
+        setSelectedAnswers(matchedAnswers);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to load answers data:', err);
+        setSelectedAnswers([]);
+        setLoading(false);
+      });
+  }, []);
+
+  // Group answers by theme
+  const answersByTheme = selectedAnswers.reduce((acc: Record<string, AnswerData[]>, answer) => {
+    if (answer.theme) {
+      if (!acc[answer.theme]) {
+        acc[answer.theme] = [];
+      }
+      acc[answer.theme].push(answer);
+    }
+    return acc;
+  }, {});
+
+  if (loading) {
+    return (
+      <div className="py-12 text-center">
+        <div className="text-white text-lg">Loading your choices...</div>
+      </div>
+    );
+  }
 
   return (
     <section className="py-24 px-6 md:px-12">
       {/* Section Header */}
       <div className="mb-24">
         <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6">
-          Blue Pacific Stories of Impact & Outcome Mapping
+          Your Choices for the Pacific Future
         </h2>
         <p className="text-lg text-white/70 leading-relaxed max-w-4xl">
-          In this section, we delve deeper into specific thematic areas to illustrate the impact of decisions and initiatives that shaped the Pacific region's journey to 2050. Each theme is part of the Blue Pacific Strategy and represents a critical arena where policy choices translated into real-world outcomes. These are the human stories behind the spider chart's data points – "Blue Pacific" stories of impact that show how collective action and innovation made a difference.
+          In this section, we explore how your specific choices during the journey shaped the Pacific region's path to 2050. Each theme represents a critical arena of the Blue Pacific 2050 Strategy where your policy decisions translated into real-world outcomes. These are the stories behind your choices – showing how individual decisions contributed to the collective future of the Blue Pacific.
         </p>
       </div>
 
       {/* Thematic Blocks */}
-      {Object.entries(THEME_DATA).map(([themeName, themeData]) => {
+      {THEME_DISPLAY_ORDER.map((themeName) => {
+        const themeData = THEME_DATA[themeName];
+        const userChoices = answersByTheme[themeName] || [];
+        
         return (
           <div key={themeName} className="mb-16">
             <h2 className="text-3xl md:text-4xl font-semibold text-white mb-6">
@@ -123,17 +166,80 @@ export default function BluePacificStoriesSection() {
               <strong>Present-Day Problematic (2025):</strong> {themeData.present_day_problematic}
             </p>
 
-            {/* Example story of success in this theme */}
-            <div className="bg-black/40 border border-white/20 p-6 rounded-lg mb-6">
-              <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
-                2050 Stories of Impact
-              </h3>
-              <p className="text-white/70 text-base leading-relaxed">
-                In this theme, Pacific leaders implemented innovative approaches that strengthened regional cooperation and created lasting positive change for communities across the Blue Pacific.
-              </p>
-            </div>
+            {/* User Choices Section - only show if there are choices for this theme */}
+            {userChoices.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-2xl md:text-3xl font-semibold text-[#35c5f2] mb-4">
+                  Your Choices in This Theme
+                </h3>
+                <p className="text-white/60 text-sm mb-6">
+                  {userChoices.length} choice{userChoices.length !== 1 ? 's' : ''} made in this theme
+                </p>
 
-            {/* Static indicators */}
+                <div className="space-y-6">
+                  {userChoices.map((answer) => (
+                    <div key={answer.code} className="bg-black/40 border border-white/20 p-6 rounded-lg">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-[#35c5f2] text-sm font-semibold uppercase tracking-wide">
+                          Choice {answer.code}
+                        </span>
+                        <span className="text-white/50 text-xs">
+                          Question {answer.QuestionCode}
+                        </span>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="text-white font-medium mb-2">Question</h4>
+                          <p className="text-white/80 text-sm leading-relaxed">
+                            {answer.Question}
+                          </p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-[#35c5f2] font-medium mb-2">Your Choice</h4>
+                          <p className="text-white text-base leading-relaxed">
+                            {answer.answer}
+                          </p>
+                        </div>
+
+                        <div>
+                          <h4 className="text-white/70 font-medium mb-2">Story</h4>
+                          <p className="text-white/70 text-sm leading-relaxed">
+                            {answer.narrative}
+                          </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div>
+                            <h4 className="text-orange-300 font-medium mb-2">Impact</h4>
+                            <p className="text-orange-200 text-sm leading-relaxed">
+                              {answer.impact}
+                            </p>
+                          </div>
+
+                          <div>
+                            <h4 className="text-green-300 font-medium mb-2">Outcome</h4>
+                            <p className="text-green-200 text-sm leading-relaxed">
+                              {answer.outcome}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Data Visualizations */}
+                        <DataVisualization 
+                          chart={answer.chart}
+                          counter={answer.counter}
+                          metrics={answer.metrics}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* BP2050 Indicators - always show */}
             <div className="bg-black/40 border border-[#35c5f2]/20 p-6 rounded-lg">
               <h3 className="text-[#35c5f2] text-sm font-semibold mb-2 uppercase tracking-wide">
                 BP2050 Indicators
