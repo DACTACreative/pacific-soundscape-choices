@@ -35,38 +35,59 @@ export function DataVisualization({ chart, counter, metrics }: DataVisualization
     <div className="mt-4 space-y-4">
       {/* Chart Visualization */}
       {chart && (
-        <div className="bg-black/60 border border-[#35c5f2]/30 p-4 rounded-lg">
-          <h4 className="text-[#35c5f2] text-sm font-semibold mb-3 uppercase tracking-wide">
-            {chart.title}
-          </h4>
-          <div className="h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chart.data}>
-                <XAxis 
-                  dataKey="label" 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: '#fff', fontSize: 12 }}
-                />
-                <YAxis 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: '#fff', fontSize: 12 }}
-                />
-                <Tooltip 
-                  contentStyle={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    border: '1px solid rgba(53, 197, 242, 0.3)',
-                    borderRadius: '8px',
-                    color: '#fff'
-                  }}
-                  formatter={(value) => [`${value}${chart.unit}`, chart.title]}
-                />
-                <Bar dataKey="value" fill="#35c5f2" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <div className="group">
+  {/* Minimal container */}
+  <div className="bg-black/40 border border-white/10 rounded-2xl overflow-hidden hover:border-[#35c5f2]/30 transition-all duration-500">
+    
+    {/* Ultra-minimal header */}
+    <div className="px-6 py-4 border-b border-white/5">
+      <div className="flex items-center justify-between">
+        <h4 className="text-white/90 text-sm font-light tracking-wide">
+          {chart.title}
+        </h4>
+        <span className="text-[#35c5f2] text-xs font-mono opacity-60">
+          {chart.unit}
+        </span>
+      </div>
+    </div>
+
+    {/* Clean chart area */}
+    <div className="p-6">
+      <div className="h-48">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={chart.data}>
+            <XAxis 
+              dataKey="label" 
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: '#ffffff60', fontSize: 11, fontWeight: 300 }}
+            />
+            <YAxis hide />
+            <Tooltip 
+              contentStyle={{
+                backgroundColor: '#000000f0',
+                border: 'none',
+                borderRadius: '8px',
+                color: '#fff',
+                fontSize: '11px',
+                fontWeight: 300,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
+              }}
+              formatter={(value) => [`${value}${chart.unit}`, '']}
+              labelStyle={{ display: 'none' }}
+            />
+            <Bar 
+              dataKey="value" 
+              fill="#35c5f2" 
+              radius={[2, 2, 0, 0]}
+              opacity={0.9}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  </div>
+</div>
       )}
 
       {/* Counter Visualization */}
