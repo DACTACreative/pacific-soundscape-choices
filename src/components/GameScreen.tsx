@@ -463,12 +463,12 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
                 return (
                   <button
                     key={index}
-                    className="group relative w-full py-6 px-8 text-2xl md:text-3xl font-bold bg-transparent border-4 border-[#003f7f] text-[#003f7f] hover:text-white overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group relative w-full py-4 px-6 text-lg md:text-xl lg:text-2xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => handleOptionSelect(index)}
                     disabled={isTransitioning}
                   >
-                    <span className="absolute inset-0 bg-[#003f7f] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                    <span className="relative z-10">
+                    <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                    <span className="relative z-10 break-words">
                       {answerObj?.answer || `Loading... (${optionCode})`}
                     </span>
                   </button>
