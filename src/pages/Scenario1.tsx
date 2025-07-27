@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
-import DebugPanel from '../components/DebugPanel';
-import StoryBlock from '../components/StoryBlock';
 import OutcomeBlock from '../components/OutcomeBlock';
+import StoryBlock from '../components/StoryBlock';
+import DebugOutcomes from '../components/DebugOutcomes';
 
 export default function Scenario1() {
   const [userOutcomes, setUserOutcomes] = useState<any[]>([]);
@@ -46,7 +46,8 @@ export default function Scenario1() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white relative">
+    <div className="bg-black text-white min-h-screen relative">
+      <DebugOutcomes />
 
       {/* Fixed Header */}
       <div className="fixed top-6 left-6 z-50">
@@ -155,8 +156,7 @@ export default function Scenario1() {
           </div>
         </section>
       
-      {/* Debug Panel - Only in development */}
-      {process.env.NODE_ENV === 'development' && <DebugPanel />}
+      {/* Debug Panel removed */}
     </div>
   );
 }

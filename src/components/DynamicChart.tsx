@@ -36,6 +36,8 @@ interface ChartProps {
 }
 
 const DynamicChart: React.FC<ChartProps> = ({ type, title, unit = '', data }) => {
+  console.log('DynamicChart rendering:', { type, title, unit, data });
+  
   const chartData = {
     labels: data.map(item => item.label),
     datasets: [

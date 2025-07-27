@@ -32,6 +32,8 @@ interface OutcomeBlockProps {
 }
 
 const OutcomeBlock: React.FC<OutcomeBlockProps> = ({ data }) => {
+  console.log('OutcomeBlock rendering:', data);
+  
   return (
     <section
       className="scroll-block outcome-block min-h-screen py-24 md:py-48 flex items-center justify-center"
