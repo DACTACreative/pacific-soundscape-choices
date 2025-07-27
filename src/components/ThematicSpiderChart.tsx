@@ -213,14 +213,15 @@ export default function ThematicSpiderChart({
     return 'LOW';
   };
 
-  // Convert theme counts to chart data using mapping and cap at 3
+  // Convert theme counts to chart data using mapping and scale to 6-point system
   const chartData = themeLabels.map(shortLabel => {
     // Find the full theme name that maps to this short label
     const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === shortLabel);
     const count = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-    const cappedCount = Math.min(count, 3); // Cap at 3 for chart display
-    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${count} (capped: ${cappedCount})`);
-    return cappedCount;
+    // Scale to 6-point system: 0-1=2, 2=4, 3+=6
+    const scaledCount = count === 0 ? 0 : count === 1 ? 2 : count === 2 ? 4 : 6;
+    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${count} (scaled: ${scaledCount})`);
+    return scaledCount;
   });
   console.log('🕷️ Final chart data:', chartData);
   const data = {
@@ -257,43 +258,44 @@ export default function ThematicSpiderChart({
       r: {
         beginAtZero: true,
         min: 0,
-        max: 3,
+        max: 6,
         angleLines: {
-          color: 'rgba(255, 255, 255, 0.1)',
-          lineWidth: 2
+          color: 'rgba(255, 255, 255, 0.2)',
+          lineWidth: 3
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)',
+          color: 'rgba(255, 255, 255, 0.15)',
           lineWidth: 2
         },
         pointLabels: {
           font: {
-            size: 18,
+            size: 20,
             family: '"Inter", system-ui, sans-serif',
-            weight: 600
+            weight: 700
           },
           color: '#ffffff',
-          padding: 25
+          padding: 35
         },
         ticks: {
-          stepSize: 1,
+          stepSize: 0.5,
           beginAtZero: true,
-          max: 3,
+          max: 6,
           display: true,
           callback: function (value: any) {
-            if (value === 1) return 'LOW';
-            if (value === 2) return 'MED';
-            if (value === 3) return 'HIGH';
+            if (value === 2) return 'LOW';
+            if (value === 4) return 'MED';
+            if (value === 6) return 'HIGH';
             return '';
           },
-          color: '#ffffff',
-          backdropColor: 'transparent',
+          color: 'rgba(255, 255, 255, 0.8)',
+          backdropColor: 'rgba(0, 0, 0, 0.6)',
+          backdropPadding: 4,
           font: {
-            size: 16,
-            weight: 600,
+            size: 18,
+            weight: 700,
             family: '"Inter", system-ui, sans-serif'
           },
-          padding: 15
+          padding: 20
         }
       }
     },
@@ -312,7 +314,7 @@ export default function ThematicSpiderChart({
     <ErrorBoundary>
       <div className={`relative ${className} space-y-8`}>
         {/* Chart Container */}
-        <div className="w-full h-[500px] mx-auto relative bg-black/20 rounded-lg p-4">
+        <div className="w-full h-[700px] mx-auto relative bg-black/20 rounded-lg p-6 border border-white/10">
           <Radar data={data} options={options} />
         </div>
         
