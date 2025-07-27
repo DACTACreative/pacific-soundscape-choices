@@ -8,6 +8,15 @@
     "Question": "Many remote villages feel left behind by national development. How will you reconnect and empower your communities?",
     "outcome": "1.3 Improved enabling environment for increased representation and participation of all Pacific peoples, including women and girls in all their diversity in leadership to ensure, inclusive and equitable sharing of resources and opportunities.",
     "impact": "The proportion of seats held by women in Vanuatu's national parliament rose from 2% in 2025 to 27% by 2050. Broader participation of women and girls in political leadership was observed across the region, particularly in local governance and youth councils.",
+    "chart": {
+      "type": "bar",
+      "title": "Women in Parliament (%)",
+      "unit": "%",
+      "data": [
+        { "label": "2025", "value": 2 },
+        { "label": "2050", "value": 27 }
+      ]
+    },
     "narrative": "In Luganville, a climate awareness tour stopped at the local school. Among the students was Litia, 16, who stayed behind after the session to ask questions about political organising. Inspired by the speakers, she formed a girls' climate club — which later evolved into a civic leadership group. A decade later, Litia won her local council seat and helped write the island's first youth-inclusive environmental charter."
   },
   "A2": {
@@ -30,6 +39,12 @@
     "Question": "A wave of foreign investment is coming into the region. How do you ensure these deals truly benefit the Pacific and align with its priorities?",
     "outcome": "2.3 The Pacific Region is recognised as a leading contributor to global discourse to ensure global actors align with regional initiatives that responds to the vulnerabilities and characteristics of the Pacific",
     "impact": "Development assistance surged from $266M in 2022 to over $1B by 2035 — but under Solomon leadership. By 2050, the country had become a respected global voice in climate finance reform, helping define global guidelines on localised investment and regional equity.",
+    "counter": {
+      "type": "countup",
+      "title": "Climate Finance Raised",
+      "value": 1000000000,
+      "unit": "$"
+    },
     "narrative": "By 2029, faced with growing foreign pressure, Solomon Islands took control. A new oversight body, led by Indigenous and youth leaders, introduced binding rules: 30% of all incoming investment must directly advance Blue Pacific 2050 goals. At COP36, they chaired the Pacific Energy Bloc — turning national self-determination into a regional movement."
   },
   "A4": {

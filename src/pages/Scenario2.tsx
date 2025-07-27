@@ -1,9 +1,31 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import StoryBlock from '../components/StoryBlock';
+import OutcomeBlock from '../components/OutcomeBlock';
 
 export default function Scenario2() {
+  const [userOutcomes, setUserOutcomes] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Load user's selected answer codes from sessionStorage
+    const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    
+    if (selectedCodes.length > 0) {
+      // Load answers.json data
+      fetch('/src/data/answers.json')
+        .then(response => response.json())
+        .then(answersData => {
+          const outcomes = selectedCodes.map((code: string) => answersData[code]).filter(Boolean);
+          setUserOutcomes(outcomes);
+        })
+        .catch(error => {
+          console.error('Error loading answers data:', error);
+        });
+    }
+  }, []);
+
   return (
     <div className="bg-black text-white min-h-screen relative">
 
@@ -64,6 +86,15 @@ export default function Scenario2() {
             </div>
           </div>
         </section>
+
+        {/* Dynamic Outcome Blocks */}
+        {userOutcomes.length > 0 && (
+          <div className="outcomes-section">
+            {userOutcomes.map((outcome, index) => (
+              <OutcomeBlock key={outcome.code || index} data={outcome} />
+            ))}
+          </div>
+        )}
 
         {/* Navigation */}
         <section className="min-h-screen py-24 flex items-center justify-center">
