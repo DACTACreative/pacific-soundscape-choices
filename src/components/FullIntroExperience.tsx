@@ -29,40 +29,32 @@ export default function FullIntroExperience({ onComplete, showAudioControls = tr
   const sections = [
     {
       id: 1,
-      title: "Creating Feeling",
-      content: `To awaken a sense of belonging, of togetherness, of hope — a rare and sacred emotion when facing the planetary scale of climate change.
+      title: "Feeling: A Call for Pacific Resilience",
+      content: `This "game" is a call to action — to create feeling that transcends vast ocean distances separating Pacific nations.
 
-To shine light where despair often creeps in.
+Isolation comes easily when 30 million km² of sea spreads between communities. Yet connection runs deeper than geography.
 
-To invite more people into the conversations that shape our region — especially around the Blue Pacific 2050 Strategy.
+This experience calls for a new paradigm: a Resilient Pacific reflecting Pacific culture, Pacific knowledge, and Pacific connection to land that must be cared for to perpetuate customs and ways of life.
 
-To stitch connection across distant shores.
+The Blue Pacific 2050 Implementation Framework was mapped to 47 measurable indicators across 7 strategic pillars, transforming abstract policy into experiential decision-making.
 
-Because we are mostly sea — scattered, yet bound. So close… yet often made to feel far.
-
-This is a game, yes — but it's also a call to feel.`,
+Because frameworks matter. Indicators matter. But feelings move people toward the resilient future Pacific communities need.`,
       backgroundColor: "from-blue-900 to-cyan-900",
       textColor: "text-cyan-100"
     },
     {
       id: 2,
-      title: "The Sound of Our Ocean",
-      content: `The sea is what brings us together.
-It is our memory, our movement, our story.
+      title: "The Sound of Our Ocean: Data Sonification.",
+        content: `Real ocean tide data from Fiji (October 10, 2024) forms this experience's foundation.
 
-This piece focuses on sound — the sound of our ocean — to carry you through this journey.
+Every high tide = rising water. Every low = retreat six hours later.
 
-When you begin, you'll be immersed in Fiji.
-The date: October 10, 2024.
+This isn't ambient sound — it's live environmental data converted to audio.
 
-The sound you hear is real.
-It is the actual tide — sonified.
+For Pacific communities, the ocean isn't background noise — it's the constant connecting 15 nations across 30 million km² of sea.
 
-Each high tide = rising water.
-Each low = its slow retreat six hours later.
-
-This soundscape grounds us. Because for the Pacific, the ocean is not background — it's home.`,
-      backgroundColor: "from-teal-900 to-blue-900",
+Data becomes visceral. Policy becomes personal. The sound of the ocean grounds every decision you'll make.`,
+       backgroundColor: "from-teal-900 to-blue-900",
       textColor: "text-teal-100"
     },
     {
