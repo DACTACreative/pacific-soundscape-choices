@@ -27,13 +27,29 @@ const THEME_DISPLAY_ORDER = [
   "Technology and Connectivity"
 ];
 
-const PLACEHOLDER_IMAGES = [
-  "https://images.unsplash.com/photo-1500375592092-40eb2168fd21", // ocean wave
-  "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb", // starry night
-  "https://images.unsplash.com/photo-1493397212122-2b85dda8106b", // building with waves
-  "https://images.unsplash.com/photo-1501854140801-50d01698950b", // green mountains
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b", // laptop
-  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6", // monitor java
+const SCENARIO_IMAGES = [
+  "/src/data/Scenario-a.png",
+  "/src/data/Scenario-b.png", 
+  "/src/data/Scenario-c.png",
+  "/src/data/Scenario-d.png",
+  "/src/data/Scenario-e.png",
+  "/src/data/Scenario-f.png",
+  "/src/data/Scenario-g.png",
+  "/src/data/Scenario-h.png",
+  "/src/data/Scenario-i.png",
+  "/src/data/Scenario-j.png",
+  "/src/data/Scenario-k.png",
+  "/src/data/Scenario-l.png",
+  "/src/data/Scenario-m.png",
+  "/src/data/Scenario-n.png",
+  "/src/data/Scenario-o.png",
+  "/src/data/Scenario-p.png",
+  "/src/data/Scenario-q.png",
+  "/src/data/Scenario-r.png",
+  "/src/data/Scenario-s.png",
+  "/src/data/Scenario-t.png",
+  "/src/data/Scenario-u.png",
+  "/src/data/Scenario-v.png"
 ];
 
 export default function AnswerBlockDisplay() {
@@ -126,7 +142,7 @@ export default function AnswerBlockDisplay() {
         
         blockIndex++;
         const isImageLeft = blockIndex % 2 === 0;
-        const imageUrl = PLACEHOLDER_IMAGES[blockIndex % PLACEHOLDER_IMAGES.length];
+        const imageUrl = SCENARIO_IMAGES[blockIndex % SCENARIO_IMAGES.length];
 
         return (
           <div key={theme}>
@@ -164,7 +180,7 @@ export default function AnswerBlockDisplay() {
             {themeAnswers.map((answer, answerIndex) => {
               blockIndex++;
               const answerImageLeft = blockIndex % 2 === 0;
-              const answerImageUrl = PLACEHOLDER_IMAGES[(blockIndex + answerIndex) % PLACEHOLDER_IMAGES.length];
+              const answerImageUrl = SCENARIO_IMAGES[(blockIndex + answerIndex) % SCENARIO_IMAGES.length];
 
               return (
                 <div key={answer.code}>
@@ -228,7 +244,7 @@ export default function AnswerBlockDisplay() {
                   {/* Impact + Outcome Block */}
                   <BlockSection 
                     imageLeft={!answerImageLeft} 
-                    imageUrl={PLACEHOLDER_IMAGES[(blockIndex + 1) % PLACEHOLDER_IMAGES.length]}
+                    imageUrl={SCENARIO_IMAGES[(blockIndex + 1) % SCENARIO_IMAGES.length]}
                     className="bg-black border-t border-white/10"
                   >
                     <div className="space-y-6">

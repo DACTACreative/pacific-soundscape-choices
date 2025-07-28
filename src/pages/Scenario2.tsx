@@ -80,14 +80,6 @@ export default function Scenario2() {
 
         {/* Block 4: Answer Blocks Section */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <img src="/src/data/Scenario-m.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-n.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-o.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-p.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-q.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-r.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-          </div>
           <AnswerBlockDisplay />
         </div>
 

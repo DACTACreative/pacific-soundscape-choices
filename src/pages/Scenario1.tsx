@@ -76,14 +76,6 @@ export default function Scenario1() {
 
         {/* Block 4: User Choices Display */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <img src="/src/data/Scenario-d.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-e.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-f.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-g.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-h.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-i.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-          </div>
           <AnswerBlockDisplay />
         </div>
 
