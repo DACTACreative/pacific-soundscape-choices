@@ -170,11 +170,6 @@ export default function ThematicSpiderChart({
         <div className="w-full h-[500px] mx-auto relative z-20 bg-black/20 rounded-lg p-4">
           <Radar data={fallbackData} options={fallbackOptions} />
         </div>
-        <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center">
-          <p className="text-white/80">
-            This chart visualizes progress across key themes of the Blue Pacific 2050 strategy.
-          </p>
-        </div>
       </div>;
   }
 
