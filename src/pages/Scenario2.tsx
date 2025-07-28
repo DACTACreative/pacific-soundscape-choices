@@ -65,7 +65,7 @@ export default function Scenario2() {
 
         {/* Blue Pacific 2050 Reality */}
         <BlockSection 
-          imageUrl="/public/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
+          imageUrl="/src/data/Scenario-w.png"
           imageLeft={false}
         >
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
