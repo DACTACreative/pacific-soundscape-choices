@@ -222,7 +222,7 @@ Let's begin.`,
       <section 
         key={sections[0].id} 
         data-scroll-section
-        className="relative h-screen flex flex-col lg:flex-row"
+        className="relative h-screen flex flex-col md:flex-row"
         id="section-0"
       >
         {/* Sticky Image Container for first section - Hidden on mobile */}
