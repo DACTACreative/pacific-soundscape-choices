@@ -24,7 +24,7 @@ export default function Scenario3() {
       <div className="relative z-10">
         {/* Block 1: Scenario Description */}
         <BlockSection 
-          imageUrl="/public/lovable-uploads/449ec207-9ff8-4b64-9e5b-01da1a9f76e2.png"
+          imageUrl="/src/data/Scenario-u.png"
           imageLeft={false}
         >
           <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
@@ -48,7 +48,7 @@ export default function Scenario3() {
 
         {/* Block 2: Sonification */}
         <BlockSection 
-          imageUrl="/public/lovable-uploads/78d90a25-3910-4b66-a54b-d21c9d715656.png"
+          imageUrl="/src/data/Scenario-v.png"
           imageLeft={true}
         >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -81,11 +81,21 @@ export default function Scenario3() {
         </BlockSection>
 
         {/* Answer Blocks Section */}
-        <AnswerBlockDisplay />
+        <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <img src="/src/data/Scenario-a.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-b.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-c.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-d.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-e.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-f.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+          </div>
+          <AnswerBlockDisplay />
+        </div>
 
         {/* Blue Pacific Stories */}
         <BlockSection 
-          imageUrl="/public/lovable-uploads/b8cf5f28-0332-46cb-83ac-a8bfe3679f10.png"
+          imageUrl="/src/data/Scenario-g.png"
           imageLeft={true}
         >
           <BluePacificStoriesSection />
@@ -93,7 +103,7 @@ export default function Scenario3() {
 
         {/* Navigation */}
         <BlockSection 
-          imageUrl="/public/lovable-uploads/c87e8f14-688e-4226-8644-0339ccb4e52d.png"
+          imageUrl="/src/data/Scenario-h.png"
           imageLeft={false}
         >
           <div className="text-center space-y-8">

@@ -19,7 +19,7 @@ export default function Scenario1() {
       {/* Content */}
       <div className="relative z-10">
         {/* Block 1: Scenario Description - Content Left, Image Right */}
-        <BlockSection imageLeft={false} imageUrl="/lovable-uploads/c87e8f14-688e-4226-8644-0339ccb4e52d.png">
+        <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-a.png">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-7xl font-bold tracking-tight text-white">
               SCENARIO 1: MANAGED TRANSITION (1.5°C)
@@ -40,7 +40,7 @@ export default function Scenario1() {
         </BlockSection>
 
         {/* Block 2: Sonification - Image Left, Content Right */}
-        <BlockSection imageLeft={true} imageUrl="/lovable-uploads/33e5c143-7349-48dd-b270-01b8573f2161.png">
+        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-b.png">
           <div className="space-y-6">
             <h2 className="text-3xl md:text-5xl font-bold text-white lg:text-6xl">
               Sonification – Fiji's Resilient Tides
@@ -78,17 +78,27 @@ export default function Scenario1() {
         </div>
 
         {/* Block 5: User Choices Display */}
-        <AnswerBlockDisplay />
+        <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <img src="/src/data/Scenario-c.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-d.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-e.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-f.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-g.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-h.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+          </div>
+          <AnswerBlockDisplay />
+        </div>
 
         {/* Block 6: Blue Pacific Stories - Image Left, Content Right */}
-        <BlockSection imageLeft={true} imageUrl="/lovable-uploads/449ec207-9ff8-4b64-9e5b-01da1a9f76e2.png">
+        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-i.png">
           <div className="space-y-6">
             <BluePacificStoriesSection />
           </div>
         </BlockSection>
 
         {/* Block 7: Navigation - Content Left, Image Right */}
-        <BlockSection imageLeft={false} imageUrl="/lovable-uploads/33e5c143-7349-48dd-b270-01b8573f2161.png">
+        <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-j.png">
           <div className="space-y-6 text-center">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
               Continue Your Journey
