@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
+import DebugPanel from '../components/DebugPanel';
+import BlockSection from '../components/BlockSection';
 
 export default function Scenario3() {
   return (
@@ -20,125 +22,115 @@ export default function Scenario3() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Scenario Title */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto text-center">
-              <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
-                SCENARIO 3: EXTREME EMISSIONS
-              </h1>
-              <div className="max-w-5xl mx-auto">
-                <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white text-justify">
-                  By 2050, in a world scorched by a catastrophic global temperature rise approaching 5°C, the nation of Fiji has effectively ceased to exist. Relentless and rapid sea-level rise, measured in meters rather than centimeters, has submerged virtually all coastal areas and low-lying islands, making the archipelago largely uninhabitable. The concept of daily life has been replaced by a permanent state of emergency and mass exodus. The society has fractured, with the government long since collapsed and its population scattered across the globe as part of a desperate diaspora of climate refugees. The ocean is a toxic, anoxic dead zone. There is no economy, no tourism, and no agriculture—only the haunting ruins of a drowned culture. The voice of Fiji is no longer a plea for aid but a silent testament to the ultimate cost of a world that ignored every warning.
-                </p>
-              </div>
-            </div>
+        {/* Block 1: Scenario Description */}
+        <BlockSection 
+          imageUrl="/public/lovable-uploads/449ec207-9ff8-4b64-9e5b-01da1a9f76e2.png"
+          imageLeft={false}
+        >
+          <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
+            SCENARIO 3: EXTREME EMISSIONS (5°C)
+          </h1>
+          <h2 className="text-2xl md:text-4xl font-bold text-white mb-6">
+            Global Pathways: Systems Collapse
+          </h2>
+          <div className="space-y-6">
+            <p className="text-xl md:text-2xl leading-relaxed text-white">
+              By 2050, in a world scorched by a catastrophic global temperature rise approaching 5°C, the nation of Fiji has effectively ceased to exist. Relentless and rapid sea-level rise, measured in meters rather than centimeters, has submerged virtually all coastal areas and low-lying islands, making the archipelago largely uninhabitable.
+            </p>
+            <p className="text-xl md:text-2xl leading-relaxed text-white">
+              The concept of daily life has been replaced by a permanent state of emergency and mass exodus. The society has fractured, with the government long since collapsed and its population scattered across the globe as part of a desperate diaspora of climate refugees.
+            </p>
+            <p className="text-xl md:text-2xl leading-relaxed text-white">
+              The ocean is a toxic, anoxic dead zone. There is no economy, no tourism, and no agriculture—only the haunting ruins of a drowned culture. The voice of Fiji is no longer a plea for aid but a silent testament to the ultimate cost of a world that ignored every warning.
+            </p>
           </div>
-        </section>
+        </BlockSection>
 
-        {/* Global Pathways */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto">
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                Global Pathways to 2050: A World in Collapse
-              </h2>
-              <div className="max-w-5xl mx-auto">
-                <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white text-justify">
-                  The world of 2050 is one of systemic collapse, a direct consequence of decades of unchecked emissions and the triggering of irreversible planetary tipping points. The path to 5°C was paved with aggressive fossil fuel expansion and a complete abandonment of international climate cooperation. By the 2040s, critical systems like the Amazon rainforest and Arctic permafrost crossed points of no return, unleashing massive carbon and methane feedback loops that accelerated warming beyond anyone's control. Global civilization is fracturing under the strain of continent-spanning "heat domes," perpetual superstorms, and the collapse of global food systems. International relations have been replaced by resource wars and hoarding by the few nations still possessing arable land or fresh water. The global mood is not one of regret, but of raw survivalism and despair in the face of a self-inflicted planetary catastrophe.
-                </p>
-              </div>
-            </div>
+        {/* Block 2: Sonification */}
+        <BlockSection 
+          imageUrl="/public/lovable-uploads/78d90a25-3910-4b66-a54b-d21c9d715656.png"
+          imageLeft={true}
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            Sonification – The Sound of a Dying Ocean
+          </h2>
+          <div className="space-y-6">
+            <p className="text-xl md:text-2xl leading-relaxed text-white">
+              The sonification for this 5°C future is an apocalyptic and overwhelming cacophony—the sound of a planet's life support systems failing. It is a wall of noise dominated by the deep, violent groan of an unstable sea, the explosive hiss of methane plumes erupting from the seafloor, and the unrelenting shriek of hyper-hurricanes.
+            </p>
+            <p className="text-xl md:text-2xl leading-relaxed text-white">
+              There are no distinct events, only a constant, multi-layered roar of destruction that is physically oppressive to hear. Any sound of life, human or animal, is long gone, buried under the sound of raw, elemental fury. The emotional tone is one of pure dread and finality. It is not a warning or a dirge; it is the sound of an ending, an auditory record of a world that has been pushed past its breaking point.
+            </p>
           </div>
-        </section>
-
-        {/* Sonification */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto">
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                Sonification – The Sound of a Dying Ocean
-              </h2>
-              <div className="max-w-5xl mx-auto space-y-6">
-                <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white text-justify">
-                  The sonification for this 5°C future is an apocalyptic and overwhelming cacophony—the sound of a planet's life support systems failing. It is a wall of noise dominated by the deep, violent groan of an unstable sea, the explosive hiss of methane plumes erupting from the seafloor, and the unrelenting shriek of hyper-hurricanes. There are no distinct events, only a constant, multi-layered roar of destruction that is physically oppressive to hear. Any sound of life, human or animal, is long gone, buried under the sound of raw, elemental fury. The emotional tone is one of pure dread and finality. It is not a warning or a dirge; it is the sound of an ending, an auditory record of a world that has been pushed past its breaking point.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        </BlockSection>
 
         {/* Blue Pacific 2050 Reality */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto space-y-8">
-              <div className="text-center space-y-6">
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
-                  Blue Pacific 2050 Reality
-                </h2>
-                <p className="text-xl md:text-2xl leading-relaxed text-white max-w-4xl mx-auto">
-                  This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
-                </p>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-300 max-w-4xl mx-auto">
-                  The chart's broad but imperfect shape illustrates a future built on successful yet realistic trade-offs. It's a living portrait of the Pacific's navigation through uncertainty, strength, and resilience.
-                </p>
-              </div>
-              <div className="w-full min-h-[70vh] relative z-10">
-                <ThematicSpiderChart className="w-full h-full" />
-              </div>
-            </div>
+        <BlockSection 
+          imageUrl="/public/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
+          imageLeft={false}
+        >
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Blue Pacific 2050 Reality
+          </h2>
+          <p className="text-xl md:text-2xl leading-relaxed text-white mb-6">
+            This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
+          </p>
+          <div className="w-full min-h-[70vh] relative z-10">
+            <ThematicSpiderChart className="w-full h-full" />
           </div>
-        </section>
+        </BlockSection>
 
         {/* Answer Blocks Section */}
-        <section className="py-24 md:py-32">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto">
-              <AnswerBlockDisplay />
-            </div>
-          </div>
-        </section>
+        <AnswerBlockDisplay />
 
         {/* Blue Pacific Stories */}
-        <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto">
-              <BluePacificStoriesSection />
-            </div>
-          </div>
-        </section>
+        <BlockSection 
+          imageUrl="/public/lovable-uploads/b8cf5f28-0332-46cb-83ac-a8bfe3679f10.png"
+          imageLeft={true}
+        >
+          <BluePacificStoriesSection />
+        </BlockSection>
 
         {/* Navigation */}
-        <section className="min-h-screen py-24 flex items-center justify-center">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto text-center space-y-8">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button 
-                  variant="pacific" 
-                  size="pacific"
-                  onClick={() => window.location.href = '/scenario-2'}
-                >
-                  SCENARIO 2
-                </Button>
-                <Button 
-                  variant="pacific" 
-                  size="pacific"
-                  onClick={() => window.location.href = '/credits'}
-                >
-                  SOURCES & CREDITS
-                </Button>
-                <Button 
-                  variant="pacific" 
-                  size="pacific"
-                  onClick={() => window.location.href = '/'}
-                >
-                  RESTART JOURNEY
-                </Button>
-              </div>
+        <BlockSection 
+          imageUrl="/public/lovable-uploads/c87e8f14-688e-4226-8644-0339ccb4e52d.png"
+          imageLeft={false}
+        >
+          <div className="text-center space-y-8">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              Continue Your Journey
+            </h2>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                variant="pacific" 
+                size="pacific"
+                onClick={() => window.location.href = '/scenario-2'}
+              >
+                SCENARIO 2
+              </Button>
+              <Button 
+                variant="pacific" 
+                size="pacific"
+                onClick={() => window.location.href = '/credits'}
+              >
+                SOURCES & CREDITS
+              </Button>
+              <Button 
+                variant="pacific" 
+                size="pacific"
+                onClick={() => window.location.href = '/'}
+              >
+                RESTART JOURNEY
+              </Button>
             </div>
           </div>
-        </section>
+        </BlockSection>
       </div>
+
+      {/* Debug Panel for Development */}
+      {process.env.NODE_ENV === 'development' && (
+        <DebugPanel />
+      )}
     </div>
   );
 }
