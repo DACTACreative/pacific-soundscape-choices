@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
-import AnswerTabsSection from '../components/AnswerTabsSection';
+import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 
 export default function Scenario2() {
@@ -90,14 +90,8 @@ export default function Scenario2() {
           </div>
         </section>
 
-        {/* Answer Tabs Section */}
-        <section className="py-24 md:py-32">
-          <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
-            <div className="max-w-7xl mx-auto">
-              <AnswerTabsSection />
-            </div>
-          </div>
-        </section>
+        {/* Answer Blocks Section */}
+        <AnswerBlockDisplay />
 
         {/* Blue Pacific Stories */}
         <section className="min-h-screen py-24 md:py-48 flex items-center justify-center">
