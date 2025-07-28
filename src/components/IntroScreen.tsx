@@ -21,12 +21,15 @@ interface IntroScreenProps {
 }
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
-  const { loading, playScenario } = useAudio();
+  const { loading, playScenario, enableAudio, audioEnabled } = useAudio();
   const scrollRef = useRef<HTMLDivElement>(null);
   const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
 
   const handleStart = () => {
     try {
+      if (!audioEnabled) {
+        enableAudio();
+      }
       playScenario(Scenario.Scenario0);
       onStart();
     } catch (error) {

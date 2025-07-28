@@ -1,8 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useAudio } from '@/context/AudioContext';
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { enableAudio, audioEnabled } = useAudio();
+  
   const handleStart = () => {
+    if (!audioEnabled) {
+      enableAudio();
+    }
     navigate('/game');
   };
   return <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
@@ -52,7 +58,7 @@ export default function LandingPage() {
           
           {/* Minimalist Button */}
           <Button onClick={handleStart} variant="pacific" size="pacific">
-            SHAPE OUR JOURNEY TO 2050
+            {audioEnabled ? "SHAPE OUR JOURNEY TO 2050" : "ENABLE AUDIO & START"}
           </Button>
 
 

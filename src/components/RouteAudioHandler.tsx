@@ -3,12 +3,12 @@ import { useLocation } from "react-router-dom";
 import { useAudio, Scenario } from "../context/AudioContext";
 
 export default function RouteAudioHandler() {
-  const { playScenario, stop, loading } = useAudio();
+  const { playScenario, stop, loading, audioEnabled } = useAudio();
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Don't play audio if still loading
-    if (loading) return;
+    // Don't play audio if still loading or audio not enabled
+    if (loading || !audioEnabled) return;
 
     if (pathname === "/game") {
       // Audio will be handled by GameScreen component when first question loads
@@ -23,7 +23,7 @@ export default function RouteAudioHandler() {
       // on any other route (e.g. results, home, landing) fade out
       stop();
     }
-  }, [pathname, playScenario, stop, loading]);
+  }, [pathname, playScenario, stop, loading, audioEnabled]);
 
   return null;
 }

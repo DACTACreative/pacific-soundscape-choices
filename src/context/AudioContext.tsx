@@ -16,6 +16,8 @@ export enum Scenario {
 
 interface AudioContextType {
   loading: boolean;
+  audioEnabled: boolean;
+  enableAudio: () => void;
   playScenario: (scenario: Scenario) => void;
   stop: () => void;
 }
@@ -23,18 +25,10 @@ interface AudioContextType {
 const AudioContext = createContext<AudioContextType>(null!);
 
 const AUDIO_PATHS: Record<Scenario, string> = {
-  [Scenario.Scenario0]: encodeURI(
-    "/audio/Scenario 0 Tide Fiji Suva 10.10.2024- 18.1416° S, 178.4419° E - 24.07.25, 16.25.m4a"
-  ),
-  [Scenario.Scenario1]: encodeURI(
-    "/audio/Scenario 1 Tide Fiji Suva 10.10.2024- 18.1416° S, 178.4419° E - 24.07.25, 16.04.m4a"
-  ),
-  [Scenario.Scenario2]: encodeURI(
-    "/audio/Scenario 2 Tide Fiji Suva 10.10.2024- 18.1416° S, 178.4419° E - 24.07.25, 16.04.m4a"
-  ),
-  [Scenario.Scenario3]: encodeURI(
-    "/audio/Scenario 3 Tide Fiji Suva 10.10.2024- 18.1416° S, 178.4419° E - 24.07.25, 16.03.m4a"
-  ),
+  [Scenario.Scenario0]: "/audio/scenario-0.m4a",
+  [Scenario.Scenario1]: "/audio/scenario-1.m4a",
+  [Scenario.Scenario2]: "/audio/scenario-2.m4a",
+  [Scenario.Scenario3]: "/audio/scenario-3.m4a",
 };
 
 export const AudioProvider: React.FC<{ children: ReactNode }> = ({
@@ -43,6 +37,7 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({
   const [howls, setHowls] = useState<Record<Scenario, Howl>>({} as any);
   const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState<Scenario | null>(null);
+  const [audioEnabled, setAudioEnabled] = useState(false);
 
   // 1) Preload all four files on mount
   useEffect(() => {
@@ -89,10 +84,17 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({
     return () => clearTimeout(fallbackTimer);
   }, []);
 
+  // Enable audio (requires user interaction)
+  const enableAudio = () => {
+    setAudioEnabled(true);
+    console.log("Audio enabled by user interaction");
+  };
+
   // 2) Play or switch scenarios
   const playScenario = (scenario: Scenario) => {
-    // Guard: don't play if still loading or howls not ready
-    if (loading || !howls[scenario]) {
+    // Guard: don't play if still loading, howls not ready, or audio not enabled
+    if (loading || !howls[scenario] || !audioEnabled) {
+      console.log("Audio playback blocked:", { loading, hasHowl: !!howls[scenario], audioEnabled });
       return;
     }
 
@@ -118,7 +120,7 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AudioContext.Provider value={{ loading, playScenario, stop }}>
+    <AudioContext.Provider value={{ loading, audioEnabled, enableAudio, playScenario, stop }}>
       {children}
     </AudioContext.Provider>
   );
