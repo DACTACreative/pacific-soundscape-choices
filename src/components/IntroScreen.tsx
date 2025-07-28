@@ -226,7 +226,7 @@ Let's begin.`,
         id="section-0"
       >
         {/* Sticky Image Container for first section - Hidden on mobile */}
-        <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh', zIndex: 10 }}>
+        <div className="sticky-section hidden md:block" style={{ position: 'relative', height: '100vh', zIndex: 10 }}>
           <div 
             className="fixed-image"
             data-scroll
@@ -258,7 +258,7 @@ Let's begin.`,
         </div>
 
         {/* Mobile Image - Visible only on mobile */}
-        <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+        <div className="md:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
           <div className="w-full h-full flex items-center justify-center">
             <img 
               src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
@@ -269,12 +269,12 @@ Let's begin.`,
         </div>
 
         {/* Text Content - Left Side */}
-        <div className="w-full lg:w-[60%] h-full flex items-center p-8 lg:p-16 bg-black">
+        <div className="w-full md:w-[60%] h-full flex items-center p-8 md:p-16 bg-black">
           <div className="max-w-2xl">
-            <h2 className={`text-4xl md:text-6xl font-bold mb-8 ${sections[0].textColor}`}>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">
               {sections[0].title}
             </h2>
-            <div className={`text-xl md:text-2xl leading-relaxed whitespace-pre-line ${sections[0].textColor}`}>
+            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
               {sections[0].content}
             </div>
           </div>
@@ -290,7 +290,7 @@ Let's begin.`,
           id={`section-${index + 1}`}
         >
           {/* Fixed Image Container for this section - Hidden on mobile */}
-          <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+          <div className="sticky-section hidden md:block" style={{ position: 'relative', height: '100vh' }}>
               <div 
                 className="fixed-image"
                 data-scroll
@@ -321,7 +321,7 @@ Let's begin.`,
           </div>
 
           {/* Mobile Image - Visible only on mobile */}
-          <div className="lg:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
+          <div className="md:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
             <div className="w-full h-full flex items-center justify-center">
               <img 
                 src={introImages[index + 1] || introImages[0]}
@@ -332,17 +332,17 @@ Let's begin.`,
           </div>
 
           {/* Scrolling Text Content */}
-          <div className="scroll-text lg:mr-[40vw] mr-0 p-8 lg:p-16 min-h-screen flex items-center bg-black">
+          <div className="scroll-text md:mr-[40vw] mr-0 p-8 md:p-16 min-h-screen flex items-center bg-black">
             <div className="max-w-2xl">
               <h2 
-                className={`text-4xl md:text-6xl font-bold mb-8 ${section.textColor}`}
+                className="text-4xl md:text-6xl font-bold mb-8 text-white"
                 data-scroll
                 data-scroll-speed="0.5"
               >
                 {section.title}
               </h2>
               <div 
-                className={`text-xl md:text-2xl leading-relaxed whitespace-pre-line ${section.textColor}`}
+                className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
                 data-scroll
                 data-scroll-speed="0.3"
               >

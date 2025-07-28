@@ -93,20 +93,19 @@ export default function AnswerBlockDisplay() {
   let blockIndex = 0;
 
   return (
-    <div className="bg-gradient-to-b from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen">
+    <div className="bg-black text-white min-h-screen">
       {/* Header Block */}
-      <div className="min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20" />
+      <div className="min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16 relative bg-black">
         <div className="text-center max-w-5xl relative z-10">
           <div className="mb-8">
-            <div className="inline-block p-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl border border-white/20 mb-6">
-              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
+            <div className="inline-block p-3 bg-black border border-white/20 rounded-2xl mb-6">
+              <h1 className="text-5xl md:text-7xl font-bold text-white">
                 Your Pacific Journey
               </h1>
             </div>
           </div>
           <div className="space-y-6">
-            <p className="text-2xl md:text-3xl text-white/90 leading-relaxed font-light">
+            <p className="text-2xl md:text-3xl text-white leading-relaxed font-light">
               The decisions that shaped our shared future
             </p>
             <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto">
@@ -114,7 +113,7 @@ export default function AnswerBlockDisplay() {
               each decision creating ripples across our region's future.
             </p>
             <div className="flex justify-center mt-8">
-              <div className="w-32 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" />
+              <div className="w-32 h-1 bg-white rounded-full" />
             </div>
           </div>
         </div>
@@ -135,12 +134,12 @@ export default function AnswerBlockDisplay() {
             <BlockSection 
               imageLeft={isImageLeft} 
               imageUrl={imageUrl}
-              className="bg-gradient-to-br from-slate-900 to-blue-900"
+              className="bg-black"
             >
               <div className="space-y-8">
                 <div className="space-y-4">
-                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-white/20">
-                    <span className="text-blue-300 text-sm font-medium uppercase tracking-wider">
+                  <div className="inline-flex items-center px-4 py-2 bg-black border border-white/20 rounded-full">
+                    <span className="text-white text-sm font-medium uppercase tracking-wider">
                       Blue Pacific Pillar
                     </span>
                   </div>
@@ -148,7 +147,7 @@ export default function AnswerBlockDisplay() {
                     {theme}
                   </h2>
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" />
+                    <div className="w-12 h-1 bg-white rounded-full" />
                     <p className="text-xl text-white/70">
                       {themeAnswers.length} decision{themeAnswers.length !== 1 ? 's' : ''} shaping this pillar
                     </p>
@@ -173,17 +172,17 @@ export default function AnswerBlockDisplay() {
                   <BlockSection 
                     imageLeft={answerImageLeft} 
                     imageUrl={answerImageUrl}
-                    className="bg-gradient-to-br from-slate-800 to-blue-800 border-t border-white/10"
+                    className="bg-black border-t border-white/10"
                   >
                     <div className="space-y-8">
                       <div className="flex items-center space-x-4">
-                        <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
-                          <span className="text-white font-bold text-lg">
+                        <div className="flex items-center justify-center w-12 h-12 bg-white rounded-full">
+                          <span className="text-black font-bold text-lg">
                             {answer.QuestionCode}
                           </span>
                         </div>
                         <div>
-                          <span className="text-blue-300 text-sm font-medium uppercase tracking-wider">
+                          <span className="text-white text-sm font-medium uppercase tracking-wider">
                             Decision Point
                           </span>
                           <p className="text-white/70 text-sm">
@@ -193,11 +192,10 @@ export default function AnswerBlockDisplay() {
                       </div>
                       
                       <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl" />
-                        <div className="relative p-8 border border-blue-400/30 rounded-2xl backdrop-blur-sm">
+                        <div className="relative p-8 border border-white/30 rounded-2xl bg-black">
                           <div className="flex items-center space-x-3 mb-6">
-                            <div className="w-2 h-2 bg-blue-400 rounded-full" />
-                            <h4 className="text-blue-300 text-xl font-bold uppercase tracking-wide">
+                            <div className="w-2 h-2 bg-white rounded-full" />
+                            <h4 className="text-white text-xl font-bold uppercase tracking-wide">
                               Your Choice
                             </h4>
                           </div>
@@ -209,15 +207,15 @@ export default function AnswerBlockDisplay() {
 
                       <div className="space-y-6">
                         <div className="flex items-center space-x-3">
-                          <div className="w-2 h-2 bg-purple-400 rounded-full" />
-                          <h4 className="text-2xl font-bold text-purple-300 uppercase tracking-wide">
+                          <div className="w-2 h-2 bg-white rounded-full" />
+                          <h4 className="text-2xl font-bold text-white uppercase tracking-wide">
                             The Story Unfolds
                           </h4>
                         </div>
-                        <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-8 rounded-2xl border border-purple-400/20">
-                          <div className="text-xl text-white/90 leading-relaxed space-y-6">
+                        <div className="bg-black p-8 rounded-2xl border border-white/20">
+                          <div className="text-xl text-white leading-relaxed space-y-6">
                             {answer.narrative.split('\n\n').map((paragraph, i) => (
-                              <p key={i} className="text-white/85 leading-relaxed">
+                              <p key={i} className="text-white leading-relaxed">
                                 {paragraph}
                               </p>
                             ))}
@@ -241,18 +239,18 @@ export default function AnswerBlockDisplay() {
                         </span>
                       </h3>
                       
-                      <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 p-6 rounded-xl border-2 border-green-300/30">
-                        <h4 className="text-green-300 text-lg font-bold mb-3 uppercase tracking-wide">
+                      <div className="bg-black p-6 rounded-xl border border-white/30">
+                        <h4 className="text-white text-lg font-bold mb-3 uppercase tracking-wide">
                           Measured Outcome
                         </h4>
-                        <p className="text-green-100 text-xl leading-relaxed">
+                        <p className="text-white text-xl leading-relaxed">
                           {answer.outcome}
                         </p>
                       </div>
 
-                      <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 p-6 rounded-xl border border-orange-300/30">
-                        <h4 className="text-orange-300 text-xl font-bold mb-4">Regional Impact</h4>
-                        <div className="text-orange-100 text-lg leading-relaxed space-y-4">
+                      <div className="bg-black p-6 rounded-xl border border-white/30">
+                        <h4 className="text-white text-xl font-bold mb-4">Regional Impact</h4>
+                        <div className="text-white text-lg leading-relaxed space-y-4">
                           {answer.impact.split('\n\n').map((paragraph, i) => (
                             <p key={i}>{paragraph}</p>
                           ))}

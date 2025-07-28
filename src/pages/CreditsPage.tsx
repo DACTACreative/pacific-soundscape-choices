@@ -6,7 +6,7 @@ export default function CreditsPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-gradient-to-b from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen">
+    <div className="bg-black text-white min-h-screen">
       {/* Fixed Return Navigation */}
       <div className="fixed top-6 left-6 z-50">
         <Button 
@@ -21,7 +21,7 @@ export default function CreditsPage() {
       {/* Sources Section */}
       <BlockSection 
         imageUrl="https://images.unsplash.com/photo-1500375592092-40eb2168fd21"
-        className="bg-gradient-to-br from-slate-900 to-blue-900"
+        className="bg-black"
       >
         <div className="space-y-8">
           <div className="space-y-4">
@@ -71,7 +71,7 @@ export default function CreditsPage() {
       <BlockSection 
         imageLeft={true}
         imageUrl="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb"
-        className="bg-gradient-to-br from-blue-900 to-purple-900"
+        className="bg-black"
       >
         <div className="space-y-8">
           <div className="space-y-4">
@@ -118,7 +118,7 @@ export default function CreditsPage() {
       {/* Credits Section */}
       <BlockSection 
         imageUrl="https://images.unsplash.com/photo-1501854140801-50d01698950b"
-        className="bg-gradient-to-br from-purple-900 to-slate-900"
+        className="bg-black"
       >
         <div className="space-y-8">
           <div className="space-y-4">

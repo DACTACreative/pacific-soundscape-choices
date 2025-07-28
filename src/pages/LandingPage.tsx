@@ -11,7 +11,7 @@ export default function LandingPage() {
     }
     navigate('/game');
   };
-  return <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+  return <div className="relative h-screen w-full overflow-hidden bg-black">
       {/* Subtle overlay for depth */}
       <div className="absolute inset-0 bg-black/30" />
 
