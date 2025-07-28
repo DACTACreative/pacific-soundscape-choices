@@ -218,66 +218,30 @@ Let's begin.`,
         </div>
       </div>
 
-          {/* First Block - Full Page Layout */}
+      {/* First Block - SIMPLIFIED Layout */}
       <section 
         key={sections[0].id} 
         data-scroll-section
-        className="relative h-screen flex flex-col md:flex-row"
+        className="min-h-screen grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-4 md:px-8 lg:px-12 xl:px-16 bg-black"
         id="section-0"
       >
-        {/* Sticky Image Container for first section - Hidden on mobile */}
-        <div className="sticky-section hidden md:block" style={{ position: 'relative', height: '100vh', zIndex: 10 }}>
-          <div 
-            className="fixed-image"
-            data-scroll
-            data-scroll-sticky
-            data-scroll-target="#section-0"
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '40vw',
-              height: '100vh',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '2rem',
-              overflow: 'hidden',
-              background: 'rgba(0, 0, 0, 0.8)'
-            }}
-          >
-            <div className="w-full h-full flex items-center justify-center">
-              <img 
-                src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
-                alt="Blue Pacific 2050 Experience"
-                className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                style={{ width: 'auto', height: 'auto', zIndex: 20 }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Image - Visible only on mobile */}
-        <div className="md:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
-          <div className="w-full h-full flex items-center justify-center">
-            <img 
-              src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
-              alt="Blue Pacific 2050 Experience"
-              className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-            />
-          </div>
-        </div>
-
         {/* Text Content - Left Side */}
-        <div className="w-full md:w-[60%] h-full flex items-center p-8 md:p-16 bg-black">
-          <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">
-              {sections[0].title}
-            </h2>
-            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
-              {sections[0].content}
-            </div>
+        <div className="space-y-6 order-2 md:order-1">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">
+            {sections[0].title}
+          </h2>
+          <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
+            {sections[0].content}
           </div>
+        </div>
+
+        {/* Image - Right Side - ALWAYS VISIBLE ON DESKTOP */}
+        <div className="flex justify-center order-1 md:order-2">
+          <img 
+            src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
+            alt="Blue Pacific 2050 Experience"
+            className="w-full max-w-lg rounded-lg object-cover"
+          />
         </div>
       </section>
 
