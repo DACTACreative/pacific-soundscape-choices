@@ -64,48 +64,43 @@ export default function Scenario3() {
           </div>
         </BlockSection>
 
-        {/* Blue Pacific 2050 Reality */}
-        <BlockSection 
-          imageUrl="/src/data/Scenario-x.png"
-          imageLeft={false}
-        >
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Blue Pacific 2050 Reality
-          </h2>
-          <p className="text-xl md:text-2xl leading-relaxed text-white mb-6">
-            This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
-          </p>
-          <div className="w-full min-h-[70vh] relative z-10">
-            <ThematicSpiderChart className="w-full h-full" />
+        {/* Block 3: Blue Pacific 2050 Reality */}
+        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-u.png">
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              Blue Pacific 2050 Reality
+            </h2>
+            <p className="text-xl md:text-2xl leading-relaxed text-white mb-6">
+              This spider chart visualizes how your choices shaped the Pacific region's future across the seven pillars of the Blue Pacific 2050 Strategy. Each axis represents a different thematic area, and the shape shows the cumulative impact of your decisions throughout the game.
+            </p>
+            <div className="w-full min-h-[70vh] relative z-10">
+              <ThematicSpiderChart className="w-full h-full" />
+            </div>
           </div>
         </BlockSection>
 
-        {/* Answer Blocks Section */}
+        {/* Block 4: Answer Blocks Section */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <img src="/src/data/Scenario-y.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-z.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
             <img src="/src/data/Scenario-a.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
             <img src="/src/data/Scenario-b.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
             <img src="/src/data/Scenario-c.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
             <img src="/src/data/Scenario-d.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-e.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
+            <img src="/src/data/Scenario-f.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
           </div>
           <AnswerBlockDisplay />
         </div>
 
-        {/* Blue Pacific Stories */}
-        <BlockSection 
-          imageUrl="/src/data/Scenario-e.png"
-          imageLeft={true}
-        >
-          <BluePacificStoriesSection />
+        {/* Block 5: Blue Pacific Stories */}
+        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-g.png">
+          <div className="space-y-6">
+            <BluePacificStoriesSection />
+          </div>
         </BlockSection>
 
-        {/* Navigation */}
-        <BlockSection 
-          imageUrl="/src/data/Scenario-f.png"
-          imageLeft={false}
-        >
+        {/* Block 6: Navigation */}
+        <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-h.png">
           <div className="text-center space-y-8">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
               Continue Your Journey
