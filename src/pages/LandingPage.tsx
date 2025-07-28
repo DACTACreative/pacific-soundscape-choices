@@ -68,7 +68,7 @@ export default function LandingPage() {
         </div>
 
         {/* Right side image placeholder */}
-        <div className="hidden lg:block flex-shrink-0 w-1/2 max-w-2xl">
+        <div className="hidden md:block flex-shrink-0 w-1/2 max-w-2xl">
           <div className="relative w-full h-[80vh] rounded-lg overflow-hidden shadow-2xl border border-white/20">
             <img src="/lovable-uploads/0546b7e7-5117-4849-9466-37a58117c896.png" alt="Blue Pacific Future Vision" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
