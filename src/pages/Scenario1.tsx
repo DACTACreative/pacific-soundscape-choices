@@ -96,13 +96,22 @@ export default function Scenario1() {
             <p className="text-xl text-white/70 mb-8">
               Explore different pathways and their consequences for the Pacific's future.
             </p>
-            <Button 
-              variant="pacific" 
-              size="pacific"
-              onClick={() => window.location.href = '/scenario-2'}
-            >
-              EXPLORE SCENARIO 2 →
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button 
+                variant="pacific" 
+                size="pacific"
+                onClick={() => window.location.href = '/scenario-2'}
+              >
+                EXPLORE SCENARIO 2
+              </Button>
+              <Button 
+                variant="pacific" 
+                size="pacific"
+                onClick={() => window.location.href = '/credits'}
+              >
+                SOURCES & CREDITS
+              </Button>
+            </div>
           </div>
         </BlockSection>
       </div>

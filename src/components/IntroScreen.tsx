@@ -299,7 +299,7 @@ Let’s begin.`,
         id="section-0"
       >
         {/* Sticky Image Container for first section - Hidden on mobile */}
-        <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh' }}>
+        <div className="sticky-section hidden lg:block" style={{ position: 'relative', height: '100vh', zIndex: 10 }}>
           <div 
             className="fixed-image"
             data-scroll
@@ -315,7 +315,8 @@ Let’s begin.`,
               alignItems: 'center',
               justifyContent: 'center',
               padding: '2rem',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              background: 'rgba(0, 0, 0, 0.8)'
             }}
           >
             <div className="w-full h-full flex items-center justify-center">
@@ -323,7 +324,7 @@ Let’s begin.`,
                 src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
                 alt="Blue Pacific 2050 Experience"
                 className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                style={{ width: 'auto', height: 'auto' }}
+                style={{ width: 'auto', height: 'auto', zIndex: 20 }}
               />
             </div>
           </div>

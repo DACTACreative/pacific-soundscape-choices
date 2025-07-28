@@ -1,106 +1,17 @@
-import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+
 export default function LandingPage() {
   const navigate = useNavigate();
-  const vantaRef = useRef<HTMLDivElement>(null);
-  const vantaEffect = useRef<any>(null);
-  useEffect(() => {
-    let mounted = true;
-    const initVanta = () => {
-      // Check if element still exists and component is mounted
-      if (!mounted || !vantaRef.current) return;
 
-      // Check if VANTA is available
-      if ((window as any).VANTA && (window as any).VANTA.CELLS) {
-        console.log('Initializing Vanta CELLS effect');
-        try {
-          vantaEffect.current = (window as any).VANTA.CELLS({
-            el: vantaRef.current,
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            color1: 0x26d7,
-            color2: 0x35c5f2,
-            size: 5.00,
-            speed: 1.20
-          });
-          console.log('Vanta CELLS effect initialized successfully');
-        } catch (error) {
-          console.error('Error initializing Vanta:', error);
-        }
-      } else {
-        console.log('VANTA not available, loading scripts...');
-        loadScripts();
-      }
-    };
-    const loadScripts = () => {
-      // Check if THREE.js is already loaded
-      if (!(window as any).THREE) {
-        const threeScript = document.createElement('script');
-        threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
-        threeScript.onload = () => {
-          console.log('THREE.js loaded');
-          loadVantaScript();
-        };
-        threeScript.onerror = () => {
-          console.error('Failed to load THREE.js');
-        };
-        document.head.appendChild(threeScript);
-      } else {
-        loadVantaScript();
-      }
-    };
-    const loadVantaScript = () => {
-      if (!(window as any).VANTA) {
-        const vantaScript = document.createElement('script');
-        vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js';
-        vantaScript.onload = () => {
-          console.log('Vanta.js loaded');
-          if (mounted) {
-            setTimeout(initVanta, 100); // Small delay to ensure everything is ready
-          }
-        };
-        vantaScript.onerror = () => {
-          console.error('Failed to load Vanta.js');
-        };
-        document.head.appendChild(vantaScript);
-      } else {
-        initVanta();
-      }
-    };
-
-    // Start the loading process
-    initVanta();
-    return () => {
-      mounted = false;
-      console.log('Cleaning up Vanta effect');
-
-      // Safe cleanup with error handling
-      if (vantaEffect.current) {
-        try {
-          if (typeof vantaEffect.current.destroy === 'function') {
-            vantaEffect.current.destroy();
-          }
-        } catch (error) {
-          console.warn('Error during Vanta cleanup (this is usually safe to ignore):', error);
-        }
-        vantaEffect.current = null;
-      }
-    };
-  }, []);
   const handleStart = () => {
     navigate('/game');
   };
-  return <div className="relative h-screen w-full overflow-hidden">
-      {/* Vanta.js Background */}
-      <div ref={vantaRef} className="absolute inset-0 w-full h-full" />
 
-      {/* Background Overlay */}
-      <div className="absolute inset-0 bg-black/50 z-5" />
+  return (
+    <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+      {/* Subtle overlay for depth */}
+      <div className="absolute inset-0 bg-black/30" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-between" style={{
@@ -167,5 +78,6 @@ will we shape a future that reflects us?</p>
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }

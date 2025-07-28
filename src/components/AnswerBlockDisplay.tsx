@@ -93,16 +93,30 @@ export default function AnswerBlockDisplay() {
   let blockIndex = 0;
 
   return (
-    <div className="bg-black text-white">
+    <div className="bg-gradient-to-b from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen">
       {/* Header Block */}
-      <div className="min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16">
-        <div className="text-center max-w-4xl">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8">
-            Your Choices for the Pacific Future
-          </h1>
-          <p className="text-xl text-white/70 leading-relaxed">
-            These are the decisions you made during your journey, organized by the seven pillars of the Blue Pacific 2050 Strategy.
-          </p>
+      <div className="min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20" />
+        <div className="text-center max-w-5xl relative z-10">
+          <div className="mb-8">
+            <div className="inline-block p-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl border border-white/20 mb-6">
+              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
+                Your Pacific Journey
+              </h1>
+            </div>
+          </div>
+          <div className="space-y-6">
+            <p className="text-2xl md:text-3xl text-white/90 leading-relaxed font-light">
+              The decisions that shaped our shared future
+            </p>
+            <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto">
+              Your choices during this journey reflect the seven pillars of the Blue Pacific 2050 Strategy – 
+              each decision creating ripples across our region's future.
+            </p>
+            <div className="flex justify-center mt-8">
+              <div className="w-32 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -121,16 +135,29 @@ export default function AnswerBlockDisplay() {
             <BlockSection 
               imageLeft={isImageLeft} 
               imageUrl={imageUrl}
-              className="bg-black"
+              className="bg-gradient-to-br from-slate-900 to-blue-900"
             >
-              <div className="space-y-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-white">
-                  {theme}
-                </h2>
-                <p className="text-xl text-white/70">
-                  {themeAnswers.length} choice{themeAnswers.length !== 1 ? 's' : ''} made in this pillar of the Blue Pacific 2050 Strategy
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-white/20">
+                    <span className="text-blue-300 text-sm font-medium uppercase tracking-wider">
+                      Blue Pacific Pillar
+                    </span>
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+                    {theme}
+                  </h2>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" />
+                    <p className="text-xl text-white/70">
+                      {themeAnswers.length} decision{themeAnswers.length !== 1 ? 's' : ''} shaping this pillar
+                    </p>
+                  </div>
+                </div>
+                <p className="text-lg text-white/60 leading-relaxed max-w-2xl">
+                  Each choice in this strategic area creates lasting impacts across our Pacific region, 
+                  influencing communities, ecosystems, and future generations.
                 </p>
-                <div className="w-32 h-1 bg-[#35c5f2] rounded-full"></div>
               </div>
             </BlockSection>
 
@@ -146,28 +173,55 @@ export default function AnswerBlockDisplay() {
                   <BlockSection 
                     imageLeft={answerImageLeft} 
                     imageUrl={answerImageUrl}
-                    className="bg-black border-t border-white/10"
+                    className="bg-gradient-to-br from-slate-800 to-blue-800 border-t border-white/10"
                   >
-                    <div className="space-y-6">
-                      <div className="mb-6">
-                        <span className="text-[#35c5f2] text-lg font-medium">
-                          Question {answer.QuestionCode}
-                        </span>
+                    <div className="space-y-8">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full">
+                          <span className="text-white font-bold text-lg">
+                            {answer.QuestionCode}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-blue-300 text-sm font-medium uppercase tracking-wider">
+                            Decision Point
+                          </span>
+                          <p className="text-white/70 text-sm">
+                            Question {answer.QuestionCode}
+                          </p>
+                        </div>
                       </div>
                       
-                      <div className="bg-gradient-to-r from-[#35c5f2]/20 to-transparent p-6 rounded-xl border-l-4 border-[#35c5f2]">
-                        <h4 className="text-[#35c5f2] text-xl font-bold mb-4">Your Choice</h4>
-                        <p className="text-white text-lg leading-relaxed">
-                          {answer.answer}
-                        </p>
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl" />
+                        <div className="relative p-8 border border-blue-400/30 rounded-2xl backdrop-blur-sm">
+                          <div className="flex items-center space-x-3 mb-6">
+                            <div className="w-2 h-2 bg-blue-400 rounded-full" />
+                            <h4 className="text-blue-300 text-xl font-bold uppercase tracking-wide">
+                              Your Choice
+                            </h4>
+                          </div>
+                          <p className="text-white text-xl leading-relaxed font-light">
+                            {answer.answer}
+                          </p>
+                        </div>
                       </div>
 
-                      <div className="space-y-4">
-                        <h4 className="text-2xl font-bold text-purple-300">The Story</h4>
-                        <div className="text-lg text-white/90 leading-relaxed space-y-4">
-                          {answer.narrative.split('\n\n').map((paragraph, i) => (
-                            <p key={i}>{paragraph}</p>
-                          ))}
+                      <div className="space-y-6">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full" />
+                          <h4 className="text-2xl font-bold text-purple-300 uppercase tracking-wide">
+                            The Story Unfolds
+                          </h4>
+                        </div>
+                        <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-8 rounded-2xl border border-purple-400/20">
+                          <div className="text-xl text-white/90 leading-relaxed space-y-6">
+                            {answer.narrative.split('\n\n').map((paragraph, i) => (
+                              <p key={i} className="text-white/85 leading-relaxed">
+                                {paragraph}
+                              </p>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>

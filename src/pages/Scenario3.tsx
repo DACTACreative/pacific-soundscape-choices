@@ -112,13 +112,20 @@ export default function Scenario3() {
         <section className="min-h-screen py-24 flex items-center justify-center">
           <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16">
             <div className="max-w-7xl mx-auto text-center space-y-8">
-              <div className="flex flex-col md:flex-row gap-6 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Button 
                   variant="pacific" 
                   size="pacific"
                   onClick={() => window.location.href = '/scenario-2'}
                 >
-                  ← SCENARIO 2
+                  SCENARIO 2
+                </Button>
+                <Button 
+                  variant="pacific" 
+                  size="pacific"
+                  onClick={() => window.location.href = '/credits'}
+                >
+                  SOURCES & CREDITS
                 </Button>
                 <Button 
                   variant="pacific" 
