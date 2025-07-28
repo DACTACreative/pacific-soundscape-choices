@@ -1,12 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import BlockSection from '@/components/BlockSection';
-
 export default function CreditsPage() {
   const navigate = useNavigate();
-
-  return (
-    <div className="text-white min-h-screen bg-black">
+  return <div className="text-white min-h-screen bg-black">
       {/* What's Next Section */}
       <div className="min-h-screen flex flex-col justify-center items-center p-8 lg:p-16">
         <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -63,8 +60,7 @@ export default function CreditsPage() {
 
             <div className="mt-12">
               <p className="text-2xl text-white italic">
-                "We are mostly sea, scattered, yet bound."
-              </p>
+            </p>
             </div>
           </div>
         </div>
@@ -73,15 +69,10 @@ export default function CreditsPage() {
       {/* Navigation Footer */}
       <div className="py-12 px-8">
         <div className="max-w-4xl mx-auto flex justify-center">
-          <Button 
-            onClick={() => navigate('/')} 
-            variant="pacific" 
-            size="pacific"
-          >
+          <Button onClick={() => navigate('/')} variant="pacific" size="pacific">
             RESTART THE JOURNEY
           </Button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
