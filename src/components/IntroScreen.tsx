@@ -112,174 +112,98 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     }
   }, [loading]);
 
-  const blocks = [
+  const sections = [
     {
       id: 1,
-      title: "Creating Feeling",
-      content: `This piece was created to spark feeling.
+      title: "Creating Feeling: A Call for Pacific Resilience",
+      content: `This "game" is a call to action — to create feeling that transcends vast ocean distances separating Pacific nations.
 
-To awaken a sense of belonging, of togetherness, of hope, a rare and sacred emotion when facing the planetary scale of climate change.
+Isolation comes easily when 30 million km² of sea spreads between communities. Yet connection runs deeper than geography.
 
-To shine light where despair often creeps in.
+This experience calls for a new paradigm: a Resilient Pacific reflecting Pacific culture, Pacific knowledge, and Pacific connection to land that must be cared for to perpetuate customs and ways of life.
 
-To invite more people into the conversations that shape our region, especially around the Blue Pacific 2050 Strategy.
+The Blue Pacific 2050 Implementation Framework was mapped to 47 measurable indicators across 7 strategic pillars, transforming abstract policy into experiential decision-making.
 
-To stitch connection across distant shores.
-
-Because we are mostly sea, scattered, yet bound. So close… yet often made to feel far.
-
-This is a game, yes, but it's also a call to feel.`,
-      reversed: false
+Because frameworks matter. Indicators matter. But feelings move people toward the resilient future Pacific communities need.`,
+      textColor: "text-cyan-100"
     },
     {
       id: 2,
-      title: "The Sound of Our Ocean",
-      content: `The sea is what brings us together.
-It is our memory, our movement, our story.
+      title: "Innovation in Data Sonification",
+      content: `Real ocean tide data from Fiji (October 10, 2024) forms this experience's foundation.
 
-This piece focuses on sound, the sound of our ocean, to carry you through this journey.
+Every high tide = rising water. Every low = retreat six hours later.
 
-When you begin, you’ll be immersed in Fiji.
-The date: October 10, 2024.
+This isn't ambient sound — it's live environmental data converted to audio.
 
-The sound you hear is real.
-It is the actual tide, sonified.
+For Pacific communities, the ocean isn't background noise — it's the constant connecting 15 nations across 30 million km² of sea.
 
-Each high tide = rising water.
-Each low = its slow retreat six hours later.
-
-This soundscape grounds us. Because for the Pacific, the ocean is not background, it’s home.`,
-      reversed: true
+Data becomes visceral. Policy becomes personal. The sound of the ocean grounds every decision you'll make.`,
+      textColor: "text-teal-100"
     },
     {
       id: 3,
-      title: "The Reality We Face",
-      content: `We are already living in a warmer world.
+      title: "The Pacific Paradox: 0.03% Emissions, 100% Impact",
+      content: `Pacific nations emit less than 0.03% of global carbon emissions.
+Yet face the highest per-capita climate risks globally.
 
-The Pacific emits less than 0.03% of global carbon emissions.
-Yet we stand on the frontlines of its consequences.
+This paradox drives everything: local action within global constraints.
 
-Sea level rise is one of our most silent threats.
-It does not roar like a cyclone, it creeps. Quietly.
-And because it's invisible, we forget.
+Sea level rise doesn't roar like cyclones — it creeps quietly, invisibly, constantly.
 
-But like the sound of waves, always returning, the threat remains.
+Decisions in this experience reflect this tension — shaping Pacific outcomes while global forces accelerate beyond control.
 
-This is not alarmism. It’s presence. And we must respond with clarity and imagination.`,
-    reversed: false
+The fundamental challenge of small island state policy: maximum adaptation with minimal causation.`,
+      textColor: "text-orange-100"
     },
     {
       id: 4,
-      title: "Your Role in This Journey",
-      content: `As you enter this experience, you'll face a series of seven decisions.
+      title: "Seven Decisions, Systemic Impact",
+      content: `Seven strategic decisions map to Blue Pacific 2050 pillars:
 
-Each is inspired by the Blue Pacific 2050 Implementation Plan, its real goals, real indicators, and real challenges.
+- Political Leadership & Governance
+- People-Centered Development  
+- Peace & Security
+- Resource & Economic Development
+- Climate Change & Disaster Resilience
+- Oceans & Environment
+- Technology & Connectivity
 
-Some choices reflect public policy. Others are visions of community-led futures, new models, small-scale utopias.
+Each choice triggers cascading effects across indicators. No isolated outcomes — only interconnected systems.
 
-Why utopias?
-
-Because in the Pacific, hope is not a luxury. It’s a lifeline.
-And imagining better is how we resist being written out of the future.`,
-    reversed: true
+This models real Pacific policy: everything connects across vast ocean distances.`,
+      textColor: "text-purple-100"
     },
     {
       id: 5,
-      title: "Why This Is a Game",
-      content: `This is a simplification, a gamified journey.
+      title: "Beyond Quantitative: Why Stories Drive Policy",
+      content: `Impact evaluation in the Pacific requires both numbers and narratives.
 
-It’s also a living form of Monitoring, Evaluation, and Learning (MEL).
-Because data shouldn’t just live in spreadsheets.
+Quantitative indicators show what changed.
+Qualitative stories show why it matters.
 
-Here, it becomes visual. Sensory. Emotional.
+In small island contexts, a 2% GDP shift affects every family. A 10cm sea level rise reshapes entire communities.
 
-Frameworks matter. Indicators matter. 
-But feelings move people. Stories hold power.
+This experience generates both: measurable indicator changes AND lived experience projections for 2050.
 
-This experience invites you to reflect not just on numbers, but on what we value, and how we act.`,
-      reversed: false
+Because effective Pacific policy needs both spreadsheets and stories.`,
+      textColor: "text-green-100"
     },
     {
       id: 6,
-      title: "Your Decisions Shape the Region",
-      content: `You will make seven key decisions.
+      title: "Policy Architect for 2050",
+      content: `Decisions create ripple effects through 2050, showing how today's policy choices compound over decades.
 
-Each one maps directly to a pillar of the Blue Pacific Strategy:
+This is Monitoring, Evaluation & Learning (MEL) as interactive experience.
 
-• Political Leadership
-• People-Centered Development
-• Peace & Security
-• Resource & Economic Development
-• Climate Change
-• Oceans & Environment
-• Technology & Connectivity
+The best policy frameworks don't just measure outcomes — they help decision-makers feel the weight of their choices.
 
-Your choices affect these domains in subtle, interconnected ways.
-You won’t get a score, you’ll get ripple effects. Shifting indicators. Lived futures.
+Hope is strategy. Unity is strength. Dreaming is action.
 
-Because in the real world, outcomes are rarely binary.`,
-    reversed: true
-    },
-    {
-      id: 7,
-      title: "But You Don’t Control the World",
-      content: `You will make seven key decisions.
+Ready to architect the Pacific's next 25 years?
 
-Each one maps directly to a pillar of the Blue Pacific Strategy:
-
-• Political Leadership
-• People-Centered Development
-• Peace & Security
-• Resource & Economic Development
-• Climate Change
-• Oceans & Environment
-• Technology & Connectivity
-
-Your choices affect these domains in subtle, interconnected ways.
-You won’t get a score, you’ll get ripple effects. Shifting indicators. Lived futures.
-
-Because in the real world, outcomes are rarely binary.`,
-   reversed: false
-    },
-    {
-      id: 8,
-      title: "The Ripple Effects in 2050",
-      content: `You will make seven key decisions.
-
-Each one maps directly to a pillar of the Blue Pacific Strategy:
-
-• Political Leadership
-• People-Centered Development
-• Peace & Security
-• Resource & Economic Development
-• Climate Change
-• Oceans & Environment
-• Technology & Connectivity
-
-Your choices affect these domains in subtle, interconnected ways.
-You won’t get a score, you’ll get ripple effects. Shifting indicators. Lived futures.
-
-Because in the real world, outcomes are rarely binary.`,
-     reversed: true
-    },
-    {
-      id: 9,
-      title: "Last Words Before You Begin",
-      content: `Yes, the ocean is rising.
-But so are we.
-
-Every small decision sends a signal.
-Every story is a compass.
-
-This game is a reminder:
-Hope is strategy.
-Unity is strength.
-And dreaming is action.
-
-Let’s co-create a future shaped by us, not for us.
-
-Let’s begin.`,
-   reversed: false,
+Let's begin.`,
+      textColor: "text-indigo-100",
       isLast: true
     }
   ];
@@ -296,7 +220,7 @@ Let’s begin.`,
 
           {/* First Block - Full Page Layout */}
       <section 
-        key={blocks[0].id} 
+        key={sections[0].id} 
         data-scroll-section
         className="relative h-screen flex flex-col lg:flex-row"
         id="section-0"
@@ -347,20 +271,20 @@ Let’s begin.`,
         {/* Text Content - Left Side */}
         <div className="w-full lg:w-[60%] h-full flex items-center p-8 lg:p-16 bg-black">
           <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
-              {blocks[0].title}
+            <h2 className={`text-4xl md:text-6xl font-bold mb-8 ${sections[0].textColor}`}>
+              {sections[0].title}
             </h2>
-            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
-              {blocks[0].content}
+            <div className={`text-xl md:text-2xl leading-relaxed whitespace-pre-line ${sections[0].textColor}`}>
+              {sections[0].content}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Rest of the blocks with sticky behavior */}
-      {blocks.slice(1).map((block, index) => (
+      {/* Rest of the sections with sticky behavior */}
+      {sections.slice(1).map((section, index) => (
         <section 
-          key={block.id} 
+          key={section.id} 
           data-scroll-section
           className="relative"
           id={`section-${index + 1}`}
@@ -411,21 +335,21 @@ Let’s begin.`,
           <div className="scroll-text lg:mr-[40vw] mr-0 p-8 lg:p-16 min-h-screen flex items-center bg-black">
             <div className="max-w-2xl">
               <h2 
-                className="text-4xl md:text-6xl font-bold text-white mb-8"
+                className={`text-4xl md:text-6xl font-bold mb-8 ${section.textColor}`}
                 data-scroll
                 data-scroll-speed="0.5"
               >
-                {block.title}
+                {section.title}
               </h2>
               <div 
-                className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
+                className={`text-xl md:text-2xl leading-relaxed whitespace-pre-line ${section.textColor}`}
                 data-scroll
                 data-scroll-speed="0.3"
               >
-                {block.content}
+                {section.content}
               </div>
               
-              {block.isLast && (
+              {section.isLast && (
                 <div className="mt-12" data-scroll data-scroll-speed="0.2">
                   <Button
                     onClick={handleStart}
