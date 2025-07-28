@@ -5,7 +5,6 @@ import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
-
 export default function Scenario1() {
   return <div className="min-h-screen bg-black text-white relative">
 
@@ -79,14 +78,7 @@ export default function Scenario1() {
 
         {/* Block 5: User Choices Display */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <img src="/src/data/Scenario-c.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-d.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-e.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-f.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-g.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-            <img src="/src/data/Scenario-h.png" alt="Scenario visualization" className="w-full h-auto rounded-lg" />
-          </div>
+          
           <AnswerBlockDisplay />
         </div>
 
@@ -107,18 +99,10 @@ export default function Scenario1() {
               Explore different pathways and their consequences for the Pacific's future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => window.location.href = '/scenario-2'}
-              >
+              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/scenario-2'}>
                 EXPLORE SCENARIO 2
               </Button>
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => window.location.href = '/credits'}
-              >
+              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/credits'}>
                 SOURCES & CREDITS
               </Button>
             </div>
