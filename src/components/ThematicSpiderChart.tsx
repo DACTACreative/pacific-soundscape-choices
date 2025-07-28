@@ -23,9 +23,12 @@ export default function ThematicSpiderChart({
   useEffect(() => {
     // Load selected answer codes from sessionStorage
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
-    console.log('Selected codes from storage:', selectedCodes);
+    console.log('🕷️ ThematicSpiderChart: Selected codes from storage:', selectedCodes);
+    console.log('🕷️ Environment:', process.env.NODE_ENV);
+    console.log('🕷️ Current URL:', window.location.href);
+    
     if (selectedCodes.length === 0) {
-      console.log('No selected codes found, using fallback data');
+      console.log('🕷️ No selected codes found, using fallback data');
       setLoading(false);
       return;
     }
@@ -35,6 +38,7 @@ export default function ThematicSpiderChart({
     const maxRetries = 3;
     const loadDataWithRetry = async () => {
       try {
+        console.log('🕷️ Loading data files...');
         const [csvResponse, spiderMapResponse] = await Promise.all([fetch('/data/Mapping - Question BPC - Sheet1.csv', {
           cache: 'no-cache',
           headers: {
@@ -46,6 +50,10 @@ export default function ThematicSpiderChart({
             'Cache-Control': 'no-cache'
           }
         })]);
+        
+        console.log('🕷️ CSV Response status:', csvResponse.status);
+        console.log('🕷️ SpiderMap Response status:', spiderMapResponse.status);
+        
         if (!csvResponse.ok || !spiderMapResponse.ok) {
           throw new Error(`HTTP Error: CSV ${csvResponse.status}, SpiderMap ${spiderMapResponse.status}`);
         }
