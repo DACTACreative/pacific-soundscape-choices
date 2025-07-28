@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
+import DebugPanel from '../components/DebugPanel';
+import BlockSection from '../components/BlockSection';
 
 export default function Scenario2() {
-  return (
-    <div className="bg-black text-white min-h-screen relative">
+  return <div className="min-h-screen bg-black text-white relative">
 
       {/* Fixed Header */}
       <div className="fixed top-6 left-6 z-50">
