@@ -1,15 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-
 export default function LandingPage() {
   const navigate = useNavigate();
-
   const handleStart = () => {
     navigate('/game');
   };
-
-  return (
-    <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+  return <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       {/* Subtle overlay for depth */}
       <div className="absolute inset-0 bg-black/30" />
 
@@ -43,8 +39,7 @@ export default function LandingPage() {
           fontSize: 'clamp(24px, 3vw, 36px)',
           fontWeight: '600',
           lineHeight: '1.3'
-        }} className="mb-6 text-4xl text-slate-50">As the climate changes,
-will we shape a future that reflects us?</p>
+        }} className="mb-6 text-4xl text-slate-50">As the climate changes, will you shape a future that reflects us?</p>
           
           {/* Note */}
           <p className="text-white/80 mb-12" style={{
@@ -56,11 +51,7 @@ will we shape a future that reflects us?</p>
           </p>
           
           {/* Minimalist Button */}
-          <Button 
-            onClick={handleStart} 
-            variant="pacific" 
-            size="pacific"
-          >
+          <Button onClick={handleStart} variant="pacific" size="pacific">
             SHAPE OUR JOURNEY TO 2050
           </Button>
 
@@ -78,6 +69,5 @@ will we shape a future that reflects us?</p>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }
