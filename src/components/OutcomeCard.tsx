@@ -33,13 +33,13 @@ export const OutcomeCard: React.FC<OutcomeCardProps> = ({
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h4 className="font-medium text-foreground mb-2">Outcome:</h4>
-            <p className="text-foreground/90 leading-relaxed">{outcome}</p>
+            <h4 className="font-medium text-foreground mb-2">Impact:</h4>
+            <p className="text-foreground/90 leading-relaxed">{impact}</p>
           </div>
           
           <div>
-            <h4 className="font-medium text-foreground mb-2">Impact:</h4>
-            <p className="text-foreground/90 leading-relaxed">{impact}</p>
+            <h4 className="font-medium text-foreground mb-2">Outcome:</h4>
+            <p className="text-foreground/90 leading-relaxed">{outcome}</p>
           </div>
           
           <div className="flex justify-center pt-4">

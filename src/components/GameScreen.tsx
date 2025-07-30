@@ -9,6 +9,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { NarrativeCard } from './NarrativeCard';
 import { OutcomeCard } from './OutcomeCard';
 import { ThematicGauges } from './ThematicGauges';
+import { AnswersReviewModal } from './AnswersReviewModal';
 
 declare global {
   interface Window {
@@ -59,6 +60,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   const [showOutcomeCard, setShowOutcomeCard] = useState(false);
   const [currentSelectedAnswer, setCurrentSelectedAnswer] = useState<GameAnswer | null>(null);
   const [themeCounts, setThemeCounts] = useState<{ [key: string]: number }>({});
+  const [showAnswersReview, setShowAnswersReview] = useState(false);
   
   const vantaRef = useRef(null);
   const vantaEffect = useRef(null);
@@ -292,11 +294,22 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     const updatedCodes = [...selectedAnswerCodes, answerCode];
     setSelectedAnswerCodes(updatedCodes);
 
-    // Update theme counts
+    // Update theme counts - convert full theme names to codes
     if (answerData && answerData.themecode) {
+      const themeCodeMap: Record<string, string> = {
+        'Political_Leadership_and_Regionalism': 'PLR',
+        'People-Centered_Development': 'PCD', 
+        'Peace_and_Security': 'PS',
+        'Resource_and_Economic_Development': 'RED',
+        'Climate_Change_and_Disasters': 'CCD',
+        'Ocean_and_Environment': 'OE',
+        'Technology_and_Connectivity': 'TC'
+      };
+      
+      const shortCode = themeCodeMap[answerData.themecode] || answerData.themecode;
       setThemeCounts(prev => ({
         ...prev,
-        [answerData.themecode]: (prev[answerData.themecode] || 0) + 1
+        [shortCode]: (prev[shortCode] || 0) + 1
       }));
     }
 
@@ -372,9 +385,19 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
               <span className="text-sm font-light tracking-wider text-white/70 uppercase">
                 Question {currentQuestionIndex + 1} of {questions.length}
               </span>
-              <span className="text-sm text-white/60 font-light">
-                {Math.round(progressPercentage)}% complete
-              </span>
+              <div className="flex items-center gap-4">
+                {selectedAnswerCodes.length > 0 && (
+                  <button 
+                    onClick={() => setShowAnswersReview(true)}
+                    className="text-xs text-[#35c5f2] hover:text-[#35c5f2]/80 underline underline-offset-2 transition-colors"
+                  >
+                    Review Answers ({selectedAnswerCodes.length})
+                  </button>
+                )}
+                <span className="text-sm text-white/60 font-light">
+                  {Math.round(progressPercentage)}% complete
+                </span>
+              </div>
             </div>
             <div className="w-full bg-white/20 h-0.5 relative">
               <div 
@@ -441,6 +464,14 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
           theme={currentSelectedAnswer?.theme || ''}
           onContinue={handleOutcomeContinue}
           isVisible={showOutcomeCard}
+        />
+
+        {/* Answers Review Modal */}
+        <AnswersReviewModal
+          selectedAnswerCodes={selectedAnswerCodes}
+          answers={answers}
+          onClose={() => setShowAnswersReview(false)}
+          isVisible={showAnswersReview}
         />
 
         {/* Debug Panel - Only in development */}
