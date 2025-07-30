@@ -6,6 +6,9 @@ import Papa from 'papaparse';
 import DebugPanel from './DebugPanel';
 import ErrorBoundary from './ErrorBoundary';
 import LoadingSpinner from './LoadingSpinner';
+import { NarrativeCard } from './NarrativeCard';
+import { OutcomeCard } from './OutcomeCard';
+import { ThematicGauges } from './ThematicGauges';
 
 declare global {
   interface Window {
@@ -52,6 +55,10 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   const [answers, setAnswers] = useState<Record<string, GameAnswer>>({});
   const [loading, setLoading] = useState(true);
   const [audioStarted, setAudioStarted] = useState(false);
+  const [showNarrativeCard, setShowNarrativeCard] = useState(false);
+  const [showOutcomeCard, setShowOutcomeCard] = useState(false);
+  const [currentSelectedAnswer, setCurrentSelectedAnswer] = useState<GameAnswer | null>(null);
+  const [themeCounts, setThemeCounts] = useState<{ [key: string]: number }>({});
   
   const vantaRef = useRef(null);
   const vantaEffect = useRef(null);
@@ -280,27 +287,44 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   }, []);
 
   const handleOptionSelect = (optionIndex: number) => {
-    setIsTransitioning(true);
-    
     const answerCode = currentQuestion.options[optionIndex];
+    const answerData = answers[answerCode];
     const updatedCodes = [...selectedAnswerCodes, answerCode];
     setSelectedAnswerCodes(updatedCodes);
 
-    // Delay transition for visual feedback
-    setTimeout(() => {
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setIsTransitioning(false);
-      } else {
-        // Game complete - store only answer codes
-        sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(updatedCodes));
-        
-        // Redirect to random scenario (1, 2, or 3)
-        const scenarioNum = Math.floor(Math.random() * 3) + 1;
-        console.log('Redirecting to scenario:', scenarioNum);
-        navigate(`/scenario-${scenarioNum}`);
-      }
-    }, 800);
+    // Update theme counts
+    if (answerData && answerData.themecode) {
+      setThemeCounts(prev => ({
+        ...prev,
+        [answerData.themecode]: (prev[answerData.themecode] || 0) + 1
+      }));
+    }
+
+    // Set current answer and show narrative card
+    setCurrentSelectedAnswer(answerData);
+    setShowNarrativeCard(true);
+  };
+
+  const handleNarrativeContinue = () => {
+    setShowNarrativeCard(false);
+    setShowOutcomeCard(true);
+  };
+
+  const handleOutcomeContinue = () => {
+    setShowOutcomeCard(false);
+    setCurrentSelectedAnswer(null);
+    
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      // Game complete - store only answer codes
+      sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(selectedAnswerCodes));
+      
+      // Redirect to random scenario (1, 2, or 3)
+      const scenarioNum = Math.floor(Math.random() * 3) + 1;
+      console.log('Redirecting to scenario:', scenarioNum);
+      navigate(`/scenario-${scenarioNum}`);
+    }
   };
 
   if (loading) {
@@ -332,6 +356,12 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
           }}
         ></div>
       
+      {/* Thematic Gauges */}
+      <ThematicGauges 
+        themeCounts={themeCounts} 
+        totalQuestions={currentQuestionIndex + 1}
+      />
+
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen">
         <div className="w-full max-w-4xl text-center px-6">
@@ -373,7 +403,7 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
                     key={index}
                     className="group relative w-full py-4 px-6 text-lg md:text-xl lg:text-2xl font-bold bg-transparent border-4 border-[#35c5f2] text-[#35c5f2] hover:text-black overflow-hidden transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => handleOptionSelect(index)}
-                    disabled={isTransitioning}
+                    disabled={isTransitioning || showNarrativeCard || showOutcomeCard}
                   >
                     <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                     <span className="relative z-10 break-words">
@@ -397,6 +427,22 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         </div>
       </div>
       
+        {/* Narrative Card */}
+        <NarrativeCard
+          narrative={currentSelectedAnswer?.narrative || ''}
+          onContinue={handleNarrativeContinue}
+          isVisible={showNarrativeCard}
+        />
+
+        {/* Outcome Card */}
+        <OutcomeCard
+          outcome={currentSelectedAnswer?.outcome || ''}
+          impact={currentSelectedAnswer?.impact || ''}
+          theme={currentSelectedAnswer?.theme || ''}
+          onContinue={handleOutcomeContinue}
+          isVisible={showOutcomeCard}
+        />
+
         {/* Debug Panel - Only in development */}
         {process.env.NODE_ENV === 'development' && <DebugPanel />}
       </div>
