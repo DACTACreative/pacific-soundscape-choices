@@ -5,6 +5,7 @@ import questionsData from '@/data/questions.json';
 import Papa from 'papaparse';
 import DebugPanel from './DebugPanel';
 import ErrorBoundary from './ErrorBoundary';
+import TimePassageLoading from './TimePassageLoading';
 import LoadingSpinner from './LoadingSpinner';
 import { NarrativeCard } from './NarrativeCard';
 import { OutcomeCard } from './OutcomeCard';
@@ -102,6 +103,8 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     Technology_and_Connectivity: 0
   });
   const [showAnswersReview, setShowAnswersReview] = useState(false);
+  const [showTimePassage, setShowTimePassage] = useState(false);
+  const [targetScenario, setTargetScenario] = useState(1);
   
   const vantaRef = useRef(null);
   const vantaEffect = useRef(null);
@@ -425,9 +428,22 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
       
       console.log('Game session data:', gameSessionData);
       console.log('Redirecting to scenario:', scenarioNum);
-      navigate(`/scenario-${scenarioNum}`);
+      
+      // Store data for the scenario page
+      sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(selectedAnswerCodes));
+      sessionStorage.setItem('gameSessionData', JSON.stringify(gameSessionData));
+      sessionStorage.setItem('thematicScores', JSON.stringify(thematicScores));
+      
+      // Set target scenario and show time passage loading
+      setTargetScenario(scenarioNum);
+      setShowTimePassage(true);
     }
   };
+
+  // Show time passage loading when game is complete
+  if (showTimePassage) {
+    return <TimePassageLoading targetScenario={targetScenario} />;
+  }
 
   if (loading) {
     return (
