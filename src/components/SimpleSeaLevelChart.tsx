@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, RotateCcw } from 'lucide-react';
 
@@ -240,13 +240,7 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
           <div className="bg-card border rounded-lg p-6">
             <div className="h-96 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={displayData}>
-                  <defs>
-                    <linearGradient id="confidenceArea" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.15}/>
-                    </linearGradient>
-                  </defs>
+                <LineChart data={displayData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
                   <XAxis 
                     dataKey="year" 
@@ -280,33 +274,45 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
                     ]}
                     labelFormatter={(year) => `Year: ${year}`}
                   />
-                  
-                  {/* Confidence Area */}
-                  <Area
-                    type="monotone"
-                    dataKey="high"
-                    stroke="none"
-                    fill="url(#confidenceArea)"
-                    stackId="confidence"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="low"
-                    stroke="none"
-                    fill="hsl(var(--background))"
-                    stackId="confidence"
+                  <Legend 
+                    verticalAlign="top" 
+                    height={36}
+                    iconType="line"
+                    formatter={(value) => (
+                      <span style={{ color: 'hsl(var(--foreground))' }}>
+                        {value === 'medium' ? 'Medium Estimate (50th percentile): The most likely projection' :
+                         value === 'high' ? 'High Estimate (95th percentile): A pessimistic scenario; 95% chance the outcome will be at or below this level' :
+                         value === 'low' ? 'Low Estimate (5th percentile): An optimistic scenario; 5% chance the outcome will be at or below this level' : value}
+                      </span>
+                    )}
                   />
                   
-                  {/* Medium Line */}
+                  {/* Three Distinct Lines */}
                   <Line 
                     type="monotone" 
                     dataKey="medium" 
-                    stroke="hsl(var(--primary))" 
+                    stroke="#FAFAFA" 
                     strokeWidth={3}
-                    dot={{ fill: 'hsl(var(--primary))', r: 3, strokeWidth: 0 }}
-                    activeDot={{ r: 5, fill: 'hsl(var(--primary))' }}
+                    dot={{ fill: '#FAFAFA', r: 3, strokeWidth: 0 }}
+                    activeDot={{ r: 5, fill: '#FAFAFA' }}
                   />
-                </AreaChart>
+                  <Line 
+                    type="monotone" 
+                    dataKey="high" 
+                    stroke="#FBBF24" 
+                    strokeWidth={2}
+                    dot={{ fill: '#FBBF24', r: 2, strokeWidth: 0 }}
+                    activeDot={{ r: 4, fill: '#FBBF24' }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="low" 
+                    stroke="#22D3EE" 
+                    strokeWidth={2}
+                    dot={{ fill: '#22D3EE', r: 2, strokeWidth: 0 }}
+                    activeDot={{ r: 4, fill: '#22D3EE' }}
+                  />
+                </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
@@ -318,24 +324,24 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
         <h3 className="text-lg font-semibold text-foreground mb-4">Understanding the Projections</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div className="flex items-start space-x-3">
-            <div className="w-4 h-4 bg-primary/20 rounded-full mt-0.5 flex-shrink-0"></div>
+            <div className="w-6 h-0.5 bg-[#FAFAFA] mt-2 flex-shrink-0"></div>
             <div>
-              <div className="font-medium text-foreground">Confidence Region (Shaded Area)</div>
-              <div className="text-muted-foreground">Shows the range between high and low estimates, representing scientific uncertainty</div>
+              <div className="font-medium text-foreground">Medium Estimate (50th percentile)</div>
+              <div className="text-muted-foreground">The most likely projection based on current climate models</div>
             </div>
           </div>
           <div className="flex items-start space-x-3">
-            <div className="w-4 h-4 bg-primary rounded-full mt-0.5 flex-shrink-0"></div>
+            <div className="w-6 h-0.5 bg-[#FBBF24] mt-2 flex-shrink-0"></div>
             <div>
-              <div className="font-medium text-foreground">Medium Estimate (Blue Line)</div>
-              <div className="text-muted-foreground">The most likely outcome (50th percentile) based on current climate models</div>
+              <div className="font-medium text-foreground">High Estimate (95th percentile)</div>
+              <div className="text-muted-foreground">A pessimistic scenario; 95% chance the outcome will be at or below this level</div>
             </div>
           </div>
           <div className="flex items-start space-x-3">
-            <div className="w-4 h-4 border-2 border-primary rounded-full mt-0.5 flex-shrink-0"></div>
+            <div className="w-6 h-0.5 bg-[#22D3EE] mt-2 flex-shrink-0"></div>
             <div>
-              <div className="font-medium text-foreground">High/Low Bounds</div>
-              <div className="text-muted-foreground">95th and 5th percentiles showing optimistic and pessimistic scenarios</div>
+              <div className="font-medium text-foreground">Low Estimate (5th percentile)</div>
+              <div className="text-muted-foreground">An optimistic scenario; 5% chance the outcome will be at or below this level</div>
             </div>
           </div>
         </div>
