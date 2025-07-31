@@ -126,28 +126,6 @@ export default function Scenario2() {
           <SimpleSeaLevelChart scenario="tlim3.0win0.25" />
         </div>
 
-        {/* Picture 2: Between sea projections - smaller */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-8">
-          <div className="flex justify-center">
-            <img 
-              src="/data/MARKET.png" 
-              alt="Pacific Market Scene" 
-              className="max-w-md h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-        </div>
-
-        {/* Picture 3: Before Spider Chart */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-8">
-          <div className="flex justify-center">
-            <img 
-              src="/data/TRAVEL.png" 
-              alt="Pacific Travel Vision" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-        </div>
-
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
         <div className="w-full max-w-7xl mx-auto px-8 py-24">
           <div className="text-center space-y-12">
@@ -168,16 +146,6 @@ export default function Scenario2() {
           </div>
         </div>
 
-        {/* Picture 4: Between Spider Chart and Thematic Cards - smaller */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-16">
-          <div className="flex justify-center">
-            <img 
-              src="/data/SUVA.png" 
-              alt="Suva Pacific Future" 
-              className="max-w-lg h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-        </div>
 
         {/* Block 3.5: Thematic Informational Cards */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
@@ -189,8 +157,8 @@ export default function Scenario2() {
 
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/data/INTERISLAND.png">
-          <div className="text-center space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+          <div className="space-y-6 text-center">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
               Continue Your Journey
             </h2>
             <p className="text-xl text-white/70 mb-8">
