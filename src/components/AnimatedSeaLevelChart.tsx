@@ -27,21 +27,39 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
   useEffect(() => {
     const loadData = async () => {
       try {
+        console.log('🔍 Loading data for scenario:', scenario);
         const response = await fetch('/data/sea-level-data.csv');
+        
+        if (!response.ok) {
+          console.error('❌ Failed to fetch CSV:', response.status);
+          return;
+        }
+        
         const csvText = await response.text();
+        console.log('📄 CSV loaded, length:', csvText.length);
         
         Papa.parse(csvText, {
           header: true,
           complete: (results: any) => {
+            console.log('📊 Parsed results:', results.data.length, 'rows');
+            console.log('🎯 Sample row:', results.data[0]);
+            
             // Filter data for the selected scenario
             const scenarioData = results.data.filter((row: any) => 
               row.scenario === scenario && row.process === 'total' && row.confidence === 'medium'
             );
+            console.log('🎯 Filtered scenario data:', scenarioData.length, 'rows for scenario:', scenario);
 
-            // Group by quantile and process years
-            const quantile5Data = scenarioData.find((row: any) => row.quantile === '5');
-            const quantile50Data = scenarioData.find((row: any) => row.quantile === '50');
-            const quantile95Data = scenarioData.find((row: any) => row.quantile === '95');
+            // Group by quantile and process years - FIX: Use number comparison
+            const quantile5Data = scenarioData.find((row: any) => Number(row.quantile) === 5);
+            const quantile50Data = scenarioData.find((row: any) => Number(row.quantile) === 50);
+            const quantile95Data = scenarioData.find((row: any) => Number(row.quantile) === 95);
+
+            console.log('📈 Quantile data found:', {
+              q5: !!quantile5Data,
+              q50: !!quantile50Data,
+              q95: !!quantile95Data
+            });
 
             if (quantile5Data && quantile50Data && quantile95Data) {
               const processedData: SeaLevelDataPoint[] = [];
@@ -59,12 +77,16 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
                 }
               }
               
+              console.log('✅ Processed data points:', processedData.length);
+              console.log('📈 Sample data point:', processedData[0]);
               setData(processedData);
+            } else {
+              console.error('❌ Missing quantile data for scenario:', scenario);
             }
           }
         });
       } catch (error) {
-        console.error('Failed to load sea level data:', error);
+        console.error('💥 Data loading error:', error);
       }
     };
 
@@ -81,7 +103,7 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     setCurrentHeight(0);
 
     const startTime = Date.now();
-    const duration = 4000; // 4 seconds
+    const duration = 2500; // 2.5 seconds - much faster
     const endYear = 2150;
 
     const animate = () => {
@@ -141,12 +163,24 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
   // Draw the chart on canvas
   const drawChart = (progress: number) => {
     const canvas = canvasRef.current;
-    if (!canvas || data.length === 0) return;
+    if (!canvas) {
+      console.error('❌ No canvas ref');
+      return;
+    }
+    
+    if (data.length === 0) {
+      console.warn('⚠️ No data to draw');
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) {
+      console.error('❌ No canvas context');
+      return;
+    }
 
     const { width, height } = canvas;
+    console.log('🎨 Drawing on canvas:', width, 'x', height, 'with', data.length, 'data points');
     ctx.clearRect(0, 0, width, height);
 
     // Set up chart dimensions
@@ -269,8 +303,17 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
       if (!container) return;
       
       const rect = container.getBoundingClientRect();
+      console.log('📐 Container size:', rect.width, 'x', rect.height);
+      
+      // Set actual canvas size
       canvas.width = rect.width;
       canvas.height = rect.height;
+      
+      // Set CSS size to match
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      
+      console.log('🎨 Canvas size set to:', canvas.width, 'x', canvas.height);
       
       // Draw initial state when data is loaded
       if (data.length > 0) {
@@ -360,10 +403,12 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
       <div className="flex-grow flex flex-col lg:flex-row gap-6">
         {/* Chart Area - Centered */}
         <div className="flex-grow flex justify-center items-center">
-          <div className="w-full max-w-4xl bg-gray-900/50 rounded-lg p-4" style={{ height: '500px' }}>
+        <div className="w-full max-w-4xl bg-gray-900/50 rounded-lg p-4 border border-blue-500/30" style={{ height: '500px', minHeight: '500px' }}>
             <canvas
               ref={canvasRef}
-              className="w-full h-full"
+              className="w-full h-full border border-red-500/20"
+              width={800}
+              height={400}
             />
           </div>
         </div>
