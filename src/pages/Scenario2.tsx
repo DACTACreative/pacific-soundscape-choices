@@ -6,7 +6,7 @@ import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
-import AnimatedSeaLevelChart from '../components/AnimatedSeaLevelChart';
+import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
 import { useAudio, Scenario } from '../context/AudioContext';
 import { useEffect } from 'react';
 
@@ -62,9 +62,9 @@ export default function Scenario2() {
           </div>
         </BlockSection>
 
-        {/* Block 2: Animated Sea-Level Chart */}
-        <div className="w-full h-screen">
-          <AnimatedSeaLevelChart scenario="tlim3.0win0.25" />
+        {/* Block 2: Sea Level Chart */}
+        <div className="w-full py-16">
+          <SimpleSeaLevelChart scenario="tlim3.0win0.25" />
         </div>
 
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
