@@ -99,11 +99,9 @@ After each answer, you'll be projected directly into the **grounded reality** of
 
 At the end, the game will randomly choose one of three **climate scenarios**:
 
-**1.5°C warming** (SSP1-1.9: Paris Agreement target, rapid decarbonization)
-
-**3°C warming** (SSP2-4.5: Paris Agreement target, rapid decarbonization)
-
-**5°C warming** (SSP5-8.5: high emissions pathway, limited climate action)
+• **Scenario 1: The Great Re-Think** (1.5°C warming)
+• **Scenario 2: The Techno-Fix Muddle** (3°C warming)  
+• **Scenario 3: The Great Distraction** (5°C warming)
 
 The same October tides will sound very different 25 years later.
 
