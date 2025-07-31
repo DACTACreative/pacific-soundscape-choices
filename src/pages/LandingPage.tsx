@@ -1,6 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import IntroScreen from '@/components/IntroScreen';
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Add TypeScript declarations
 declare global {
@@ -13,9 +14,10 @@ declare global {
 export default function LandingPage() {
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffect = useRef<any>(null);
+  const navigate = useNavigate();
 
   const handleGameStart = () => {
-    window.location.href = '/game';
+    navigate('/game');
   };
 
   useEffect(() => {
