@@ -68,11 +68,6 @@ export default function Scenario1() {
           <ThematicInformationalCards />
         </div>
 
-        {/* Block 4: User Choices Display */}
-        <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
-          <AnswerBlockDisplay />
-        </div>
-
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-k.png">
           <div className="space-y-6 text-center">
