@@ -34,14 +34,46 @@ interface GameAnswer {
   outcome: string;
   impact: string;
   narrative: string;
+  points?: {
+    Political_Leadership_and_Regionalism: number;
+    People_Centered_Development: number;
+    Peace_and_Security: number;
+    Resource_and_Economic_Development: number;
+    Climate_Change_and_Disasters: number;
+    Ocean_and_Environment: number;
+    Technology_and_Connectivity: number;
+  };
+  chart?: any;
+  counter?: any;
 }
 
 interface ThemeCounts {
   [key: string]: number;
 }
 
-interface ThemeAnswers {
-  [key: string]: string[];
+interface ThematicScores {
+  Political_Leadership_and_Regionalism: number;
+  People_Centered_Development: number;
+  Peace_and_Security: number;
+  Resource_and_Economic_Development: number;
+  Climate_Change_and_Disasters: number;
+  Ocean_and_Environment: number;
+  Technology_and_Connectivity: number;
+}
+
+interface GameSessionData {
+  sessionId: string;
+  timestamp: string;
+  scenario: string;
+  selectedAnswers: string[];
+  finalThematicScores: ThematicScores;
+  totalScore: number;
+  answerDetails: Array<{
+    questionCode: string;
+    selectedAnswer: string;
+    answerText: string;
+    pointsEarned: ThematicScores;
+  }>;
 }
 
 interface GameScreenProps {
@@ -60,6 +92,15 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   const [showOutcomeCard, setShowOutcomeCard] = useState(false);
   const [currentSelectedAnswer, setCurrentSelectedAnswer] = useState<GameAnswer | null>(null);
   const [themeCounts, setThemeCounts] = useState<{ [key: string]: number }>({});
+  const [thematicScores, setThematicScores] = useState<ThematicScores>({
+    Political_Leadership_and_Regionalism: 0,
+    People_Centered_Development: 0,
+    Peace_and_Security: 0,
+    Resource_and_Economic_Development: 0,
+    Climate_Change_and_Disasters: 0,
+    Ocean_and_Environment: 0,
+    Technology_and_Connectivity: 0
+  });
   const [showAnswersReview, setShowAnswersReview] = useState(false);
   
   const vantaRef = useRef(null);
@@ -239,10 +280,10 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
   }, []);
 
   useEffect(() => {
-    // Load answers from JSON file instead of CSV for better reliability
+    // Load answers from new points-based JSON file
     const loadAnswersData = async () => {
       try {
-        const response = await fetch('/data/answers.json');
+        const response = await fetch('/data/ANSWERSMAPPING.6.json');
         if (!response.ok) {
           throw new Error(`Failed to load answers: ${response.status}`);
         }
@@ -294,11 +335,11 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     const updatedCodes = [...selectedAnswerCodes, answerCode];
     setSelectedAnswerCodes(updatedCodes);
 
-    // Update theme counts - convert full theme names to codes
+    // Update theme counts for display (backward compatibility)
     if (answerData && answerData.themecode) {
       const themeCodeMap: Record<string, string> = {
         'Political_Leadership_and_Regionalism': 'PLR',
-        'People-Centered_Development': 'PCD', 
+        'People_Centered_Development': 'PCD', 
         'Peace_and_Security': 'PS',
         'Resource_and_Economic_Development': 'RED',
         'Climate_Change_and_Disasters': 'CCD',
@@ -311,6 +352,19 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
         ...prev,
         [shortCode]: (prev[shortCode] || 0) + 1
       }));
+    }
+
+    // Update thematic scores using points system
+    if (answerData?.points) {
+      setThematicScores(prev => {
+        const updated = { ...prev };
+        Object.entries(answerData.points).forEach(([theme, points]) => {
+          if (theme in updated) {
+            updated[theme as keyof ThematicScores] += points;
+          }
+        });
+        return updated;
+      });
     }
 
     // Set current answer and show narrative card
@@ -330,11 +384,46 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Game complete - store only answer codes
-      sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(selectedAnswerCodes));
-      
-      // Redirect to random scenario (1, 2, or 3)
+      // Game complete - prepare comprehensive session data
+      const sessionId = crypto.randomUUID();
       const scenarioNum = Math.floor(Math.random() * 3) + 1;
+      const totalScore = Object.values(thematicScores).reduce((sum, score) => sum + score, 0);
+      
+      // Build answer details for analytics
+      const answerDetails = selectedAnswerCodes.map(code => {
+        const answerData = answers[code];
+        return {
+          questionCode: answerData?.QuestionCode || '',
+          selectedAnswer: code,
+          answerText: answerData?.answer || '',
+          pointsEarned: answerData?.points || {
+            Political_Leadership_and_Regionalism: 0,
+            People_Centered_Development: 0,
+            Peace_and_Security: 0,
+            Resource_and_Economic_Development: 0,
+            Climate_Change_and_Disasters: 0,
+            Ocean_and_Environment: 0,
+            Technology_and_Connectivity: 0
+          }
+        };
+      });
+
+      const gameSessionData: GameSessionData = {
+        sessionId,
+        timestamp: new Date().toISOString(),
+        scenario: `scenario${scenarioNum}`,
+        selectedAnswers: selectedAnswerCodes,
+        finalThematicScores: thematicScores,
+        totalScore,
+        answerDetails
+      };
+
+      // Store comprehensive data for analytics
+      sessionStorage.setItem('selectedAnswerCodes', JSON.stringify(selectedAnswerCodes));
+      sessionStorage.setItem('gameSessionData', JSON.stringify(gameSessionData));
+      sessionStorage.setItem('thematicScores', JSON.stringify(thematicScores));
+      
+      console.log('Game session data:', gameSessionData);
       console.log('Redirecting to scenario:', scenarioNum);
       navigate(`/scenario-${scenarioNum}`);
     }
@@ -371,7 +460,8 @@ export default function GameScreen({ onComplete }: GameScreenProps) {
       
       {/* Thematic Gauges */}
       <ThematicGauges 
-        themeCounts={themeCounts} 
+        themeCounts={themeCounts}
+        thematicScores={thematicScores}
         totalQuestions={currentQuestionIndex + 1}
       />
 
