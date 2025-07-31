@@ -28,7 +28,7 @@ export default function LandingPage() {
           fontSize: 'clamp(48px, 6vw, 80px)',
           lineHeight: '1.1',
           letterSpacing: '0.03em'
-        }}>BLUE LENSE</h1>
+        }}>BLUE PARADIGM</h1>
           
           {/* Subtitle */}
           <h2 style={{

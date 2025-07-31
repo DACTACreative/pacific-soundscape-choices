@@ -1,4 +1,4 @@
-# Choose Your Pacific Future - Game Documentation
+# BLUE PARADIGM - Game Documentation
 
 ## Overview
 Interactive climate game for Pacific Islands with sound-driven storytelling.

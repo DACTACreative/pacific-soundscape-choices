@@ -1,4 +1,4 @@
-# UI/UX Guidelines - Choose Your Pacific Future
+# UI/UX Guidelines - BLUE PARADIGM
 
 ## Design Philosophy
 

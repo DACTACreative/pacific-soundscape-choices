@@ -1,8 +1,8 @@
-# Voice and Tone Guidelines - Choose Your Pacific Future
+# Voice and Tone Guidelines - BLUE PARADIGM
 
 ## Core Voice Principles
 
-The voice of "Choose Your Pacific Future" honors Pacific perspectives while maintaining scientific credibility and emotional resonance. We speak with respect, urgency, and hope—acknowledging the gravity of climate challenges while empowering users to envision positive change.
+The voice of "BLUE PARADIGM" honors Pacific perspectives while maintaining scientific credibility and emotional resonance. We speak with respect, urgency, and hope—acknowledging the gravity of climate challenges while empowering users to envision positive change.
 
 ## Tone Characteristics
 
@@ -208,4 +208,4 @@ Before finalizing any content, verify:
 - Apply voice guidelines consistently across all content types
 - Regular voice audits to catch inconsistencies
 
-This voice framework ensures that "Choose Your Pacific Future" speaks authentically about climate challenges while honoring Pacific wisdom, sovereignty, and resilience.
+This voice framework ensures that "BLUE PARADIGM" speaks authentically about climate challenges while honoring Pacific wisdom, sovereignty, and resilience.

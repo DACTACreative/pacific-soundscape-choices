@@ -1,4 +1,4 @@
-# Next Developer Actionables - Choose Your Pacific Future
+# Next Developer Actionables - BLUE PARADIGM
 
 ## Current Status Overview
 
