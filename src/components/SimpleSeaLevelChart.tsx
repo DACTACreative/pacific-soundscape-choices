@@ -243,8 +243,8 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
                 <AreaChart data={displayData}>
                   <defs>
                     <linearGradient id="confidenceArea" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
-                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.05}/>
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.15}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
