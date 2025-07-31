@@ -1,15 +1,64 @@
 import { ChevronDown } from 'lucide-react';
 import IntroScreen from '@/components/IntroScreen';
+import { useEffect } from 'react';
 
 export default function LandingPage() {
   const handleGameStart = () => {
     window.location.href = '/game';
   };
+
+  useEffect(() => {
+    // Load Three.js
+    const threeScript = document.createElement('script');
+    threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+    threeScript.async = true;
+    document.head.appendChild(threeScript);
+
+    // Load Vanta Birds after Three.js loads
+    threeScript.onload = () => {
+      const vantaScript = document.createElement('script');
+      vantaScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js';
+      vantaScript.async = true;
+      document.head.appendChild(vantaScript);
+
+      vantaScript.onload = () => {
+        // Initialize Vanta Birds effect
+        if (window.VANTA) {
+          window.VANTA.BIRDS({
+            el: "#vanta-hero",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x000000,
+            color1: 0xfbbf24,
+            color2: 0xff7f50,
+            colorMode: "lerp",
+            birdSize: 0.70,
+            speedLimit: 4.00,
+            separation: 99.00,
+            alignment: 85.00,
+            cohesion: 1.00,
+            quantity: 3.00
+          });
+        }
+      };
+    };
+
+    return () => {
+      // Cleanup scripts
+      const scripts = document.querySelectorAll('script[src*="three"], script[src*="vanta"]');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
   
   return (
     <div className="w-full">
       {/* Landing Page Hero */}
-      <div className="h-screen w-full bg-black relative">
+      <div id="vanta-hero" className="h-screen w-full bg-black relative">
         {/* Subtle overlay for depth */}
         <div className="absolute inset-0 bg-black/30" />
 
