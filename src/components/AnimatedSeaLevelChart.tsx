@@ -19,6 +19,7 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
   const [currentYear, setCurrentYear] = useState(2020);
   const [currentHeight, setCurrentHeight] = useState(0);
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [selectedQuantile, setSelectedQuantile] = useState<'5' | '50' | '95'>('50');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
 
@@ -127,12 +128,14 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     }
 
     if (beforePoint.year === afterPoint.year) {
-      return beforePoint.quantile50;
+      const key = `quantile${selectedQuantile}` as keyof SeaLevelDataPoint;
+      return beforePoint[key] as number;
     }
 
     // Linear interpolation
     const ratio = (year - beforePoint.year) / (afterPoint.year - beforePoint.year);
-    return beforePoint.quantile50 + ratio * (afterPoint.quantile50 - beforePoint.quantile50);
+    const key = `quantile${selectedQuantile}` as keyof SeaLevelDataPoint;
+    return (beforePoint[key] as number) + ratio * ((afterPoint[key] as number) - (beforePoint[key] as number));
   };
 
   // Draw the chart on canvas
@@ -300,76 +303,107 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
   };
 
   return (
-    <div className="w-full h-screen flex flex-col bg-black text-white p-8">
-      <div className="flex-shrink-0 mb-8">
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+    <div className="w-full min-h-screen flex flex-col bg-black text-white p-4 md:p-8">
+      <div className="flex-shrink-0 mb-6 text-center">
+        <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
           Sea-Level Rise Projection: {getScenarioTitle(scenario)}
         </h2>
-        <p className="text-lg md:text-xl text-gray-300 mb-6 max-w-3xl">
-          This animated chart shows projected sea-level rise from 2020 to 2150. The blue area represents the range of uncertainty, while the line shows the most likely outcome.
-        </p>
+        
+        {/* Play Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-6">
+          <Button
+            onClick={() => {
+              setSelectedQuantile('5');
+              startAnimation();
+            }}
+            disabled={isPlaying || data.length === 0}
+            variant={selectedQuantile === '5' ? 'default' : 'outline'}
+            size="lg"
+            className="text-base px-6 py-3"
+          >
+            {isPlaying && selectedQuantile === '5' ? 'Playing...' : '▶ Play Low Quantile (5%)'}
+          </Button>
+          <Button
+            onClick={() => {
+              setSelectedQuantile('50');
+              startAnimation();
+            }}
+            disabled={isPlaying || data.length === 0}
+            variant={selectedQuantile === '50' ? 'default' : 'outline'}
+            size="lg"
+            className="text-base px-6 py-3"
+          >
+            {isPlaying && selectedQuantile === '50' ? 'Playing...' : '▶ Play Medium Quantile (50%)'}
+          </Button>
+          <Button
+            onClick={() => {
+              setSelectedQuantile('95');
+              startAnimation();
+            }}
+            disabled={isPlaying || data.length === 0}
+            variant={selectedQuantile === '95' ? 'default' : 'outline'}
+            size="lg"
+            className="text-base px-6 py-3"
+          >
+            {isPlaying && selectedQuantile === '95' ? 'Playing...' : '▶ Play High Quantile (95%)'}
+          </Button>
+        </div>
       </div>
 
-      <div className="flex-grow flex flex-col lg:flex-row gap-8">
-        {/* Chart Area */}
-        <div className="flex-grow relative bg-gray-900/50 rounded-lg p-4">
-          <canvas
-            ref={canvasRef}
-            className="w-full h-full"
-            style={{ maxHeight: '600px' }}
-          />
+      <div className="flex-grow flex flex-col lg:flex-row gap-6">
+        {/* Chart Area - Centered */}
+        <div className="flex-grow flex justify-center items-center">
+          <div className="w-full max-w-4xl bg-gray-900/50 rounded-lg p-4" style={{ height: '500px' }}>
+            <canvas
+              ref={canvasRef}
+              className="w-full h-full"
+            />
+          </div>
         </div>
 
-        {/* Controls and Data Display */}
-        <div className="lg:w-80 flex flex-col gap-6">
-          {/* Play Button */}
-          <div className="text-center">
-            <Button
-              onClick={startAnimation}
-              disabled={isPlaying || data.length === 0}
-              variant="pacific"
-              size="pacific"
-              className="text-lg px-8 py-4"
-            >
-              {isPlaying ? 'Playing...' : '▶ Play 2020-2150 Projection'}
-            </Button>
-          </div>
-
+        {/* Data Display - Side panel or below on mobile */}
+        <div className="lg:w-80 flex flex-col gap-4">
           {/* Data Readouts */}
-          <div className="space-y-4">
-            <div className="bg-gray-900/50 rounded-lg p-6 text-center">
-              <div className="text-sm text-gray-400 uppercase tracking-wider mb-2">
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
+            <div className="bg-gray-900/50 rounded-lg p-4 text-center">
+              <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Current Year
               </div>
-              <div className="text-4xl font-mono font-bold text-white">
+              <div className="text-2xl lg:text-3xl font-mono font-bold text-white">
                 {currentYear}
               </div>
             </div>
 
-            <div className="bg-gray-900/50 rounded-lg p-6 text-center">
-              <div className="text-sm text-gray-400 uppercase tracking-wider mb-2">
+            <div className="bg-gray-900/50 rounded-lg p-4 text-center">
+              <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Sea-Level Rise
               </div>
-              <div className="text-4xl font-mono font-bold text-blue-400">
+              <div className="text-2xl lg:text-3xl font-mono font-bold text-blue-400">
                 {currentHeight.toFixed(1)} cm
               </div>
             </div>
           </div>
 
-          {/* Legend */}
-          <div className="bg-gray-900/50 rounded-lg p-4 space-y-3">
-            <h3 className="text-lg font-semibold text-white mb-3">Legend</h3>
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 bg-blue-600 rounded"></div>
-              <span className="text-sm text-gray-300">Median Projection</span>
+          {/* Current Selection */}
+          <div className="bg-gray-900/50 rounded-lg p-4 text-center">
+            <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+              Selected Quantile
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 bg-blue-600/30 rounded"></div>
-              <span className="text-sm text-gray-300">Confidence Range (5-95%)</span>
+            <div className="text-lg font-bold text-white">
+              {selectedQuantile === '5' ? 'Low (5%)' : 
+               selectedQuantile === '50' ? 'Medium (50%)' : 
+               'High (95%)'}
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Debug info */}
+      {data.length === 0 && (
+        <div className="text-center text-red-400 mt-4">
+          Loading data... Scenario: {scenario}
+        </div>
+      )}
     </div>
   );
 }
