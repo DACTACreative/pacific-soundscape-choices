@@ -122,6 +122,7 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
               tick={{ fill: '#fff' }}
             />
             <YAxis 
+              domain={[0, 160]}
               stroke="#fff"
               tick={{ fill: '#fff' }}
               label={{ value: 'Sea Level Rise (cm)', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fill: '#fff' } }}
