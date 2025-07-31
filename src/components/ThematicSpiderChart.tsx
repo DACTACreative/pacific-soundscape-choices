@@ -62,9 +62,9 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
     );
   }
 
-  const size = 800;
+  const size = 500;
   const center = size / 2;
-  const maxRadius = 300;
+  const maxRadius = 180;
   const angleStep = (2 * Math.PI) / 7;
 
   // Calculate positions for each axis point
@@ -104,168 +104,214 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
   })();
 
   return (
-    <div className="w-full h-screen flex items-center justify-center p-8">
-      <div className="w-full h-full max-w-none flex items-center justify-center">
-        <svg
-          ref={svgRef}
-          className="w-full h-full max-w-[90vmin] max-h-[90vmin]"
-          viewBox={`0 0 ${size} ${size}`}
-          preserveAspectRatio="xMidYMid meet"
-        >
-          {/* Grid lines at 2, 4, 6 marks */}
-          {[2, 4, 6].map(value => (
-            <path
-              key={value}
-              d={generateGridPath(value)}
-              fill="none"
-              stroke="rgba(255, 255, 255, 0.2)"
-              strokeWidth="2"
+    <div className={`relative ${className}`}>
+      <svg
+        ref={svgRef}
+        width={size}
+        height={size}
+        className="mx-auto"
+        viewBox={`0 0 ${size} ${size}`}
+      >
+        {/* Grid lines at 2, 4, 6 marks */}
+        {[2, 4, 6].map(value => (
+          <path
+            key={value}
+            d={generateGridPath(value)}
+            fill="none"
+            stroke="rgba(255, 255, 255, 0.2)"
+            strokeWidth="1"
+          />
+        ))}
+
+        {/* Axis lines */}
+        {THEMES.map((_, index) => {
+          const endPoint = getAxisPoint(index, 7);
+          return (
+            <line
+              key={index}
+              x1={center}
+              y1={center}
+              x2={endPoint.x}
+              y2={endPoint.y}
+              stroke="rgba(255, 255, 255, 0.3)"
+              strokeWidth="1"
             />
-          ))}
+          );
+        })}
 
-          {/* Axis lines */}
-          {THEMES.map((_, index) => {
-            const endPoint = getAxisPoint(index, 7);
-            return (
-              <line
-                key={index}
-                x1={center}
-                y1={center}
-                x2={endPoint.x}
-                y2={endPoint.y}
-                stroke="rgba(255, 255, 255, 0.3)"
-                strokeWidth="2"
-              />
-            );
-          })}
+        {/* Ambition Zone - Semi-transparent heptagon at 4.5 */}
+        <path
+          d={ambitionZonePath}
+          fill="rgba(53, 197, 242, 0.15)"
+          stroke="rgba(53, 197, 242, 0.4)"
+          strokeWidth="2"
+          strokeDasharray="5,5"
+        />
 
-          {/* Ambition Zone - Semi-transparent heptagon at 4.5 */}
-          <path
-            d={ambitionZonePath}
-            fill="rgba(53, 197, 242, 0.15)"
-            stroke="rgba(53, 197, 242, 0.4)"
-            strokeWidth="3"
-            strokeDasharray="8,8"
-          />
+        {/* Player data shape */}
+        <path
+          d={playerPath}
+          fill="rgba(255, 255, 255, 0.1)"
+          stroke="white"
+          strokeWidth="2"
+          style={{
+            strokeDasharray: isAnimated ? 'none' : '2000',
+            strokeDashoffset: isAnimated ? '0' : '2000',
+            transition: 'stroke-dashoffset 2s ease-out'
+          }}
+        />
 
-          {/* Player data shape */}
-          <path
-            d={playerPath}
-            fill="rgba(255, 255, 255, 0.1)"
-            stroke="white"
-            strokeWidth="4"
-            style={{
-              strokeDasharray: isAnimated ? 'none' : '2000',
-              strokeDashoffset: isAnimated ? '0' : '2000',
-              transition: 'stroke-dashoffset 2s ease-out'
-            }}
-          />
+        {/* Player data points with conditional styling */}
+        {playerScores.map((score, index) => {
+          const point = getAxisPoint(index, score);
+          const isSuccess = score >= 4.5;
+          
+          return (
+            <circle
+              key={index}
+              cx={point.x}
+              cy={point.y}
+              r={isSuccess ? 8 : 5}
+              fill={isSuccess ? '#35c5f2' : 'white'}
+              stroke={isSuccess ? '#35c5f2' : 'rgba(255, 255, 255, 0.8)'}
+              strokeWidth="2"
+              className="cursor-pointer transition-all duration-200"
+              style={{
+                filter: isSuccess ? 'drop-shadow(0 0 12px rgba(53, 197, 242, 0.8))' : 'none',
+                opacity: isAnimated ? 1 : 0,
+                transition: `opacity 0.5s ease-out ${index * 0.15}s, r 0.2s ease-out`
+              }}
+              onMouseEnter={(e) => {
+                const rect = svgRef.current?.getBoundingClientRect();
+                if (rect) {
+                  setHoveredPoint({
+                    theme: THEMES[index],
+                    score: score,
+                    x: rect.left + point.x,
+                    y: rect.top + point.y
+                  });
+                }
+              }}
+              onMouseLeave={() => setHoveredPoint(null)}
+              onMouseMove={(e) => {
+                const rect = svgRef.current?.getBoundingClientRect();
+                if (hoveredPoint && rect) {
+                  setHoveredPoint({
+                    ...hoveredPoint,
+                    x: rect.left + point.x,
+                    y: rect.top + point.y
+                  });
+                }
+              }}
+            />
+          );
+        })}
 
-          {/* Player data points with conditional styling */}
-          {playerScores.map((score, index) => {
-            const point = getAxisPoint(index, score);
-            const isSuccess = score >= 4.5;
-            
-            return (
-              <circle
-                key={index}
-                cx={point.x}
-                cy={point.y}
-                r={isSuccess ? 12 : 8}
-                fill={isSuccess ? '#35c5f2' : 'white'}
-                stroke={isSuccess ? '#35c5f2' : 'rgba(255, 255, 255, 0.8)'}
-                strokeWidth="3"
-                className="cursor-pointer transition-all duration-200"
-                style={{
-                  filter: isSuccess ? 'drop-shadow(0 0 16px rgba(53, 197, 242, 0.8))' : 'none',
-                  opacity: isAnimated ? 1 : 0,
-                  transition: `opacity 0.5s ease-out ${index * 0.15}s, r 0.2s ease-out`
-                }}
-                onMouseEnter={(e) => {
-                  const rect = svgRef.current?.getBoundingClientRect();
-                  if (rect) {
-                    setHoveredPoint({
-                      theme: THEMES[index],
-                      score: score,
-                      x: e.clientX,
-                      y: e.clientY
-                    });
-                  }
-                }}
-                onMouseLeave={() => setHoveredPoint(null)}
-                onMouseMove={(e) => {
-                  if (hoveredPoint) {
-                    setHoveredPoint({
-                      ...hoveredPoint,
-                      x: e.clientX,
-                      y: e.clientY
-                    });
-                  }
-                }}
-              />
-            );
-          })}
+        {/* Axis labels */}
+        {THEMES.map((theme, index) => {
+          const labelPoint = getAxisPoint(index, 8.2);
+          const lines = theme.includes('&') ? theme.split(' & ') : [theme];
+          
+          return (
+            <text
+              key={index}
+              x={labelPoint.x}
+              y={labelPoint.y}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="white"
+              fontSize="12"
+              className="font-medium"
+            >
+              {lines.map((line, lineIndex) => (
+                <tspan 
+                  key={lineIndex} 
+                  x={labelPoint.x} 
+                  dy={lineIndex === 0 ? 0 : 14}
+                >
+                  {line}
+                </tspan>
+              ))}
+            </text>
+          );
+        })}
 
-          {/* Grid value labels */}
-          {[2, 4, 6].map(value => {
-            const point = getAxisPoint(0, value);
-            return (
-              <text
-                key={value}
-                x={point.x + 15}
-                y={point.y}
-                textAnchor="start"
-                dominantBaseline="middle"
-                fill="rgba(255, 255, 255, 0.6)"
-                fontSize="16"
-                className="font-medium"
-              >
-                {value}
-              </text>
-            );
-          })}
+        {/* Grid value labels */}
+        {[2, 4, 6].map(value => {
+          const point = getAxisPoint(0, value);
+          return (
+            <text
+              key={value}
+              x={point.x + 10}
+              y={point.y}
+              textAnchor="start"
+              dominantBaseline="middle"
+              fill="rgba(255, 255, 255, 0.6)"
+              fontSize="11"
+            >
+              {value}
+            </text>
+          );
+        })}
 
-          {/* Center label */}
-          <text
-            x={center}
-            y={center + 6}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fill="rgba(255, 255, 255, 0.6)"
-            fontSize="16"
-            className="font-medium"
-          >
-            0
-          </text>
+        {/* Center label */}
+        <text
+          x={center}
+          y={center + 4}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="rgba(255, 255, 255, 0.6)"
+          fontSize="11"
+        >
+          0
+        </text>
 
-          {/* Max value label */}
-          <text
-            x={center}
-            y={center - maxRadius - 25}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fill="rgba(255, 255, 255, 0.6)"
-            fontSize="16"
-            className="font-medium"
-          >
-            7
-          </text>
-        </svg>
+        {/* Max value label */}
+        <text
+          x={center}
+          y={center - maxRadius - 15}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="rgba(255, 255, 255, 0.6)"
+          fontSize="11"
+        >
+          7
+        </text>
+      </svg>
 
-        {/* Interactive Tooltip */}
-        {hoveredPoint && (
-          <div
-            className="fixed bg-black/95 text-white text-lg px-4 py-3 rounded shadow-lg pointer-events-none z-50 border border-white/20"
-            style={{
-              left: hoveredPoint.x + 15,
-              top: hoveredPoint.y - 40,
-              transform: 'translateX(-50%)'
-            }}
-          >
-            <div className="font-medium">{hoveredPoint.theme}</div>
-            <div className="text-[#35c5f2] text-xl font-bold">{hoveredPoint.score.toFixed(1)} / 7.0</div>
+      {/* Interactive Tooltip */}
+      {hoveredPoint && (
+        <div
+          className="fixed bg-black/95 text-white text-sm px-3 py-2 rounded shadow-lg pointer-events-none z-50 border border-white/20"
+          style={{
+            left: hoveredPoint.x + 15,
+            top: hoveredPoint.y - 35,
+            transform: 'translateX(-50%)'
+          }}
+        >
+          <div className="font-medium">{hoveredPoint.theme}</div>
+          <div className="text-[#35c5f2]">{hoveredPoint.score.toFixed(1)} / 7.0</div>
+        </div>
+      )}
+
+      {/* Legend */}
+      <div className="mt-6 flex justify-center">
+        <div className="bg-black/40 backdrop-blur-sm border border-slate-600/50 rounded-lg px-6 py-3">
+          <div className="flex items-center gap-6 text-sm text-white/80">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-[#35c5f2] bg-[#35c5f2]/20 rounded-sm"></div>
+              <span>Ambition Zone (4.5+)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-[#35c5f2] rounded-full"></div>
+              <span>Ambition Achieved</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-white rounded-full"></div>
+              <span>Below Ambition</span>
+            </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
