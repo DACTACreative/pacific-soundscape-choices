@@ -138,13 +138,15 @@ export default function LandingPage() {
   
   return (
     <div className="w-full">
-      {/* Debug Button */}
-      <button 
-        onClick={() => console.log('VANTA check:', window.VANTA, window.THREE)}
-        className="fixed top-4 right-4 bg-red-500 text-white p-2 z-50 rounded"
-      >
-        Debug
-      </button>
+      {/* Debug Button - Development Only */}
+      {process.env.NODE_ENV === 'development' && (
+        <button 
+          onClick={() => console.log('VANTA check:', window.VANTA, window.THREE)}
+          className="fixed top-4 right-4 bg-red-500 text-white p-2 z-50 rounded"
+        >
+          Debug
+        </button>
+      )}
 
       {/* Landing Page Hero */}
       <div 
