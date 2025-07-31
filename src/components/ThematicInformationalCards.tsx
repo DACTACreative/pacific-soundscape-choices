@@ -101,7 +101,7 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ theme, score, spiderData 
   const IconComponent = theme.icon;
 
   return (
-    <div className="relative w-full h-72 perspective-1000">
+    <div className="relative w-full h-80 perspective-1000">
       <div 
         className={`absolute inset-0 transition-transform duration-700 transform-style-preserve-3d ${
           isFlipped ? 'rotate-y-180' : ''
@@ -109,32 +109,31 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ theme, score, spiderData 
       >
         {/* Front of card */}
         <Card 
-          className={`absolute inset-0 backface-hidden bg-slate-900/80 backdrop-blur-sm relative ${
+          className={`absolute inset-0 backface-hidden bg-slate-900/60 backdrop-blur-sm relative ${
             isAmbitionAchieved 
-              ? 'border-[#35c5f2] border-2 shadow-lg shadow-[#35c5f2]/20' 
-              : 'border-slate-600/50'
+              ? 'border-white/60 border-2' 
+              : 'border-slate-600/40'
           }`}
         >
           {/* Ambition Met Badge */}
           {isAmbitionAchieved && (
-            <Badge className="absolute top-3 right-3 bg-[#35c5f2]/20 border-[#35c5f2] text-[#35c5f2] text-xs">
-              <Star className="w-3 h-3 mr-1" />
-              AMBITION MET
-            </Badge>
+            <div className="absolute top-4 right-4 text-xs text-white/80 font-medium">
+              ★ AMBITION MET
+            </div>
           )}
           
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm text-white/90 leading-tight flex items-center gap-2">
-              <IconComponent className="w-4 h-4 text-[#35c5f2]" />
+          <CardHeader className="pb-4">
+            <CardTitle className="text-base text-white/90 leading-tight flex items-center gap-3">
+              <IconComponent className="w-5 h-5 text-white/70" />
               {theme.name}
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-0 space-y-4">
+          <CardContent className="pt-0 space-y-6">
             <div className="text-center">
-              <div className="text-5xl font-bold text-[#35c5f2] mb-1">
+              <div className="text-6xl font-bold text-white mb-2">
                 {score.toFixed(1)}
               </div>
-              <div className="text-xs text-white/50 font-light">
+              <div className="text-sm text-white/50 font-light">
                 / 7.0 points
               </div>
             </div>
@@ -180,15 +179,15 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ theme, score, spiderData 
         </Card>
 
         {/* Back of card */}
-        <Card className="absolute inset-0 backface-hidden rotate-y-180 bg-black/60 border-white/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm text-white/90 leading-tight">
+        <Card className="absolute inset-0 backface-hidden rotate-y-180 bg-slate-900/60 backdrop-blur-sm border-slate-600/40">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-base text-white/90 leading-tight">
               {theme.name} - Your Outcome
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-0 space-y-4">
+          <CardContent className="pt-0 space-y-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-[#35c5f2] mb-2">
+              <div className="text-3xl font-bold text-white mb-4">
                 {outcomeLevel}
               </div>
               <p className="text-sm text-white/80 leading-relaxed">
@@ -242,7 +241,7 @@ export const ThematicInformationalCards: React.FC = () => {
         <p className="text-lg text-white/80 leading-relaxed text-center mb-8 max-w-4xl mx-auto">
           Below is an analysis of the future you have shaped through your policy choices. Each theme has been scored out of a maximum of 7.0 points based on your decisions. Your goal was to build a balanced and prosperous future by meeting the strategic goals for every area.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {THEMES.map((theme) => {
             const points = thematicScores[theme.key as keyof ThematicScores] || 0;
             return (
