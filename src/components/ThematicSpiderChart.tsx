@@ -62,9 +62,9 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
     );
   }
 
-  const size = 500;
+  const size = 700; // Increased from 500 to 700 for better visibility
   const center = size / 2;
-  const maxRadius = 180;
+  const maxRadius = 250; // Increased from 180 to 250 for more space
   const angleStep = (2 * Math.PI) / 7;
 
   // Calculate positions for each axis point
@@ -209,7 +209,7 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
 
         {/* Axis labels */}
         {THEMES.map((theme, index) => {
-          const labelPoint = getAxisPoint(index, 8.2);
+          const labelPoint = getAxisPoint(index, 8.8); // Increased spacing for labels
           const lines = theme.includes('&') ? theme.split(' & ') : [theme];
           
           return (
@@ -220,7 +220,7 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
               textAnchor="middle"
               dominantBaseline="middle"
               fill="white"
-              fontSize="12"
+              fontSize="14" // Increased font size for better readability
               className="font-medium"
             >
               {lines.map((line, lineIndex) => (
