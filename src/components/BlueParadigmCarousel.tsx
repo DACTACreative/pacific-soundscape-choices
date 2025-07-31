@@ -24,6 +24,12 @@ const BlueParadigmCarousel = () => {
     { src: "/data/TEAUPO.png", alt: "Te Aupo Sacred Waters" },
     { src: "/data/TRAVEL.png", alt: "Pacific Travel Vision" },
     { src: "/data/WATER.png", alt: "Pacific Water Resources" },
+    { src: "/lovable-uploads/4323d14e-e3a0-4ae5-9fe4-23efdecc54b9.png", alt: "Pacific Future Cityscape" },
+    { src: "/lovable-uploads/70e1c33e-9535-45a2-a513-e51920cc504b.png", alt: "Sustainable Pacific Energy" },
+    { src: "/lovable-uploads/e201c93d-80ac-4b42-8027-c13a11d0ac4a.png", alt: "Pacific Ocean Innovation" },
+    { src: "/lovable-uploads/6632c13f-066c-4cac-aac5-e19176a7d07d.png", alt: "Pacific Green Architecture" },
+    { src: "/lovable-uploads/c8630550-8323-4e4c-80e6-44baaa4eb2cc.png", alt: "Pacific Community Life" },
+    { src: "/lovable-uploads/fc6432ca-b0cd-4e55-a99a-8a7b2544dfcc.png", alt: "Pacific Transportation Future" },
   ];
 
   return (
