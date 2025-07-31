@@ -11,6 +11,7 @@ import Scenario1 from "./pages/Scenario1";
 import Scenario2 from "./pages/Scenario2";
 import Scenario3 from "./pages/Scenario3";
 import CreditsPage from "./pages/CreditsPage";
+import SourcesPage from "./pages/SourcesPage";
 import RouteAudioHandler from "./components/RouteAudioHandler";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/scenario-2" element={<Scenario2 />} />
           <Route path="/scenario-3" element={<Scenario3 />} />
           <Route path="/credits" element={<CreditsPage />} />
+          <Route path="/sources" element={<SourcesPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

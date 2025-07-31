@@ -114,7 +114,7 @@ export default function Scenario2() {
               <Button 
                 variant="pacific" 
                 size="pacific"
-                onClick={() => window.location.href = '/credits'}
+                onClick={() => window.location.href = '/sources'}
               >
                 SOURCES & CREDITS
               </Button>
