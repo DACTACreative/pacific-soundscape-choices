@@ -81,7 +81,7 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     setCurrentHeight(0);
 
     const startTime = Date.now();
-    const duration = 12000; // 12 seconds
+    const duration = 4000; // 4 seconds
     const endYear = 2150;
 
     const animate = () => {
@@ -259,30 +259,37 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     ctx.fillText('Year', margin.left + chartWidth / 2, height - 20);
   };
 
-  // Canvas resize effect
+  // Canvas resize and initial draw effect
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const resizeCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = rect.height * window.devicePixelRatio;
+      const container = canvas.parentElement;
+      if (!container) return;
       
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-      }
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
       
-      if (animationComplete) {
-        drawChart(1);
+      // Draw initial state when data is loaded
+      if (data.length > 0) {
+        drawChart(animationComplete ? 1 : 0);
       }
     };
 
-    resizeCanvas();
+    // Initial setup
+    setTimeout(resizeCanvas, 100); // Small delay to ensure DOM is ready
     window.addEventListener('resize', resizeCanvas);
     return () => window.removeEventListener('resize', resizeCanvas);
   }, [data, animationComplete]);
+
+  // Initial draw when data loads
+  useEffect(() => {
+    if (data.length > 0 && canvasRef.current) {
+      setTimeout(() => drawChart(0), 50);
+    }
+  }, [data]);
 
   // Cleanup animation on unmount
   useEffect(() => {
