@@ -85,10 +85,7 @@ export const ThematicGauges: React.FC<ThematicGaugesProps> = ({
             <div key={theme.code} className="space-y-1">
               <div className="flex justify-between items-center gap-2">
                 <span className="text-xs text-white/80 truncate">{theme.name}</span>
-                <div className="flex items-center gap-1">
-                  <span className="text-xs text-white/60">{count}</span>
-                  <span className="text-xs font-medium text-[#35c5f2]">{points.toFixed(1)}</span>
-                </div>
+                <span className="text-xs font-medium text-[#35c5f2]">{points.toFixed(1)}</span>
               </div>
               <div className="w-full bg-white/20 rounded-full h-1.5">
                 <div 

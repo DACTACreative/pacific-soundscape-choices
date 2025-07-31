@@ -18,14 +18,20 @@ export default function ThematicSpiderChart({
 }: ThematicSpiderChartProps) {
   const [playerChoices, setPlayerChoices] = useState<any[]>([]);
   const [spiderMap, setSpiderMap] = useState<any>(null);
+  const [thematicScores, setThematicScores] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load selected answer codes from sessionStorage
+    // Load thematic scores from sessionStorage
+    const scores = sessionStorage.getItem('thematicScores');
     const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
+    
     console.log('🕷️ ThematicSpiderChart: Selected codes from storage:', selectedCodes);
-    console.log('🕷️ Environment:', process.env.NODE_ENV);
-    console.log('🕷️ Current URL:', window.location.href);
+    console.log('🕷️ Thematic scores from storage:', scores);
+    
+    if (scores) {
+      setThematicScores(JSON.parse(scores));
+    }
     
     if (selectedCodes.length === 0) {
       console.log('🕷️ No selected codes found, using fallback data');
@@ -39,7 +45,7 @@ export default function ThematicSpiderChart({
     const loadDataWithRetry = async () => {
       try {
         console.log('🕷️ Loading data files...');
-        const [csvResponse, spiderMapResponse] = await Promise.all([fetch('/data/Mapping - Question BPC - Sheet1.csv', {
+        const [answerMappingResponse, spiderMapResponse] = await Promise.all([fetch('/data/ANSWERSMAPPING.6.json', {
           cache: 'no-cache',
           headers: {
             'Cache-Control': 'no-cache'
@@ -51,41 +57,27 @@ export default function ThematicSpiderChart({
           }
         })]);
         
-        console.log('🕷️ CSV Response status:', csvResponse.status);
+        console.log('🕷️ AnswerMapping Response status:', answerMappingResponse.status);
         console.log('🕷️ SpiderMap Response status:', spiderMapResponse.status);
         
-        if (!csvResponse.ok || !spiderMapResponse.ok) {
-          throw new Error(`HTTP Error: CSV ${csvResponse.status}, SpiderMap ${spiderMapResponse.status}`);
+        if (!answerMappingResponse.ok || !spiderMapResponse.ok) {
+          throw new Error(`HTTP Error: AnswerMapping ${answerMappingResponse.status}, SpiderMap ${spiderMapResponse.status}`);
         }
-        const [csvText, spiderMapData] = await Promise.all([csvResponse.text(), spiderMapResponse.json()]);
-        if (!csvText || csvText.length < 100) {
-          throw new Error('CSV data appears corrupted');
+        const [answerMappingData, spiderMapData] = await Promise.all([answerMappingResponse.json(), spiderMapResponse.json()]);
+        if (!answerMappingData || Object.keys(answerMappingData).length === 0) {
+          throw new Error('Answer mapping data appears corrupted');
         }
 
-        // Parse CSV with error handling
-        Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true,
-          complete: results => {
-            if (results.errors.length > 0) {
-              console.warn('🕷️ CSV parsing warnings:', results.errors);
-            }
-
-            // Find matching answers for selected codes
-            const matchedAnswers = selectedCodes.map((code: string) => results.data.find((row: any) => row.code === code)).filter(Boolean);
-            console.log('🕷️ Spider chart data loaded:', {
-              selectedCodes: selectedCodes.length,
-              matchedAnswers: matchedAnswers.length,
-              spiderMapKeys: Object.keys(spiderMapData).length
-            });
-            setPlayerChoices(matchedAnswers);
-            setSpiderMap(spiderMapData);
-            setLoading(false);
-          },
-          error: parseError => {
-            throw new Error(`CSV parsing failed: ${parseError.message}`);
-          }
+        // Find matching answers for selected codes
+        const matchedAnswers = selectedCodes.map((code: string) => answerMappingData[code]).filter(Boolean);
+        console.log('🕷️ Spider chart data loaded:', {
+          selectedCodes: selectedCodes.length,
+          matchedAnswers: matchedAnswers.length,
+          spiderMapKeys: Object.keys(spiderMapData).length
         });
+        setPlayerChoices(matchedAnswers);
+        setSpiderMap(spiderMapData);
+        setLoading(false);
       } catch (error) {
         console.error(`🕷️ Data load attempt ${retryCount + 1} failed:`, error);
         if (retryCount < maxRetries) {
@@ -105,8 +97,8 @@ export default function ThematicSpiderChart({
         <LoadingSpinner message="Loading your thematic impact..." />
       </div>;
   }
-  console.log('Rendering spider chart - playerChoices:', playerChoices.length, 'spiderMap:', !!spiderMap);
-  if (playerChoices.length === 0 || !spiderMap) {
+  console.log('Rendering spider chart - playerChoices:', playerChoices.length, 'spiderMap:', !!spiderMap, 'thematicScores:', !!thematicScores);
+  if (!thematicScores || !spiderMap) {
     console.log('Using fallback chart data');
     // Provide fallback data showing a balanced Pacific 2050 scenario
     const fallbackData = {
@@ -131,11 +123,11 @@ export default function ThematicSpiderChart({
         mode: 'nearest' as const,
         intersect: false
       },
-      scales: {
+          scales: {
         r: {
           beginAtZero: true,
           min: 0,
-          max: 3,
+          max: 7,
           angleLines: {
             color: 'rgba(255, 255, 255, 0.1)'
           },
@@ -152,9 +144,9 @@ export default function ThematicSpiderChart({
           ticks: {
             stepSize: 1,
             callback: function (value: any) {
-              if (value === 1) return 'LOW';
-              if (value === 2) return 'MED';
-              if (value === 3) return 'HIGH';
+              if (value === 2) return 'LOW';
+              if (value === 4) return 'MED';
+              if (value === 6) return 'HIGH';
               return '';
             },
             color: '#e5e7eb',
@@ -186,50 +178,35 @@ export default function ThematicSpiderChart({
       </div>;
   }
 
-  // Calculate theme counts from player choices
-  const themeCounts: Record<string, number> = {};
-  console.log('🕷️ Processing player choices for spider chart:', playerChoices.length);
-  playerChoices.forEach((choice, index) => {
-    const theme = choice.theme;
-    console.log(`🕷️ Choice ${index + 1}:`, {
-      code: choice.code,
-      theme: theme,
-      answer: choice.answer?.substring(0, 50) + '...'
-    });
-    if (theme) {
-      themeCounts[theme] = (themeCounts[theme] || 0) + 1;
-    }
-  });
-  console.log('🕷️ Theme counts calculated:', themeCounts);
+  // Use thematic scores instead of simple counts
+  console.log('🕷️ Using thematic scores for spider chart:', thematicScores);
 
-  // Map CSV themes to chart labels
+  // Map thematic scores to chart labels
   const themeMapping: Record<string, string> = {
-    "Political Leadership and Regionalism": "Political Leadership",
-    "People Centered Development": "People Development",
-    "Peace and Security": "Peace & Security",
-    "Resource and Economic Development": "Economic Development",
-    "Climate Change and Disasters": "Climate & Disasters",
-    "Ocean and Environment": "Ocean & Environment",
-    "Technology and Connectivity": "Technology"
+    "Political_Leadership_and_Regionalism": "Political Leadership",
+    "People_Centered_Development": "People Development", 
+    "Peace_and_Security": "Peace & Security",
+    "Resource_and_Economic_Development": "Economic Development",
+    "Climate_Change_and_Disasters": "Climate & Disasters",
+    "Ocean_and_Environment": "Ocean & Environment",
+    "Technology_and_Connectivity": "Technology"
   };
   const themeLabels = ["Political Leadership", "People Development", "Peace & Security", "Economic Development", "Climate & Disasters", "Ocean & Environment", "Technology"];
 
-  // Helper function to map scores to level (0-1=LOW, 2=MEDIUM, 3+=HIGH)
+  // Helper function to map scores to level (0-2=LOW, 2.5-4=MEDIUM, 4.5+=HIGH)
   const getLevel = (score: number): string => {
-    if (score >= 3) return 'HIGH';
-    if (score === 2) return 'MEDIUM';
+    if (score >= 4.5) return 'HIGH';
+    if (score >= 2.5) return 'MEDIUM';
     return 'LOW';
   };
 
-  // Convert theme counts to chart data using mapping and scale to 6-point system
+  // Convert thematic scores to chart data
   const chartData = themeLabels.map(shortLabel => {
     // Find the full theme name that maps to this short label
     const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === shortLabel);
-    const count = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-    // Scale to 6-point system: 0-1=2, 2=4, 3+=6
-    const scaledCount = count === 0 ? 0 : count === 1 ? 2 : count === 2 ? 4 : 6;
-    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${count} (scaled: ${scaledCount})`);
-    return scaledCount;
+    const score = fullThemeName ? thematicScores[fullThemeName] || 0 : 0;
+    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${score}`);
+    return score;
   });
   console.log('🕷️ Final chart data:', chartData);
   const data = {
@@ -262,11 +239,11 @@ export default function ThematicSpiderChart({
         display: false
       }
     },
-    scales: {
+        scales: {
       r: {
         beginAtZero: true,
         min: 0,
-        max: 6,
+        max: 7,
         angleLines: {
           color: 'rgba(255, 255, 255, 0.2)',
           lineWidth: 3
@@ -284,17 +261,17 @@ export default function ThematicSpiderChart({
           color: '#ffffff',
           padding: 35
         },
-        ticks: {
-          stepSize: 0.5,
-          beginAtZero: true,
-          max: 6,
-          display: true,
-          callback: function (value: any) {
-            if (value === 2) return 'LOW';
-            if (value === 4) return 'MED';
-            if (value === 6) return 'HIGH';
-            return '';
-          },
+          ticks: {
+            stepSize: 1,
+            beginAtZero: true,
+            max: 7,
+            display: true,
+            callback: function (value: any) {
+              if (value === 2) return 'LOW';
+              if (value === 4) return 'MED';
+              if (value === 6) return 'HIGH';
+              return '';
+            },
           color: 'rgba(255, 255, 255, 0.8)',
           backdropColor: 'rgba(0, 0, 0, 0.6)',
           backdropPadding: 4,
@@ -333,8 +310,8 @@ export default function ThematicSpiderChart({
             const fullThemeName = Object.keys(themeMapping).find(fullName => 
               themeMapping[fullName] === shortLabel
             );
-            const rawCount = fullThemeName ? themeCounts[fullThemeName] || 0 : 0;
-            const level = getLevel(rawCount);
+            const score = fullThemeName ? thematicScores[fullThemeName] || 0 : 0;
+            const level = getLevel(score);
             const description = fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] 
               ? spiderMap[fullThemeName][level] 
               : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.';
@@ -349,7 +326,7 @@ export default function ThematicSpiderChart({
                     </Badge>
                   </div>
                   <div className="text-sm text-white/60">
-                    {rawCount} {rawCount === 1 ? 'choice' : 'choices'}
+                    {score.toFixed(1)} points
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">

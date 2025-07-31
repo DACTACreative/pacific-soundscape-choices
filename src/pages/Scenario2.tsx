@@ -5,6 +5,7 @@ import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
+import { ThematicPointsDisplay } from '../components/ThematicPointsDisplay';
 
 export default function Scenario2() {
   return (
@@ -78,6 +79,7 @@ export default function Scenario2() {
             <div className="w-full max-w-5xl mx-auto">
               <ThematicSpiderChart className="w-full" />
             </div>
+            <ThematicPointsDisplay />
           </div>
         </div>
 
