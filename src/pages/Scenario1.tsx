@@ -102,9 +102,42 @@ export default function Scenario1() {
           </div>
         </div>
 
-        {/* Block 2: Sea Level Chart */}
+        {/* Picture 1: After Animated Text */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
-          <SimpleSeaLevelChart scenario="tlim1.5win0.25" />
+          <div className="flex justify-center">
+            <img 
+              src="/data/PANEL.png" 
+              alt="Pacific Climate Panel" 
+              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
+        </div>
+
+        {/* Block 2: Sea Level Chart with Market Image */}
+        <div className="w-full max-w-7xl mx-auto px-8 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <SimpleSeaLevelChart scenario="tlim1.5win0.25" />
+            </div>
+            <div className="flex justify-center">
+              <img 
+                src="/data/MARKET.png" 
+                alt="Pacific Market Scene" 
+                className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Picture 3: Before Spider Chart */}
+        <div className="w-full max-w-7xl mx-auto px-8 py-8">
+          <div className="flex justify-center">
+            <img 
+              src="/data/TRAVEL.png" 
+              alt="Pacific Travel Vision" 
+              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
         </div>
 
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
@@ -127,13 +160,24 @@ export default function Scenario1() {
           </div>
         </div>
 
+        {/* Picture 4: Between Spider Chart and Thematic Cards */}
+        <div className="w-full max-w-7xl mx-auto px-8 py-16">
+          <div className="flex justify-center">
+            <img 
+              src="/data/SUVA.png" 
+              alt="Suva Pacific Future" 
+              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
+        </div>
+
         {/* Block 3.5: Thematic Informational Cards */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
           <ThematicInformationalCards />
         </div>
 
         {/* Block 6: Navigation */}
-        <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-k.png">
+        <BlockSection imageLeft={false} imageUrl="/data/INTERISLAND.png">
           <div className="space-y-6 text-center">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
               Continue Your Journey
