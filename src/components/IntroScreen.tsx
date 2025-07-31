@@ -115,95 +115,40 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   const sections = [
     {
       id: 1,
-      title: "Creating Feeling: A Call for Pacific Resilience",
-      content: `This "game" is a call to action — to create feeling that transcends vast ocean distances separating Pacific nations.
+      title: "A Call for Pacific Resilience",
+      content: `Let's create a new paradigm: a Resilient Pacific reflecting Pacific culture, Pacific knowledge & Customs, a Pacific that Protects our connection to the land & perpetuates our way of life.
 
-Isolation comes easily when 30 million km² of sea spreads between communities. Yet connection runs deeper than geography.
-
-This experience calls for a new paradigm: a Resilient Pacific reflecting Pacific culture, Pacific knowledge, and Pacific connection to land that must be cared for to perpetuate customs and ways of life.
-
-The Blue Pacific 2050 Implementation Framework was mapped to 47 measurable indicators across 7 strategic pillars, transforming abstract policy into experiential decision-making.
-
-Because frameworks matter. Indicators matter. But feelings move people toward the resilient future Pacific communities need.`,
+The 2050 Strategy for the Blue Pacific Continent features 10 commitments that Pacific Leaders have made to strengthen collective action and deepen regionalism. This piece was created to link stories to frameworks—to share and simplify by gamifying the great vision that our leaders have for our region.`,
       textColor: "text-cyan-100"
     },
     {
       id: 2,
-      title: "Innovation in Data Sonification",
-      content: `Real ocean tide data from Fiji (October 10, 2024) forms this experience's foundation.
+      title: "The Game Mechanics & Your Challenge",
+      content: `Quantitative indicators show what changed, but qualitative stories show why it matters. This experience blends indicators with stories because Pacific policy works best when it speaks our language. In small island contexts, a 2% GDP shift affects every family and a 10cm sea level rise reshapes entire communities.
 
-Every high tide = rising water. Every low = retreat six hours later.
+The Strategy brings together seven interconnected thematic areas. This work analyzed each thematic area and its outcomes, anchoring strategy indicators (like % of women in parliament) in fictional stories that bridge policy complexity with lived reality.
 
-This isn't ambient sound — it's live environmental data converted to audio.
-
-For Pacific communities, the ocean isn't background noise — it's the constant connecting 15 nations across 30 million km² of sea.
-
-Data becomes visceral. Policy becomes personal. The sound of the ocean grounds every decision you'll make.`,
+There is no single "win" or "loss" in this game. Instead, the challenge is to achieve a balanced result where the Level of Ambition for all seven thematic areas is met. Each answer directly impacts one thematic but can also contribute to others. After each answer, you'll be projected directly into the grounded reality of your decision by hearing the story and impact it has on someone's life.`,
       textColor: "text-teal-100"
     },
     {
       id: 3,
-      title: "The Pacific Paradox: 0.03% Emissions, 100% Impact",
-      content: `Pacific nations emit less than 0.03% of global carbon emissions.
-Yet face the highest per-capita climate risks globally.
+      title: "The Immersive Journey & The Global Context",
+      content: `Your Journey to 2050
+Throughout this experience, you'll hear Fiji's ocean tides from October 10, 2024. Because sea level rise is in the background of our lives. It's music that plays on without us having much control over the ending.
 
-This paradox drives everything: local action within global constraints.
+Our destiny also depends on the world's choices. At the end of your journey, the game will randomly select one of three global climate scenarios:
 
-Sea level rise doesn't roar like cyclones — it creeps quietly, invisibly, constantly.
+1.5°C warming (SSP1-1.9: A future of rapid, successful decarbonization)
 
-Decisions in this experience reflect this tension — shaping Pacific outcomes while global forces accelerate beyond control.
+3°C warming (SSP2-4.5: A future of partial progress and dangerous warming)
 
-The fundamental challenge of small island state policy: maximum adaptation with minimal causation.`,
-      textColor: "text-orange-100"
-    },
-    {
-      id: 4,
-      title: "Seven Decisions, Systemic Impact",
-      content: `Seven strategic decisions map to Blue Pacific 2050 pillars:
+5°C warming (SSP5-8.5: A future of high emissions and limited climate action)
 
-- Political Leadership & Governance
-- People-Centered Development  
-- Peace & Security
-- Resource & Economic Development
-- Climate Change & Disaster Resilience
-- Oceans & Environment
-- Technology & Connectivity
+The same October tides you hear now will sound very different 25 years later.
 
-Each choice triggers cascading effects across indicators. No isolated outcomes — only interconnected systems.
-
-This models real Pacific policy: everything connects across vast ocean distances.`,
-      textColor: "text-purple-100"
-    },
-    {
-      id: 5,
-      title: "Beyond Quantitative: Why Stories Drive Policy",
-      content: `Impact evaluation in the Pacific requires both numbers and narratives.
-
-Quantitative indicators show what changed.
-Qualitative stories show why it matters.
-
-In small island contexts, a 2% GDP shift affects every family. A 10cm sea level rise reshapes entire communities.
-
-This experience generates both: measurable indicator changes AND lived experience projections for 2050.
-
-Because effective Pacific policy needs both spreadsheets and stories.`,
-      textColor: "text-green-100"
-    },
-    {
-      id: 6,
-      title: "Policy Architect for 2050",
-      content: `Decisions create ripple effects through 2050, showing how today's policy choices compound over decades.
-
-This is Monitoring, Evaluation & Learning (MEL) as interactive experience.
-
-The best policy frameworks don't just measure outcomes — they help decision-makers feel the weight of their choices.
-
-Hope is strategy. Unity is strength. Dreaming is action.
-
-Ready to architect the Pacific's next 25 years?
-
-Let's begin.`,
-      textColor: "text-indigo-100",
+Enjoy the game—see you in the future.`,
+      textColor: "text-orange-100",
       isLast: true
     }
   ];
@@ -218,124 +163,104 @@ Let's begin.`,
         </div>
       </div>
 
-      {/* First Block - SIMPLIFIED Layout */}
+      {/* Block 1: The Vision & The Purpose - Full-screen background */}
       <section 
-        key={sections[0].id} 
         data-scroll-section
-        className="min-h-screen grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-4 md:px-8 lg:px-12 xl:px-16 bg-black"
+        className="min-h-screen relative flex items-center justify-center"
+        style={{
+          backgroundImage: `url(${introAA})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
         id="section-0"
       >
-        {/* Text Content - Left Side */}
-        <div className="space-y-6 order-2 md:order-1">
-          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/50"></div>
+        
+        {/* Centered text content */}
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-8" data-scroll data-scroll-speed="0.3">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white animate-fade-in">
             {sections[0].title}
           </h2>
-          <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white">
+          <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white animate-fade-in">
             {sections[0].content}
           </div>
         </div>
+      </section>
 
-        {/* Image - Right Side - ALWAYS VISIBLE ON DESKTOP */}
-        <div className="flex justify-center order-1 md:order-2">
-          <img 
-            src="/lovable-uploads/c4274d0f-201f-4d6e-920a-1131b2022596.png"
-            alt="Blue Pacific 2050 Experience"
-            className="w-full max-w-lg rounded-lg object-cover"
-          />
+      {/* Block 2: The Game Mechanics & Your Challenge - Two-column grid */}
+      <section 
+        data-scroll-section
+        className="min-h-screen bg-black"
+        id="section-1"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-8 max-w-6xl mx-auto min-h-screen">
+          {/* Image on the left */}
+          <div className="order-2 md:order-1 flex justify-center" data-scroll data-scroll-speed="0.3">
+            <img 
+              src={introI}
+              alt="Pacific village scene"
+              className="w-full max-w-lg rounded-xl object-cover"
+            />
+          </div>
+          
+          {/* Text on the right */}
+          <div className="order-1 md:order-2 space-y-6" data-scroll data-scroll-speed="0.5">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white animate-fade-in">
+              {sections[1].title}
+            </h2>
+            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white animate-fade-in">
+              {sections[1].content}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Rest of the sections with sticky behavior */}
-      {sections.slice(1).map((section, index) => (
-        <section 
-          key={section.id} 
-          data-scroll-section
-          className="relative"
-          id={`section-${index + 1}`}
-        >
-          {/* Fixed Image Container for this section - Hidden on mobile */}
-          <div className="sticky-section hidden md:block" style={{ position: 'relative', height: '100vh' }}>
-              <div 
-                className="fixed-image"
-                data-scroll
-                data-scroll-sticky
-                data-scroll-target={`#section-${index + 1}`}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  width: '40vw',
-                  height: '100vh',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '2rem',
-                  overflow: 'hidden'
-                }}
-              >
-                <div className="w-full h-full flex items-center justify-center">
-                  <img 
-                    src={introImages[index + 1] || introImages[0]}
-                    alt="Blue Pacific 2050 Experience"
-                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-                    style={{ width: 'auto', height: 'auto' }}
-                  />
-                </div>
+      {/* Block 3: The Immersive Journey & The Global Context - Two-column grid (reversed) */}
+      <section 
+        data-scroll-section
+        className="min-h-screen bg-black"
+        id="section-2"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-8 max-w-6xl mx-auto min-h-screen">
+          {/* Text on the left */}
+          <div className="space-y-6" data-scroll data-scroll-speed="0.5">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white animate-fade-in">
+              {sections[2].title}
+            </h2>
+            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white animate-fade-in">
+              {sections[2].content}
             </div>
-          </div>
-
-          {/* Mobile Image - Visible only on mobile */}
-          <div className="md:hidden w-full min-h-[50vh] flex items-center justify-center p-4 bg-black">
-            <div className="w-full h-full flex items-center justify-center">
-              <img 
-                src={introImages[index + 1] || introImages[0]}
-                alt="Blue Pacific 2050 Experience"
-                className="max-w-full max-h-[80vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/20"
-              />
-            </div>
-          </div>
-
-          {/* Scrolling Text Content */}
-          <div className="scroll-text md:mr-[40vw] mr-0 p-8 md:p-16 min-h-screen flex items-center bg-black">
-            <div className="max-w-2xl">
-              <h2 
-                className="text-4xl md:text-6xl font-bold mb-8 text-white"
-                data-scroll
-                data-scroll-speed="0.5"
+            
+            <div className="mt-12" data-scroll data-scroll-speed="0.2">
+              <Button
+                onClick={handleStart}
+                disabled={loading}
+                variant="pacific"
+                size="pacific"
               >
-                {section.title}
-              </h2>
-              <div 
-                className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white"
-                data-scroll
-                data-scroll-speed="0.3"
-              >
-                {section.content}
-              </div>
+                <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                <span className="relative z-10">
+                  {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
+                </span>
+              </Button>
               
-              {section.isLast && (
-                <div className="mt-12" data-scroll data-scroll-speed="0.2">
-                  <Button
-                    onClick={handleStart}
-                    disabled={loading}
-                    variant="pacific"
-                    size="pacific"
-                  >
-                    <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                    <span className="relative z-10">
-                      {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
-                    </span>
-                  </Button>
-                  
-                  <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
-                    Audio experience recommended for full immersion
-                  </p>
-                </div>
-              )}
+              <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
+                Audio experience recommended for full immersion
+              </p>
             </div>
           </div>
-        </section>
-      ))}
+          
+          {/* Image on the right */}
+          <div className="flex justify-center" data-scroll data-scroll-speed="0.3">
+            <img 
+              src={introH}
+              alt="Person looking to the future"
+              className="w-full max-w-lg rounded-xl object-cover"
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
