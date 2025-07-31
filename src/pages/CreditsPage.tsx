@@ -6,50 +6,77 @@ export default function CreditsPage() {
   
   return (
     <div className="text-white min-h-screen bg-black">
-      <div className="container mx-auto px-8 py-16 max-w-4xl">
+      <div className="container mx-auto px-8 py-16 max-w-5xl">
         
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
             Credits & Acknowledgements
           </h1>
-          <p className="text-xl text-white/90 leading-relaxed">
+          <p className="text-xl text-white/90 leading-relaxed max-w-4xl mx-auto">
             This experience was created as part of the Pacific Data Visualization Challenge, 
             with deep respect for Pacific communities, knowledge systems, and the urgent 
             need for climate resilience building and mitigation in our region.
           </p>
         </div>
 
-        {/* Our Goal Section */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-white mb-6">Our Goal</h2>
-          <p className="text-lg text-white/90 leading-relaxed">
-            To center Pacific voices in climate conversations and make complex data emotionally resonant through immersive storytelling.
-          </p>
-        </div>
-
-        {/* Our Approach Section */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-white mb-6">Our Approach</h2>
-          <p className="text-lg text-white/90 leading-relaxed">
-            Combining authentic Pacific soundscapes, rigorous data, and interactive narratives to create meaningful engagement with climate futures.
-          </p>
-        </div>
-
-        {/* Our Hope Section */}
+        {/* Game Concept Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-white mb-6">Our Hope</h2>
-          <p className="text-lg text-white/90 leading-relaxed">
-            That this experience sparks deeper connection to our shared Pacific future and inspires action toward resilience and sustainability.
-          </p>
+          <h2 className="text-4xl font-bold text-white mb-8">Game Concept</h2>
+          <div className="space-y-6 text-lg text-white/90 leading-relaxed">
+            <p>
+              A paradigm is a model or a framework of ideas, and this project proposes a new one for engaging with the future of the Blue Pacific Continent. It's a move beyond dense policy documents and abstract data, towards a more intuitive, artistic, and human-centered way of understanding the complex choices that will shape our region.
+            </p>
+            <p>
+              Blue Paradigm translates the dense framework of the 2050 Strategy for the Blue Pacific Continent into an interactive narrative game. As a Pacific leader, the player makes a series of choices across seven interconnected thematic areas, with each decision affecting a complex scoring system designed to reflect real-world policy trade-offs. The core visualization challenge is to achieve a "balanced result" by meeting the "Level of Ambition" for all themes, a success metric visualized through a dynamic spider chart and thematic review cards. This quantitative feedback is paired with qualitative stories and an innovative data sonification of Fijian ocean tides, grounding abstract policy in the lived, sensory reality of the Pacific.
+            </p>
+            
+            <div className="mt-8">
+              <h3 className="text-2xl font-semibold text-white mb-6">The Project's Foundation</h3>
+              
+              <div className="space-y-8">
+                <div>
+                  <h4 className="text-xl font-medium text-white mb-3">Artistic Data Sonification</h4>
+                  <p className="text-white/90 ml-4">
+                    The experience begins with sound, designed to immerse the player in the inevitable presence of sea-level rise. The process involved capturing and normalizing real-world tide data from Suva, Fiji (October 10-11, 2024). I then layered the median sea-level rise projections onto this baseline to create generative soundscapes for each climate scenario. The resulting audio represents the "rise" with a higher pitch and increased "noise," reflecting the growing instability of weather patterns.
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-xl font-medium text-white mb-3">Strategic Deconstruction & Game Design</h4>
+                  <p className="text-white/90 ml-4">
+                    The game's logic is the result of a granular analysis of the 2050 Strategy's Implementation Plan. I cross-referenced official indicators, outcomes, and "Levels of Ambition" to develop 22 distinct policy choices. These were then meticulously mapped into game questions and a weighted scoring system. The game is balanced to have a ~30% success rate, with around 600 "winning" combinations out of over 2,000 possibilities, making a balanced outcome challenging but achievable.
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-xl font-medium text-white mb-3">Reflective Analytics</h4>
+                  <p className="text-white/90 ml-4">
+                    The results screen is a tool for reflection. The sea-level projection chart intentionally includes different quantiles to remind the user that these are possibilities, not certainties, and that our trajectory can still deviate. The interactive cards are designed to familiarize the player with the official language and ambitions of the 2050 Strategy in an engaging, educational way.
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-xl font-medium text-white mb-3">AI-Generated Visuals</h4>
+                  <p className="text-white/90 ml-4">
+                    The "Solarpunk" aesthetic that defines the game's visual identity was created using generative AI. Each image was individually crafted using text-to-image machine learning models to convey the specific feeling and visual tone of the different scenarios, accentuating the immersive aspect of the experience.
+                  </p>
+                </div>
+              </div>
+              
+              <p className="text-white/90 mt-8 italic">
+                This project is a work of fiction grounded in a deep analysis of both quantitative and qualitative data. It was a joy to create, blending rigorous analysis with a personal dream of a futuristic, utopian, and resilient Pacific future.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Creator Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-white mb-6">Creator</h2>
-          <h3 className="text-2xl font-semibold text-white mb-4">Eunice Rigo</h3>
-          <p className="text-lg text-white/80 mb-4 italic">Project Lead, Data Analysis, Design, Development & Sonification</p>
-          <div className="space-y-4 text-white/90 leading-relaxed">
+          <h2 className="text-4xl font-bold text-white mb-8">Creator</h2>
+          <h3 className="text-3xl font-semibold text-white mb-4">Eunice Rigo</h3>
+          <p className="text-xl text-white/80 mb-6 italic">Project Lead, Data Analysis, Design, Development & Sonification</p>
+          <div className="space-y-6 text-lg text-white/90 leading-relaxed">
             <p>
               Eunice is a creative data analyst with a Master's degree in Computer Science and six years of experience supporting programs through accessible, impact-driven reporting. Her work includes data infrastructure design, dashboard development, and automating workflows to improve how organisations collect, understand, and act on their knowledge and information. She strategically leverages AI and machine learning methods to interrogate complex datasets, enhance pattern detection, and support more adaptive, insight-led decision-making across teams.
             </p>
@@ -64,132 +91,57 @@ export default function CreditsPage() {
 
         {/* Primary Sources Section */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-white mb-8">Primary Sources & Inspiration</h2>
+          <h2 className="text-4xl font-bold text-white mb-8">Primary Sources & Inspiration</h2>
           <p className="text-lg text-white/90 mb-8 leading-relaxed">
             This project stands on the shoulders of giants. It was made possible by referencing the foundational data, strategic frameworks, and creative works listed below.
           </p>
 
-          {/* Strategy Framework */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Strategy Framework Alignment</h3>
-            <div className="ml-4 space-y-2">
-              <p className="text-white/90">Blue Pacific 2050 Strategy & Dashboard</p>
-              <p className="text-white/90">Strategy Site</p>
-              <p className="text-white/90">Indicator Dashboard</p>
-            </div>
-          </div>
-
-          {/* Climate & Environmental Data */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Climate & Environmental Data</h3>
-            <div className="ml-4 space-y-4">
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Sea-Level Rise</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>NASA Sea Level Change Team – Projections for Pacific Islands</p>
-                  <p>Pacific Climate Change Science Program (Australia)</p>
-                  <p>RCCAP Fiji Climate Summary</p>
-                </div>
-              </div>
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Coastal Flooding</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>NASA projections for Tuvalu and analog islands</p>
-                </div>
-              </div>
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Coral Reef Bleaching</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>IPCC Special Report on 1.5°C</p>
-                  <p>Reef Resilience Network</p>
-                  <p>Coral Guardian</p>
-                </div>
-              </div>
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Fisheries & Ocean Resources</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>FAO – Future catches from coastal fisheries</p>
-                  <p>University of Wollongong – Fish stock decline projections</p>
-                </div>
+          <div className="space-y-8">
+            {/* Key Strategic Sources */}
+            <div>
+              <h3 className="text-2xl font-semibold text-white mb-4">Key Strategic Sources</h3>
+              <div className="ml-4 space-y-2 text-white/90">
+                <p><a href="https://blue-pacific-2050.pacificdata.org" className="text-blue-400 hover:text-blue-300 underline">Blue Pacific 2050 Strategy</a></p>
+                <p><a href="https://pacificdata.org" className="text-blue-400 hover:text-blue-300 underline">Pacific Data Hub</a></p>
+                <p><a href="https://sealevel.nasa.gov" className="text-blue-400 hover:text-blue-300 underline">Sea-Level & Flooding: NASA Sea Level Change Team</a></p>
+                <p><a href="https://unfccc.int" className="text-blue-400 hover:text-blue-300 underline">Displacement & Climate Frameworks: UNFCCC</a></p>
+                <p>Fiji Government energy policy (100% renewables by 2030 target)</p>
+                <p><a href="https://unfccc.int/process-and-meetings/the-paris-agreement" className="text-blue-400 hover:text-blue-300 underline">The Paris Agreement (UNFCCC)</a></p>
+                <p><a href="https://www.ipcc.ch/sr15/" className="text-blue-400 hover:text-blue-300 underline">IPCC Special Report on Global Warming of 1.5°C</a></p>
+                <p><a href="https://www.un.org/sustainabledevelopment/climate-action/" className="text-blue-400 hover:text-blue-300 underline">United Nations Sustainable Development Goal 13: Climate Action</a></p>
+                <p><a href="https://coralreefwatch.noaa.gov" className="text-blue-400 hover:text-blue-300 underline">NOAA Coral Reef Watch</a></p>
+                <p><a href="https://climateknowledgeportal.worldbank.org" className="text-blue-400 hover:text-blue-300 underline">The World Bank Climate Change Knowledge Portal</a></p>
+                <p><a href="https://www.sprep.org" className="text-blue-400 hover:text-blue-300 underline">Secretariat of the Pacific Regional Environment Programme (SPREP)</a></p>
+                <p><a href="https://www.spc.int/cces" className="text-blue-400 hover:text-blue-300 underline">The Pacific Community (SPC) - Climate Change & Environmental Sustainability</a></p>
+                <p><a href="https://www.tide-forecast.com/locations/Suva-Harbor-Fiji-Islands/tides/latest" className="text-blue-400 hover:text-blue-300 underline">Tide Data Reference: Suva Harbor, Fiji</a></p>
+                <p><a href="https://www.daybreakgame.com" className="text-blue-400 hover:text-blue-300 underline">Inspirational Game Design: Daybreak</a></p>
+                <p><a href="https://solarpunkcity.org/solarpunk-project-ideas/" className="text-blue-400 hover:text-blue-300 underline">Utopian Future Concept: Solarpunk</a></p>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Social Impact & Displacement */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Social Impact & Displacement</h3>
-            <div className="ml-4 space-y-4">
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Village Relocation & Displacement</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>Fiji Government Planned Relocation Guidelines</p>
-                  <p>UNFCCC – Fiji climate migration studies</p>
-                  <p>FM Review – Pacific Mobilities</p>
-                  <p>Berkeley Belonging Institute – Fiji Climate Displacement Case</p>
-                </div>
-              </div>
-            </div>
+        {/* Game Framework & Data */}
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold text-white mb-8">Game Framework & Data</h2>
+          <div className="ml-4 space-y-4 text-lg text-white/90">
+            <p><strong className="text-white">Core Game Logic & Content:</strong> ANSWERSMAPPING.6.json – Contains the game's questions, answers, narrative outcomes, and the thematic point scoring system.</p>
+            <p><strong className="text-white">Sea-Level Rise Data:</strong> sea-level-data.csv – Provides the raw data for the sea-level rise projection chart, based on IPCC scenarios.</p>
+            <p><strong className="text-white">Thematic Outcome Text:</strong> SpiderMap.json – Contains the descriptive text for the Low, Medium, High, and Level of Ambition outcomes for each of the seven themes.</p>
           </div>
+        </div>
 
-          {/* Economic Impact & Infrastructure Risk */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Economic Impact & Infrastructure Risk</h3>
-            <div className="ml-4 space-y-4">
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">GDP Loss</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>IMF Climate Risk & GDP Report (2025)</p>
-                  <p>World Bank / GFDRR – Pacific disaster and resilience costs</p>
-                </div>
-              </div>
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Infrastructure at Risk</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>Merschroth et al. (2020) – Buildings inundated by 2050</p>
-                  <p>PreventionWeb – Pacific urban infrastructure exposure</p>
-                </div>
-              </div>
+        {/* Sound & Audio Sources */}
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold text-white mb-8">Sound & Audio Sources</h2>
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-xl font-semibold text-white mb-3">Tide Sonification Logic:</h3>
+              <p className="ml-4 text-white/90">Suva Harbor tide data reference</p>
             </div>
-          </div>
-
-          {/* Energy & Mitigation Pathways */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Energy & Mitigation Pathways</h3>
-            <div className="ml-4 space-y-4">
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Energy Mix & Renewables</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>Energypedia – Fiji energy mix and targets</p>
-                  <p>Fiji Government Energy Roadmap (100% renewable by 2030 target)</p>
-                </div>
-              </div>
-              <div>
-                <h4 className="text-lg font-medium text-white mb-2">Emissions Scenarios & Global Warming</h4>
-                <div className="ml-4 space-y-1 text-white/90">
-                  <p>IPCC 1.5°C / 2.5°C / 4°C trajectory baselines used in model</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Game Framework & Data */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Game Framework & Data</h3>
-            <div className="ml-4 space-y-1 text-white/90">
-              <p><strong>Core Game Logic & Content:</strong> ANSWERSMAPPING.6.json – Contains the game's questions, answers, narrative outcomes, and the thematic point scoring system.</p>
-              <p><strong>Sea-Level Rise Data:</strong> sea-level-data.csv – Provides the raw data for the sea-level rise projection chart, based on IPCC scenarios.</p>
-              <p><strong>Thematic Outcome Text:</strong> SpiderMap.json – Contains the descriptive text for the Low, Medium, High, and Level of Ambition outcomes for each of the seven themes.</p>
-            </div>
-          </div>
-
-          {/* Sound & Audio Sources */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Sound & Audio Sources</h3>
-            <div className="ml-4 space-y-2 text-white/90">
-              <p><strong>Tide Sonification Logic:</strong></p>
-              <p className="ml-4">Suva Harbor tide data reference</p>
-              <p><strong>2050 Ocean Audio Tracks (created by Eunice Rigo):</strong></p>
-              <div className="ml-4 space-y-1">
+            <div>
+              <h3 className="text-xl font-semibold text-white mb-3">2050 Ocean Audio Tracks (created by Eunice Rigo):</h3>
+              <div className="ml-4 space-y-2 text-white/90">
                 <p>Scenario 0 (Baseline) Tide Sonification</p>
                 <p>Scenario 1 (1.5°C) Tide Sonification</p>
                 <p>Scenario 2 (3.0°C) Tide Sonification</p>
@@ -197,22 +149,22 @@ export default function CreditsPage() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Artistic Inspiration */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">Artistic Inspiration</h3>
-            <p className="ml-4 text-white/90">
-              The visual aesthetic of the futuristic illustrations is inspired by the pointillist style of French Neo-Impressionist painter Henri-Edmond Cross, re-imagining a vibrant, "Solarpunk" future for the Pacific.
-            </p>
-          </div>
+        {/* Artistic Inspiration */}
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold text-white mb-8">Artistic Inspiration</h2>
+          <p className="text-lg text-white/90 leading-relaxed">
+            The visual aesthetic of the futuristic illustrations is inspired by the pointillist style of French Neo-Impressionist painter Henri-Edmond Cross, re-imagining a vibrant, "Solarpunk" future for the Pacific.
+          </p>
+        </div>
 
-          {/* Special Thanks */}
-          <div className="mb-16">
-            <h3 className="text-xl font-semibold text-white mb-4">Special Thanks</h3>
-            <p className="ml-4 text-white/90">
-              We extend our sincere gratitude to the Pacific Islands Forum Secretariat for their comprehensive and forward-thinking strategic work, which forms the intellectual and spiritual backbone of this project.
-            </p>
-          </div>
+        {/* Special Thanks */}
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold text-white mb-8">Special Thanks</h2>
+          <p className="text-lg text-white/90 leading-relaxed">
+            We extend our sincere gratitude to the Pacific Islands Forum Secretariat for their comprehensive and forward-thinking strategic work, which forms the intellectual and spiritual backbone of this project.
+          </p>
         </div>
 
         {/* Navigation Footer */}
