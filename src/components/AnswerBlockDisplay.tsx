@@ -110,30 +110,6 @@ export default function AnswerBlockDisplay() {
 
   return (
     <div className="bg-black text-white min-h-screen">
-      {/* Header Block */}
-      <div className="min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-12 xl:px-16 relative bg-black">
-        <div className="text-center max-w-5xl relative z-10">
-          <div className="mb-8">
-            <div className="inline-block p-3 bg-black border border-white/20 rounded-2xl mb-6">
-              <h1 className="text-5xl md:text-7xl font-bold text-white">
-                Your Pacific Journey
-              </h1>
-            </div>
-          </div>
-          <div className="space-y-6">
-            <p className="text-2xl md:text-3xl text-white leading-relaxed font-light">
-              The decisions that shaped our shared future
-            </p>
-            <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto">
-              Your choices during this journey reflect the seven pillars of the Blue Pacific 2050 Strategy – 
-              each decision creating ripples across our region's future.
-            </p>
-            <div className="flex justify-center mt-8">
-              <div className="w-32 h-1 bg-white rounded-full" />
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Theme Blocks */}
       {THEME_DISPLAY_ORDER.map(theme => {
