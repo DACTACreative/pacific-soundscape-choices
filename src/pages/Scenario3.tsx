@@ -7,6 +7,7 @@ import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
+import BlueParadigmCarousel from '../components/BlueParadigmCarousel';
 import { useAudio, Scenario } from '../context/AudioContext';
 import { useEffect, useState } from 'react';
 export default function Scenario3() {
@@ -119,27 +120,6 @@ export default function Scenario3() {
           <SimpleSeaLevelChart scenario="tlim5.0win0.25" />
         </div>
 
-        {/* Picture 2: Between sea projections - smaller */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-8">
-          <div className="flex justify-center">
-            <img 
-              src="/data/MARKET.png" 
-              alt="Pacific Market Scene" 
-              className="max-w-md h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-        </div>
-
-        {/* Picture 3: Before Spider Chart */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-8">
-          <div className="flex justify-center">
-            <img 
-              src="/data/TRAVEL.png" 
-              alt="Pacific Travel Vision" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-        </div>
 
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
         <div className="w-full max-w-7xl mx-auto px-8 py-24">
@@ -161,21 +141,14 @@ export default function Scenario3() {
           </div>
         </div>
 
-        {/* Picture 4: Between Spider Chart and Thematic Cards - smaller */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-16">
-          <div className="flex justify-center">
-            <img 
-              src="/data/SUVA.png" 
-              alt="Suva Pacific Future" 
-              className="max-w-lg h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-        </div>
 
         {/* Block 3.5: Thematic Informational Cards */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
           <ThematicInformationalCards />
         </div>
+
+        {/* Block 4: Blue Paradigm Carousel */}
+        <BlueParadigmCarousel />
 
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/data/INTERISLAND.png">
@@ -184,23 +157,9 @@ export default function Scenario3() {
               Continue Your Journey
             </h2>
             <p className="text-xl text-white/70 mb-8">
-              Explore different pathways and their consequences for the Pacific's future.
+              Experience the full immersive journey and create your own Pacific future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => window.location.href = '/scenario-1'}
-              >
-                SCENARIO 1
-              </Button>
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => window.location.href = '/scenario-2'}
-              >
-                SCENARIO 2
-              </Button>
               <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/credits'}>
                 CREDITS
               </Button>
