@@ -62,9 +62,9 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
     );
   }
 
-  const size = 700; // Increased from 500 to 700 for better visibility
+  const size = 500; // Mobile-friendly size
   const center = size / 2;
-  const maxRadius = 250; // Increased from 180 to 250 for more space
+  const maxRadius = 180; // Constrained for mobile
   const angleStep = (2 * Math.PI) / 7;
 
   // Calculate positions for each axis point
@@ -104,13 +104,14 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
   })();
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className} overflow-hidden`}>
       <svg
         ref={svgRef}
-        width={size}
-        height={size}
-        className="mx-auto"
+        width="100%"
+        height="auto"
+        className="mx-auto max-w-full"
         viewBox={`0 0 ${size} ${size}`}
+        style={{ maxHeight: '90vw' }}
       >
         {/* Grid lines at 2, 4, 6 marks */}
         {[2, 4, 6].map(value => (

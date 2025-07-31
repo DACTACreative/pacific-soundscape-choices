@@ -161,9 +161,6 @@ export default function Scenario1() {
               Experience the full immersive journey and create your own Pacific future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button variant="pacific" size="pacific" onClick={() => navigate('/scenario-2')}>
-                EXPLORE SCENARIO 2
-              </Button>
               <Button variant="pacific" size="pacific" onClick={() => navigate('/credits')}>
                 CREDITS
               </Button>

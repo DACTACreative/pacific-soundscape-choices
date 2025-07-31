@@ -168,20 +168,6 @@ export default function Scenario2() {
               <Button 
                 variant="pacific" 
                 size="pacific"
-                onClick={() => navigate('/scenario-1')}
-              >
-                SCENARIO 1
-              </Button>
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => navigate('/scenario-3')}
-              >
-                SCENARIO 3
-              </Button>
-              <Button 
-                variant="pacific" 
-                size="pacific"
                 onClick={() => navigate('/credits')}
               >
                 CREDITS
