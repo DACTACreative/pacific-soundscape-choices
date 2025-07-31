@@ -112,43 +112,89 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     }
   }, [loading]);
 
-  const sections = [
+  const blocks = [
     {
       id: 1,
+      type: "hero",
       title: "A Call for Pacific Resilience",
-      content: `Let's create a new paradigm: a Resilient Pacific reflecting Pacific culture, Pacific knowledge & Customs, a Pacific that Protects our connection to the land & perpetuates our way of life.
-
-The 2050 Strategy for the Blue Pacific Continent features 10 commitments that Pacific Leaders have made to strengthen collective action and deepen regionalism. This piece was created to link stories to frameworks—to share and simplify by gamifying the great vision that our leaders have for our region.`,
-      textColor: "text-cyan-100"
+      content: `Let's create a new paradigm: a Resilient Pacific reflecting Pacific culture, Pacific knowledge & Customs, a Pacific that Protects our connection to the land & perpetuates our way of life.`,
+      backgroundImage: introAA
     },
     {
       id: 2,
-      title: "The Game Mechanics & Your Challenge",
-      content: `Quantitative indicators show what changed, but qualitative stories show why it matters. This experience blends indicators with stories because Pacific policy works best when it speaks our language. In small island contexts, a 2% GDP shift affects every family and a 10cm sea level rise reshapes entire communities.
-
-The Strategy brings together seven interconnected thematic areas. This work analyzed each thematic area and its outcomes, anchoring strategy indicators (like % of women in parliament) in fictional stories that bridge policy complexity with lived reality.
-
-There is no single "win" or "loss" in this game. Instead, the challenge is to achieve a balanced result where the Level of Ambition for all seven thematic areas is met. Each answer directly impacts one thematic but can also contribute to others. After each answer, you'll be projected directly into the grounded reality of your decision by hearing the story and impact it has on someone's life.`,
-      textColor: "text-teal-100"
+      type: "highlight",
+      highlight: "Let's create a new paradigm",
+      content: `A Resilient Pacific reflecting Pacific culture, Pacific knowledge & Customs, a Pacific that Protects our connection to the land & perpetuates our way of life.`,
+      image: introA,
+      imagePosition: "right"
     },
     {
       id: 3,
-      title: "The Immersive Journey & The Global Context",
-      content: `Your Journey to 2050
-Throughout this experience, you'll hear Fiji's ocean tides from October 10, 2024. Because sea level rise is in the background of our lives. It's music that plays on without us having much control over the ending.
-
-Our destiny also depends on the world's choices. At the end of your journey, the game will randomly select one of three global climate scenarios:
+      type: "content",
+      title: "The 2050 Strategy Framework",
+      content: `The 2050 Strategy for the Blue Pacific Continent features 10 commitments that Pacific Leaders have made to strengthen collective action and deepen regionalism. This piece was created to link stories to frameworks—to share and simplify by gamifying the great vision that our leaders have for our region.`,
+      image: introB,
+      imagePosition: "left"
+    },
+    {
+      id: 4,
+      type: "highlight",
+      highlight: "Stories show why it matters",
+      content: `Quantitative indicators show what changed, but qualitative stories show why it matters. This experience blends indicators with stories because Pacific policy works best when it speaks our language.`,
+      image: introC,
+      imagePosition: "right"
+    },
+    {
+      id: 5,
+      type: "content",
+      title: "Small Island Context",
+      content: `In small island contexts, a 2% GDP shift affects every family and a 10cm sea level rise reshapes entire communities. The Strategy brings together seven interconnected thematic areas. This work analyzed each thematic area and its outcomes, anchoring strategy indicators (like % of women in parliament) in fictional stories that bridge policy complexity with lived reality.`,
+      image: introD,
+      imagePosition: "left"
+    },
+    {
+      id: 6,
+      type: "highlight",
+      highlight: "There is no single win or loss",
+      content: `Instead, the challenge is to achieve a balanced result where the Level of Ambition for all seven thematic areas is met. Each answer directly impacts one thematic but can also contribute to others.`,
+      image: introE,
+      imagePosition: "right"
+    },
+    {
+      id: 7,
+      type: "content",
+      title: "Lived Reality of Decisions",
+      content: `After each answer, you'll be projected directly into the grounded reality of your decision by hearing the story and impact it has on someone's life. This experience transforms abstract policy into personal narrative.`,
+      image: introF,
+      imagePosition: "left"
+    },
+    {
+      id: 8,
+      type: "highlight",
+      highlight: "Your Journey to 2050",
+      content: `Throughout this experience, you'll hear Fiji's ocean tides from October 10, 2024. Because sea level rise is in the background of our lives. It's music that plays on without us having much control over the ending.`,
+      image: introG,
+      imagePosition: "right"
+    },
+    {
+      id: 9,
+      type: "content",
+      title: "Global Climate Scenarios", 
+      content: `Our destiny also depends on the world's choices. At the end of your journey, the game will randomly select one of three global climate scenarios:
 
 1.5°C warming (SSP1-1.9: A future of rapid, successful decarbonization)
-
-3°C warming (SSP2-4.5: A future of partial progress and dangerous warming)
-
-5°C warming (SSP5-8.5: A future of high emissions and limited climate action)
-
-The same October tides you hear now will sound very different 25 years later.
-
-Enjoy the game—see you in the future.`,
-      textColor: "text-orange-100",
+3°C warming (SSP2-4.5: A future of partial progress and dangerous warming)  
+5°C warming (SSP5-8.5: A future of high emissions and limited climate action)`,
+      image: introH,
+      imagePosition: "left"
+    },
+    {
+      id: 10,
+      type: "highlight",
+      highlight: "See you in the future",
+      content: `The same October tides you hear now will sound very different 25 years later. Enjoy the game—see you in the future.`,
+      image: introI,
+      imagePosition: "right",
       isLast: true
     }
   ];
@@ -163,104 +209,100 @@ Enjoy the game—see you in the future.`,
         </div>
       </div>
 
-      {/* Block 1: The Vision & The Purpose - Full-screen background */}
+      {/* Hero Block - Full background */}
       <section 
         data-scroll-section
         className="min-h-screen relative flex items-center justify-center"
         style={{
-          backgroundImage: `url(${introAA})`,
+          backgroundImage: `url(${blocks[0].backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
-        id="section-0"
       >
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/50"></div>
-        
-        {/* Centered text content */}
         <div className="relative z-10 text-center max-w-4xl mx-auto px-8" data-scroll data-scroll-speed="0.3">
           <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white animate-fade-in">
-            {sections[0].title}
+            {blocks[0].title}
           </h2>
-          <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white animate-fade-in">
-            {sections[0].content}
+          <div className="text-xl md:text-2xl leading-relaxed text-white animate-fade-in">
+            {blocks[0].content}
           </div>
         </div>
       </section>
 
-      {/* Block 2: The Game Mechanics & Your Challenge - Two-column grid */}
-      <section 
-        data-scroll-section
-        className="min-h-screen bg-black"
-        id="section-1"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-8 max-w-6xl mx-auto min-h-screen">
-          {/* Image on the left */}
-          <div className="order-2 md:order-1 flex justify-center" data-scroll data-scroll-speed="0.3">
-            <img 
-              src={introI}
-              alt="Pacific village scene"
-              className="w-full max-w-lg rounded-xl object-cover"
-            />
-          </div>
-          
-          {/* Text on the right */}
-          <div className="order-1 md:order-2 space-y-6" data-scroll data-scroll-speed="0.5">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white animate-fade-in">
-              {sections[1].title}
-            </h2>
-            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white animate-fade-in">
-              {sections[1].content}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Block 3: The Immersive Journey & The Global Context - Two-column grid (reversed) */}
-      <section 
-        data-scroll-section
-        className="min-h-screen bg-black"
-        id="section-2"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-8 max-w-6xl mx-auto min-h-screen">
-          {/* Text on the left */}
-          <div className="space-y-6" data-scroll data-scroll-speed="0.5">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white animate-fade-in">
-              {sections[2].title}
-            </h2>
-            <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white animate-fade-in">
-              {sections[2].content}
-            </div>
-            
-            <div className="mt-12" data-scroll data-scroll-speed="0.2">
-              <Button
-                onClick={handleStart}
-                disabled={loading}
-                variant="pacific"
-                size="pacific"
-              >
-                <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-                <span className="relative z-10">
-                  {loading ? 'Loading Audio...' : 'START YOUR JOURNEY TO 2050'}
-                </span>
-              </Button>
+      {/* Dynamic Blocks */}
+      {blocks.slice(1).map((block) => (
+        <section 
+          key={block.id}
+          data-scroll-section
+          className="min-h-screen bg-black"
+        >
+          <div className="container mx-auto px-8 py-16">
+            <div className={`grid grid-cols-1 lg:grid-cols-10 gap-8 items-center min-h-[80vh] ${
+              block.imagePosition === "right" ? "" : "lg:grid-flow-col-dense"
+            }`}>
               
-              <p className="mt-6 text-lg md:text-xl text-white/80 font-light">
-                Audio experience recommended for full immersion
-              </p>
+              {/* Text Content - 70% width */}
+              <div className={`lg:col-span-7 space-y-8 ${
+                block.imagePosition === "right" ? "order-1" : "order-2 lg:order-1"
+              }`} data-scroll data-scroll-speed="0.5">
+                
+                {block.type === "highlight" ? (
+                  <>
+                    <h2 className="text-6xl md:text-8xl font-black mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 leading-tight animate-fade-in">
+                      {block.highlight}
+                    </h2>
+                    <div className="text-2xl md:text-3xl leading-relaxed text-white/90 animate-fade-in">
+                      {block.content}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white animate-fade-in">
+                      {block.title}
+                    </h2>
+                    <div className="text-xl md:text-2xl leading-relaxed whitespace-pre-line text-white/90 animate-fade-in">
+                      {block.content}
+                    </div>
+                  </>
+                )}
+
+                {block.isLast && (
+                  <div className="mt-12" data-scroll data-scroll-speed="0.2">
+                    <Button
+                      onClick={handleStart}
+                      disabled={loading}
+                      variant="pacific"
+                      size="pacific"
+                      className="mb-6"
+                    >
+                      <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+                      <span className="relative z-10">
+                        {loading ? "Loading Audio..." : "START YOUR JOURNEY TO 2050"}
+                      </span>
+                    </Button>
+                    
+                    <p className="text-lg md:text-xl text-white/80 font-light">
+                      Audio experience recommended for full immersion
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Image - 30% width */}
+              <div className={`lg:col-span-3 flex justify-center ${
+                block.imagePosition === "right" ? "order-2" : "order-1 lg:order-2"
+              }`} data-scroll data-scroll-speed="0.3">
+                <img 
+                  src={block.image}
+                  alt="Pacific vision"
+                  className="w-full max-w-sm lg:max-w-full rounded-xl object-cover shadow-2xl border-2 border-white/20"
+                />
+              </div>
             </div>
           </div>
-          
-          {/* Image on the right */}
-          <div className="flex justify-center" data-scroll data-scroll-speed="0.3">
-            <img 
-              src={introH}
-              alt="Person looking to the future"
-              className="w-full max-w-lg rounded-xl object-cover"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
+      ))}
     </div>
   );
 }
