@@ -51,85 +51,87 @@ export default function Scenario2() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Block 1: Animated Scenario Content */}
+        {/* Block 1: Animated Scenario Content with Picture */}
         <div className="min-h-screen flex items-center justify-center px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <div 
-              className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
-                Scenario 2: The Techno-Fix Muddle (3.0°C)
-              </h1>
-            </div>
-            
-            <div 
-              className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
-                A summary of the well-intentioned but insufficient global events between 2025 and 2050 that led to dangerous warming.
-              </p>
-            </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div 
+                  className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                >
+                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
+                    Scenario 2: The Techno-Fix Muddle (3.0°C)
+                  </h1>
+                </div>
+                
+                <div 
+                  className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                >
+                  <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
+                    A summary of the well-intentioned but insufficient global events between 2025 and 2050 that led to dangerous warming.
+                  </p>
+                </div>
 
-            <div className="space-y-6">
-              <div 
-                className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  The "hydrogen economy" hype bubble delayed real investment in effective renewables by a critical decade.
-                </p>
+                <div className="space-y-6">
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      The "hydrogen economy" hype bubble delayed real investment in effective renewables by a critical decade.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      Oil companies rebranded as "Carbon Management Firms," using PR-friendly carbon capture to gain subsidies while changing little.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      A complex global carbon "bazaar" created bizarre loopholes instead of actually reducing emissions.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      Cities invested trillions in "smart" infrastructure to manage climate impacts, while ignoring the root cause of the emissions.
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  Oil companies rebranded as "Carbon Management Firms," using PR-friendly carbon capture to gain subsidies while changing little.
-                </p>
-              </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  A complex global carbon "bazaar" created bizarre loopholes instead of actually reducing emissions.
-                </p>
-              </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  Cities invested trillions in "smart" infrastructure to manage climate impacts, while ignoring the root cause of the emissions.
-                </p>
+              
+              {/* Picture 1: Right side of intro */}
+              <div className="flex justify-center lg:justify-end">
+                <img 
+                  src="/data/PANEL.png" 
+                  alt="Pacific Climate Panel" 
+                  className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+                />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Picture 1: After Animated Text */}
+        {/* Block 2: Sea Level Chart */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
+          <SimpleSeaLevelChart scenario="tlim3.0win0.25" />
+        </div>
+
+        {/* Picture 2: Between sea projections - smaller */}
+        <div className="w-full max-w-7xl mx-auto px-8 py-8">
           <div className="flex justify-center">
             <img 
-              src="/data/PANEL.png" 
-              alt="Pacific Climate Panel" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+              src="/data/MARKET.png" 
+              alt="Pacific Market Scene" 
+              className="max-w-md h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
             />
-          </div>
-        </div>
-
-        {/* Block 2: Sea Level Chart with Market Image */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <SimpleSeaLevelChart scenario="tlim3.0win0.25" />
-            </div>
-            <div className="flex justify-center">
-              <img 
-                src="/data/MARKET.png" 
-                alt="Pacific Market Scene" 
-                className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-              />
-            </div>
           </div>
         </div>
 
@@ -164,13 +166,13 @@ export default function Scenario2() {
           </div>
         </div>
 
-        {/* Picture 4: Between Spider Chart and Thematic Cards */}
+        {/* Picture 4: Between Spider Chart and Thematic Cards - smaller */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
           <div className="flex justify-center">
             <img 
               src="/data/SUVA.png" 
               alt="Suva Pacific Future" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+              className="max-w-lg h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
             />
           </div>
         </div>

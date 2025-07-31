@@ -47,85 +47,87 @@ export default function Scenario1() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Block 1: Animated Scenario Content */}
+        {/* Block 1: Animated Scenario Content with Picture */}
         <div className="min-h-screen flex items-center justify-center px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <div 
-              className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
-                Scenario 1: The Great Re-Think (1.5°C)
-              </h1>
-            </div>
-            
-            <div 
-              className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
-                A summary of the surprising global events between 2025 and 2050 that led to a managed transition.
-              </p>
-            </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div 
+                  className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                >
+                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
+                    Scenario 1: The Great Re-Think (1.5°C)
+                  </h1>
+                </div>
+                
+                <div 
+                  className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                >
+                  <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
+                    A summary of the surprising global events between 2025 and 2050 that led to a managed transition.
+                  </p>
+                </div>
 
-            <div className="space-y-6">
-              <div 
-                className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  A global social media referendum saved the Amazon, funded by a micro-tax on streaming services.
-                </p>
+                <div className="space-y-6">
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      A global social media referendum saved the Amazon, funded by a micro-tax on streaming services.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      China banned single-use plastics, making a mandatory "circular economy" its primary economic driver.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      A viral trend of billionaires competing to "rewild" vast tracts of land boosted global carbon capture.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      A unified global AI managed the world's renewable energy grid, ending energy storage crises.
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  China banned single-use plastics, making a mandatory "circular economy" its primary economic driver.
-                </p>
-              </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  A viral trend of billionaires competing to "rewild" vast tracts of land boosted global carbon capture.
-                </p>
-              </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  A unified global AI managed the world's renewable energy grid, ending energy storage crises.
-                </p>
+              
+              {/* Picture 1: Right side of intro */}
+              <div className="flex justify-center lg:justify-end">
+                <img 
+                  src="/data/PANEL.png" 
+                  alt="Pacific Climate Panel" 
+                  className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+                />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Picture 1: After Animated Text */}
+        {/* Block 2: Sea Level Chart */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
+          <SimpleSeaLevelChart scenario="tlim1.5win0.25" />
+        </div>
+
+        {/* Picture 2: Between sea projections - smaller */}
+        <div className="w-full max-w-7xl mx-auto px-8 py-8">
           <div className="flex justify-center">
             <img 
-              src="/data/PANEL.png" 
-              alt="Pacific Climate Panel" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+              src="/data/MARKET.png" 
+              alt="Pacific Market Scene" 
+              className="max-w-md h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
             />
-          </div>
-        </div>
-
-        {/* Block 2: Sea Level Chart with Market Image */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <SimpleSeaLevelChart scenario="tlim1.5win0.25" />
-            </div>
-            <div className="flex justify-center">
-              <img 
-                src="/data/MARKET.png" 
-                alt="Pacific Market Scene" 
-                className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-              />
-            </div>
           </div>
         </div>
 
@@ -160,13 +162,13 @@ export default function Scenario1() {
           </div>
         </div>
 
-        {/* Picture 4: Between Spider Chart and Thematic Cards */}
+        {/* Picture 4: Between Spider Chart and Thematic Cards - smaller */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
           <div className="flex justify-center">
             <img 
               src="/data/SUVA.png" 
               alt="Suva Pacific Future" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+              className="max-w-lg h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
             />
           </div>
         </div>

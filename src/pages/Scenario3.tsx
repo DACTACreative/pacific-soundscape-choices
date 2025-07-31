@@ -46,85 +46,87 @@ export default function Scenario3() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Block 1: Animated Scenario Content */}
+        {/* Block 1: Animated Scenario Content with Picture */}
         <div className="min-h-screen flex items-center justify-center px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <div 
-              className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
-                Scenario 3: The Great Distraction (5.0°C)
-              </h1>
-            </div>
-            
-            <div 
-              className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            >
-              <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
-                A summary of the bizarre and counter-productive global events between 2025 and 2050 that led to extreme emissions.
-              </p>
-            </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div 
+                  className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                >
+                  <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
+                    Scenario 3: The Great Distraction (5.0°C)
+                  </h1>
+                </div>
+                
+                <div 
+                  className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                >
+                  <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
+                    A summary of the bizarre and counter-productive global events between 2025 and 2050 that led to extreme emissions.
+                  </p>
+                </div>
 
-            <div className="space-y-6">
-              <div 
-                className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  A populist "Energy Freedom" movement successfully mandated the exclusive use of gasoline-powered vehicles for government fleets.
-                </p>
+                <div className="space-y-6">
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      A populist "Energy Freedom" movement successfully mandated the exclusive use of gasoline-powered vehicles for government fleets.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      To "solve" ocean plastic, corporations successfully lobbied for a mandatory, individually-wrapped plastic straw with every can.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      The ultra-wealthy built massive, city-sized domes with private, air-conditioned atmospheres powered by fossil fuels.
+                    </p>
+                  </div>
+
+                  <div 
+                    className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed text-white">
+                      A viral "Carbon Indulgence" app allowed users to pay people in developing nations to not use electricity as a meaningless "offset."
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  To "solve" ocean plastic, corporations successfully lobbied for a mandatory, individually-wrapped plastic straw with every can.
-                </p>
-              </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  The ultra-wealthy built massive, city-sized domes with private, air-conditioned atmospheres powered by fossil fuels.
-                </p>
-              </div>
-
-              <div 
-                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              >
-                <p className="text-lg md:text-xl leading-relaxed text-white">
-                  A viral "Carbon Indulgence" app allowed users to pay people in developing nations to not use electricity as a meaningless "offset."
-                </p>
+              
+              {/* Picture 1: Right side of intro */}
+              <div className="flex justify-center lg:justify-end">
+                <img 
+                  src="/data/PANEL.png" 
+                  alt="Pacific Climate Panel" 
+                  className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+                />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Picture 1: After Animated Text */}
+        {/* Block 2: Sea Level Chart */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
+          <SimpleSeaLevelChart scenario="tlim5.0win0.25" />
+        </div>
+
+        {/* Picture 2: Between sea projections - smaller */}
+        <div className="w-full max-w-7xl mx-auto px-8 py-8">
           <div className="flex justify-center">
             <img 
-              src="/data/PANEL.png" 
-              alt="Pacific Climate Panel" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+              src="/data/MARKET.png" 
+              alt="Pacific Market Scene" 
+              className="max-w-md h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
             />
-          </div>
-        </div>
-
-        {/* Block 2: Sea Level Chart with Market Image */}
-        <div className="w-full max-w-7xl mx-auto px-8 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <SimpleSeaLevelChart scenario="tlim5.0win0.25" />
-            </div>
-            <div className="flex justify-center">
-              <img 
-                src="/data/MARKET.png" 
-                alt="Pacific Market Scene" 
-                className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
-              />
-            </div>
           </div>
         </div>
 
@@ -159,13 +161,13 @@ export default function Scenario3() {
           </div>
         </div>
 
-        {/* Picture 4: Between Spider Chart and Thematic Cards */}
+        {/* Picture 4: Between Spider Chart and Thematic Cards - smaller */}
         <div className="w-full max-w-7xl mx-auto px-8 py-16">
           <div className="flex justify-center">
             <img 
               src="/data/SUVA.png" 
               alt="Suva Pacific Future" 
-              className="max-w-full h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
+              className="max-w-lg h-auto rounded-lg shadow-lg opacity-90 hover:opacity-100 transition-opacity duration-300"
             />
           </div>
         </div>
