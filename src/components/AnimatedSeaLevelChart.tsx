@@ -308,14 +308,18 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     ctx.fillText('Year', canvas.width / 2, canvas.height - 20);
   };
 
-  // Setup canvas - SIMPLE AND WORKING
+  // Setup canvas - FIXED SIZING
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Set exact canvas size to match style
+    // Set canvas internal resolution
     canvas.width = 800;
     canvas.height = 500;
+    
+    // CRITICAL: Set CSS size to match exactly
+    canvas.style.width = '800px';
+    canvas.style.height = '500px';
     
     // Draw initial chart
     drawChart(0);
@@ -399,7 +403,14 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
           <canvas
             ref={canvasRef}
             className="border border-gray-600 rounded"
-            style={{ width: '800px', height: '500px' }}
+            width={800}
+            height={500}
+            style={{ 
+              width: '800px', 
+              height: '500px',
+              maxWidth: '800px',
+              maxHeight: '500px'
+            }}
           />
         </div>
       </div>
