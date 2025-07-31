@@ -72,13 +72,6 @@ export default function Scenario3() {
           <AnswerBlockDisplay />
         </div>
 
-        {/* Block 5: Blue Pacific Stories */}
-        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-g.png">
-          <div className="space-y-6">
-            <BluePacificStoriesSection />
-          </div>
-        </BlockSection>
-
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-h.png">
           <div className="space-y-6 text-center">
