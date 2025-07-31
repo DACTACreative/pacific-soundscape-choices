@@ -8,9 +8,10 @@ import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
 import { useAudio, Scenario } from '../context/AudioContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 export default function Scenario3() {
   const { enableAudio, playScenario, audioEnabled } = useAudio();
+  const [showLines, setShowLines] = useState([false, false, false, false, false]);
 
   useEffect(() => {
     // Enable audio on page load and play scenario 3 sound
@@ -21,6 +22,18 @@ export default function Scenario3() {
     setTimeout(() => {
       playScenario(Scenario.Scenario3);
     }, 500);
+
+    // Animate text lines sequentially
+    const delays = [500, 1000, 1500, 2000, 2500];
+    delays.forEach((delay, index) => {
+      setTimeout(() => {
+        setShowLines(prev => {
+          const newState = [...prev];
+          newState[index] = true;
+          return newState;
+        });
+      }, delay);
+    });
   }, [enableAudio, playScenario, audioEnabled]);
 
   return <div className="min-h-screen bg-black text-white relative">
@@ -33,26 +46,60 @@ export default function Scenario3() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Block 1: Scenario Description */}
-        <BlockSection imageUrl="/src/data/Scenario-u.png" imageLeft={false}>
-          <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
-            SCENARIO 3: EXTREME EMISSIONS (5°C)
-          </h1>
-          <h2 className="text-2xl md:text-4xl font-bold text-white mb-6">
-            Global Pathways: Systems Collapse
-          </h2>
-          <div className="space-y-6">
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              By 2050, in a world scorched by a catastrophic global temperature rise approaching 5°C, the nation of Fiji has effectively ceased to exist. Relentless and rapid sea-level rise, measured in meters rather than centimeters, has submerged virtually all coastal areas and low-lying islands, making the archipelago largely uninhabitable.
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              The concept of daily life has been replaced by a permanent state of emergency and mass exodus. The society has fractured, with the government long since collapsed and its population scattered across the globe as part of a desperate diaspora of climate refugees.
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              The ocean is a toxic, anoxic dead zone. There is no economy, no tourism, and no agriculture—only the haunting ruins of a drowned culture. The voice of Fiji is no longer a plea for aid but a silent testament to the ultimate cost of a world that ignored every warning.
-            </p>
+        {/* Block 1: Animated Scenario Content */}
+        <div className="min-h-screen flex items-center justify-center px-8">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <div 
+              className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
+                Scenario 3: The Great Distraction (5.0°C)
+              </h1>
+            </div>
+            
+            <div 
+              className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
+                A summary of the bizarre and counter-productive global events between 2025 and 2050 that led to extreme emissions.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div 
+                className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  A populist "Energy Freedom" movement successfully mandated the exclusive use of gasoline-powered vehicles for government fleets.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  To "solve" ocean plastic, corporations successfully lobbied for a mandatory, individually-wrapped plastic straw with every can.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  The ultra-wealthy built massive, city-sized domes with private, air-conditioned atmospheres powered by fossil fuels.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  A viral "Carbon Indulgence" app allowed users to pay people in developing nations to not use electricity as a meaningless "offset."
+                </p>
+              </div>
+            </div>
           </div>
-        </BlockSection>
+        </div>
 
         {/* Block 2: Sea Level Chart */}
         <div className="w-full py-16">

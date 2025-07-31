@@ -8,9 +8,10 @@ import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
 import { useAudio, Scenario } from '../context/AudioContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 export default function Scenario1() {
   const { enableAudio, playScenario, audioEnabled } = useAudio();
+  const [showLines, setShowLines] = useState([false, false, false, false, false]);
 
   useEffect(() => {
     // Enable audio on page load and play scenario 1 sound
@@ -21,6 +22,18 @@ export default function Scenario1() {
     setTimeout(() => {
       playScenario(Scenario.Scenario1);
     }, 500);
+
+    // Animate text lines sequentially
+    const delays = [500, 1000, 1500, 2000, 2500];
+    delays.forEach((delay, index) => {
+      setTimeout(() => {
+        setShowLines(prev => {
+          const newState = [...prev];
+          newState[index] = true;
+          return newState;
+        });
+      }, delay);
+    });
   }, [enableAudio, playScenario, audioEnabled]);
 
   return <div className="min-h-screen bg-black text-white relative">
@@ -34,26 +47,60 @@ export default function Scenario1() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Block 1: Scenario Description - Content Left, Image Right */}
-        <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-a.png">
-          <div className="space-y-6">
-            <h1 className="text-4xl md:text-7xl font-bold tracking-tight text-white">
-              SCENARIO 1: MANAGED TRANSITION (1.5°C)
-            </h1>
-            <h2 className="text-2xl md:text-4xl font-bold text-white">
-              Global Pathways: Urgent Action Delivered Fragile Hope
-            </h2>
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white">
-              By 2050, the world achieved 1.5°C through unprecedented global cooperation that began in the late 2020s. Immediate, radical emissions cuts transformed energy systems within two decades. Carbon removal technologies scaled rapidly. Temperatures briefly exceeded 1.5°C in the 2040s before stabilizing.
-            </p>
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white">
-              This pathway required sacrificing fossil fuel industries, restructuring entire economies, and mobilizing resources on a wartime scale. International climate cooperation became the defining political force of the 2030s and 2040s.
-            </p>
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white">
-              Yet even this "success" story carries profound costs: 30,000 annual heat deaths in Europe alone, massive ecosystem disruption, and the near-complete loss of coral reefs.
-            </p>
+        {/* Block 1: Animated Scenario Content */}
+        <div className="min-h-screen flex items-center justify-center px-8">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <div 
+              className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
+                Scenario 1: The Great Re-Think (1.5°C)
+              </h1>
+            </div>
+            
+            <div 
+              className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
+                A summary of the surprising global events between 2025 and 2050 that led to a managed transition.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div 
+                className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  A global social media referendum saved the Amazon, funded by a micro-tax on streaming services.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  China banned single-use plastics, making a mandatory "circular economy" its primary economic driver.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  A viral trend of billionaires competing to "rewild" vast tracts of land boosted global carbon capture.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  A unified global AI managed the world's renewable energy grid, ending energy storage crises.
+                </p>
+              </div>
+            </div>
           </div>
-        </BlockSection>
+        </div>
 
         {/* Block 2: Sea Level Chart */}
         <div className="w-full py-16">

@@ -8,10 +8,11 @@ import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
 import { useAudio, Scenario } from '../context/AudioContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Scenario2() {
   const { enableAudio, playScenario, audioEnabled } = useAudio();
+  const [showLines, setShowLines] = useState([false, false, false, false, false]);
 
   useEffect(() => {
     // Enable audio on page load and play scenario 2 sound
@@ -22,6 +23,18 @@ export default function Scenario2() {
     setTimeout(() => {
       playScenario(Scenario.Scenario2);
     }, 500);
+
+    // Animate text lines sequentially
+    const delays = [500, 1000, 1500, 2000, 2500];
+    delays.forEach((delay, index) => {
+      setTimeout(() => {
+        setShowLines(prev => {
+          const newState = [...prev];
+          newState[index] = true;
+          return newState;
+        });
+      }, delay);
+    });
   }, [enableAudio, playScenario, audioEnabled]);
 
   return (
@@ -38,29 +51,60 @@ export default function Scenario2() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Block 1: Scenario Description */}
-        <BlockSection 
-          imageUrl="/src/data/Scenario-k.png"
-          imageLeft={false}
-        >
-          <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
-            SCENARIO 2: DANGEROUS WARMING (3°C)
-          </h1>
-          <h2 className="text-2xl md:text-4xl font-bold text-white mb-6">
-            Global Pathways: Promises Broken, Systems Strained
-          </h2>
-          <div className="space-y-6">
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              By 2050, current policies and Paris Agreement pledges delivered partial results, putting the world on track for 2.4-3.3°C by 2100. Renewable energy expanded, some carbon capture was deployed, forest area increased—but not enough to prevent dangerous warming.
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              The 2030s and 2040s saw climate impacts overwhelm adaptation capacity. Heat-humidity combinations became lethal for 711 million people annually. Groundwater systems collapsed. 43% of Himalayan glaciers disappeared, cutting water supplies for 800 million people.
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              International cooperation fractured under mass migration and resource competition. The global mood shifted from hope to grim endurance.
-            </p>
+        {/* Block 1: Animated Scenario Content */}
+        <div className="min-h-screen flex items-center justify-center px-8">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <div 
+              className={`transition-all duration-1000 ${showLines[0] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">
+                Scenario 2: The Techno-Fix Muddle (3.0°C)
+              </h1>
+            </div>
+            
+            <div 
+              className={`transition-all duration-1000 ${showLines[1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <p className="text-xl md:text-2xl leading-relaxed text-white/80 mb-8">
+                A summary of the well-intentioned but insufficient global events between 2025 and 2050 that led to dangerous warming.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div 
+                className={`transition-all duration-1000 ${showLines[2] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  The "hydrogen economy" hype bubble delayed real investment in effective renewables by a critical decade.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[3] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  Oil companies rebranded as "Carbon Management Firms," using PR-friendly carbon capture to gain subsidies while changing little.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  A complex global carbon "bazaar" created bizarre loopholes instead of actually reducing emissions.
+                </p>
+              </div>
+
+              <div 
+                className={`transition-all duration-1000 ${showLines[4] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              >
+                <p className="text-lg md:text-xl leading-relaxed text-white">
+                  Cities invested trillions in "smart" infrastructure to manage climate impacts, while ignoring the root cause of the emissions.
+                </p>
+              </div>
+            </div>
           </div>
-        </BlockSection>
+        </div>
 
         {/* Block 2: Sea Level Chart */}
         <div className="w-full py-16">
