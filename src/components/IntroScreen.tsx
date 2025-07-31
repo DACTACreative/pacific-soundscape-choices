@@ -77,10 +77,18 @@ And the game begins—Will you stay on track with the **Blue Pacific thematics**
     },
     {
       id: 5,
-      title: "Your Journey to 2050",
+      title: "An Immersive Soundscape",
       content: `Throughout this experience, you'll hear **Fiji's ocean tides** from October 10, 2024. Because **sea level rise** is in the background of our lives. It's music that plays on without us having much control over the ending.
 
-And while we build a **resilient future**, representing less than **2% of global emissions** across **20% of Earth's surface** means our destiny depends on the **world's choices**.
+After each answer, you'll be projected directly into the **grounded reality** of your decision by hearing the **story and impact** it has on someone's life.`,
+      image: introA,
+      imageAlt: "The immersive soundscape experience",
+      imageLeft: true
+    },
+    {
+      id: 6,
+      title: "The Final Variable & Your Future",
+      content: `And while we build a **resilient future**, representing less than **2% of global emissions** across **20% of Earth's surface** means our destiny depends on the **world's choices**.
 
 At the end, the game will randomly choose one of three **climate scenarios**:
 
@@ -95,7 +103,7 @@ The same October tides will sound very different 25 years later.
 Enjoy the game—see you in the future.`,
       image: introH,
       imageAlt: "The person on the beach, looking to the future",
-      imageLeft: true,
+      imageLeft: false,
       isLast: true
     }
   ];
