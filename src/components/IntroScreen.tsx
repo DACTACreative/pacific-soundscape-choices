@@ -1,8 +1,5 @@
 import { useAudio, Scenario } from '@/context/AudioContext';
 import { Button } from './ui/button';
-import { useEffect, useRef } from 'react';
-import LocomotiveScroll from 'locomotive-scroll';
-import 'locomotive-scroll/dist/locomotive-scroll.css';
 import introA from '@/data/intro-a.png';
 import introAA from '@/data/intro-aa.png';
 import introB from '@/data/intro-b.png';
@@ -22,8 +19,6 @@ interface IntroScreenProps {
 
 export default function IntroScreen({ onStart }: IntroScreenProps) {
   const { loading, playScenario, enableAudio, audioEnabled } = useAudio();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
 
   const handleStart = () => {
     try {
@@ -36,81 +31,6 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
       console.error('Error starting scenario:', error);
     }
   };
-
-  // Reordered to have introAA first, then introA, then the rest in order
-  // Using introJ instead of introB in the array
-  const introImages = [introAA, introA, introJ, introC, introD, introE, introF, introG, introH, introI, introB];
-
-  // Initialize Locomotive Scroll
-  useEffect(() => {
-    let scrollInstance: LocomotiveScroll | null = null;
-    
-    const initScroll = () => {
-      if (scrollRef.current && !scrollInstance) {
-        try {
-          scrollInstance = new LocomotiveScroll({
-            el: scrollRef.current,
-            smooth: true,
-            multiplier: 1,
-            class: 'is-revealed'
-          });
-          locomotiveScrollRef.current = scrollInstance;
-          console.log('Locomotive Scroll initialized successfully');
-        } catch (error) {
-          console.error('Failed to initialize Locomotive Scroll:', error);
-        }
-      }
-    };
-
-    // Delay initialization to ensure DOM is ready
-    const timer = setTimeout(initScroll, 100);
-
-    return () => {
-      clearTimeout(timer);
-      if (scrollInstance) {
-        try {
-          scrollInstance.destroy();
-          console.log('Locomotive Scroll destroyed');
-        } catch (error) {
-          console.error('Error destroying Locomotive Scroll:', error);
-        }
-      }
-      locomotiveScrollRef.current = null;
-    };
-  }, []);
-
-  // Debug logging
-  useEffect(() => {
-    console.log('IntroScreen mounted');
-    console.log('Loading state:', loading);
-    console.log('Images loaded:', introImages.length);
-    console.log('First image src:', introImages[0]);
-    
-    // Check if scroll container exists
-    if (scrollRef.current) {
-      console.log('Scroll container found');
-    } else {
-      console.log('Scroll container not found');
-    }
-    
-    return () => console.log('IntroScreen unmounted');
-  }, []);
-
-  // Update locomotive scroll when content changes
-  useEffect(() => {
-    if (locomotiveScrollRef.current) {
-      const timer = setTimeout(() => {
-        try {
-          locomotiveScrollRef.current?.update();
-          console.log('Locomotive Scroll updated');
-        } catch (error) {
-          console.error('Error updating Locomotive Scroll:', error);
-        }
-      }, 500);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [loading]);
 
   const sections = [
     {
@@ -167,7 +87,7 @@ Enjoy the game—see you in the future.`,
   ];
 
   return (
-    <div ref={scrollRef} data-scroll-container className="bg-black text-white">
+    <div className="bg-black text-white">
       {/* Sticky Header */}
       <div className="sticky top-0 z-40 bg-black border-b border-white/10">
         <div className="px-8 py-6">
@@ -179,8 +99,7 @@ Enjoy the game—see you in the future.`,
       {sections.map((section, index) => (
         <section
           key={section.id}
-          data-scroll-section
-          className="min-h-screen bg-black py-16"
+          className="min-h-screen bg-black py-16 scroll-snap-start"
           id={`section-${section.id}`}
         >
           <div className="max-w-7xl mx-auto px-8">
@@ -190,8 +109,6 @@ Enjoy the game—see you in the future.`,
                 className={`lg:col-span-7 space-y-6 ${
                   section.imageLeft ? 'order-2 lg:order-2' : 'order-2 lg:order-1'
                 }`}
-                data-scroll 
-                data-scroll-speed="0.5"
               >
                 <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-white leading-tight">
                   {section.title}
@@ -202,12 +119,13 @@ Enjoy the game—see you in the future.`,
                 
                 {/* Show button only on the last section */}
                 {section.isLast && (
-                  <div className="mt-12" data-scroll data-scroll-speed="0.2">
+                  <div className="mt-12">
                     <Button
                       onClick={handleStart}
                       disabled={loading}
                       variant="pacific"
                       size="pacific"
+                      className="group relative overflow-hidden"
                     >
                       <span className="absolute inset-0 bg-[#35c5f2] transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
                       <span className="relative z-10">
@@ -227,8 +145,6 @@ Enjoy the game—see you in the future.`,
                 className={`lg:col-span-3 ${
                   section.imageLeft ? 'order-1 lg:order-1' : 'order-1 lg:order-2'
                 }`}
-                data-scroll 
-                data-scroll-speed="0.3"
               >
                 <div className="relative">
                   <img

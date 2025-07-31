@@ -1,33 +1,15 @@
-import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import IntroScreen from '@/components/IntroScreen';
 
 export default function LandingPage() {
-  const [scrollY, setScrollY] = useState(0);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const handleGameStart = () => {
     window.location.href = '/game';
   };
-
-  // Calculate opacity based on scroll
-  const opacity = Math.max(0, 1 - scrollY / 500);
   
   return (
-    <div className="relative">
-      {/* Landing Page Hero - Fades out on scroll */}
-      <div 
-        className="h-screen w-full bg-black relative"
-        style={{ opacity }}
-      >
+    <div className="w-full">
+      {/* Landing Page Hero */}
+      <div className="h-screen w-full bg-black relative">
         {/* Subtle overlay for depth */}
         <div className="absolute inset-0 bg-black/30" />
 
@@ -70,7 +52,7 @@ export default function LandingPage() {
               lineHeight: '1.4'
             }} className="mb-8 text-white/90">The 2050 Strategy for the Blue Pacific Continent provides the map, but you must choose the path.</p>
             
-            {/* Headphones note - no button */}
+            {/* Headphones note */}
             <p className="text-white/80" style={{
               fontFamily: 'Space Grotesk, sans-serif',
               fontSize: 'clamp(16px, 2vw, 20px)',
@@ -96,10 +78,8 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Intro Screen - Scrollable content below */}
-      <div className="relative bg-black">
-        <IntroScreen onStart={handleGameStart} />
-      </div>
+      {/* Intro Screen - Direct content below */}
+      <IntroScreen onStart={handleGameStart} />
     </div>
   );
 }
