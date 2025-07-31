@@ -35,8 +35,10 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   const sections = [
     {
       id: 1,
-      title: "A Call for Pacific Resilience",
-      content: `The 2050 Strategy for the Blue Pacific Continent features 10 commitments that Pacific Leaders have made to strengthen collective action and deepen regionalism. This piece was created to link stories to frameworks—to share and simplify by gamifying the great vision that our leaders have for our region.`,
+      title: "Let's create a new paradigm: a Resilient Pacific",
+      content: `A **Resilient Pacific** reflecting **Pacific culture**, **Pacific knowledge & Customs**, A pacific that **Protect our connection to the land** & **perpetuate our way of life**.
+
+The **2050 Strategy** features **10 commitments** that Pacific Leaders have made to strengthen collective action and deepen regionalism. This piece was created to link stories to frameworks—to share and simplify by **gamifying** the great vision that our leaders have for our region.`,
       image: introAA,
       imageAlt: "The Earth, focused on the Pacific",
       imageLeft: true
@@ -44,39 +46,51 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
     {
       id: 2,
       title: "Stories & Indicators",
-      content: `Quantitative indicators show what changed, but qualitative stories show why it matters. This experience blends indicators with stories because Pacific policy works best when it speaks our language. In small island contexts, a 2% GDP shift affects every family and a 10cm sea level rise reshapes entire communities.`,
+      content: `**Quantitative indicators** show what changed, but **qualitative stories** show **why it matters**. This experience blends indicators with stories because **Pacific policy** works best when it **speaks our language**. Because In **small island contexts**, a **2% GDP shift** affects every family and a **10cm sea level rise** reshapes entire communities.`,
       image: introI,
       imageAlt: "The village scene",
       imageLeft: false
     },
     {
       id: 3,
-      title: "Your Challenge",
-      content: `The Strategy brings together seven interconnected thematic areas. This work analyzed each thematic area and its outcomes, anchoring strategy indicators (like % of women in parliament) in fictional stories that bridge policy complexity with lived reality.
+      title: "The Strategy's Seven Thematic Areas",
+      content: `The Strategy brings together **seven interconnected thematic areas**: **Political Leadership and Regionalism**, **People-Centered Development**, **Peace and Security**, **Resource and Economic Development**, **Climate Change and Disasters**, **Ocean and Environment**, and **Technology and Connectivity**. 
 
-There is no single "win" or "loss" in this game. Instead, the challenge is to achieve a balanced result where the Level of Ambition for all seven thematic areas is met. Each answer directly impacts one thematic but can also contribute to others.`,
+This work analyzed each thematic area and its outcomes, anchoring **strategy indicators** (like **% of women in parliament**) in fictional stories that bridge policy complexity with lived reality.`,
       image: introD,
       imageAlt: "The large banyan tree, symbolizing interconnectedness",
       imageLeft: true
     },
     {
       id: 4,
-      title: "An Immersive Soundscape",
-      content: `Throughout this experience, you'll hear Fiji's ocean tides from October 10, 2024. Because sea level rise is in the background of our lives. It's music that plays on without us having much control over the ending. After each answer, you'll be projected directly into the grounded reality of your decision by hearing the story and impact it has on someone's life.`,
+      title: "Game Mechanics and Your Impact",
+      content: `Each **game choice** connects to a specific strategy outcomes and indicators, demonstrating how decisions create **ripple effects** toward the **2050 goals**.
+
+Each decision will impact the type of Pacific you build. Will your choices lean toward people development while leaving economic power behind? Or will you manage to make decisions that reflect all main thematics while meeting their **levels of ambition**?
+
+Each answer directly impacts one thematic but can also contribute to others—that's the magic we often miss when measuring **impact**: **TIME**. After each answer, you'll be projected directly into the **grounded reality** of your decision by hearing the **story and impact** it has on someone's life.
+
+And the game begins—Will you stay on track with the **Blue Pacific thematics**, or will you prioritize one decision above another? Will you be able to identify the outcomes they support and their potential **ripple effects** on others?`,
       image: introF,
       imageAlt: "The serene ocean and beach",
       imageLeft: false
     },
     {
       id: 5,
-      title: "The Final Variable & Call to Action",
-      content: `Our destiny also depends on the world's choices. At the end of your journey, the game will randomly select one of three global climate scenarios:
+      title: "Your Journey to 2050",
+      content: `Throughout this experience, you'll hear **Fiji's ocean tides** from October 10, 2024. Because **sea level rise** is in the background of our lives. It's music that plays on without us having much control over the ending.
 
-1.5°C warming (SSP1-1.9: A future of rapid, successful decarbonization)
+And while we build a **resilient future**, representing less than **2% of global emissions** across **20% of Earth's surface** means our destiny depends on the **world's choices**.
 
-3°C warming (SSP2-4.5: A future of partial progress and dangerous warming)
+At the end, the game will randomly choose one of three **climate scenarios**:
 
-5°C warming (SSP5-8.5: A future of high emissions and limited climate action)
+**1.5°C warming** (SSP1-1.9: Paris Agreement target, rapid decarbonization)
+
+**3°C warming** (SSP2-4.5: Paris Agreement target, rapid decarbonization)
+
+**5°C warming** (SSP5-8.5: high emissions pathway, limited climate action)
+
+The same October tides will sound very different 25 years later.
 
 Enjoy the game—see you in the future.`,
       image: introH,
@@ -113,9 +127,12 @@ Enjoy the game—see you in the future.`,
                 <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 text-white leading-tight">
                   {section.title}
                 </h2>
-                <div className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white/90 whitespace-pre-line">
-                  {section.content}
-                </div>
+                <div 
+                  className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white/90 whitespace-pre-line"
+                  dangerouslySetInnerHTML={{
+                    __html: section.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                  }}
+                />
                 
                 {/* Show button only on the last section */}
                 {section.isLast && (
