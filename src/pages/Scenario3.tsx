@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
@@ -6,16 +5,11 @@ import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
-
 export default function Scenario3() {
-  return (
-    <div className="bg-black text-white min-h-screen relative">
+  return <div className="bg-black text-white min-h-screen relative">
       {/* Fixed Header */}
       <div className="fixed top-6 left-6 z-50">
-        <Link 
-          to="/"
-          className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500"
-        >
+        <Link to="/" className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500">
           ← RETURN TO JOURNEY
         </Link>
       </div>
@@ -23,10 +17,7 @@ export default function Scenario3() {
       {/* Content */}
       <div className="relative z-10">
         {/* Block 1: Scenario Description */}
-        <BlockSection 
-          imageUrl="/src/data/Scenario-u.png"
-          imageLeft={false}
-        >
+        <BlockSection imageUrl="/src/data/Scenario-u.png" imageLeft={false}>
           <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-8 text-white">
             SCENARIO 3: EXTREME EMISSIONS (5°C)
           </h1>
@@ -47,10 +38,7 @@ export default function Scenario3() {
         </BlockSection>
 
         {/* Block 2: Sonification */}
-        <BlockSection 
-          imageUrl="/src/data/Scenario-v.png"
-          imageLeft={true}
-        >
+        <BlockSection imageUrl="/src/data/Scenario-v.png" imageLeft={true}>
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Sonification – The Sound of a Dying Ocean
           </h2>
@@ -83,9 +71,7 @@ export default function Scenario3() {
         </div>
 
         {/* Block 4: Answer Blocks Section */}
-        <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
-          <AnswerBlockDisplay />
-        </div>
+        
 
         {/* Block 5: Blue Pacific Stories */}
         <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-g.png">
@@ -101,25 +87,11 @@ export default function Scenario3() {
               Continue Your Journey
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => window.location.href = '/scenario-2'}
-              >
-                SCENARIO 2
-              </Button>
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => window.location.href = '/credits'}
-              >
+              
+              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/credits'}>
                 SOURCES & CREDITS
               </Button>
-              <Button 
-                variant="pacific" 
-                size="pacific"
-                onClick={() => window.location.href = '/'}
-              >
+              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/'}>
                 RESTART JOURNEY
               </Button>
             </div>
@@ -128,9 +100,6 @@ export default function Scenario3() {
       </div>
 
       {/* Debug Panel for Development */}
-      {process.env.NODE_ENV === 'development' && (
-        <DebugPanel />
-      )}
-    </div>
-  );
+      {process.env.NODE_ENV === 'development' && <DebugPanel />}
+    </div>;
 }
