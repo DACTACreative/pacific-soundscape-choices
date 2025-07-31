@@ -100,7 +100,7 @@ At the end, the game will randomly choose one of three **climate scenarios**:
 
 The same October tides will sound very different 25 years later.
 
-Enjoy the game—see you in the future.`,
+Enjoy the game.`,
       image: introH,
       imageAlt: "The person on the beach, looking to the future",
       imageLeft: false,
