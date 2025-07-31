@@ -109,15 +109,15 @@ const FlippableCard: React.FC<FlippableCardProps> = ({ theme, score, spiderData 
       >
         {/* Front of card */}
         <Card 
-          className={`absolute inset-0 backface-hidden bg-slate-900/60 backdrop-blur-sm relative ${
+          className={`absolute inset-0 backface-hidden bg-black/40 backdrop-blur-sm relative ${
             isAmbitionAchieved 
-              ? 'border-white/60 border-2' 
+              ? 'border-[#35c5f2] border-2' 
               : 'border-slate-600/40'
           }`}
         >
-          {/* Ambition Met Badge */}
+          {/* Ambition Met Badge - Outside the card */}
           {isAmbitionAchieved && (
-            <div className="absolute top-4 right-4 text-xs text-white/80 font-medium">
+            <div className="absolute -top-2 -right-2 bg-[#35c5f2] text-black text-xs font-medium px-2 py-1 rounded z-10">
               ★ AMBITION MET
             </div>
           )}
