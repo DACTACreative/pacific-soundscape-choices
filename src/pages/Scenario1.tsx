@@ -5,7 +5,7 @@ import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
-import { ThematicPointsDisplay } from '../components/ThematicPointsDisplay';
+import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 export default function Scenario1() {
   return <div className="min-h-screen bg-black text-white relative">
 
@@ -72,8 +72,12 @@ export default function Scenario1() {
             <div className="w-full max-w-5xl mx-auto">
               <ThematicSpiderChart className="w-full" />
             </div>
-            <ThematicPointsDisplay />
           </div>
+        </div>
+
+        {/* Block 3.5: Thematic Informational Cards */}
+        <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
+          <ThematicInformationalCards />
         </div>
 
         {/* Block 4: User Choices Display */}
