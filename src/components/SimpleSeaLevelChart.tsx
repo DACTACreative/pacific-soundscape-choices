@@ -25,15 +25,21 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
     try {
       const response = await fetch('/data/sea-level-data.csv');
       const csvText = await response.text();
-      const lines = csvText.split('\n').slice(1); // Skip header
+      const lines = csvText.split('\n').slice(1).filter(line => line.trim()); // Skip header and empty lines
+      
+      console.log('Loading scenario:', selectedScenario);
+      console.log('Found lines:', lines.length);
       
       // Find the rows for our scenario
       const scenarioRows = lines.filter(line => line.includes(selectedScenario));
+      console.log('Scenario rows found:', scenarioRows.length);
       
       if (scenarioRows.length >= 3) {
         const lowRow = scenarioRows.find(row => row.includes(',5,'));
         const mediumRow = scenarioRows.find(row => row.includes(',50,'));
         const highRow = scenarioRows.find(row => row.includes(',95,'));
+        
+        console.log('Rows found:', { lowRow: !!lowRow, mediumRow: !!mediumRow, highRow: !!highRow });
         
         if (lowRow && mediumRow && highRow) {
           const years = [2020, 2030, 2040, 2050, 2060, 2070, 2080, 2090, 2100];
@@ -42,6 +48,12 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
           const lowValues = lowRow.split(',').slice(5, 14).map(Number);
           const mediumValues = mediumRow.split(',').slice(5, 14).map(Number);
           const highValues = highRow.split(',').slice(5, 14).map(Number);
+          
+          console.log('Sample values for 2050:', {
+            low: lowValues[3] * 100,
+            medium: mediumValues[3] * 100,
+            high: highValues[3] * 100
+          });
           
           years.forEach((year, index) => {
             chartData.push({
@@ -52,6 +64,7 @@ export default function SimpleSeaLevelChart({ scenario = 'tlim1.5win0.25' }: Sim
             });
           });
           
+          console.log('Chart data created:', chartData.length, 'points');
           setData(chartData);
         }
       }
