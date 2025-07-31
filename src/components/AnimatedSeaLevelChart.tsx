@@ -41,48 +41,84 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
         Papa.parse(csvText, {
           header: true,
           complete: (results: any) => {
-            console.log('📊 Parsed results:', results.data.length, 'rows');
+            console.log('📊 Total CSV rows:', results.data.length);
             console.log('🎯 Sample row:', results.data[0]);
             
             // Filter data for the selected scenario
             const scenarioData = results.data.filter((row: any) => 
-              row.scenario === scenario && row.process === 'total' && row.confidence === 'medium'
+              row.scenario === scenario && 
+              row.process === 'total' && 
+              row.confidence === 'medium'
             );
-            console.log('🎯 Filtered scenario data:', scenarioData.length, 'rows for scenario:', scenario);
+            
+            console.log('🎯 Filtered scenario data:', scenarioData.length, 'rows');
+            
+            if (scenarioData.length === 0) {
+              console.error('❌ No data found for scenario:', scenario);
+              return;
+            }
 
-            // Group by quantile and process years - FIX: Use number comparison
-            const quantile5Data = scenarioData.find((row: any) => Number(row.quantile) === 5);
-            const quantile50Data = scenarioData.find((row: any) => Number(row.quantile) === 50);
-            const quantile95Data = scenarioData.find((row: any) => Number(row.quantile) === 95);
+            // Find quantile rows
+            const quantile5Data = scenarioData.find((row: any) => row.quantile === '5');
+            const quantile50Data = scenarioData.find((row: any) => row.quantile === '50');
+            const quantile95Data = scenarioData.find((row: any) => row.quantile === '95');
 
-            console.log('📈 Quantile data found:', {
+            console.log('📊 Quantile data found:', {
               q5: !!quantile5Data,
-              q50: !!quantile50Data,
+              q50: !!quantile50Data, 
               q95: !!quantile95Data
             });
 
-            if (quantile5Data && quantile50Data && quantile95Data) {
-              const processedData: SeaLevelDataPoint[] = [];
+            if (!quantile5Data || !quantile50Data || !quantile95Data) {
+              console.error('❌ Missing quantile data');
+              return;
+            }
+
+            const processedData: SeaLevelDataPoint[] = [];
+            
+            // Process years from 2020 to 2150 in 10-year steps
+            for (let year = 2020; year <= 2150; year += 10) {
+              const yearKey = year.toString();
               
-              // Extract years from 2020 to 2150
-              for (let year = 2020; year <= 2150; year += 10) {
-                const yearKey = year.toString();
-                if (quantile5Data[yearKey] !== undefined) {
+              // Check if year column exists and has valid data
+              if (quantile5Data[yearKey] !== undefined && 
+                  quantile50Data[yearKey] !== undefined && 
+                  quantile95Data[yearKey] !== undefined) {
+                
+                const q5Value = parseFloat(quantile5Data[yearKey]) * 100; // Convert to cm
+                const q50Value = parseFloat(quantile50Data[yearKey]) * 100;
+                const q95Value = parseFloat(quantile95Data[yearKey]) * 100;
+                
+                // Validate numeric values
+                if (!isNaN(q5Value) && !isNaN(q50Value) && !isNaN(q95Value)) {
+                  console.log(`📈 Year ${year}:`, { q5: q5Value, q50: q50Value, q95: q95Value });
+                  
                   processedData.push({
                     year,
-                    quantile5: parseFloat(quantile5Data[yearKey]) * 100, // Convert to cm
-                    quantile50: parseFloat(quantile50Data[yearKey]) * 100,
-                    quantile95: parseFloat(quantile95Data[yearKey]) * 100,
+                    quantile5: q5Value,
+                    quantile50: q50Value,
+                    quantile95: q95Value,
                   });
+                } else {
+                  console.warn(`⚠️ Invalid numeric data for year ${year}`);
                 }
+              } else {
+                console.warn(`⚠️ Missing data for year ${year}`);
               }
-              
-              console.log('✅ Processed data points:', processedData.length);
-              console.log('📈 Sample data point:', processedData[0]);
-              setData(processedData);
-            } else {
-              console.error('❌ Missing quantile data for scenario:', scenario);
             }
+            
+            console.log('✅ Final processed data:', processedData.length, 'points');
+            console.log('🎯 Sample processed point:', processedData[0]);
+            
+            if (processedData.length === 0) {
+              console.error('❌ No valid data points processed');
+              return;
+            }
+            
+            setData(processedData);
+          },
+          error: (error: any) => {
+            console.error('💥 CSV parsing error:', error);
           }
         });
       } catch (error) {
@@ -180,7 +216,11 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     }
 
     const { width, height } = canvas;
-    console.log('🎨 Drawing on canvas:', width, 'x', height, 'with', data.length, 'data points');
+    if (width === 0 || height === 0) {
+      console.warn('⚠️ Canvas has zero dimensions');
+      return;
+    }
+    
     ctx.clearRect(0, 0, width, height);
 
     // Set up chart dimensions
@@ -293,7 +333,7 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     ctx.fillText('Year', margin.left + chartWidth / 2, height - 20);
   };
 
-  // Canvas resize and initial draw effect
+  // Canvas resize and initial draw effect - Fixed to prevent infinite loops
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -303,36 +343,45 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
       if (!container) return;
       
       const rect = container.getBoundingClientRect();
-      console.log('📐 Container size:', rect.width, 'x', rect.height);
       
-      // Set actual canvas size
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      
-      // Set CSS size to match
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
-      
-      console.log('🎨 Canvas size set to:', canvas.width, 'x', canvas.height);
-      
-      // Draw initial state when data is loaded
-      if (data.length > 0) {
-        drawChart(animationComplete ? 1 : 0);
+      // Set actual canvas size (only if different to prevent infinite loops)
+      if (canvas.width !== rect.width || canvas.height !== rect.height) {
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        
+        // Set CSS size to match
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        
+        console.log('🎨 Canvas resized to:', canvas.width, 'x', canvas.height);
+        
+        // Redraw after resize
+        if (data.length > 0) {
+          drawChart(animationComplete ? 1 : 0);
+        }
       }
     };
 
-    // Initial setup
-    setTimeout(resizeCanvas, 100); // Small delay to ensure DOM is ready
+    // Initial setup with multiple attempts
+    const initCanvas = () => {
+      setTimeout(resizeCanvas, 50);
+      setTimeout(resizeCanvas, 200);
+    };
+    
+    initCanvas();
     window.addEventListener('resize', resizeCanvas);
     return () => window.removeEventListener('resize', resizeCanvas);
-  }, [data, animationComplete]);
+  }, [data.length > 0]); // Only depend on whether we have data, not the data itself
 
-  // Initial draw when data loads
+  // Initial draw when data loads - Fixed to prevent continuous redraws
   useEffect(() => {
-    if (data.length > 0 && canvasRef.current) {
-      setTimeout(() => drawChart(0), 50);
+    if (data.length > 0 && canvasRef.current && !isPlaying) {
+      setTimeout(() => {
+        console.log('🎨 Initial draw with', data.length, 'data points');
+        drawChart(0);
+      }, 100);
     }
-  }, [data]);
+  }, [data.length > 0]); // Only redraw when data availability changes
 
   // Cleanup animation on unmount
   useEffect(() => {
@@ -450,12 +499,18 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
         </div>
       </div>
       
-      {/* Debug info */}
-      {data.length === 0 && (
-        <div className="text-center text-red-400 mt-4">
-          Loading data... Scenario: {scenario}
-        </div>
-      )}
+      {/* Status info */}
+      <div className="text-center mt-4">
+        {data.length === 0 ? (
+          <div className="text-yellow-400">
+            Loading data for scenario: {scenario}...
+          </div>
+        ) : (
+          <div className="text-green-400 text-sm">
+            ✅ Loaded {data.length} data points for {getScenarioTitle(scenario)}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
