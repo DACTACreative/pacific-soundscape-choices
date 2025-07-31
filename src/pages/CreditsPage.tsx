@@ -100,22 +100,66 @@ export default function CreditsPage() {
             {/* Key Strategic Sources */}
             <div>
               <h3 className="text-2xl font-semibold text-white mb-4">Key Strategic Sources</h3>
-              <div className="ml-4 space-y-2 text-white/90">
-                <p><a href="https://blue-pacific-2050.pacificdata.org" className="text-blue-400 hover:text-blue-300 underline">Blue Pacific 2050 Strategy</a></p>
-                <p><a href="https://pacificdata.org" className="text-blue-400 hover:text-blue-300 underline">Pacific Data Hub</a></p>
-                <p><a href="https://sealevel.nasa.gov" className="text-blue-400 hover:text-blue-300 underline">Sea-Level & Flooding: NASA Sea Level Change Team</a></p>
-                <p><a href="https://unfccc.int" className="text-blue-400 hover:text-blue-300 underline">Displacement & Climate Frameworks: UNFCCC</a></p>
-                <p>Fiji Government energy policy (100% renewables by 2030 target)</p>
-                <p><a href="https://unfccc.int/process-and-meetings/the-paris-agreement" className="text-blue-400 hover:text-blue-300 underline">The Paris Agreement (UNFCCC)</a></p>
-                <p><a href="https://www.ipcc.ch/sr15/" className="text-blue-400 hover:text-blue-300 underline">IPCC Special Report on Global Warming of 1.5°C</a></p>
-                <p><a href="https://www.un.org/sustainabledevelopment/climate-action/" className="text-blue-400 hover:text-blue-300 underline">United Nations Sustainable Development Goal 13: Climate Action</a></p>
-                <p><a href="https://coralreefwatch.noaa.gov" className="text-blue-400 hover:text-blue-300 underline">NOAA Coral Reef Watch</a></p>
-                <p><a href="https://climateknowledgeportal.worldbank.org" className="text-blue-400 hover:text-blue-300 underline">The World Bank Climate Change Knowledge Portal</a></p>
-                <p><a href="https://www.sprep.org" className="text-blue-400 hover:text-blue-300 underline">Secretariat of the Pacific Regional Environment Programme (SPREP)</a></p>
-                <p><a href="https://www.spc.int/cces" className="text-blue-400 hover:text-blue-300 underline">The Pacific Community (SPC) - Climate Change & Environmental Sustainability</a></p>
-                <p><a href="https://www.tide-forecast.com/locations/Suva-Harbor-Fiji-Islands/tides/latest" className="text-blue-400 hover:text-blue-300 underline">Tide Data Reference: Suva Harbor, Fiji</a></p>
-                <p><a href="https://www.daybreakgame.com" className="text-blue-400 hover:text-blue-300 underline">Inspirational Game Design: Daybreak</a></p>
-                <p><a href="https://solarpunkcity.org/solarpunk-project-ideas/" className="text-blue-400 hover:text-blue-300 underline">Utopian Future Concept: Solarpunk</a></p>
+              <div className="ml-4 space-y-4 text-white/90">
+                <div>
+                  <p className="font-medium">Blue Pacific 2050 Strategy</p>
+                  <p className="text-white/70">https://blue-pacific-2050.pacificdata.org</p>
+                </div>
+                <div>
+                  <p className="font-medium">Pacific Data Hub</p>
+                  <p className="text-white/70">https://pacificdata.org</p>
+                </div>
+                <div>
+                  <p className="font-medium">Sea-Level & Flooding: NASA Sea Level Change Team</p>
+                  <p className="text-white/70">https://sealevel.nasa.gov</p>
+                </div>
+                <div>
+                  <p className="font-medium">Displacement & Climate Frameworks: UNFCCC</p>
+                  <p className="text-white/70">https://unfccc.int</p>
+                </div>
+                <div>
+                  <p className="font-medium">Fiji Government energy policy (100% renewables by 2030 target)</p>
+                </div>
+                <div>
+                  <p className="font-medium">The Paris Agreement (UNFCCC)</p>
+                  <p className="text-white/70">https://unfccc.int/process-and-meetings/the-paris-agreement</p>
+                </div>
+                <div>
+                  <p className="font-medium">IPCC Special Report on Global Warming of 1.5°C</p>
+                  <p className="text-white/70">https://www.ipcc.ch/sr15/</p>
+                </div>
+                <div>
+                  <p className="font-medium">United Nations Sustainable Development Goal 13: Climate Action</p>
+                  <p className="text-white/70">https://www.un.org/sustainabledevelopment/climate-action/</p>
+                </div>
+                <div>
+                  <p className="font-medium">NOAA Coral Reef Watch</p>
+                  <p className="text-white/70">https://coralreefwatch.noaa.gov</p>
+                </div>
+                <div>
+                  <p className="font-medium">The World Bank Climate Change Knowledge Portal</p>
+                  <p className="text-white/70">https://climateknowledgeportal.worldbank.org</p>
+                </div>
+                <div>
+                  <p className="font-medium">Secretariat of the Pacific Regional Environment Programme (SPREP)</p>
+                  <p className="text-white/70">https://www.sprep.org</p>
+                </div>
+                <div>
+                  <p className="font-medium">The Pacific Community (SPC) - Climate Change & Environmental Sustainability</p>
+                  <p className="text-white/70">https://www.spc.int/cces</p>
+                </div>
+                <div>
+                  <p className="font-medium">Tide Data Reference: Suva Harbor, Fiji</p>
+                  <p className="text-white/70">https://www.tide-forecast.com/locations/Suva-Harbor-Fiji-Islands/tides/latest</p>
+                </div>
+                <div>
+                  <p className="font-medium">Inspirational Game Design: Daybreak</p>
+                  <p className="text-white/70">https://www.daybreakgame.com</p>
+                </div>
+                <div>
+                  <p className="font-medium">Utopian Future Concept: Solarpunk</p>
+                  <p className="text-white/70">https://solarpunkcity.org/solarpunk-project-ideas/</p>
+                </div>
               </div>
             </div>
           </div>
