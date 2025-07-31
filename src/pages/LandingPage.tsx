@@ -98,16 +98,16 @@ export default function LandingPage() {
           minWidth: 200.00,
           scale: 1.00,
           scaleMobile: 1.00,
-          backgroundColor: 0x000000,
-          color1: 0xfbbf24, // Gold
-          color2: 0x3b82f6, // Blue
+          backgroundColor: 0x0a0a0a, // Slightly lighter than pure black
+          color1: 0xfbbf24, // Bright gold
+          color2: 0x60a5fa, // Bright blue
           colorMode: "lerp",
-          birdSize: 1.20,
-          speedLimit: 3.00,
-          separation: 50.00,
-          alignment: 70.00,
-          cohesion: 20.00,
-          quantity: 4.00
+          birdSize: 2.00, // Made birds bigger
+          speedLimit: 2.00, // Slower for visibility
+          separation: 80.00,
+          alignment: 85.00,
+          cohesion: 50.00,
+          quantity: 6.00 // More birds
         });
         
         if (vantaEffect.current) {
