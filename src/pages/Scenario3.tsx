@@ -67,16 +67,6 @@ export default function Scenario3() {
           <ThematicInformationalCards />
         </div>
 
-        {/* Block 4: Answer Blocks Section */}
-        
-
-        {/* Block 5: Blue Pacific Stories */}
-        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-g.png">
-          <div className="space-y-6">
-            <BluePacificStoriesSection />
-          </div>
-        </BlockSection>
-
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-h.png">
           <div className="text-center space-y-8">
