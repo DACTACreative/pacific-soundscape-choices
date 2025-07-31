@@ -6,6 +6,7 @@ import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
+import AnimatedSeaLevelChart from '../components/AnimatedSeaLevelChart';
 
 export default function Scenario2() {
   return (
@@ -46,23 +47,10 @@ export default function Scenario2() {
           </div>
         </BlockSection>
 
-        {/* Block 2: Sonification */}
-        <BlockSection 
-          imageUrl="/src/data/Scenario-l.png"
-          imageLeft={true}
-        >
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Sonification – Fiji's Disrupted Rhythms
-          </h2>
-          <div className="space-y-6">
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              In 2050, sea levels have risen 47cm (median projection), with extreme high tides reaching 78cm above 2020 levels. The sonification reflects this disrupted reality.
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              The sound reflects a Fiji in constant transition. Entire communities have moved to higher ground as coastal villages disappear beneath regular flooding. The coral reefs that once protected shorelines are bleached and broken, their protective barriers weakened. Saltwater intrudes into freshwater wells, forcing families to rely on rainwater collection and desalination. Traditional ceremonies are held on new beaches, carved from what were once inland areas. The sound of displacement—a culture adapting to the rhythm of an increasingly unpredictable ocean.
-            </p>
-          </div>
-        </BlockSection>
+        {/* Block 2: Animated Sea-Level Chart */}
+        <div className="w-full h-screen">
+          <AnimatedSeaLevelChart scenario="tlim3.0win0.25" />
+        </div>
 
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-16">

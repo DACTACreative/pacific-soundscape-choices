@@ -6,6 +6,7 @@ import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
+import AnimatedSeaLevelChart from '../components/AnimatedSeaLevelChart';
 export default function Scenario3() {
   return <div className="bg-black text-white min-h-screen relative">
       {/* Fixed Header */}
@@ -38,20 +39,10 @@ export default function Scenario3() {
           </div>
         </BlockSection>
 
-        {/* Block 2: Sonification */}
-        <BlockSection imageUrl="/src/data/Scenario-v.png" imageLeft={true}>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Sonification – The Sound of a Dying Ocean
-          </h2>
-          <div className="space-y-6">
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              The sonification for this 5°C future is an apocalyptic and overwhelming cacophony—the sound of a planet's life support systems failing. It is a wall of noise dominated by the deep, violent groan of an unstable sea, the explosive hiss of methane plumes erupting from the seafloor, and the unrelenting shriek of hyper-hurricanes.
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-white">
-              There are no distinct events, only a constant, multi-layered roar of destruction that is physically oppressive to hear. Any sound of life, human or animal, is long gone, buried under the sound of raw, elemental fury. The emotional tone is one of pure dread and finality. It is not a warning or a dirge; it is the sound of an ending, an auditory record of a world that has been pushed past its breaking point.
-            </p>
-          </div>
-        </BlockSection>
+        {/* Block 2: Animated Sea-Level Chart */}
+        <div className="w-full h-screen">
+          <AnimatedSeaLevelChart scenario="tlim5.0win0.25" />
+        </div>
 
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-16">

@@ -6,6 +6,7 @@ import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
+import AnimatedSeaLevelChart from '../components/AnimatedSeaLevelChart';
 export default function Scenario1() {
   return <div className="min-h-screen bg-black text-white relative">
 
@@ -39,23 +40,10 @@ export default function Scenario1() {
           </div>
         </BlockSection>
 
-        {/* Block 2: Sonification - Image Left, Content Right */}
-        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-b.png">
-          <div className="space-y-6">
-            <h2 className="text-3xl md:text-5xl font-bold text-white lg:text-6xl">
-              Sonification – Fiji's Resilient Tides
-            </h2>
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white">
-              The sonification reflects Fiji's tides in 2050 under managed climate change. Sea levels have risen 20cm (median projection), with high tides reaching 35cm above 2020 levels during extreme events.
-            </p>
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white">
-              The sound carries tension—familiar tidal rhythms stretched and intensified. Each tide cycle sounds slightly more urgent, more forceful than in 2020. There are pauses, moments of calm, but the underlying pulse has quickened.
-            </p>
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed text-white">
-              This is the sound of an ocean under stress but still recognizable. The rhythm of Pacific life continues, altered but not broken.
-            </p>
-          </div>
-        </BlockSection>
+        {/* Block 2: Animated Sea-Level Chart */}
+        <div className="w-full h-screen">
+          <AnimatedSeaLevelChart scenario="tlim1.5win0.25" />
+        </div>
 
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
         <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-16">
