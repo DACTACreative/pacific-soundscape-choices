@@ -50,7 +50,7 @@ export default function LandingPage() {
               fontSize: 'clamp(18px, 2.2vw, 24px)',
               fontWeight: '400',
               lineHeight: '1.4'
-            }} className="mb-8 text-white/90">The 2050 Strategy for the Blue Pacific Continent provides the map, but you must choose the path.</p>
+            }} className="mb-8 text-white/90">The 2050 Strategy for the Blue Pacific provides the map, but you must choose the path.</p>
             
             {/* Headphones note */}
             <p className="text-white/80" style={{
