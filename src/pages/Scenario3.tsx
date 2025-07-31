@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
@@ -12,6 +12,7 @@ import { useAudio, Scenario } from '../context/AudioContext';
 import { useEffect, useState } from 'react';
 export default function Scenario3() {
   const { enableAudio, playScenario, audioEnabled } = useAudio();
+  const navigate = useNavigate();
   const [showLines, setShowLines] = useState([false, false, false, false, false]);
 
   useEffect(() => {
@@ -160,7 +161,7 @@ export default function Scenario3() {
               Experience the full immersive journey and create your own Pacific future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/credits'}>
+              <Button variant="pacific" size="pacific" onClick={() => navigate('/credits')}>
                 CREDITS
               </Button>
             </div>

@@ -72,9 +72,9 @@ export const ThematicGauges: React.FC<ThematicGaugesProps> = ({
   totalQuestions 
 }) => {
   return (
-    <div className="fixed top-4 right-4 bg-black/80 backdrop-blur-sm border border-[#35c5f2]/30 rounded-lg p-3 max-w-xs w-auto z-40 hidden md:block">
-      <h3 className="text-xs font-semibold text-[#35c5f2] mb-2">Thematic Engagement</h3>
-      <div className="space-y-2">
+    <div className="fixed top-6 right-6 bg-black/80 backdrop-blur-sm border border-[#35c5f2]/30 rounded-lg p-6 max-w-sm w-auto z-40 hidden md:block shadow-xl">
+      <h3 className="text-sm font-semibold text-[#35c5f2] mb-3">Thematic Engagement</h3>
+      <div className="space-y-3">
         {THEMES.map((theme) => {
           const count = themeCounts[theme.code] || 0;
           const points = thematicScores?.[theme.fullKey as keyof typeof thematicScores] || 0;
@@ -83,13 +83,13 @@ export const ThematicGauges: React.FC<ThematicGaugesProps> = ({
           
           return (
             <div key={theme.code} className="space-y-1">
-              <div className="flex justify-between items-center gap-2">
-                <span className="text-xs text-white/80 truncate">{theme.name}</span>
-                <span className="text-xs font-medium text-[#35c5f2]">{points.toFixed(1)}</span>
+              <div className="flex justify-between items-center gap-3">
+                <span className="text-sm text-white/80 truncate">{theme.name}</span>
+                <span className="text-sm font-medium text-[#35c5f2]">{points.toFixed(1)}</span>
               </div>
-              <div className="w-full bg-white/20 rounded-full h-1.5">
+              <div className="w-full bg-white/20 rounded-full h-2">
                 <div 
-                  className="h-1.5 rounded-full transition-all duration-500"
+                  className="h-2 rounded-full transition-all duration-500"
                   style={{ 
                     width: `${Math.min(percentage, 100)}%`,
                     backgroundColor: points > 0 ? '#35c5f2' : 'transparent'

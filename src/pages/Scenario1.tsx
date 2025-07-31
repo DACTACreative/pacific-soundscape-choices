@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
@@ -7,10 +7,12 @@ import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
+import BlueParadigmCarousel from '../components/BlueParadigmCarousel';
 import { useAudio, Scenario } from '../context/AudioContext';
 import { useEffect, useState } from 'react';
 export default function Scenario1() {
   const { enableAudio, playScenario, audioEnabled } = useAudio();
+  const navigate = useNavigate();
   const [showLines, setShowLines] = useState([false, false, false, false, false]);
 
   useEffect(() => {
@@ -178,6 +180,9 @@ export default function Scenario1() {
           <ThematicInformationalCards />
         </div>
 
+        {/* Block 4: Blue Paradigm Carousel */}
+        <BlueParadigmCarousel />
+
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/data/INTERISLAND.png">
           <div className="space-y-6 text-center">
@@ -188,10 +193,10 @@ export default function Scenario1() {
               Explore different pathways and their consequences for the Pacific's future.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/scenario-2'}>
+              <Button variant="pacific" size="pacific" onClick={() => navigate('/scenario-2')}>
                 EXPLORE SCENARIO 2
               </Button>
-              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/credits'}>
+              <Button variant="pacific" size="pacific" onClick={() => navigate('/credits')}>
                 CREDITS
               </Button>
             </div>

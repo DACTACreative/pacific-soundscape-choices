@@ -26,9 +26,14 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
         enableAudio();
       }
       playScenario(Scenario.Scenario0);
-      onStart();
+      // Use proper navigation instead of window.location
+      setTimeout(() => {
+        onStart();
+      }, 100);
     } catch (error) {
       console.error('Error starting scenario:', error);
+      // Fallback to direct navigation if audio fails
+      onStart();
     }
   };
 

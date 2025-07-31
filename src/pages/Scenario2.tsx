@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
@@ -7,11 +7,13 @@ import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
+import BlueParadigmCarousel from '../components/BlueParadigmCarousel';
 import { useAudio, Scenario } from '../context/AudioContext';
 import { useEffect, useState } from 'react';
 
 export default function Scenario2() {
   const { enableAudio, playScenario, audioEnabled } = useAudio();
+  const navigate = useNavigate();
   const [showLines, setShowLines] = useState([false, false, false, false, false]);
 
   useEffect(() => {
@@ -182,31 +184,37 @@ export default function Scenario2() {
           <ThematicInformationalCards />
         </div>
 
+        {/* Block 4: Blue Paradigm Carousel */}
+        <BlueParadigmCarousel />
+
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/data/INTERISLAND.png">
           <div className="text-center space-y-8">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
               Continue Your Journey
             </h2>
+            <p className="text-xl text-white/70 mb-8">
+              Experience the full immersive journey and create your own Pacific future.
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
                 variant="pacific" 
                 size="pacific"
-                onClick={() => window.location.href = '/scenario-1'}
+                onClick={() => navigate('/scenario-1')}
               >
                 SCENARIO 1
               </Button>
               <Button 
                 variant="pacific" 
                 size="pacific"
-                onClick={() => window.location.href = '/scenario-3'}
+                onClick={() => navigate('/scenario-3')}
               >
                 SCENARIO 3
               </Button>
               <Button 
                 variant="pacific" 
                 size="pacific"
-                onClick={() => window.location.href = '/credits'}
+                onClick={() => navigate('/credits')}
               >
                 CREDITS
               </Button>

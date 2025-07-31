@@ -14,10 +14,19 @@ export default function FullIntroExperience({ onComplete, showAudioControls = tr
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
 
   const handleStart = () => {
-    if (isAudioEnabled) {
-      playScenario(Scenario.Scenario0);
+    try {
+      if (isAudioEnabled) {
+        playScenario(Scenario.Scenario0);
+      }
+      // Use proper navigation instead of window.location
+      setTimeout(() => {
+        onComplete();
+      }, 100);
+    } catch (error) {
+      console.error('Error starting scenario:', error);
+      // Fallback navigation if audio fails
+      onComplete();
     }
-    onComplete();
   };
 
   const handleNextSection = () => {
