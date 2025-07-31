@@ -39,7 +39,6 @@ export default function Scenario1() {
   }, [enableAudio, playScenario, audioEnabled]);
 
   return <div className="min-h-screen bg-black text-white relative">
-
       {/* Fixed Header */}
       <div className="fixed top-6 left-6 z-50">
         <Link to="/" className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500">
@@ -206,5 +205,5 @@ export default function Scenario1() {
       
       {/* Debug Panel - Only in development */}
       {process.env.NODE_ENV === 'development' && <DebugPanel />}
-    </div>;
+    </div>
 }
