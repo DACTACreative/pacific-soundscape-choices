@@ -54,9 +54,7 @@ export default function LandingPage() {
     <div className="relative">
       {/* Landing Page Hero - Fixed overlay */}
       <div 
-        className={`fixed inset-0 z-50 transition-all duration-500 ${
-          isVisible ? 'pointer-events-auto' : 'pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 transition-all duration-500`}
         style={{ opacity }}
       >
         <div className="relative h-screen w-full overflow-hidden bg-black">
@@ -136,8 +134,11 @@ export default function LandingPage() {
         </div>
       </div>
 
+      {/* Spacer to push intro content down */}
+      <div className="h-screen"></div>
+
       {/* Intro Screen - Positioned below the hero */}
-      <div id="intro-section" className="relative">
+      <div id="intro-section" className="relative bg-black">
         <IntroScreen onStart={handleGameStart} />
       </div>
     </div>
