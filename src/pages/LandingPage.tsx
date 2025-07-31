@@ -34,31 +34,38 @@ export default function LandingPage() {
           <h2 style={{
           fontFamily: 'Space Grotesk, sans-serif',
           fontWeight: '800',
-          fontSize: 'clamp(42px, 5.5vw, 72px)',
+          fontSize: 'clamp(32px, 4.5vw, 56px)',
           lineHeight: '1.1',
           letterSpacing: '0.03em'
-        }} className="text-white uppercase tracking-wider leading-none mb-6 text-4xl font-extrabold">AN IMMERSIVE EXPERIENCE INTO WHAT OUR FUTURE COULD LOOK LIKE</h2>
+        }} className="text-white uppercase tracking-wider leading-none mb-8">An Immersive Experience in Pacific Strategy</h2>
           
-          {/* Tagline */}
+          {/* Description */}
           <p style={{
           fontFamily: 'Space Grotesk, sans-serif',
-          fontSize: 'clamp(24px, 3vw, 36px)',
-          fontWeight: '600',
-          lineHeight: '1.3'
-        }} className="mb-6 text-4xl text-slate-50">As the climate changes, will you shape a future that reflects us?</p>
+          fontSize: 'clamp(18px, 2.2vw, 24px)',
+          fontWeight: '400',
+          lineHeight: '1.4'
+        }} className="mb-6 text-white/90">You are about to step into the heart of Pacific policy-making. For the next 25 years, you will guide the region's response to its greatest challenges, from climate change to economic development.</p>
+          
+          <p style={{
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontSize: 'clamp(18px, 2.2vw, 24px)',
+          fontWeight: '400',
+          lineHeight: '1.4'
+        }} className="mb-8 text-white/90">The 2050 Strategy for the Blue Pacific Continent provides the map, but you must choose the path.</p>
           
           {/* Note */}
           <p className="text-white/80 mb-12" style={{
           fontFamily: 'Space Grotesk, sans-serif',
-          fontSize: 'clamp(20px, 2.5vw, 28px)',
+          fontSize: 'clamp(16px, 2vw, 20px)',
           fontWeight: '400'
         }}>
-            Headphones recommended
+            (Headphones Recommended for the full immersive experience)
           </p>
           
           {/* Minimalist Button */}
           <Button onClick={handleStart} variant="pacific" size="pacific">
-            {audioEnabled ? "SHAPE OUR JOURNEY TO 2050" : "ENABLE AUDIO & START"}
+            {audioEnabled ? "Start your Journey To 2050" : "ENABLE AUDIO & START"}
           </Button>
 
 
