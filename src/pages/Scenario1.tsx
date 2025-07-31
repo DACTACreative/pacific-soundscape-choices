@@ -6,7 +6,7 @@ import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
-import AnimatedSeaLevelChart from '../components/AnimatedSeaLevelChart';
+import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
 export default function Scenario1() {
   return <div className="min-h-screen bg-black text-white relative">
 
@@ -40,9 +40,9 @@ export default function Scenario1() {
           </div>
         </BlockSection>
 
-        {/* Block 2: Animated Sea-Level Chart */}
-        <div className="w-full h-screen">
-          <AnimatedSeaLevelChart scenario="tlim1.5win0.25" />
+        {/* Block 2: Sea Level Chart */}
+        <div className="w-full py-16">
+          <SimpleSeaLevelChart scenario="tlim1.5win0.25" />
         </div>
 
         {/* Block 3: Blue Pacific 2050 Reality - Dedicated Chart Section */}
