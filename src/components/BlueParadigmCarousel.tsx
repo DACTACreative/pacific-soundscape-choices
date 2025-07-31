@@ -39,6 +39,7 @@ const BlueParadigmCarousel = () => {
     { src: "/lovable-uploads/357243db-92d4-4494-b899-329a02d8eb16.png", alt: "Pacific Green City" },
     { src: "/lovable-uploads/3e7a7601-e543-4ff8-b08a-e8eb00e936c9.png", alt: "Pacific Renewable Energy Coast" },
     { src: "/lovable-uploads/ae3abc16-6964-4382-8d03-be1487acea57.png", alt: "Pacific Communication Networks" },
+    { src: "/lovable-uploads/42b336bc-ba3e-4f24-9e0b-77917ef4a5b3.png", alt: "Pacific Village Community" },
   ];
 
   return (
@@ -50,7 +51,13 @@ const BlueParadigmCarousel = () => {
           </h2>
         </div>
         
-        <Carousel className="w-full max-w-5xl mx-auto">
+        <Carousel 
+          className="w-full max-w-5xl mx-auto"
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
           <CarouselContent>
             {images.map((image, index) => (
               <CarouselItem key={index} className="md:basis-1/1 lg:basis-1/2">
