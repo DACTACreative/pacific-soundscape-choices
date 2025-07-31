@@ -308,14 +308,25 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     ctx.fillText('Year', canvas.width / 2, canvas.height - 20);
   };
 
-  // Setup canvas
+  // Setup canvas - fix infinite redraw by removing drawChart from dependencies
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    canvas.width = 800;
-    canvas.height = 500;
-    drawChart(0);
+    // Fix canvas sizing with device pixel ratio
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.scale(dpr, dpr);
+    }
+
+    // Draw initial chart
+    requestAnimationFrame(() => drawChart(0));
   }, [selectedQuantile, scenario]);
 
   useEffect(() => {
