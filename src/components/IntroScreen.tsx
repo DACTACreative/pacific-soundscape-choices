@@ -35,7 +35,7 @@ export default function IntroScreen({ onStart }: IntroScreenProps) {
   const sections = [
     {
       id: 1,
-      title: "Let's create a new paradigm: a Resilient Pacific",
+      title: "A New Paradigm",
       content: `A **Resilient Pacific** reflecting **Pacific culture**, **Pacific knowledge & Customs**, A pacific that **Protect our connection to the land** & **perpetuate our way of life**.
 
 The **2050 Strategy** features **10 commitments** that Pacific Leaders have made to strengthen collective action and deepen regionalism. This piece was created to link stories to frameworks—to share and simplify by **gamifying** the great vision that our leaders have for our region.`,
