@@ -33,9 +33,6 @@ const BlueParadigmCarousel = () => {
           <h2 className="text-4xl md:text-6xl font-bold text-white">
             A Fictional Journey into the Blue Paradigm
           </h2>
-          <p className="text-lg md:text-xl leading-relaxed text-gray-300 font-medium max-w-4xl mx-auto">
-            Visual narratives that capture the essence of Pacific futures—each image tells a story of possibility, challenge, and hope across the Blue Pacific continent.
-          </p>
         </div>
         
         <Carousel className="w-full max-w-5xl mx-auto">
@@ -43,16 +40,12 @@ const BlueParadigmCarousel = () => {
             {images.map((image, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-4">
-                  <div className="relative group">
+                  <div className="relative">
                     <img
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-64 object-cover rounded-lg shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl"
+                      className="w-full h-64 object-cover rounded-lg shadow-lg"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <p className="text-white text-sm font-medium">{image.alt}</p>
-                    </div>
                   </div>
                 </div>
               </CarouselItem>
