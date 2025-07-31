@@ -8,7 +8,7 @@ import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import AnimatedSeaLevelChart from '../components/AnimatedSeaLevelChart';
 export default function Scenario3() {
-  return <div className="bg-black text-white min-h-screen relative">
+  return <div className="min-h-screen bg-black text-white relative">
       {/* Fixed Header */}
       <div className="fixed top-6 left-6 z-50">
         <Link to="/" className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500">
@@ -67,19 +67,44 @@ export default function Scenario3() {
           <ThematicInformationalCards />
         </div>
 
+        {/* Block 4: Answer Blocks Section */}
+        <div className="px-4 md:px-8 lg:px-12 xl:px-16 py-8">
+          <AnswerBlockDisplay />
+        </div>
+
+        {/* Block 5: Blue Pacific Stories */}
+        <BlockSection imageLeft={true} imageUrl="/src/data/Scenario-g.png">
+          <div className="space-y-6">
+            <BluePacificStoriesSection />
+          </div>
+        </BlockSection>
+
         {/* Block 6: Navigation */}
         <BlockSection imageLeft={false} imageUrl="/src/data/Scenario-h.png">
-          <div className="text-center space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+          <div className="space-y-6 text-center">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
               Continue Your Journey
             </h2>
+            <p className="text-xl text-white/70 mb-8">
+              Explore different pathways and their consequences for the Pacific's future.
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              
+              <Button 
+                variant="pacific" 
+                size="pacific"
+                onClick={() => window.location.href = '/scenario-1'}
+              >
+                SCENARIO 1
+              </Button>
+              <Button 
+                variant="pacific" 
+                size="pacific"
+                onClick={() => window.location.href = '/scenario-2'}
+              >
+                SCENARIO 2
+              </Button>
               <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/credits'}>
                 SOURCES & CREDITS
-              </Button>
-              <Button variant="pacific" size="pacific" onClick={() => window.location.href = '/'}>
-                RESTART JOURNEY
               </Button>
             </div>
           </div>
