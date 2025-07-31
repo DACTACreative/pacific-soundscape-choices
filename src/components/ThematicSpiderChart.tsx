@@ -1,344 +1,320 @@
-import { useEffect, useState } from 'react';
-import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Legend } from 'chart.js';
-import { Radar } from 'react-chartjs-2';
-import Papa from 'papaparse';
-import LoadingSpinner from './LoadingSpinner';
-import ErrorBoundary from './ErrorBoundary';
-import { Badge } from './ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import React, { useState, useEffect, useRef } from 'react';
 
-// Register Chart.js components - REMOVED Tooltip to prevent conflicts
-ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Legend);
+interface ThematicScores {
+  Political_Leadership_and_Regionalism: number;
+  People_Centered_Development: number;
+  Peace_and_Security: number;
+  Resource_and_Economic_Development: number;
+  Climate_Change_and_Disasters: number;
+  Ocean_and_Environment: number;
+  Technology_and_Connectivity: number;
+}
 
-interface ThematicSpiderChartProps {
+const THEMES = [
+  'Political Leadership & Regionalism',
+  'People-Centered Development', 
+  'Peace & Security',
+  'Resource & Economic Development',
+  'Climate Change & Disasters',
+  'Ocean & Environment',
+  'Technology & Connectivity'
+];
+
+const THEME_KEYS = [
+  'Political_Leadership_and_Regionalism',
+  'People_Centered_Development',
+  'Peace_and_Security', 
+  'Resource_and_Economic_Development',
+  'Climate_Change_and_Disasters',
+  'Ocean_and_Environment',
+  'Technology_and_Connectivity'
+];
+
+interface SpiderChartProps {
   className?: string;
 }
-export default function ThematicSpiderChart({
-  className
-}: ThematicSpiderChartProps) {
-  const [playerChoices, setPlayerChoices] = useState<any[]>([]);
-  const [spiderMap, setSpiderMap] = useState<any>(null);
-  const [thematicScores, setThematicScores] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+
+const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [thematicScores, setThematicScores] = useState<ThematicScores | null>(null);
+  const [hoveredPoint, setHoveredPoint] = useState<{ theme: string; score: number; x: number; y: number } | null>(null);
+  const [isAnimated, setIsAnimated] = useState(false);
 
   useEffect(() => {
-    // Load thematic scores from sessionStorage
     const scores = sessionStorage.getItem('thematicScores');
-    const selectedCodes = JSON.parse(sessionStorage.getItem('selectedAnswerCodes') || '[]');
-    
-    console.log('🕷️ ThematicSpiderChart: Selected codes from storage:', selectedCodes);
-    console.log('🕷️ Thematic scores from storage:', scores);
-    
     if (scores) {
       setThematicScores(JSON.parse(scores));
     }
-    
-    if (selectedCodes.length === 0) {
-      console.log('🕷️ No selected codes found, using fallback data');
-      setLoading(false);
-      return;
-    }
-
-    // Load mapping CSV and spider map data with retry logic
-    let retryCount = 0;
-    const maxRetries = 3;
-    const loadDataWithRetry = async () => {
-      try {
-        console.log('🕷️ Loading data files...');
-        const [answerMappingResponse, spiderMapResponse] = await Promise.all([fetch('/data/ANSWERSMAPPING.6.json', {
-          cache: 'no-cache',
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        }), fetch('/data/SpiderMap.json', {
-          cache: 'no-cache',
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        })]);
-        
-        console.log('🕷️ AnswerMapping Response status:', answerMappingResponse.status);
-        console.log('🕷️ SpiderMap Response status:', spiderMapResponse.status);
-        
-        if (!answerMappingResponse.ok || !spiderMapResponse.ok) {
-          throw new Error(`HTTP Error: AnswerMapping ${answerMappingResponse.status}, SpiderMap ${spiderMapResponse.status}`);
-        }
-        const [answerMappingData, spiderMapData] = await Promise.all([answerMappingResponse.json(), spiderMapResponse.json()]);
-        if (!answerMappingData || Object.keys(answerMappingData).length === 0) {
-          throw new Error('Answer mapping data appears corrupted');
-        }
-
-        // Find matching answers for selected codes
-        const matchedAnswers = selectedCodes.map((code: string) => answerMappingData[code]).filter(Boolean);
-        console.log('🕷️ Spider chart data loaded:', {
-          selectedCodes: selectedCodes.length,
-          matchedAnswers: matchedAnswers.length,
-          spiderMapKeys: Object.keys(spiderMapData).length
-        });
-        setPlayerChoices(matchedAnswers);
-        setSpiderMap(spiderMapData);
-        setLoading(false);
-      } catch (error) {
-        console.error(`🕷️ Data load attempt ${retryCount + 1} failed:`, error);
-        if (retryCount < maxRetries) {
-          retryCount++;
-          console.log(`🔄 Retrying spider chart data load in ${retryCount * 1000}ms...`);
-          setTimeout(loadDataWithRetry, retryCount * 1000);
-        } else {
-          console.error('🕷️ All data load attempts failed for spider chart');
-          setLoading(false);
-        }
-      }
-    };
-    loadDataWithRetry();
   }, []);
-  if (loading) {
-    return <div className="flex items-center justify-center h-64">
-        <LoadingSpinner message="Loading your thematic impact..." />
-      </div>;
-  }
-  console.log('Rendering spider chart - playerChoices:', playerChoices.length, 'spiderMap:', !!spiderMap, 'thematicScores:', !!thematicScores);
-  if (!thematicScores || !spiderMap) {
-    console.log('Using fallback chart data');
-    // Provide fallback data showing a balanced Pacific 2050 scenario
-    const fallbackData = {
-      labels: ["Political Leadership", "People Development", "Peace & Security", "Economic Development", "Climate & Disasters", "Ocean & Environment", "Technology"],
-      datasets: [{
-        label: 'Blue Pacific 2050 Progress',
-        data: [2.5, 2.8, 2.2, 2.6, 3.0, 2.4, 2.1],
-        backgroundColor: 'rgba(53, 197, 242, 0.2)',
-        borderColor: '#35c5f2',
-        borderWidth: 2,
-        pointBackgroundColor: '#35c5f2',
-        pointBorderColor: '#ffffff',
-        pointBorderWidth: 1,
-        pointRadius: 4,
-        pointHoverRadius: 6
-      }]
-    };
-    const fallbackOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        mode: 'nearest' as const,
-        intersect: false
-      },
-          scales: {
-        r: {
-          beginAtZero: true,
-          min: 0,
-          max: 7,
-          angleLines: {
-            color: 'rgba(255, 255, 255, 0.1)'
-          },
-          grid: {
-            color: 'rgba(255, 255, 255, 0.1)'
-          },
-          pointLabels: {
-            font: {
-              size: 12,
-              family: 'inherit'
-            },
-            color: '#ffffff'
-          },
-          ticks: {
-            stepSize: 1,
-            callback: function (value: any) {
-              if (value === 2) return 'LOW';
-              if (value === 4) return 'MED';
-              if (value === 6) return 'HIGH';
-              return '';
-            },
-            color: '#e5e7eb',
-            backdropColor: 'transparent',
-            font: {
-              size: 10
-            }
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          enabled: false
-        }
-      }
-    };
-    return <div className={`relative ${className}`}>
-        <div className="w-full h-[500px] mx-auto relative z-20 bg-black/20 rounded-lg p-4">
-          <Radar data={fallbackData} options={fallbackOptions} />
-        </div>
-        <div className="mt-8 p-6 bg-black/40 rounded-lg border border-white/20 text-center">
-          <p className="text-white/80">
-            This chart visualizes progress across key themes of the Blue Pacific 2050 strategy.
-          </p>
-        </div>
-      </div>;
-  }
 
-  // Use thematic scores instead of simple counts
-  console.log('🕷️ Using thematic scores for spider chart:', thematicScores);
-
-  // Map thematic scores to chart labels
-  const themeMapping: Record<string, string> = {
-    "Political_Leadership_and_Regionalism": "Political Leadership",
-    "People_Centered_Development": "People Development", 
-    "Peace_and_Security": "Peace & Security",
-    "Resource_and_Economic_Development": "Economic Development",
-    "Climate_Change_and_Disasters": "Climate & Disasters",
-    "Ocean_and_Environment": "Ocean & Environment",
-    "Technology_and_Connectivity": "Technology"
-  };
-  const themeLabels = ["Political Leadership", "People Development", "Peace & Security", "Economic Development", "Climate & Disasters", "Ocean & Environment", "Technology"];
-
-  // Helper function to map scores to level (0-2=LOW, 2.5-4=MEDIUM, 4.5+=HIGH)
-  const getLevel = (score: number): string => {
-    if (score >= 4.5) return 'HIGH';
-    if (score >= 2.5) return 'MEDIUM';
-    return 'LOW';
-  };
-
-  // Convert thematic scores to chart data
-  const chartData = themeLabels.map(shortLabel => {
-    // Find the full theme name that maps to this short label
-    const fullThemeName = Object.keys(themeMapping).find(fullName => themeMapping[fullName] === shortLabel);
-    const score = fullThemeName ? thematicScores[fullThemeName] || 0 : 0;
-    console.log(`🕷️ ${shortLabel} -> ${fullThemeName} = ${score}`);
-    return score;
-  });
-  console.log('🕷️ Final chart data:', chartData);
-  const data = {
-    labels: themeLabels,
-    datasets: [{
-      label: 'Your Pacific Impact',
-      data: chartData,
-      fill: true,
-      backgroundColor: 'rgba(53, 197, 242, 0.2)',
-      borderColor: '#35c5f2',
-      borderWidth: 2,
-      pointBackgroundColor: '#35c5f2',
-      pointBorderColor: '#ffffff',
-      pointHoverBackgroundColor: '#ffffff',
-      pointHoverBorderColor: '#35c5f2',
-      pointRadius: 10,
-      pointHoverRadius: 14,
-      pointStyle: 'circle',
-      pointBorderWidth: 3
-    }]
-  };
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      tooltip: {
-        enabled: false
-      },
-      legend: {
-        display: false
-      }
-    },
-        scales: {
-      r: {
-        beginAtZero: true,
-        min: 0,
-        max: 7,
-        angleLines: {
-          color: 'rgba(255, 255, 255, 0.2)',
-          lineWidth: 3
-        },
-        grid: {
-          color: 'rgba(255, 255, 255, 0.15)',
-          lineWidth: 2
-        },
-        pointLabels: {
-          font: {
-            size: 20,
-            family: '"Inter", system-ui, sans-serif',
-            weight: 700
-          },
-          color: '#ffffff',
-          padding: 35
-        },
-          ticks: {
-            stepSize: 1,
-            beginAtZero: true,
-            max: 7,
-            display: true,
-            callback: function (value: any) {
-              if (value === 2) return 'LOW';
-              if (value === 4) return 'MED';
-              if (value === 6) return 'HIGH';
-              return '';
-            },
-          color: 'rgba(255, 255, 255, 0.8)',
-          backdropColor: 'rgba(0, 0, 0, 0.6)',
-          backdropPadding: 4,
-          font: {
-            size: 18,
-            weight: 700,
-            family: '"Inter", system-ui, sans-serif'
-          },
-          padding: 20
-        }
-      }
-    },
-  };
-  // Get badge variant based on impact level
-  const getBadgeVariant = (level: string) => {
-    switch (level) {
-      case 'HIGH': return 'default';
-      case 'MEDIUM': return 'secondary';
-      case 'LOW': return 'destructive';
-      default: return 'outline';
+  useEffect(() => {
+    if (thematicScores) {
+      // Trigger animation after a short delay
+      setTimeout(() => setIsAnimated(true), 300);
     }
+  }, [thematicScores]);
+
+  if (!thematicScores) {
+    return (
+      <div className={`flex items-center justify-center h-96 ${className}`}>
+        <div className="text-white/60">Loading chart data...</div>
+      </div>
+    );
+  }
+
+  const size = 500;
+  const center = size / 2;
+  const maxRadius = 180;
+  const angleStep = (2 * Math.PI) / 7;
+
+  // Calculate positions for each axis point
+  const getAxisPoint = (axisIndex: number, value: number) => {
+    const angle = axisIndex * angleStep - Math.PI / 2; // Start from top
+    const radius = (value / 7) * maxRadius;
+    return {
+      x: center + radius * Math.cos(angle),
+      y: center + radius * Math.sin(angle)
+    };
   };
+
+  // Generate grid lines (concentric heptagons)
+  const generateGridPath = (value: number) => {
+    const points = [];
+    for (let i = 0; i < 7; i++) {
+      const point = getAxisPoint(i, value);
+      points.push(`${i === 0 ? 'M' : 'L'} ${point.x} ${point.y}`);
+    }
+    points.push('Z');
+    return points.join(' ');
+  };
+
+  // Generate ambition zone path (heptagon at 4.5)
+  const ambitionZonePath = generateGridPath(4.5);
+
+  // Generate player data path
+  const playerScores = THEME_KEYS.map(key => thematicScores[key as keyof ThematicScores] || 0);
+  const playerPath = (() => {
+    const points = [];
+    for (let i = 0; i < 7; i++) {
+      const point = getAxisPoint(i, playerScores[i]);
+      points.push(`${i === 0 ? 'M' : 'L'} ${point.x} ${point.y}`);
+    }
+    points.push('Z');
+    return points.join(' ');
+  })();
 
   return (
-    <ErrorBoundary>
-      <div className={`relative ${className}`}>
-        {/* Chart Container - Full Size Block */}
-        <div className="w-full h-[80vh] relative bg-black/20 rounded-lg p-6 border border-white/10 mb-8">
-          <Radar data={data} options={options} />
-        </div>
-        
-        {/* Theme Cards Block - Below Chart */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {themeLabels.map((shortLabel, index) => {
-            // Find the full theme name for this short label
-            const fullThemeName = Object.keys(themeMapping).find(fullName => 
-              themeMapping[fullName] === shortLabel
-            );
-            const score = fullThemeName ? thematicScores[fullThemeName] || 0 : 0;
-            const level = getLevel(score);
-            const description = fullThemeName && spiderMap[fullThemeName] && spiderMap[fullThemeName][level] 
-              ? spiderMap[fullThemeName][level] 
-              : 'This theme represents progress toward achieving the Blue Pacific 2050 vision.';
+    <div className={`relative ${className}`}>
+      <svg
+        ref={svgRef}
+        width={size}
+        height={size}
+        className="mx-auto"
+        viewBox={`0 0 ${size} ${size}`}
+      >
+        {/* Grid lines at 2, 4, 6 marks */}
+        {[2, 4, 6].map(value => (
+          <path
+            key={value}
+            d={generateGridPath(value)}
+            fill="none"
+            stroke="rgba(255, 255, 255, 0.2)"
+            strokeWidth="1"
+          />
+        ))}
 
-            return (
-              <Card key={shortLabel} className="bg-black/40 border-white/20">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg text-white">{shortLabel}</CardTitle>
-                    <Badge variant={getBadgeVariant(level)} className="ml-2">
-                      {level}
-                    </Badge>
-                  </div>
-                  <div className="text-sm text-white/60">
-                    {score.toFixed(1)} points
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-sm text-white/80 leading-relaxed">
-                    {description}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
+        {/* Axis lines */}
+        {THEMES.map((_, index) => {
+          const endPoint = getAxisPoint(index, 7);
+          return (
+            <line
+              key={index}
+              x1={center}
+              y1={center}
+              x2={endPoint.x}
+              y2={endPoint.y}
+              stroke="rgba(255, 255, 255, 0.3)"
+              strokeWidth="1"
+            />
+          );
+        })}
+
+        {/* Ambition Zone - Semi-transparent heptagon at 4.5 */}
+        <path
+          d={ambitionZonePath}
+          fill="rgba(53, 197, 242, 0.15)"
+          stroke="rgba(53, 197, 242, 0.4)"
+          strokeWidth="2"
+          strokeDasharray="5,5"
+        />
+
+        {/* Player data shape */}
+        <path
+          d={playerPath}
+          fill="rgba(255, 255, 255, 0.1)"
+          stroke="white"
+          strokeWidth="2"
+          style={{
+            strokeDasharray: isAnimated ? 'none' : '2000',
+            strokeDashoffset: isAnimated ? '0' : '2000',
+            transition: 'stroke-dashoffset 2s ease-out'
+          }}
+        />
+
+        {/* Player data points with conditional styling */}
+        {playerScores.map((score, index) => {
+          const point = getAxisPoint(index, score);
+          const isSuccess = score >= 4.5;
+          
+          return (
+            <circle
+              key={index}
+              cx={point.x}
+              cy={point.y}
+              r={isSuccess ? 8 : 5}
+              fill={isSuccess ? '#35c5f2' : 'white'}
+              stroke={isSuccess ? '#35c5f2' : 'rgba(255, 255, 255, 0.8)'}
+              strokeWidth="2"
+              className="cursor-pointer transition-all duration-200"
+              style={{
+                filter: isSuccess ? 'drop-shadow(0 0 12px rgba(53, 197, 242, 0.8))' : 'none',
+                opacity: isAnimated ? 1 : 0,
+                transition: `opacity 0.5s ease-out ${index * 0.15}s, r 0.2s ease-out`
+              }}
+              onMouseEnter={(e) => {
+                const rect = svgRef.current?.getBoundingClientRect();
+                if (rect) {
+                  setHoveredPoint({
+                    theme: THEMES[index],
+                    score: score,
+                    x: rect.left + point.x,
+                    y: rect.top + point.y
+                  });
+                }
+              }}
+              onMouseLeave={() => setHoveredPoint(null)}
+              onMouseMove={(e) => {
+                const rect = svgRef.current?.getBoundingClientRect();
+                if (hoveredPoint && rect) {
+                  setHoveredPoint({
+                    ...hoveredPoint,
+                    x: rect.left + point.x,
+                    y: rect.top + point.y
+                  });
+                }
+              }}
+            />
+          );
+        })}
+
+        {/* Axis labels */}
+        {THEMES.map((theme, index) => {
+          const labelPoint = getAxisPoint(index, 8.2);
+          const lines = theme.includes('&') ? theme.split(' & ') : [theme];
+          
+          return (
+            <text
+              key={index}
+              x={labelPoint.x}
+              y={labelPoint.y}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="white"
+              fontSize="12"
+              className="font-medium"
+            >
+              {lines.map((line, lineIndex) => (
+                <tspan 
+                  key={lineIndex} 
+                  x={labelPoint.x} 
+                  dy={lineIndex === 0 ? 0 : 14}
+                >
+                  {line}
+                </tspan>
+              ))}
+            </text>
+          );
+        })}
+
+        {/* Grid value labels */}
+        {[2, 4, 6].map(value => {
+          const point = getAxisPoint(0, value);
+          return (
+            <text
+              key={value}
+              x={point.x + 10}
+              y={point.y}
+              textAnchor="start"
+              dominantBaseline="middle"
+              fill="rgba(255, 255, 255, 0.6)"
+              fontSize="11"
+            >
+              {value}
+            </text>
+          );
+        })}
+
+        {/* Center label */}
+        <text
+          x={center}
+          y={center + 4}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="rgba(255, 255, 255, 0.6)"
+          fontSize="11"
+        >
+          0
+        </text>
+
+        {/* Max value label */}
+        <text
+          x={center}
+          y={center - maxRadius - 15}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="rgba(255, 255, 255, 0.6)"
+          fontSize="11"
+        >
+          7
+        </text>
+      </svg>
+
+      {/* Interactive Tooltip */}
+      {hoveredPoint && (
+        <div
+          className="fixed bg-black/95 text-white text-sm px-3 py-2 rounded shadow-lg pointer-events-none z-50 border border-white/20"
+          style={{
+            left: hoveredPoint.x + 15,
+            top: hoveredPoint.y - 35,
+            transform: 'translateX(-50%)'
+          }}
+        >
+          <div className="font-medium">{hoveredPoint.theme}</div>
+          <div className="text-[#35c5f2]">{hoveredPoint.score.toFixed(1)} / 7.0</div>
+        </div>
+      )}
+
+      {/* Legend */}
+      <div className="mt-6 flex justify-center">
+        <div className="bg-black/40 backdrop-blur-sm border border-slate-600/50 rounded-lg px-6 py-3">
+          <div className="flex items-center gap-6 text-sm text-white/80">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-[#35c5f2] bg-[#35c5f2]/20 rounded-sm"></div>
+              <span>Ambition Zone (4.5+)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-[#35c5f2] rounded-full"></div>
+              <span>Ambition Achieved</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-white rounded-full"></div>
+              <span>Below Ambition</span>
+            </div>
+          </div>
         </div>
       </div>
-    </ErrorBoundary>
+    </div>
   );
-}
+};
+
+export default ThematicSpiderChart;
