@@ -44,7 +44,7 @@ const BlueParadigmCarousel = () => {
                     <img
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-64 object-cover rounded-lg shadow-lg"
+                      className="w-full h-auto rounded-lg shadow-lg"
                     />
                   </div>
                 </div>
