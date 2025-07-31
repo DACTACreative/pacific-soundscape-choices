@@ -38,7 +38,7 @@ const BlueParadigmCarousel = () => {
         <Carousel className="w-full max-w-5xl mx-auto">
           <CarouselContent>
             {images.map((image, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem key={index} className="md:basis-1/1 lg:basis-1/2">
                 <div className="p-4">
                   <div className="relative">
                     <img

@@ -223,7 +223,7 @@ export default function SimpleSeaLevelChart({
                   color: 'hsl(var(--popover-foreground))',
                   fontSize: '14px'
                 }} formatter={(value: number, name: string) => [`${value.toFixed(1)} cm`, name === 'low' ? 'Low Estimate' : name === 'medium' ? 'Medium Estimate' : 'High Estimate']} labelFormatter={year => `Year: ${year}`} />
-                  <Legend verticalAlign="top" height={36} iconType="line" formatter={value => {}} />
+                  <Legend verticalAlign="top" height={36} iconType="line" formatter={(value) => value} />
                   
                   {/* Three Distinct Lines */}
                   <Line type="monotone" dataKey="medium" stroke="#FAFAFA" strokeWidth={3} dot={{
