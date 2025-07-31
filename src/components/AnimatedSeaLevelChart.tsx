@@ -1,229 +1,254 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
+import * as Papa from 'papaparse';
+
+interface SeaLevelDataPoint {
+  year: number;
+  quantile5: number;
+  quantile50: number;
+  quantile95: number;
+}
 
 interface AnimatedSeaLevelChartProps {
-  scenario: string;
+  scenario: string; // e.g., "tlim1.5win0.25", "tlim3.0win0.25", "tlim5.0win0.25"
 }
 
 export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChartProps) {
+  const [data, setData] = useState<SeaLevelDataPoint[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentYear, setCurrentYear] = useState(2020);
   const [currentHeight, setCurrentHeight] = useState(0);
-  const [selectedQuantile, setSelectedQuantile] = useState<'low' | 'medium' | 'high'>('medium');
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [selectedQuantile, setSelectedQuantile] = useState<'5' | '50' | '95'>('50');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
 
-  // HARDCODED DATA BASED ON YOUR CSV - GUARANTEED TO WORK
-  const getDataForScenario = (scenario: string) => {
-    const scenarios: Record<string, any> = {
-      'tlim1.5win0.25': {
-        low: [
-          { year: 2020, value: -0.4 },
-          { year: 2030, value: 2.2 },
-          { year: 2040, value: 6.2 },
-          { year: 2050, value: 10.8 },
-          { year: 2060, value: 14.1 },
-          { year: 2070, value: 18.0 },
-          { year: 2080, value: 21.1 },
-          { year: 2090, value: 24.0 },
-          { year: 2100, value: 24.5 },
-          { year: 2150, value: 23.9 }
-        ],
-        medium: [
-          { year: 2020, value: 5.2 },
-          { year: 2030, value: 9.8 },
-          { year: 2040, value: 14.2 },
-          { year: 2050, value: 20.5 },
-          { year: 2060, value: 25.4 },
-          { year: 2070, value: 30.8 },
-          { year: 2080, value: 36.6 },
-          { year: 2090, value: 42.6 },
-          { year: 2100, value: 49.4 },
-          { year: 2150, value: 64.9 }
-        ],
-        high: [
-          { year: 2020, value: 11.4 },
-          { year: 2030, value: 18.7 },
-          { year: 2040, value: 24.9 },
-          { year: 2050, value: 34.5 },
-          { year: 2060, value: 42.9 },
-          { year: 2070, value: 51.9 },
-          { year: 2080, value: 62.6 },
-          { year: 2090, value: 73.5 },
-          { year: 2100, value: 85.8 },
-          { year: 2150, value: 123.7 }
-        ]
-      },
-      'tlim3.0win0.25': {
-        low: [
-          { year: 2020, value: -0.1 },
-          { year: 2030, value: 5.6 },
-          { year: 2040, value: 8.3 },
-          { year: 2050, value: 13.5 },
-          { year: 2060, value: 19.2 },
-          { year: 2070, value: 25.0 },
-          { year: 2080, value: 30.4 },
-          { year: 2090, value: 36.2 },
-          { year: 2100, value: 33.1 },
-          { year: 2150, value: 33.1 }
-        ],
-        medium: [
-          { year: 2020, value: 5.5 },
-          { year: 2030, value: 10.8 },
-          { year: 2040, value: 16.0 },
-          { year: 2050, value: 23.4 },
-          { year: 2060, value: 30.5 },
-          { year: 2070, value: 38.9 },
-          { year: 2080, value: 48.2 },
-          { year: 2090, value: 58.1 },
-          { year: 2100, value: 68.2 },
-          { year: 2150, value: 104.5 }
-        ],
-        high: [
-          { year: 2020, value: 11.6 },
-          { year: 2030, value: 18.1 },
-          { year: 2040, value: 27.3 },
-          { year: 2050, value: 38.7 },
-          { year: 2060, value: 50.2 },
-          { year: 2070, value: 63.9 },
-          { year: 2080, value: 80.0 },
-          { year: 2090, value: 96.8 },
-          { year: 2100, value: 119.6 },
-          { year: 2150, value: 203.5 }
-        ]
-      },
-      'tlim5.0win0.25': {
-        low: [
-          { year: 2020, value: 3.0 },
-          { year: 2030, value: 5.7 },
-          { year: 2040, value: 6.7 },
-          { year: 2050, value: 12.9 },
-          { year: 2060, value: 21.9 },
-          { year: 2070, value: 29.5 },
-          { year: 2080, value: 39.2 },
-          { year: 2090, value: 50.0 },
-          { year: 2100, value: 59.6 },
-          { year: 2150, value: 83.1 }
-        ],
-        medium: [
-          { year: 2020, value: 5.8 },
-          { year: 2030, value: 11.2 },
-          { year: 2040, value: 18.2 },
-          { year: 2050, value: 26.8 },
-          { year: 2060, value: 36.0 },
-          { year: 2070, value: 48.0 },
-          { year: 2080, value: 60.6 },
-          { year: 2090, value: 75.2 },
-          { year: 2100, value: 92.4 },
-          { year: 2150, value: 151.9 }
-        ],
-        high: [
-          { year: 2020, value: 9.7 },
-          { year: 2030, value: 18.9 },
-          { year: 2040, value: 32.7 },
-          { year: 2050, value: 45.9 },
-          { year: 2060, value: 58.5 },
-          { year: 2070, value: 78.1 },
-          { year: 2080, value: 98.0 },
-          { year: 2090, value: 120.8 },
-          { year: 2100, value: 150.5 },
-          { year: 2150, value: 264.8 }
-        ]
+  // Load and process sea level data
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        console.log('🔍 Loading data for scenario:', scenario);
+        const response = await fetch('/data/sea-level-data.csv');
+        
+        if (!response.ok) {
+          console.error('❌ Failed to fetch CSV:', response.status);
+          return;
+        }
+        
+        const csvText = await response.text();
+        console.log('📄 CSV loaded, length:', csvText.length);
+        
+        Papa.parse(csvText, {
+          header: true,
+          complete: (results: any) => {
+            console.log('📊 Total CSV rows:', results.data.length);
+            console.log('🎯 Sample row:', results.data[0]);
+            
+            // Filter data for the selected scenario
+            const scenarioData = results.data.filter((row: any) => 
+              row.scenario === scenario && 
+              row.process === 'total' && 
+              row.confidence === 'medium'
+            );
+            
+            console.log('🎯 Filtered scenario data:', scenarioData.length, 'rows');
+            
+            if (scenarioData.length === 0) {
+              console.error('❌ No data found for scenario:', scenario);
+              return;
+            }
+
+            // Find quantile rows
+            const quantile5Data = scenarioData.find((row: any) => row.quantile === '5');
+            const quantile50Data = scenarioData.find((row: any) => row.quantile === '50');
+            const quantile95Data = scenarioData.find((row: any) => row.quantile === '95');
+
+            console.log('📊 Quantile data found:', {
+              q5: !!quantile5Data,
+              q50: !!quantile50Data, 
+              q95: !!quantile95Data
+            });
+
+            if (!quantile5Data || !quantile50Data || !quantile95Data) {
+              console.error('❌ Missing quantile data');
+              return;
+            }
+
+            const processedData: SeaLevelDataPoint[] = [];
+            
+            // Process years from 2020 to 2150 in 10-year steps
+            for (let year = 2020; year <= 2150; year += 10) {
+              const yearKey = year.toString();
+              
+              // Check if year column exists and has valid data
+              if (quantile5Data[yearKey] !== undefined && 
+                  quantile50Data[yearKey] !== undefined && 
+                  quantile95Data[yearKey] !== undefined) {
+                
+                const q5Value = parseFloat(quantile5Data[yearKey]) * 100; // Convert to cm
+                const q50Value = parseFloat(quantile50Data[yearKey]) * 100;
+                const q95Value = parseFloat(quantile95Data[yearKey]) * 100;
+                
+                // Validate numeric values
+                if (!isNaN(q5Value) && !isNaN(q50Value) && !isNaN(q95Value)) {
+                  console.log(`📈 Year ${year}:`, { q5: q5Value, q50: q50Value, q95: q95Value });
+                  
+                  processedData.push({
+                    year,
+                    quantile5: q5Value,
+                    quantile50: q50Value,
+                    quantile95: q95Value,
+                  });
+                } else {
+                  console.warn(`⚠️ Invalid numeric data for year ${year}`);
+                }
+              } else {
+                console.warn(`⚠️ Missing data for year ${year}`);
+              }
+            }
+            
+            console.log('✅ Final processed data:', processedData.length, 'points');
+            console.log('🎯 Sample processed point:', processedData[0]);
+            
+            if (processedData.length === 0) {
+              console.error('❌ No valid data points processed');
+              return;
+            }
+            
+            setData(processedData);
+          },
+          error: (error: any) => {
+            console.error('💥 CSV parsing error:', error);
+          }
+        });
+      } catch (error) {
+        console.error('💥 Data loading error:', error);
       }
     };
 
-    return scenarios[scenario] || scenarios['tlim1.5win0.25'];
-  };
+    loadData();
+  }, [scenario]);
 
-  const data = getDataForScenario(scenario);
-  const currentData = data[selectedQuantile];
-
-  // Simple animation
+  // Animation logic
   const startAnimation = () => {
+    if (data.length === 0) return;
+    
     setIsPlaying(true);
+    setAnimationComplete(false);
     setCurrentYear(2020);
-    setCurrentHeight(currentData[0].value);
+    setCurrentHeight(0);
 
     const startTime = Date.now();
-    const duration = 3000; // 3 seconds
+    const duration = 2500; // 2.5 seconds - much faster
+    const endYear = 2150;
 
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      const year = 2020 + (2150 - 2020) * progress;
+      // Calculate current year
+      const year = 2020 + (endYear - 2020) * progress;
       setCurrentYear(Math.round(year));
 
-      // Find current height by interpolation
-      const height = interpolateValue(year, currentData);
+      // Interpolate height at current year
+      const height = interpolateHeight(year);
       setCurrentHeight(height);
 
+      // Draw chart
       drawChart(progress);
 
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
       } else {
         setIsPlaying(false);
+        setAnimationComplete(true);
+        drawChart(1); // Final state
       }
     };
 
     animationRef.current = requestAnimationFrame(animate);
   };
 
-  const interpolateValue = (year: number, dataPoints: any[]) => {
-    if (year <= dataPoints[0].year) return dataPoints[0].value;
-    if (year >= dataPoints[dataPoints.length - 1].year) return dataPoints[dataPoints.length - 1].value;
+  // Interpolate height for any year
+  const interpolateHeight = (year: number): number => {
+    if (data.length === 0) return 0;
 
-    for (let i = 0; i < dataPoints.length - 1; i++) {
-      if (year >= dataPoints[i].year && year <= dataPoints[i + 1].year) {
-        const ratio = (year - dataPoints[i].year) / (dataPoints[i + 1].year - dataPoints[i].year);
-        return dataPoints[i].value + ratio * (dataPoints[i + 1].value - dataPoints[i].value);
+    // Find surrounding data points
+    let beforePoint = data[0];
+    let afterPoint = data[data.length - 1];
+
+    for (let i = 0; i < data.length - 1; i++) {
+      if (data[i].year <= year && data[i + 1].year >= year) {
+        beforePoint = data[i];
+        afterPoint = data[i + 1];
+        break;
       }
     }
-    return dataPoints[0].value;
+
+    if (beforePoint.year === afterPoint.year) {
+      const key = `quantile${selectedQuantile}` as keyof SeaLevelDataPoint;
+      return beforePoint[key] as number;
+    }
+
+    // Linear interpolation
+    const ratio = (year - beforePoint.year) / (afterPoint.year - beforePoint.year);
+    const key = `quantile${selectedQuantile}` as keyof SeaLevelDataPoint;
+    return (beforePoint[key] as number) + ratio * ((afterPoint[key] as number) - (beforePoint[key] as number));
   };
 
+  // Draw the chart on canvas
   const drawChart = (progress: number) => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      console.error('❌ No canvas ref');
+      return;
+    }
+    
+    if (data.length === 0) {
+      console.warn('⚠️ No data to draw');
+      return;
+    }
 
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) {
+      console.error('❌ No canvas context');
+      return;
+    }
 
-    // Clear canvas
-    ctx.fillStyle = '#111827'; // Dark background
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    const margin = { top: 50, right: 50, bottom: 80, left: 80 };
-    const chartWidth = canvas.width - margin.left - margin.right;
-    const chartHeight = canvas.height - margin.top - margin.bottom;
-
-    // Scales
-    const maxValue = Math.max(...currentData.map(d => d.value));
-    const minValue = Math.min(...currentData.map(d => d.value));
-    const valueRange = maxValue - minValue;
+    const { width, height } = canvas;
+    if (width === 0 || height === 0) {
+      console.warn('⚠️ Canvas has zero dimensions');
+      return;
+    }
     
-    const xScale = (year: number) => margin.left + ((year - 2020) / (2150 - 2020)) * chartWidth;
-    const yScale = (value: number) => margin.top + chartHeight - ((value - minValue) / valueRange) * chartHeight;
+    ctx.clearRect(0, 0, width, height);
 
-    // Draw grid
+    // Set up chart dimensions
+    const margin = { top: 40, right: 40, bottom: 60, left: 80 };
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
+
+    // Define scales
+    const maxHeight = Math.max(...data.map(d => d.quantile95));
+    const yearRange = 2150 - 2020;
+    const currentDataYear = 2020 + yearRange * progress;
+
+    // Helper functions
+    const xScale = (year: number) => margin.left + ((year - 2020) / yearRange) * chartWidth;
+    const yScale = (value: number) => margin.top + chartHeight - (value / maxHeight) * chartHeight;
+
+    // Draw grid lines
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
     ctx.lineWidth = 1;
-
+    
     // Horizontal grid lines
     for (let i = 0; i <= 5; i++) {
-      const value = minValue + (valueRange / 5) * i;
+      const value = (maxHeight / 5) * i;
       const y = yScale(value);
       ctx.beginPath();
       ctx.moveTo(margin.left, y);
       ctx.lineTo(margin.left + chartWidth, y);
       ctx.stroke();
-
-      // Y-axis labels
-      ctx.fillStyle = 'white';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'right';
-      ctx.fillText(value.toFixed(1) + ' cm', margin.left - 10, y + 4);
     }
 
     // Vertical grid lines
@@ -233,16 +258,10 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
       ctx.moveTo(x, margin.top);
       ctx.lineTo(x, margin.top + chartHeight);
       ctx.stroke();
-
-      // X-axis labels
-      ctx.fillStyle = 'white';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'center';
-      ctx.fillText(year.toString(), x, margin.top + chartHeight + 25);
     }
 
     // Draw axes
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(margin.left, margin.top);
@@ -250,74 +269,121 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
     ctx.lineTo(margin.left + chartWidth, margin.top + chartHeight);
     ctx.stroke();
 
-    // Draw data line (animated)
-    const currentYear = 2020 + (2150 - 2020) * progress;
-    const visibleData = currentData.filter(d => d.year <= currentYear);
-
-    if (visibleData.length > 1) {
-      ctx.strokeStyle = '#3B82F6'; // Blue
-      ctx.lineWidth = 4;
+    // Draw confidence area (animated)
+    const filteredData = data.filter(d => d.year <= currentDataYear);
+    
+    if (filteredData.length > 1) {
+      // Create path for confidence area
+      ctx.fillStyle = 'rgba(59, 130, 246, 0.3)'; // Blue with transparency
       ctx.beginPath();
-      ctx.moveTo(xScale(visibleData[0].year), yScale(visibleData[0].value));
       
-      for (let i = 1; i < visibleData.length; i++) {
-        ctx.lineTo(xScale(visibleData[i].year), yScale(visibleData[i].value));
+      // Top boundary (95th quantile)
+      ctx.moveTo(xScale(filteredData[0].year), yScale(filteredData[0].quantile95));
+      for (let i = 1; i < filteredData.length; i++) {
+        ctx.lineTo(xScale(filteredData[i].year), yScale(filteredData[i].quantile95));
       }
-      ctx.stroke();
-
-      // Draw points
-      ctx.fillStyle = '#3B82F6';
-      for (const point of visibleData) {
-        ctx.beginPath();
-        ctx.arc(xScale(point.year), yScale(point.value), 4, 0, 2 * Math.PI);
-        ctx.fill();
+      
+      // Bottom boundary (5th quantile) - reverse order
+      for (let i = filteredData.length - 1; i >= 0; i--) {
+        ctx.lineTo(xScale(filteredData[i].year), yScale(filteredData[i].quantile5));
       }
+      
+      ctx.closePath();
+      ctx.fill();
     }
 
-    // Current year line
+    // Draw median line (animated)
+    if (filteredData.length > 1) {
+      ctx.strokeStyle = '#3b82f6'; // Bright blue
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(xScale(filteredData[0].year), yScale(filteredData[0].quantile50));
+      for (let i = 1; i < filteredData.length; i++) {
+        ctx.lineTo(xScale(filteredData[i].year), yScale(filteredData[i].quantile50));
+      }
+      ctx.stroke();
+    }
+
+    // Draw current year indicator
     if (isPlaying) {
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
       ctx.lineWidth = 2;
       ctx.setLineDash([5, 5]);
-      const x = xScale(currentYear);
+      const currentX = xScale(currentDataYear);
       ctx.beginPath();
-      ctx.moveTo(x, margin.top);
-      ctx.lineTo(x, margin.top + chartHeight);
+      ctx.moveTo(currentX, margin.top);
+      ctx.lineTo(currentX, margin.top + chartHeight);
       ctx.stroke();
       ctx.setLineDash([]);
     }
 
-    // Title
+    // Draw labels
     ctx.fillStyle = 'white';
-    ctx.font = 'bold 18px Arial';
+    ctx.font = '14px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(`Sea Level Rise - ${getScenarioTitle(scenario)}`, canvas.width / 2, 30);
-
-    // Y-axis title
+    
+    // Y-axis label
     ctx.save();
-    ctx.translate(25, canvas.height / 2);
+    ctx.translate(20, margin.top + chartHeight / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.font = '14px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('Sea Level Rise (cm)', 0, 0);
+    ctx.fillText('Sea-Level Rise (cm)', 0, 0);
     ctx.restore();
-
-    // X-axis title
-    ctx.font = '14px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('Year', canvas.width / 2, canvas.height - 20);
+    
+    // X-axis label
+    ctx.fillText('Year', margin.left + chartWidth / 2, height - 20);
   };
 
-  // Setup canvas
+  // Canvas resize and initial draw effect - Fixed to prevent infinite loops
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    canvas.width = 800;
-    canvas.height = 500;
-    drawChart(0);
-  }, [selectedQuantile, scenario]);
+    const resizeCanvas = () => {
+      const container = canvas.parentElement;
+      if (!container) return;
+      
+      const rect = container.getBoundingClientRect();
+      
+      // Set actual canvas size (only if different to prevent infinite loops)
+      if (canvas.width !== rect.width || canvas.height !== rect.height) {
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        
+        // Set CSS size to match
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        
+        console.log('🎨 Canvas resized to:', canvas.width, 'x', canvas.height);
+        
+        // Redraw after resize
+        if (data.length > 0) {
+          drawChart(animationComplete ? 1 : 0);
+        }
+      }
+    };
 
+    // Initial setup with multiple attempts
+    const initCanvas = () => {
+      setTimeout(resizeCanvas, 50);
+      setTimeout(resizeCanvas, 200);
+    };
+    
+    initCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    return () => window.removeEventListener('resize', resizeCanvas);
+  }, [data.length > 0]); // Only depend on whether we have data, not the data itself
+
+  // Initial draw when data loads - Fixed to prevent continuous redraws
+  useEffect(() => {
+    if (data.length > 0 && canvasRef.current && !isPlaying) {
+      setTimeout(() => {
+        console.log('🎨 Initial draw with', data.length, 'data points');
+        drawChart(0);
+      }, 100);
+    }
+  }, [data.length > 0]); // Only redraw when data availability changes
+
+  // Cleanup animation on unmount
   useEffect(() => {
     return () => {
       if (animationRef.current) {
@@ -328,106 +394,122 @@ export default function AnimatedSeaLevelChart({ scenario }: AnimatedSeaLevelChar
 
   const getScenarioTitle = (scenario: string) => {
     switch (scenario) {
-      case 'tlim1.5win0.25': return '1.5°C Warming';
-      case 'tlim3.0win0.25': return '3.0°C Warming';
-      case 'tlim5.0win0.25': return '5.0°C Warming';
+      case 'tlim1.5win0.25': return 'Managed Transition (1.5°C)';
+      case 'tlim3.0win0.25': return 'Dangerous Warming (3°C)';
+      case 'tlim5.0win0.25': return 'Extreme Emissions (5°C)';
       default: return 'Climate Scenario';
     }
   };
 
-  const getQuantileTitle = (quantile: string) => {
-    switch (quantile) {
-      case 'low': return 'Low Estimate (5th percentile)';
-      case 'medium': return 'Medium Estimate (50th percentile)';
-      case 'high': return 'High Estimate (95th percentile)';
-      default: return 'Estimate';
-    }
-  };
-
   return (
-    <div className="w-full min-h-screen bg-gray-900 text-white p-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4">
-          Sea Level Rise Projections
-        </h1>
-        <h2 className="text-2xl text-blue-400 mb-6">
-          {getScenarioTitle(scenario)}
+    <div className="w-full min-h-screen flex flex-col bg-black text-white p-4 md:p-8">
+      <div className="flex-shrink-0 mb-6 text-center">
+        <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
+          Sea-Level Rise Projection: {getScenarioTitle(scenario)}
         </h2>
-
-        {/* Controls */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          <Button
-            onClick={() => setSelectedQuantile('low')}
-            variant={selectedQuantile === 'low' ? 'default' : 'outline'}
-            size="lg"
-          >
-            Low Estimate
-          </Button>
-          <Button
-            onClick={() => setSelectedQuantile('medium')}
-            variant={selectedQuantile === 'medium' ? 'default' : 'outline'}
-            size="lg"
-          >
-            Medium Estimate
-          </Button>
-          <Button
-            onClick={() => setSelectedQuantile('high')}
-            variant={selectedQuantile === 'high' ? 'default' : 'outline'}
-            size="lg"
-          >
-            High Estimate
-          </Button>
-        </div>
-
-        <Button
-          onClick={startAnimation}
-          disabled={isPlaying}
-          size="lg"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
-        >
-          {isPlaying ? 'Playing Animation...' : '▶ Play Animation'}
-        </Button>
-      </div>
-
-      {/* Chart */}
-      <div className="flex justify-center mb-8">
-        <div className="bg-gray-800 rounded-lg p-6 shadow-2xl">
-          <canvas
-            ref={canvasRef}
-            className="border border-gray-600 rounded"
-            style={{ width: '800px', height: '500px' }}
-          />
-        </div>
-      </div>
-
-      {/* Data Display */}
-      <div className="flex justify-center gap-8">
-        <div className="bg-gray-800 rounded-lg p-6 text-center min-w-[150px]">
-          <div className="text-gray-400 text-sm mb-2">Current Year</div>
-          <div className="text-3xl font-bold">{currentYear}</div>
-        </div>
         
-        <div className="bg-gray-800 rounded-lg p-6 text-center min-w-[150px]">
-          <div className="text-gray-400 text-sm mb-2">Sea Level Rise</div>
-          <div className="text-3xl font-bold text-blue-400">
-            {currentHeight.toFixed(1)} cm
+        {/* Play Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-6">
+          <Button
+            onClick={() => {
+              setSelectedQuantile('5');
+              startAnimation();
+            }}
+            disabled={isPlaying || data.length === 0}
+            variant={selectedQuantile === '5' ? 'default' : 'outline'}
+            size="lg"
+            className="text-base px-6 py-3"
+          >
+            {isPlaying && selectedQuantile === '5' ? 'Playing...' : '▶ Play Low Quantile (5%)'}
+          </Button>
+          <Button
+            onClick={() => {
+              setSelectedQuantile('50');
+              startAnimation();
+            }}
+            disabled={isPlaying || data.length === 0}
+            variant={selectedQuantile === '50' ? 'default' : 'outline'}
+            size="lg"
+            className="text-base px-6 py-3"
+          >
+            {isPlaying && selectedQuantile === '50' ? 'Playing...' : '▶ Play Medium Quantile (50%)'}
+          </Button>
+          <Button
+            onClick={() => {
+              setSelectedQuantile('95');
+              startAnimation();
+            }}
+            disabled={isPlaying || data.length === 0}
+            variant={selectedQuantile === '95' ? 'default' : 'outline'}
+            size="lg"
+            className="text-base px-6 py-3"
+          >
+            {isPlaying && selectedQuantile === '95' ? 'Playing...' : '▶ Play High Quantile (95%)'}
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex-grow flex flex-col lg:flex-row gap-6">
+        {/* Chart Area - Centered */}
+        <div className="flex-grow flex justify-center items-center">
+        <div className="w-full max-w-4xl bg-gray-900/50 rounded-lg p-4 border border-blue-500/30" style={{ height: '500px', minHeight: '500px' }}>
+            <canvas
+              ref={canvasRef}
+              className="w-full h-full border border-red-500/20"
+              width={800}
+              height={400}
+            />
           </div>
         </div>
-        
-        <div className="bg-gray-800 rounded-lg p-6 text-center min-w-[200px]">
-          <div className="text-gray-400 text-sm mb-2">Current Estimate</div>
-          <div className="text-lg font-semibold">
-            {getQuantileTitle(selectedQuantile)}
+
+        {/* Data Display - Side panel or below on mobile */}
+        <div className="lg:w-80 flex flex-col gap-4">
+          {/* Data Readouts */}
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
+            <div className="bg-gray-900/50 rounded-lg p-4 text-center">
+              <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                Current Year
+              </div>
+              <div className="text-2xl lg:text-3xl font-mono font-bold text-white">
+                {currentYear}
+              </div>
+            </div>
+
+            <div className="bg-gray-900/50 rounded-lg p-4 text-center">
+              <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+                Sea-Level Rise
+              </div>
+              <div className="text-2xl lg:text-3xl font-mono font-bold text-blue-400">
+                {currentHeight.toFixed(1)} cm
+              </div>
+            </div>
+          </div>
+
+          {/* Current Selection */}
+          <div className="bg-gray-900/50 rounded-lg p-4 text-center">
+            <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+              Selected Quantile
+            </div>
+            <div className="text-lg font-bold text-white">
+              {selectedQuantile === '5' ? 'Low (5%)' : 
+               selectedQuantile === '50' ? 'Medium (50%)' : 
+               'High (95%)'}
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Status */}
-      <div className="text-center mt-8">
-        <div className="text-green-400">
-          ✅ Chart loaded successfully with {currentData.length} data points
-        </div>
+      
+      {/* Status info */}
+      <div className="text-center mt-4">
+        {data.length === 0 ? (
+          <div className="text-yellow-400">
+            Loading data for scenario: {scenario}...
+          </div>
+        ) : (
+          <div className="text-green-400 text-sm">
+            ✅ Loaded {data.length} data points for {getScenarioTitle(scenario)}
+          </div>
+        )}
       </div>
     </div>
   );
