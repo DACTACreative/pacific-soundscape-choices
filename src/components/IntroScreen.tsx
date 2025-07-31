@@ -53,7 +53,7 @@ The **2050 Strategy** features **10 commitments** that Pacific Leaders have made
     },
     {
       id: 3,
-      title: "The Strategy's Seven Thematic Areas",
+      title: "Seven Thematic Areas",
       content: `The Strategy brings together **seven interconnected thematic areas**: **Political Leadership and Regionalism**, **People-Centered Development**, **Peace and Security**, **Resource and Economic Development**, **Climate Change and Disasters**, **Ocean and Environment**, and **Technology and Connectivity**. 
 
 This work analyzed each thematic area and its outcomes, anchoring **strategy indicators** (like **% of women in parliament**) in fictional stories that bridge policy complexity with lived reality.`,
