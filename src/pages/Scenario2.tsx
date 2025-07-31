@@ -7,8 +7,23 @@ import DebugPanel from '../components/DebugPanel';
 import BlockSection from '../components/BlockSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import AnimatedSeaLevelChart from '../components/AnimatedSeaLevelChart';
+import { useAudio, Scenario } from '../context/AudioContext';
+import { useEffect } from 'react';
 
 export default function Scenario2() {
+  const { enableAudio, playScenario, audioEnabled } = useAudio();
+
+  useEffect(() => {
+    // Enable audio on page load and play scenario 2 sound
+    if (!audioEnabled) {
+      enableAudio();
+    }
+    // Small delay to ensure audio context is ready
+    setTimeout(() => {
+      playScenario(Scenario.Scenario2);
+    }, 500);
+  }, [enableAudio, playScenario, audioEnabled]);
+
   return (
     <div className="min-h-screen bg-black text-white relative">
       {/* Fixed Header */}
