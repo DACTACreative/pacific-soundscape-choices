@@ -167,7 +167,7 @@ Enjoy the game—see you in the future.`,
   ];
 
   return (
-    <div ref={scrollRef} data-scroll-container className="bg-black text-white pt-[100vh]">
+    <div ref={scrollRef} data-scroll-container className="bg-black text-white">
       {/* Sticky Header */}
       <div className="sticky top-0 z-40 bg-black border-b border-white/10">
         <div className="px-8 py-6">
