@@ -62,9 +62,10 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
     );
   }
 
-  const size = 500;
+  // Use viewport dimensions for responsive sizing
+  const size = Math.min(window.innerWidth - 64, window.innerHeight - 64); // Account for margins
   const center = size / 2;
-  const maxRadius = 180;
+  const maxRadius = size * 0.36; // Scale radius proportionally
   const angleStep = (2 * Math.PI) / 7;
 
   // Calculate positions for each axis point
@@ -104,13 +105,14 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
   })();
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`min-h-screen w-full flex items-center justify-center p-8 ${className}`}>
       <svg
         ref={svgRef}
         width={size}
         height={size}
-        className="mx-auto"
+        className="w-full h-full max-w-full max-h-full"
         viewBox={`0 0 ${size} ${size}`}
+        preserveAspectRatio="xMidYMid meet"
       >
         {/* Grid lines at 2, 4, 6 marks */}
         {[2, 4, 6].map(value => (
@@ -119,7 +121,7 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
             d={generateGridPath(value)}
             fill="none"
             stroke="rgba(255, 255, 255, 0.2)"
-            strokeWidth="1"
+            strokeWidth={Math.max(1, size * 0.002)}
           />
         ))}
 
@@ -134,7 +136,7 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
               x2={endPoint.x}
               y2={endPoint.y}
               stroke="rgba(255, 255, 255, 0.3)"
-              strokeWidth="1"
+              strokeWidth={Math.max(1, size * 0.002)}
             />
           );
         })}
@@ -144,7 +146,7 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
           d={ambitionZonePath}
           fill="rgba(53, 197, 242, 0.15)"
           stroke="rgba(53, 197, 242, 0.4)"
-          strokeWidth="2"
+          strokeWidth={Math.max(2, size * 0.004)}
           strokeDasharray="5,5"
         />
 
@@ -153,7 +155,7 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
           d={playerPath}
           fill="rgba(255, 255, 255, 0.1)"
           stroke="white"
-          strokeWidth="2"
+          strokeWidth={Math.max(2, size * 0.004)}
           style={{
             strokeDasharray: isAnimated ? 'none' : '2000',
             strokeDashoffset: isAnimated ? '0' : '2000',
@@ -171,10 +173,10 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
               key={index}
               cx={point.x}
               cy={point.y}
-              r={isSuccess ? 8 : 5}
+              r={isSuccess ? Math.max(10, size * 0.02) : Math.max(6, size * 0.012)}
               fill={isSuccess ? '#35c5f2' : 'white'}
               stroke={isSuccess ? '#35c5f2' : 'rgba(255, 255, 255, 0.8)'}
-              strokeWidth="2"
+              strokeWidth={Math.max(2, size * 0.004)}
               className="cursor-pointer transition-all duration-200"
               style={{
                 filter: isSuccess ? 'drop-shadow(0 0 12px rgba(53, 197, 242, 0.8))' : 'none',
@@ -207,34 +209,6 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
           );
         })}
 
-        {/* Axis labels */}
-        {THEMES.map((theme, index) => {
-          const labelPoint = getAxisPoint(index, 8.2);
-          const lines = theme.includes('&') ? theme.split(' & ') : [theme];
-          
-          return (
-            <text
-              key={index}
-              x={labelPoint.x}
-              y={labelPoint.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill="white"
-              fontSize="12"
-              className="font-medium"
-            >
-              {lines.map((line, lineIndex) => (
-                <tspan 
-                  key={lineIndex} 
-                  x={labelPoint.x} 
-                  dy={lineIndex === 0 ? 0 : 14}
-                >
-                  {line}
-                </tspan>
-              ))}
-            </text>
-          );
-        })}
 
         {/* Grid value labels */}
         {[2, 4, 6].map(value => {
@@ -242,12 +216,12 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
           return (
             <text
               key={value}
-              x={point.x + 10}
+              x={point.x + 15}
               y={point.y}
               textAnchor="start"
               dominantBaseline="middle"
               fill="rgba(255, 255, 255, 0.6)"
-              fontSize="11"
+              fontSize={Math.max(12, size * 0.024)}
             >
               {value}
             </text>
@@ -257,11 +231,11 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
         {/* Center label */}
         <text
           x={center}
-          y={center + 4}
+          y={center + 6}
           textAnchor="middle"
           dominantBaseline="middle"
           fill="rgba(255, 255, 255, 0.6)"
-          fontSize="11"
+          fontSize={Math.max(12, size * 0.024)}
         >
           0
         </text>
@@ -269,11 +243,11 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
         {/* Max value label */}
         <text
           x={center}
-          y={center - maxRadius - 15}
+          y={center - maxRadius - 20}
           textAnchor="middle"
           dominantBaseline="middle"
           fill="rgba(255, 255, 255, 0.6)"
-          fontSize="11"
+          fontSize={Math.max(12, size * 0.024)}
         >
           7
         </text>
@@ -294,25 +268,6 @@ const ThematicSpiderChart: React.FC<SpiderChartProps> = ({ className }) => {
         </div>
       )}
 
-      {/* Legend */}
-      <div className="mt-6 flex justify-center">
-        <div className="bg-black/40 backdrop-blur-sm border border-slate-600/50 rounded-lg px-6 py-3">
-          <div className="flex items-center gap-6 text-sm text-white/80">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 border-2 border-[#35c5f2] bg-[#35c5f2]/20 rounded-sm"></div>
-              <span>Ambition Zone (4.5+)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-[#35c5f2] rounded-full"></div>
-              <span>Ambition Achieved</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-white rounded-full"></div>
-              <span>Below Ambition</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
