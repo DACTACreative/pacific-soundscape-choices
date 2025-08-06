@@ -123,7 +123,7 @@ Enjoy the game.`,
       {/* Sticky Header */}
       <div className="sticky top-0 z-40 bg-black border-b border-white/10">
         <div className="px-8 py-6">
-          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-white">BLUE PACIFIC 2050</h1>
+          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-white">BLUE PARADIGM 2050</h1>
           <p className="text-lg md:text-xl font-light tracking-wide text-white/80">AN IMMERSIVE EXPERIENCE INTO OUR FUTURE</p>
         </div>
       </div>
