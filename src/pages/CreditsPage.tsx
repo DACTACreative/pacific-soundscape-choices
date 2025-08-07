@@ -41,7 +41,7 @@ export default function CreditsPage() {
                 
                 <div>
                   <h4 className="text-xl font-medium text-white mb-3">Strategic Deconstruction & Game Design</h4>
-                  <p className="text-white/90 ml-4">The game's logic is the result of a granular analysis of the 2050 Strategy's Implementation Plan. I cross-referenced official indicators, outcomes, and "Levels of Ambition" to develop 22 distinct policy choices. These were then meticulously mapped into game questions and a weighted scoring system. The game is balanced to have a ~0.49% success rate, with around 10 "winning" combinations out of over 2,000 possibilities, making a balanced outcome challenging but achievable.</p>
+                  <p className="text-white/90 ml-4">The game's logic is the result of a granular analysis of the 2050 Strategy's Implementation Plan. I cross-referenced official indicators, outcomes, and "Levels of Ambition" to develop 22 distinct policy choices. These were then meticulously mapped into game questions and a weighted scoring system. The game is balanced to have a ~0.49% success rate, with around 10 "winning" combinations making a balanced outcome challenging but achievable.</p>
                 </div>
                 
                 <div>
