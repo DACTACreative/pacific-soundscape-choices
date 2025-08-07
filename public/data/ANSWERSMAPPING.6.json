@@ -23,10 +23,10 @@
         "Political_Leadership_and_Regionalism": 1,
         "People_Centered_Development": 0.5,
         "Climate_Change_and_Disasters": 0.5,
-        "Peace_and_Security": 0,
-        "Resource_and_Economic_Development": 0,
+        "Peace_and_Security": 0.5,
+        "Resource_and_Economic_Development": 0.5,
         "Ocean_and_Environment": 0.5,
-        "Technology_and_Connectivity": 0
+        "Technology_and_Connectivity": 0.5
       }
     },
     "A2": {
@@ -45,7 +45,7 @@
         "Peace_and_Security": 0.5,
         "Resource_and_Economic_Development": 0,
         "Climate_Change_and_Disasters": 0,
-        "Ocean_and_Environment": 0,
+        "Ocean_and_Environment": 0.5,
         "Technology_and_Connectivity": 0
       }
     },
@@ -71,8 +71,8 @@
       "points": {
         "Political_Leadership_and_Regionalism": 2,
         "Resource_and_Economic_Development": 1.5,
-        "Climate_Change_and_Disasters": 0.5,
-        "People_Centered_Development": 0,
+        "Climate_Change_and_Disasters": 1,
+        "People_Centered_Development": 0.5,
         "Peace_and_Security": 0,
         "Ocean_and_Environment": 0,
         "Technology_and_Connectivity": 0
@@ -157,7 +157,7 @@
       },
       "points": {
         "People_Centered_Development": 1,
-        "Climate_Change_and_Disasters": 0.5,
+        "Climate_Change_and_Disasters": 1,
         "Resource_and_Economic_Development": 0.5,
         "Political_Leadership_and_Regionalism": 0,
         "Peace_and_Security": 0,
@@ -260,7 +260,7 @@
         "People_Centered_Development": 0.5,
         "Political_Leadership_and_Regionalism": 0,
         "Resource_and_Economic_Development": 0,
-        "Ocean_and_Environment": 0
+        "Ocean_and_Environment": 0.5
       }
     },
     "D1": {
@@ -467,7 +467,7 @@
         "Climate_Change_and_Disasters": 1,
         "Ocean_and_Environment": 1.5,
         "Technology_and_Connectivity": 0.5,
-        "Resource_and_Economic_Development": 0.5,
+        "Resource_and_Economic_Development": 1,
         "Political_Leadership_and_Regionalism": 0,
         "People_Centered_Development": 0,
         "Peace_and_Security": 0
