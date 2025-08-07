@@ -19,10 +19,10 @@
       ]
     },
     "points": {
-      "Political_Leadership_and_Regionalism": 1,
-      "People_Centered_Development": 0.5,
+      "Political_Leadership_and_Regionalism": 1.5,
+      "People_Centered_Development": 1.0,
       "Climate_Change_and_Disasters": 0.5,
-      "Peace_and_Security": 0,
+      "Peace_and_Security": 0.5,
       "Resource_and_Economic_Development": 0,
       "Ocean_and_Environment": 0.5,
       "Technology_and_Connectivity": 0
@@ -39,13 +39,13 @@
     "impact": "The Ina i-Tu model was formalised across six countries as part of the regional governance system. By 2050, it became a recognised mechanism within the Pacific Islands Forum — ensuring that traditional leaders, women, and rural youth had a seat in climate and development negotiations.",
     "narrative": "In North Tarawa, community leader Tekiera joined her first Ina i-Tu circle — one of dozens launched across the islands. Discussions once confined to government halls were now taking place under trees and beside canoes. Her voice — rooted in ancestral knowledge and lived climate experience — soon echoed beyond her village. Within five years, she was appointed to Kiribati's national adaptation taskforce. Her presence shifted the tone of regional meetings: local wisdom was no longer symbolic — it was strategy.",
     "points": {
-      "Political_Leadership_and_Regionalism": 1,
-      "People_Centered_Development": 1,
-      "Peace_and_Security": 0.5,
-      "Resource_and_Economic_Development": 0,
+      "Political_Leadership_and_Regionalism": 1.5,
+      "People_Centered_Development": 1.0,
       "Climate_Change_and_Disasters": 0,
+      "Peace_and_Security": 1.0,
+      "Resource_and_Economic_Development": 0,
       "Ocean_and_Environment": 0,
-      "Technology_and_Connectivity": 0
+      "Technology_and_Connectivity": 0.5
     }
   },
   "A3": {
@@ -68,12 +68,12 @@
       ]
     },
     "points": {
-      "Political_Leadership_and_Regionalism": 2,
-      "Resource_and_Economic_Development": 1.5,
-      "Climate_Change_and_Disasters": 0.5,
+      "Political_Leadership_and_Regionalism": 2.0,
       "People_Centered_Development": 0,
+      "Climate_Change_and_Disasters": 0.5,
       "Peace_and_Security": 0,
-      "Ocean_and_Environment": -1,
+      "Resource_and_Economic_Development": 1.5,
+      "Ocean_and_Environment": 0,
       "Technology_and_Connectivity": 0
     }
   },
@@ -97,12 +97,12 @@
       ]
     },
     "points": {
-      "Political_Leadership_and_Regionalism": 1,
-      "Climate_Change_and_Disasters": 1.5,
-      "Ocean_and_Environment": 0.5,
-      "Resource_and_Economic_Development": 0,
+      "Political_Leadership_and_Regionalism": 1.5,
       "People_Centered_Development": 0,
+      "Climate_Change_and_Disasters": 2.0,
       "Peace_and_Security": 0,
+      "Resource_and_Economic_Development": 0,
+      "Ocean_and_Environment": 0.5,
       "Technology_and_Connectivity": 0
     }
   },
@@ -126,13 +126,13 @@
       ]
     },
     "points": {
-      "People_Centered_Development": 1.5,
-      "Peace_and_Security": 0.5,
-      "Political_Leadership_and_Regionalism": 0,
+      "Political_Leadership_and_Regionalism": 0.5,
+      "People_Centered_Development": 2.0,
       "Climate_Change_and_Disasters": 0,
+      "Peace_and_Security": 1.0,
       "Resource_and_Economic_Development": 0,
       "Ocean_and_Environment": 0,
-      "Technology_and_Connectivity": 0
+      "Technology_and_Connectivity": 0.5
     }
   },
   "B2": {
@@ -155,13 +155,13 @@
       ]
     },
     "points": {
-      "People_Centered_Development": 1,
-      "Climate_Change_and_Disasters": 0.5,
-      "Resource_and_Economic_Development": 0.5,
       "Political_Leadership_and_Regionalism": 0,
-      "Peace_and_Security": 0,
+      "People_Centered_Development": 1.5,
+      "Climate_Change_and_Disasters": 0.5,
+      "Peace_and_Security": 0.5,
+      "Resource_and_Economic_Development": 0.5,
       "Ocean_and_Environment": 0,
-      "Technology_and_Connectivity": 0
+      "Technology_and_Connectivity": 1.0
     }
   },
   "B3": {
@@ -175,13 +175,13 @@
     "impact": "Healthy food policies in schools across French Polynesia shifted from under development to full implementation by 2050. Obesity rates declined, and youth participation in agriculture and cultural cooking practices increased, with several Indigenous vegetables reintroduced into local diets and school meals.",
     "narrative": "On the remote island of Tana, a student filmed her grandmother preparing 'uru kea, a nearly forgotten wild breadfruit variety. The video — part of the \"From Grandmother: Best Cooking\" challenge — quickly gained traction. Soon, markets in Papeete were requesting seeds, schools started planting them, and the recipe was added to national curriculum materials. A quiet revival had begun — one story, one root at a time.",
     "points": {
-      "People_Centered_Development": 1,
-      "Ocean_and_Environment": 1,
-      "Technology_and_Connectivity": 0.5,
       "Political_Leadership_and_Regionalism": 0,
+      "People_Centered_Development": 1.5,
+      "Climate_Change_and_Disasters": 0,
       "Peace_and_Security": 0,
-      "Resource_and_Economic_Development": 0,
-      "Climate_Change_and_Disasters": 0
+      "Resource_and_Economic_Development": 0.5,
+      "Ocean_and_Environment": 1.5,
+      "Technology_and_Connectivity": 1.5
     }
   },
   "C1": {
@@ -201,13 +201,13 @@
       "value": 15
     },
     "points": {
-      "Peace_and_Security": 1,
-      "Political_Leadership_and_Regionalism": 0.5,
-      "Climate_Change_and_Disasters": 1,
+      "Political_Leadership_and_Regionalism": 1.0,
       "People_Centered_Development": 0.5,
+      "Climate_Change_and_Disasters": 1.5,
+      "Peace_and_Security": 1.5,
       "Resource_and_Economic_Development": 0,
       "Ocean_and_Environment": 0,
-      "Technology_and_Connectivity": 0
+      "Technology_and_Connectivity": 0.5
     }
   },
   "C2": {
@@ -227,13 +227,13 @@
       "value": 50
     },
     "points": {
-      "Peace_and_Security": 1.5,
+      "Political_Leadership_and_Regionalism": 1.0,
       "People_Centered_Development": 0.5,
-      "Political_Leadership_and_Regionalism": 0,
-      "Resource_and_Economic_Development": 0,
       "Climate_Change_and_Disasters": 0,
+      "Peace_and_Security": 2.0,
+      "Resource_and_Economic_Development": 0,
       "Ocean_and_Environment": 0,
-      "Technology_and_Connectivity": 0
+      "Technology_and_Connectivity": 0.5
     }
   },
   "C3": {
@@ -253,13 +253,13 @@
       "value": 70
     },
     "points": {
-      "Peace_and_Security": 1,
-      "Climate_Change_and_Disasters": 0.5,
-      "Technology_and_Connectivity": 0.5,
-      "People_Centered_Development": 0.5,
-      "Political_Leadership_and_Regionalism": 0,
+      "Political_Leadership_and_Regionalism": 0.5,
+      "People_Centered_Development": 1.0,
+      "Climate_Change_and_Disasters": 1.0,
+      "Peace_and_Security": 1.5,
       "Resource_and_Economic_Development": 0,
-      "Ocean_and_Environment": 0
+      "Ocean_and_Environment": 0,
+      "Technology_and_Connectivity": 1.0
     }
   },
   "D1": {
@@ -293,12 +293,12 @@
       }
     ],
     "points": {
-      "Resource_and_Economic_Development": 1.5,
       "Political_Leadership_and_Regionalism": 0.5,
-      "Ocean_and_Environment": 0.5,
       "People_Centered_Development": 0.5,
-      "Peace_and_Security": 0,
       "Climate_Change_and_Disasters": 0,
+      "Peace_and_Security": 0.5,
+      "Resource_and_Economic_Development": 2.0,
+      "Ocean_and_Environment": 0.5,
       "Technology_and_Connectivity": 0
     }
   },
@@ -328,12 +328,12 @@
       "value": 63
     },
     "points": {
-      "Resource_and_Economic_Development": 1,
-      "Ocean_and_Environment": 1,
-      "People_Centered_Development": 0.5,
       "Political_Leadership_and_Regionalism": 0,
-      "Peace_and_Security": 0,
+      "People_Centered_Development": 1.0,
       "Climate_Change_and_Disasters": 0,
+      "Peace_and_Security": 0.5,
+      "Resource_and_Economic_Development": 2.0,
+      "Ocean_and_Environment": 1.5,
       "Technology_and_Connectivity": 0
     }
   },
@@ -346,7 +346,7 @@
     "Question": "Your nation grapples with urban health challenges and rural unemployment. What is your development priority?",
     "outcome": "1.4 Strengthened policies, legislations, and mechanisms that support the development and sustainable growth of private sector",
     "impact": "Fiji's national community enterprise registry reached 12,400 cooperatives by 2050. 48% were run by women, with legal status and digital accounting support. Informal vendors accessing micro-tax exemptions and training rose by 70%, and national GDP from small enterprises outpaced tourism for the first time.",
-    "narrative": "In Nausori Highlands, a young mother registered her community soap cooperative with just three other women. A local law student helped file the papers. They soon got their first bulk sale to a resort chain. What started as a stall under a breadfruit tree now paid for uniforms, bikes — and hope.",
+    "narrative": "In Nausori Highlands, a young mother registered her community soap cooperative with just three other women.",
     "metrics": [
       {
         "label": "Total Registered Cooperatives",
@@ -368,13 +368,13 @@
       }
     ],
     "points": {
-      "Resource_and_Economic_Development": 1,
-      "People_Centered_Development": 1,
-      "Political_Leadership_and_Regionalism": 0,
-      "Peace_and_Security": 0,
+      "Political_Leadership_and_Regionalism": 0.5,
+      "People_Centered_Development": 1.5,
       "Climate_Change_and_Disasters": 0,
+      "Peace_and_Security": 0.5,
+      "Resource_and_Economic_Development": 1.5,
       "Ocean_and_Environment": 0,
-      "Technology_and_Connectivity": 0
+      "Technology_and_Connectivity": 1.0
     }
   },
   "E1": {
@@ -394,13 +394,13 @@
       "value": 5
     },
     "points": {
-      "Climate_Change_and_Disasters": 2,
-      "Political_Leadership_and_Regionalism": 1,
-      "Peace_and_Security": 0,
-      "People_Centered_Development": 0,
+      "Political_Leadership_and_Regionalism": 1.5,
+      "People_Centered_Development": 0.5,
+      "Climate_Change_and_Disasters": 2.0,
+      "Peace_and_Security": 0.5,
       "Resource_and_Economic_Development": 0,
       "Ocean_and_Environment": 0,
-      "Technology_and_Connectivity": 0
+      "Technology_and_Connectivity": 0.5
     }
   },
   "E2": {
@@ -428,13 +428,13 @@
       }
     ],
     "points": {
-      "Climate_Change_and_Disasters": 1,
-      "Technology_and_Connectivity": 1,
-      "Resource_and_Economic_Development": 0.5,
-      "People_Centered_Development": 0,
-      "Political_Leadership_and_Regionalism": 0,
+      "Political_Leadership_and_Regionalism": 0.5,
+      "People_Centered_Development": 1.0,
+      "Climate_Change_and_Disasters": 1.5,
       "Peace_and_Security": 0,
-      "Ocean_and_Environment": 0
+      "Resource_and_Economic_Development": 1.0,
+      "Ocean_and_Environment": 0,
+      "Technology_and_Connectivity": 2.0
     }
   },
   "E3": {
@@ -463,13 +463,13 @@
       "value": 85
     },
     "points": {
-      "Climate_Change_and_Disasters": 1,
-      "Ocean_and_Environment": 1.5,
-      "Technology_and_Connectivity": 0.5,
-      "Resource_and_Economic_Development": 0.5,
       "Political_Leadership_and_Regionalism": 0,
-      "People_Centered_Development": 0,
-      "Peace_and_Security": 0
+      "People_Centered_Development": 0.5,
+      "Climate_Change_and_Disasters": 1.5,
+      "Peace_and_Security": 0,
+      "Resource_and_Economic_Development": 0.5,
+      "Ocean_and_Environment": 1.5,
+      "Technology_and_Connectivity": 1.0
     }
   },
   "F1": {
@@ -498,13 +498,13 @@
       "value": 70
     },
     "points": {
-      "Ocean_and_Environment": 1.5,
-      "People_Centered_Development": 0.5,
-      "Resource_and_Economic_Development": 0.5,
-      "Climate_Change_and_Disasters": 0,
       "Political_Leadership_and_Regionalism": 0,
-      "Peace_and_Security": 0,
-      "Technology_and_Connectivity": 0
+      "People_Centered_Development": 1.0,
+      "Climate_Change_and_Disasters": 0.5,
+      "Peace_and_Security": 0.5,
+      "Resource_and_Economic_Development": 0.5,
+      "Ocean_and_Environment": 2.0,
+      "Technology_and_Connectivity": 0.5
     }
   },
   "F2": {
@@ -532,13 +532,13 @@
       "value": 92
     },
     "points": {
-      "Ocean_and_Environment": 1.5,
-      "Resource_and_Economic_Development": 1,
-      "Climate_Change_and_Disasters": 0,
-      "People_Centered_Development": 0,
       "Political_Leadership_and_Regionalism": 0,
+      "People_Centered_Development": 0.5,
+      "Climate_Change_and_Disasters": 0.5,
       "Peace_and_Security": 0,
-      "Technology_and_Connectivity": 0
+      "Resource_and_Economic_Development": 1.5,
+      "Ocean_and_Environment": 2.0,
+      "Technology_and_Connectivity": 0.5
     }
   },
   "F3": {
@@ -566,13 +566,13 @@
       "value": 12
     },
     "points": {
-      "Ocean_and_Environment": 1,
-      "Technology_and_Connectivity": 1,
-      "Political_Leadership_and_Regionalism": 0.5,
+      "Political_Leadership_and_Regionalism": 1.0,
       "People_Centered_Development": 0.5,
-      "Resource_and_Economic_Development": 0,
-      "Climate_Change_and_Disasters": 0,
-      "Peace_and_Security": 0
+      "Climate_Change_and_Disasters": 0.5,
+      "Peace_and_Security": 0,
+      "Resource_and_Economic_Development": 0.5,
+      "Ocean_and_Environment": 1.5,
+      "Technology_and_Connectivity": 1.0
     }
   },
   "G1": {
@@ -592,13 +592,13 @@
       "value": 65
     },
     "points": {
-      "Technology_and_Connectivity": 1.5,
-      "People_Centered_Development": 1,
-      "Political_Leadership_and_Regionalism": 0,
+      "Political_Leadership_and_Regionalism": 0.5,
+      "People_Centered_Development": 1.5,
+      "Climate_Change_and_Disasters": 0.5,
       "Peace_and_Security": 0.5,
       "Resource_and_Economic_Development": 0,
-      "Climate_Change_and_Disasters": 0,
-      "Ocean_and_Environment": 0
+      "Ocean_and_Environment": 0.5,
+      "Technology_and_Connectivity": 2.0
     }
   },
   "G2": {
@@ -618,13 +618,13 @@
       "value": 60
     },
     "points": {
-      "Technology_and_Connectivity": 1.5,
-      "Peace_and_Security": 1.5,
-      "Political_Leadership_and_Regionalism": 0,
-      "People_Centered_Development": 0,
+      "Political_Leadership_and_Regionalism": 1.0,
+      "People_Centered_Development": 0.5,
+      "Climate_Change_and_Disasters": 0.5,
+      "Peace_and_Security": 2.0,
       "Resource_and_Economic_Development": 0,
-      "Climate_Change_and_Disasters": 0,
-      "Ocean_and_Environment": 0
+      "Ocean_and_Environment": 0,
+      "Technology_and_Connectivity": 2.0
     }
   },
   "G3": {
@@ -653,13 +653,13 @@
       "value": 1500
     },
     "points": {
-      "Technology_and_Connectivity": 1,
-      "Climate_Change_and_Disasters": 1,
-      "Resource_and_Economic_Development": 0.5,
-      "Political_Leadership_and_Regionalism": 0,
-      "People_Centered_Development": 0,
-      "Peace_and_Security": 0,
-      "Ocean_and_Environment": 0
+      "Political_Leadership_and_Regionalism": 0.5,
+      "People_Centered_Development": 1.0,
+      "Climate_Change_and_Disasters": 1.5,
+      "Peace_and_Security": 0.5,
+      "Resource_and_Economic_Development": 1.0,
+      "Ocean_and_Environment": 0,
+      "Technology_and_Connectivity": 2.0
     }
   }
 }
