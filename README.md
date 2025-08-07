@@ -1,73 +1,146 @@
-# Welcome to your Lovable project
+# Blue Paradigm
 
-## Project info
+> A sound-driven climate game exploring Fiji's future through your choices
 
-**URL**: https://lovable.dev/projects/e1f51404-891c-4153-845b-3f41539cc9f3
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-blue--paradigm.org-blue)](https://blue-paradigm.org)
+[![React](https://img.shields.io/badge/React-18.x-blue)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.x-purple)](https://vitejs.dev/)
 
-## How can I edit this code?
+## 🌊 About
 
-There are several ways of editing your application.
+Blue Paradigm is an interactive narrative game that translates the dense framework of the **2050 Strategy for the Blue Pacific Continent** into an engaging, human-centered experience. As a Pacific leader, players make strategic decisions across seven interconnected thematic areas, with each choice affecting a complex scoring system designed to reflect real-world policy trade-offs.
 
-**Use Lovable**
+The game challenges players to achieve a "balanced result" by meeting the "Level of Ambition" for all themes—a success metric visualized through dynamic spider charts and thematic review cards. This quantitative feedback is paired with qualitative stories and innovative data sonification of Fijian ocean tides, grounding abstract policy in the lived, sensory reality of the Pacific.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e1f51404-891c-4153-845b-3f41539cc9f3) and start prompting.
+## 🎯 Key Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Interactive Policy Simulation**: Navigate complex climate and development decisions across 7 thematic areas
+- **Data Sonification**: Experience sea-level rise through generative soundscapes based on real Suva, Fiji tide data
+- **Dynamic Visualization**: Spider charts and interactive cards provide immediate feedback on policy choices
+- **Balanced Gameplay**: Carefully calibrated scoring system with ~0.49% success rate (10 winning combinations out of 2,048 possible)
+- **Educational Impact**: Familiarizes players with official Pacific climate strategy language and ambitions
 
-**Use your preferred IDE**
+## 🏗️ Technical Architecture
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Built With
+- **Frontend**: React 18 with TypeScript
+- **Build Tool**: Vite 5.x
+- **Styling**: Tailwind CSS with shadcn-ui components
+- **Data Processing**: Custom algorithms for policy scoring and visualization
+- **Audio**: Web Audio API for tide sonification
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### Project Structure
+```
+src/
+├── components/          # Reusable UI components
+├── data/               # Game data and configuration
+│   ├── ANSWERS1.2.json    # Questions, answers, and scoring system
+│   ├── question1.2.json  # Question structure
+│   └── sea-level-data.csv # IPCC sea-level projections
+├── hooks/              # Custom React hooks
+├── lib/                # Utilities and helpers
+└── pages/              # Main game screens
 ```
 
-**Edit a file directly in GitHub**
+## 🚀 Getting Started
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-**Use GitHub Codespaces**
+### Installation
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd blue-paradigm
+   ```
 
-## What technologies are used for this project?
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-This project is built with:
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+4. **Open your browser**
+   Navigate to `http://localhost:5173`
 
-## How can I deploy this project?
+### Build for Production
+```bash
+npm run build
+npm run preview
+```
 
-Simply open [Lovable](https://lovable.dev/projects/e1f51404-891c-4153-845b-3f41539cc9f3) and click on Share -> Publish.
+## 🎮 Game Mechanics
 
-## Can I connect a custom domain to my Lovable project?
+### Scoring System
+The game features a meticulously balanced point system across seven themes:
+- Political Leadership and Regionalism
+- People Centered Development  
+- Climate Change and Disasters
+- Peace and Security
+- Resource and Economic Development
+- Ocean and Environment
+- Technology and Connectivity
 
-Yes, you can!
+Players must achieve 4.5+ points in ALL themes simultaneously to win—representing the real-world challenge of balanced, sustainable development.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Data Foundation
+- **Strategic Analysis**: Based on granular analysis of the 2050 Strategy Implementation Plan
+- **Real-World Grounding**: Cross-referenced with official indicators, outcomes, and "Levels of Ambition"
+- **Audio Design**: Tide sonification using actual Suva Harbor data (October 10-11, 2024)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 📊 Data Sources
+
+### Primary Strategic References
+- [Blue Pacific 2050 Strategy](https://blue-pacific-2050.pacificdata.org)
+- [Pacific Data Hub](https://pacificdata.org)
+- [NASA Sea Level Change Team](https://sealevel.nasa.gov)
+- [UNFCCC Climate Frameworks](https://unfccc.int)
+- [IPCC Special Report on 1.5°C](https://www.ipcc.ch/sr15/)
+
+### Environmental Data
+- Suva Harbor tide data for sonification
+- IPCC sea-level rise projections
+- NOAA Coral Reef Watch data
+
+## 🎨 Design Philosophy
+
+**Solarpunk Aesthetic**: AI-generated visuals inspired by Henri-Edmond Cross's pointillist style, reimagining a vibrant, sustainable Pacific future.
+
+**Human-Centered Approach**: Moving beyond dense policy documents toward intuitive, artistic engagement with complex climate choices.
+
+**Cultural Respect**: Created with deep respect for Pacific communities, knowledge systems, and the urgent need for climate resilience.
+
+## 🤝 Contributing
+
+This project was created as part of the Pacific Data Visualization Challenge. Contributions that honor Pacific knowledge systems and improve accessibility are welcome.
+
+### Development Guidelines
+- Follow TypeScript best practices
+- Maintain accessibility standards
+- Respect cultural sensitivity in content
+- Test across different devices and browsers
+
+## 📄 License
+
+This project is a work of fiction grounded in rigorous analysis of quantitative and qualitative data. Please respect the cultural context and educational purpose when using or adapting this work.
+
+## 🙏 Acknowledgments
+
+**Creator**: Eunice Rigo - Project Lead, Data Analysis, Design, Development & Sonification
+
+**Special Thanks**: Pacific Islands Forum Secretariat for their comprehensive strategic work, which forms the intellectual and spiritual backbone of this project.
+
+**Inspiration**: The vibrant cultures of the Pacific and the urgent need for climate resilience building in our region.
+
+---
+
+**Born from the Pacific, for the Pacific** 🌺
+
+*This experience represents a new paradigm for engaging with the future of the Blue Pacific Continent—moving toward a more intuitive, artistic, and human-centered understanding of the complex choices that will shape our region.*
