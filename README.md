@@ -34,14 +34,17 @@ The game challenges players to achieve a "balanced result" by meeting the "Level
 ```
 src/
 ├── components/          # Reusable UI components
-├── data/               # Game data and configuration
-│   ├── ANSWERS1.2.json    # Questions, answers, and scoring system
-│   ├── question1.2.json  # Question structure
-│   └── sea-level-data.csv # IPCC sea-level projections
 ├── hooks/              # Custom React hooks
 ├── lib/                # Utilities and helpers
-└── pages/              # Main game screens
+├── pages/              # Main game screens
+└── data/               # Private game data and configuration
+public/
+└── data/
+    ├── ANSWERSMAPPING.6.json # Questions, answers, and scoring system
+    ├── sea-level-data.csv    # IPCC sea-level projections
+    └── SpiderMap.json        # Thematic outcome descriptions
 ```
+
 
 ## 🚀 Getting Started
 
