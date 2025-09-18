@@ -1,7 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
 export default function CreditsPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return <div className="text-white min-h-screen bg-black">
       <div className="container mx-auto px-8 py-16 max-w-5xl">
         
