@@ -4,6 +4,7 @@ import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
 import ScenarioFooterSection from '../components/ScenarioFooterSection';
+import FeedbackBanner from '../components/FeedbackBanner';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
 import BlueParadigmCarousel from '../components/BlueParadigmCarousel';
@@ -152,6 +153,9 @@ export default function Scenario2() {
 
         {/* Block 4: Blue Paradigm Carousel */}
         <BlueParadigmCarousel />
+
+        {/* Feedback Banner */}
+        <FeedbackBanner />
 
         {/* Block 6: Navigation */}
         <ScenarioFooterSection />
