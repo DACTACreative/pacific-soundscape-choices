@@ -229,8 +229,9 @@ export default function CreditsPage() {
           </p>
           <p className="text-lg text-white/90 leading-relaxed mb-8">
             Blue Paradigm won the Pacific category of the 2025 Pacific Data
-            Visualisation Challenge. I would genuinely love to hear what you
-            experienced.
+            Visualisation Challenge and has since been recognised by the 2026
+            Australian Not-for-Profit Technology Awards and TechDiversity Awards.
+            I would genuinely love to hear what you experienced.
           </p>
           <div className="flex flex-wrap gap-4">
             <a
