@@ -160,6 +160,26 @@ export default function ResultScreen({}: ResultScreenProps) {
             </button>
           </div>
         </div>
+
+        {/* Permanent feedback invitation */}
+        <div className="mt-24 pt-12 border-t border-ocean-light/20 text-center animate-fade-in">
+          <h2 className="text-2xl font-extralight text-coral-warm mb-4 tracking-wide">
+            Share your experience
+          </h2>
+          <p className="text-base text-card-foreground/70 mb-8 max-w-2xl mx-auto">
+            Blue Paradigm won the Pacific category of the 2025 Pacific Data
+            Visualisation Challenge. I would genuinely love to hear what you
+            experienced.
+          </p>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLScBqDxhrzRnuyhLa3U2I1k7W3IOHQ5MyA0tu-WTgHURT_ZAyA/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-4 bg-coral-warm/20 border border-coral-warm/40 text-coral-warm hover:bg-coral-warm/30 transition-all duration-500 font-light tracking-wider uppercase"
+          >
+            Share your experience
+          </a>
+        </div>
       </div>
     </div>
   );
