@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 
 const FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLScBqDxhrzRnuyhLa3U2I1k7W3IOHQ5MyA0tu-WTgHURT_ZAyA/viewform?usp=publish-editor';
-const STORAGE_KEY = 'blueParadigmFeedbackBannerDismissed';
+const STORAGE_KEY = 'blueParadigmFeedbackBannerDismissed_v2';
 
 export default function FeedbackBanner() {
   const [dismissed, setDismissed] = useState(true);
@@ -29,7 +29,7 @@ export default function FeedbackBanner() {
 
   return (
     <div className="relative w-full border-b border-border bg-card text-foreground">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 pr-12 sm:pr-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 pr-12">
         <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6">
           <div className="flex-1 text-sm sm:text-base leading-relaxed">
             <p className="font-medium text-foreground">
