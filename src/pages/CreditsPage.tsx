@@ -1,6 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import RecognitionBanner from '@/components/RecognitionBanner';
+
+const FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLScBqDxhrzRnuyhLa3U2I1k7W3IOHQ5MyA0tu-WTgHURT_ZAyA/viewform';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/eunice-rigo';
 
 export default function CreditsPage() {
   const navigate = useNavigate();
@@ -9,6 +14,7 @@ export default function CreditsPage() {
     window.scrollTo(0, 0);
   }, []);
   return <div className="text-white min-h-screen bg-black">
+      <RecognitionBanner />
       <div className="container mx-auto px-8 py-16 max-w-5xl">
         
         {/* Header */}
@@ -213,6 +219,39 @@ export default function CreditsPage() {
         </div>
 
         {/* Navigation Footer */}
+        {/* About the creator / feedback */}
+        <div className="mb-16 border-t border-white/10 pt-12">
+          <h2 className="text-4xl font-bold text-white mb-6">About the creator</h2>
+          <p className="text-lg text-white/90 leading-relaxed mb-4">
+            Blue Paradigm was designed, built, and sonified by Eunice Rigo — a
+            creative data analyst exploring more intuitive, artistic, and
+            inclusive ways of engaging with Pacific data.
+          </p>
+          <p className="text-lg text-white/90 leading-relaxed mb-8">
+            Blue Paradigm won the Pacific category of the 2025 Pacific Data
+            Visualisation Challenge. I would genuinely love to hear what you
+            experienced.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href={FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 border border-white/40 text-white hover:bg-white/10 transition-colors rounded"
+            >
+              Share your experience
+            </a>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 border border-white/40 text-white hover:bg-white/10 transition-colors rounded"
+            >
+              Connect on LinkedIn
+            </a>
+          </div>
+        </div>
+
         <div className="text-center">
           <Button onClick={() => navigate('/')} variant="pacific" size="pacific">
             RESTART THE JOURNEY
