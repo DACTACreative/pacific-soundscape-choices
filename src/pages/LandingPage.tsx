@@ -2,6 +2,7 @@ import { ChevronDown } from 'lucide-react';
 import IntroScreen from '@/components/IntroScreen';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import RecognitionBanner from '@/components/RecognitionBanner';
 
 // Add TypeScript declarations
 declare global {
@@ -140,6 +141,7 @@ export default function LandingPage() {
   
   return (
     <div className="w-full">
+      <RecognitionBanner />
       {/* Debug Button - Development Only */}
       {process.env.NODE_ENV === 'development' && (
         <button 
