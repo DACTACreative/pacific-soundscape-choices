@@ -46,7 +46,7 @@ export default function RecognitionBanner() {
               rel="noopener noreferrer"
               className="inline-flex items-center px-4 py-2 text-sm font-medium border border-accent/60 text-accent hover:bg-accent/10 transition-colors rounded"
             >
-              Read my writing
+              Connect on Substack
             </a>
             <a
               href={LINKEDIN_URL}
