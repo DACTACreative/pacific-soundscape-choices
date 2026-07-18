@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 
 const FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLScBqDxhrzRnuyhLa3U2I1k7W3IOHQ5MyA0tu-WTgHURT_ZAyA/viewform?usp=publish-editor';
-const STORAGE_KEY = 'blueParadigmFeedbackBannerDismissed';
+const STORAGE_KEY = 'blueParadigmFeedbackBannerDismissed_v2';
 
 export default function FeedbackBanner() {
   const [dismissed, setDismissed] = useState(true);
