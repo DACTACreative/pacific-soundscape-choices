@@ -154,6 +154,9 @@ export default function Scenario2() {
         {/* Block 4: Blue Paradigm Carousel */}
         <BlueParadigmCarousel />
 
+        {/* Feedback Banner */}
+        <FeedbackBanner />
+
         {/* Block 6: Navigation */}
         <ScenarioFooterSection />
       </div>
