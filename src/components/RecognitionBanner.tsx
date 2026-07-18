@@ -29,7 +29,7 @@ export default function RecognitionBanner() {
 
   return (
     <div className="relative w-full border-b border-border bg-card text-foreground">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 pr-12 sm:pr-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 pr-12">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
           <div className="flex-1 text-sm sm:text-base leading-relaxed">
             <span className="font-medium">
