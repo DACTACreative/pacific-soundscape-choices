@@ -27,31 +27,6 @@ export default function ScenarioFooterSection() {
           </Button>
         </div>
 
-        {/* Share your experience */}
-        <div className="space-y-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-            Share your experience
-          </h2>
-          <p className="text-base md:text-lg leading-relaxed text-white/80">
-            Blue Paradigm forms part of a wider exploration of what creativity can make possible when data, stories, sound and interaction are brought together.
-          </p>
-          <p className="text-base md:text-lg leading-relaxed text-white/80">
-            I would genuinely love to know what you felt, what stayed with you and what excited or surprised you. Feedback helps me understand what this work creates for the people who encounter it, what could be strengthened and where the exploration might go next.
-          </p>
-          <p className="text-base md:text-lg leading-relaxed text-white/80">
-            You can share as much or as little as you like, and you are welcome to leave your email address if you would like a reply or would like to stay connected.
-          </p>
-          <Button asChild variant="pacific" size="pacific">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScBqDxhrzRnuyhLa3U2I1k7W3IOHQ5MyA0tu-WTgHURT_ZAyA/viewform?usp=publish-editor"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Share your Blue Paradigm experience
-            </a>
-          </Button>
-        </div>
-
         {/* Explore the project */}
         <div className="space-y-4">
           <p className="text-base md:text-lg leading-relaxed text-white/80">
