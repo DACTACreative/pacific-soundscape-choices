@@ -14,7 +14,7 @@ export default function ScenarioFooterSection() {
             About the creator
           </h2>
           <p className="text-base md:text-lg leading-relaxed text-white/80">
-            Eunice Rigo is a data analyst working within Australia's not for profit sector. Her practice brings together information systems, artificial intelligence, organisational knowledge and creative technology, with a particular interest in how systems shape what organisations can understand, remember and act upon.
+            Eunice Rigo is a data analyst working within Australia's not for profit sector. Her practice brings together data visualisation, artificial intelligence, storytelling, sound and creative technology. She explores how Warm Data, relational knowledge and place based and Indigenous ways of knowing can support richer, more human ways of understanding and communicating complex information.
           </p>
           <Button asChild variant="pacific" size="pacific">
             <a
