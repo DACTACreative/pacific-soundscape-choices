@@ -1,10 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import ThematicSpiderChart from '../components/ThematicSpiderChart';
 import AnswerBlockDisplay from '../components/AnswerBlockDisplay';
 import BluePacificStoriesSection from '../components/BluePacificStoriesSection';
 import DebugPanel from '../components/DebugPanel';
-import BlockSection from '../components/BlockSection';
+import ScenarioFooterSection from '../components/ScenarioFooterSection';
 import { ThematicInformationalCards } from '../components/ThematicInformationalCards';
 import SimpleSeaLevelChart from '../components/SimpleSeaLevelChart';
 import BlueParadigmCarousel from '../components/BlueParadigmCarousel';
