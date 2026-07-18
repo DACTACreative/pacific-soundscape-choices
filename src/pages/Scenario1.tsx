@@ -11,7 +11,6 @@ import { useAudio, Scenario } from '../context/AudioContext';
 import { useEffect, useState } from 'react';
 export default function Scenario1() {
   const { enableAudio, playScenario, audioEnabled } = useAudio();
-  const navigate = useNavigate();
   const [showLines, setShowLines] = useState([false, false, false, false, false]);
 
   useEffect(() => {
@@ -151,21 +150,7 @@ export default function Scenario1() {
         <BlueParadigmCarousel />
 
         {/* Block 6: Navigation */}
-        <BlockSection imageLeft={false} imageUrl="/data/INTERISLAND.png">
-          <div className="space-y-6 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
-              Continue Your Journey
-            </h2>
-            <p className="text-xl text-white/70 mb-8">
-              Experience the full immersive journey and create your own Pacific future.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button variant="pacific" size="pacific" onClick={() => navigate('/credits')}>
-                CREDITS
-              </Button>
-            </div>
-          </div>
-        </BlockSection>
+        <ScenarioFooterSection />
       </div>
       
       {/* Debug Panel - Only in development */}
