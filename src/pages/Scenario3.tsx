@@ -38,6 +38,8 @@ export default function Scenario3() {
   }, [enableAudio, playScenario, audioEnabled]);
 
   return <div className="min-h-screen bg-black text-white relative">
+      <FeedbackBanner />
+
       {/* Fixed Header */}
       <div className="fixed top-6 left-6 z-50">
         <Link to="/" className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500">
@@ -149,9 +151,6 @@ export default function Scenario3() {
 
         {/* Block 4: Blue Paradigm Carousel */}
         <BlueParadigmCarousel />
-
-        {/* Feedback Banner */}
-        <FeedbackBanner />
 
         {/* Block 6: Navigation */}
         <ScenarioFooterSection />

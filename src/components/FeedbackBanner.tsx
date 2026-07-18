@@ -10,9 +10,9 @@ export default function FeedbackBanner() {
   if (dismissed) return null;
 
   return (
-    <div className="relative w-full border-b border-border bg-card text-foreground">
+    <div className="relative z-[60] w-full border-y border-border bg-card text-foreground shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 pr-14 sm:pr-16">
-        <div className="flex flex-col lg:flex-row lg:items-start gap-4 lg:gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
           <div className="flex-1 text-sm sm:text-base leading-relaxed">
             <p className="font-semibold text-accent mb-2">Share your experience</p>
             <p className="font-medium text-foreground">
@@ -25,7 +25,7 @@ export default function FeedbackBanner() {
               You can share as much or as little as you like, and you are welcome to leave your email address if you would like a reply or would like to stay connected.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-2 shrink-0 w-full lg:w-auto">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0 w-full lg:w-auto">
             <a
               href={FORM_URL}
               target="_blank"
