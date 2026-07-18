@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 
 const FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLScBqDxhrzRnuyhLa3U2I1k7W3IOHQ5MyA0tu-WTgHURT_ZAyA/viewform';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/eunice-rigo';
 const STORAGE_KEY = 'blueParadigmBannerDismissed';
 
 export default function RecognitionBanner() {
