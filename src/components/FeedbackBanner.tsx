@@ -10,7 +10,7 @@ export default function FeedbackBanner() {
   if (dismissed) return null;
 
   return (
-    <div className="relative w-full border-y border-border bg-card text-foreground shadow-lg">
+    <div className="relative z-[60] w-full border-y border-border bg-card text-foreground shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 pr-14 sm:pr-16">
         <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
           <div className="flex-1 text-sm sm:text-base leading-relaxed">
