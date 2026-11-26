@@ -12,6 +12,7 @@ import Scenario2 from "./pages/Scenario2";
 import Scenario3 from "./pages/Scenario3";
 import CreditsPage from "./pages/CreditsPage";
 import RouteAudioHandler from "./components/RouteAudioHandler";
+import PageMetadata from "./components/PageMetadata";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <PageMetadata />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/game" element={<Index />} />
