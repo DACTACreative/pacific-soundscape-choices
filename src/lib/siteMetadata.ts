@@ -2,8 +2,8 @@ export const SITE_URL = "https://blueparadigm.dactacreative.com";
 
 export const pageMetadata: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Blue Paradigm 2050 | A Sound-Driven Pacific Climate Journey",
-    description: "Explore Pacific futures with Blue Paradigm 2050, Eunice Rigo's interactive climate story combining data, sound and choices, with Fiji as a case study.",
+    title: "Blue Paradigm 2050 | Pacific Data Story by Eunice Rigo",
+    description: "Eunice Rigo's Blue Paradigm 2050 is an interactive Pacific data visualisation and sound-driven climate journey shaped by your choices for Fiji and the Blue Pacific.",
   },
   "/game": {
     title: "Choose Your Pacific Future | Blue Paradigm 2050",

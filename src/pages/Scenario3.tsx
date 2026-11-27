@@ -42,7 +42,7 @@ export default function Scenario3() {
 
       {/* Fixed Header */}
       <div className="fixed top-6 left-6 z-50">
-        <Link to="/" className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500">
+        <Link to="/" aria-label="Return to journey start" className="text-white/60 hover:text-white font-light tracking-wider text-sm uppercase transition-colors duration-500">
           ← RETURN TO JOURNEY
         </Link>
       </div>

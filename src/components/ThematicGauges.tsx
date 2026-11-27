@@ -87,15 +87,12 @@ export const ThematicGauges: React.FC<ThematicGaugesProps> = ({
                 <span className="text-sm text-white/80 truncate">{theme.name}</span>
                 <span className="text-sm font-medium text-[#35c5f2]">{points.toFixed(1)}</span>
               </div>
-              <div className="w-full bg-white/20 rounded-full h-2">
-                <div 
-                  className="h-2 rounded-full transition-all duration-500"
-                  style={{ 
-                    width: `${Math.min(percentage, 100)}%`,
-                    backgroundColor: points > 0 ? '#35c5f2' : 'transparent'
-                  }}
-                />
-              </div>
+              <Progress
+                value={Math.min(percentage, 100)}
+                max={100}
+                aria-label={`${theme.name}: ${points.toFixed(1)} of ${maxPossible} thematic engagement points`}
+                className="h-2 bg-white/20 [&>div]:bg-[#35c5f2]"
+              />
             </div>
           );
         })}

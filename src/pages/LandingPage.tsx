@@ -174,7 +174,7 @@ export default function LandingPage() {
               fontSize: 'clamp(48px, 6vw, 80px)',
               lineHeight: '1.1',
               letterSpacing: '0.03em'
-            }}>BLUE PARADIGM</h1>
+            }}>BLUE PARADIGM<span className="sr-only"> — An Immersive Experience in Pacific Strategy</span></h1>
             
             {/* Subtitle */}
             <h2 style={{
@@ -220,9 +220,9 @@ export default function LandingPage() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 flex flex-col items-center z-20">
+        <div aria-label="Scroll to explore more content" className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 flex flex-col items-center z-20">
           <p className="text-sm mb-2 font-light">Scroll to explore</p>
-          <ChevronDown className="w-6 h-6 animate-bounce" />
+          <ChevronDown aria-hidden="true" className="w-6 h-6 animate-bounce" />
         </div>
       </div>
 
